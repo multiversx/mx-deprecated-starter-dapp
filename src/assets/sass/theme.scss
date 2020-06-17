@@ -1,0 +1,31 @@
+$google-fonts-import: 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600|Roboto+Mono' !default; // Includes: Poppins: Light, Regular, Medium, Semi-bold; Roboto Mono: Regular
+
+$font-family-system-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family-poppins-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family-system-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family-roboto-mono-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+$headings-font-weight: 300 !important;
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  min-height: 100%;
+  font-size: 14px;
+}
+
+#root {
+  position: relative;
+}
+
+body {
+  margin-bottom: 50px; /* Margin bottom by footer height */
+  background: #fafafa;
+}
+
+.footer {
+  position: absolute;
+  bottom: -60px;
+  width: 100%;
+  height: 50px;
+}
