@@ -10,8 +10,7 @@ const Login = () => {
           <div className="card">
             <div className="card-body card-details">
               <div className="empty">
-                <FontAwesomeIcon icon={faTimes} className="empty-icon" />
-                <span className="h4 empty-heading">This is login</span>
+                <a href="/" className="btn"></a>
               </div>
             </div>
           </div>
