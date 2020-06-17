@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "bootstrap/dist/css/bootstrap.css";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React from "react";
+import Layout from "./components/Layout";
+import PageNotFoud from "./components/PageNotFoud";
+import routes from "./routes";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Layout>
+        <Switch>
+          {routes.map((route, i) => (
+            <Route
+              path={route.path}
+              key={route.path + i}
+              component={route.component}
+              exact={true}
+            />
+          ))}
+          <Route component={PageNotFoud} />
+        </Switch>
+      </Layout>
+    </Router>
   );
 }
 
