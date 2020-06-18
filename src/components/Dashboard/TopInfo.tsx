@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'context';
+import { Denominate } from 'sharedComponents';
 
 const TopInfo = () => {
   const { accountAddress, balance } = useContext();
@@ -12,7 +13,9 @@ const TopInfo = () => {
         </div>
         <div className="item row">
           <div className="key col-md-3">Available ERD balance</div>
-          <div className="value col-md-9">{balance}</div>
+          <div className="value col-md-9">
+            <Denominate value={balance} />
+          </div>
         </div>
       </div>
     </div>

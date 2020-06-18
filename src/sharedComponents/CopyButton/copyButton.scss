@@ -1,0 +1,37 @@
+.copy-btn {
+  min-height: 17px;
+
+  &.white {
+    .copy-icon {
+      #path-color {
+        fill: #fff;
+      }
+    }
+
+    .check-icon {
+      color: #fff;
+    }
+  }
+
+  &.muted {
+    .copy-icon {
+      #path-color {
+        fill: lightgray;
+      }
+
+      &:hover {
+        #path-color {
+          fill: darkgray;
+        }
+      }
+    }
+
+    .check-icon {
+      color: darkgray;
+    }
+  }
+
+  &.align-end {
+    margin: 0 0 0 auto !important;
+  }
+}

@@ -12,6 +12,11 @@ export type ActionType =
       balance: StateType['balance'];
       nonce: StateType['nonce'];
       newTransactions: StateType['newTransactions'];
+    }
+  | {
+      type: 'setActiveTestnet';
+      activeTestnet: StateType['activeTestnet'];
+      metaChainShardId: StateType['metaChainShardId'];
     };
 
 export function reducer(state: StateType, action: ActionType): StateType {
@@ -24,9 +29,11 @@ export function reducer(state: StateType, action: ActionType): StateType {
       const { publicKey, accountAddress } = action;
       return { ...state, publicKey, accountAddress };
     }
+    case 'setActiveTestnet': {
+      const { activeTestnet, metaChainShardId } = action;
+      return { ...state, activeTestnet, metaChainShardId };
+    }
     case 'setBalanceAndTransactions': {
-      console.warn(action);
-
       const { balance, nonce, newTransactions } = action;
       return { ...state, balance, nonce, newTransactions };
     }

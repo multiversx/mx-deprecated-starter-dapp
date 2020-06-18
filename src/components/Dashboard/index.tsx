@@ -1,8 +1,17 @@
 import * as React from 'react';
+import { Redirect } from 'react-router-dom';
+import { useContext } from 'context';
 import TopInfo from './TopInfo';
+import Transactions from './Transactions';
 
 const Dashboard = () => {
   const ref = React.useRef(null);
+  const { accountAddress } = useContext();
+
+  if (!accountAddress) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className="container pt-3 pb-3" ref={ref}>
       <div className="row">
@@ -10,15 +19,7 @@ const Dashboard = () => {
           <TopInfo />
         </div>
       </div>
-      <div className="row">
-        <div className="col-12">
-          <div className="card">
-            <div className="card-body card-details">
-              <div className="empty">This is dashboard</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Transactions />
     </div>
   );
 };
