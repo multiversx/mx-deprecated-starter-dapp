@@ -9,8 +9,34 @@ const schema = object({
 
 export type ConfigType = InferType<typeof schema>;
 
+interface TransactionType {
+  blockHash: string;
+  data: string;
+  gasLimit: number;
+  gasPrice: number;
+  gasUsed: string;
+  hash: string;
+  miniBlockHash: string;
+  nonce: number;
+  receiver: string;
+  receiverShard: number;
+  round: number;
+  sender: string;
+  senderShard: number;
+  signature: string;
+  status: string;
+  timestamp: number;
+  value: string;
+}
+
 export interface StateType {
   config: ConfigType;
+  hideApp: boolean;
+  publicKey: string;
+  accountAddress: string;
+  balance: string;
+  nonce: number;
+  newTransactions: TransactionType[];
 }
 
 const initialState = () => {
@@ -19,6 +45,12 @@ const initialState = () => {
   });
   return {
     config,
+    hideApp: false,
+    accountAddress: '',
+    balance: '...',
+    nonce: 0,
+    publicKey: '',
+    newTransactions: [],
   };
 };
 
