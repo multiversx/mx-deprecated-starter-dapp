@@ -1,0 +1,201 @@
+// /* Navbar
+// -------------------------------------------------- */
+
+@import './../../../../node_modules/bootstrap/scss/mixins.scss';
+@import './../../../../node_modules/bootstrap/scss/functions.scss';
+@import './../../../../node_modules/bootstrap/scss/variables.scss';
+
+.elrond-logo {
+  fill: $white;
+  width: 24px;
+  height: 24px;
+}
+
+.white-nav-bg {
+  .navbar {
+    background-color: $white;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.09);
+
+    .network {
+      color: $black;
+    }
+  }
+
+  .elrond-logo {
+    fill: $black;
+  }
+
+  .appSwitcherButton {
+    .activeApp {
+      color: $black;
+
+      &:hover {
+        svg {
+          color: darken($color: #212529, $amount: 20);
+        }
+      }
+    }
+  }
+}
+
+.navbar-expand > .container.navContainer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.navbar {
+  padding: 0 0.8125rem !important;
+
+  .network {
+    color: $white;
+    font-size: 0.875rem;
+  }
+
+  .navContainer {
+    position: relative;
+    border: 0 !important;
+    height: 48px;
+    margin: 0 1.25rem;
+
+    .dropdown-menu {
+      min-width: 8rem;
+
+      .dropdown-item {
+        color: #7f7f7f;
+        font-weight: 400;
+
+        &.active,
+        &:hover {
+          background-color: $white;
+          color: $black;
+          transition: none;
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    .navContainer {
+      margin: 0 1rem;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    .navContainer {
+      margin: 0 0.4rem;
+    }
+  }
+}
+
+.navbarToggle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  border: none;
+  outline: none;
+}
+
+.navbar-toggler {
+  outline: none;
+}
+
+.navbar .navbar-brand img {
+  height: 2.286rem;
+}
+
+.appSwitcherButton {
+  white-space: nowrap;
+  position: relative;
+  display: flex;
+
+  .activeApp {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #fff;
+    margin-left: 0.7rem;
+
+    small {
+      margin-top: 0.2rem;
+      margin-left: 0.2rem;
+    }
+  }
+
+  svg {
+    color: #717488;
+  }
+}
+
+.nav-item {
+  a {
+    padding-top: 0.04rem;
+    padding-bottom: 0.04rem;
+    display: inline-block;
+  }
+
+  #logout {
+    path {
+      fill: #6c757d;
+    }
+  }
+
+  &:hover {
+    #logout {
+      path {
+        fill: #000;
+      }
+    }
+  }
+}
+
+.brandDropdown {
+  line-height: 1;
+
+  a.nav-link {
+    padding: 0 1.8rem 0 0;
+  }
+  .dropdown-menu {
+    margin-top: 0.3rem;
+
+    .dropdown-item {
+      font-size: 0.9375rem;
+    }
+  }
+}
+
+.navbar {
+  a.nav-link {
+    color: #b8b8b8 !important;
+    transition: none;
+  }
+  a.nav-link:not(#basic-nav-dropdown) {
+    @include media-breakpoint-up(lg) {
+      border-top: 0.2rem solid transparent;
+      line-height: 3.4rem;
+      padding-top: 0.4rem;
+    }
+  }
+
+  .dropdown-toggle:after {
+    content: none;
+  }
+}
+
+.navbar a.nav-link:hover {
+  color: #212529 !important;
+}
+
+.appSwitcher {
+  margin-top: 0.8rem;
+  .nav-link {
+    padding: 0.1rem 0.45rem;
+    font-size: 1.2rem;
+  }
+}
+
+.navbar .nav-link.active {
+  border-color: $blue !important;
+  color: #212529 !important;
+}
