@@ -1,8 +1,14 @@
 import * as React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'context';
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const onClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    dispatch({ type: 'toggleApp', hideApp: true });
+  };
+
   return (
     <div className="container pt-3 pb-3">
       <div className="row">
@@ -10,7 +16,9 @@ const Login = () => {
           <div className="card">
             <div className="card-body card-details">
               <div className="empty">
-                <a href="/" className="btn"></a>
+                <button onClick={onClick} className="btn btn-primary">
+                  Login
+                </button>
               </div>
             </div>
           </div>
