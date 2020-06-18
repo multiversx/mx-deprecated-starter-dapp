@@ -1,6 +1,7 @@
-import React from "react";
-import { withPageTitle } from "./sharedComponents";
-import Login from "./components/Login";
+import React from 'react';
+import { withPageTitle } from './sharedComponents';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 
 interface RouteType {
   path: string;
@@ -10,21 +11,23 @@ interface RouteType {
 
 const routes: RouteType[] = [
   {
-    path: "/",
-    title: "Login",
+    path: '/',
+    title: 'Login',
     component: Login,
+  },
+  {
+    path: '/dashboard',
+    title: 'Dashboard',
+    component: Dashboard,
   },
 ];
 
 const wrappedRoutes = () =>
   routes.map((route) => {
-    const title = route.title ? `${route.title} • Elrond Dapp` : "Elrond Dapp";
+    const title = route.title ? `${route.title} • Elrond Dapp` : 'Elrond Dapp';
     return {
       path: route.path,
-      component: (withPageTitle(
-        title,
-        route.component
-      ) as any) as React.ComponentClass<{}, any>,
+      component: (withPageTitle(title, route.component) as any) as React.ComponentClass<{}, any>,
     };
   });
 
