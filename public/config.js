@@ -2,7 +2,8 @@ const CONFIG = {
   // walletUrl: 'https://wallet.elrond.com',
   walletUrl: 'http://localhost:3001',
   loginCallbackUrl: 'http://localhost:3000',
-  erdLabel: 'xErd',
+  nodeUrl: 'https://api.elrond.com',
+  elasticUrl: 'https://elastic-aws.elrond.com',
 };
 
 window.CONFIG = CONFIG;

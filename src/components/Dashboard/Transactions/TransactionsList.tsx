@@ -2,8 +2,8 @@ import moment from 'moment';
 import React from 'react';
 import Web3 from 'web3';
 import BigNumber from 'bignumber.js';
-import { Denominate, ShardSpan } from 'sharedComponents';
-import { addressIsBach32, truncate } from 'helpers';
+import { Denominate } from 'sharedComponents';
+import { truncate } from 'helpers';
 import { TransactionType } from 'context/state';
 import { Accordion, useAccordionToggle } from 'react-bootstrap';
 import { CopyButton } from 'sharedComponents';
@@ -142,13 +142,7 @@ const TransactionList = ({ transactions }: { transactions: TransactionType[] }) 
                                 ) : (
                                   <span className="font-weight-bold mr-2">RECEIVED FROM:</span>
                                 )}{' '}
-                                <span>
-                                  {addressIsBach32(senderOrReceiver) ? (
-                                    senderOrReceiver
-                                  ) : (
-                                    <ShardSpan shardId={senderOrReceiver} />
-                                  )}
-                                </span>
+                                <span>{senderOrReceiver}</span>
                                 <CopyButton text={senderOrReceiver} extraClasses={'muted'} />
                               </div>
                               <span className="transaction-date">

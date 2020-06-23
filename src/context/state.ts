@@ -6,7 +6,6 @@ const config: ConfigType = window[configKey] as any;
 const schema = object({
   walletUrl: string().required(),
   loginCallbackUrl: string().required(),
-  erdLabel: string().required(),
 }).defined();
 
 interface TestnetType {
@@ -70,10 +69,11 @@ export interface StateType {
   activeTestnet: TestnetType;
   metaChainShardId: number;
   hideApp: boolean;
-  publicKey: string;
   accountAddress: string;
   balance: string;
   nonce: number;
+  detailsFetched: boolean;
+  timeout: number;
   newTransactions: TransactionType[];
 }
 
@@ -94,7 +94,7 @@ const defaultTestnet = {
   faucet: false,
 };
 
-const initialState = () => {
+const initialState = (): StateType => {
   schema.validate(config, { strict: true }).catch(({ errors }) => {
     console.error('config.js format errors: ', errors);
   });
@@ -106,8 +106,9 @@ const initialState = () => {
     accountAddress: '',
     balance: '...',
     nonce: 0,
-    publicKey: '',
+    detailsFetched: false,
     newTransactions: [],
+    timeout: 3000,
   };
 };
 
