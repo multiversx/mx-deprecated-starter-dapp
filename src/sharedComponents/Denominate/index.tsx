@@ -16,7 +16,7 @@ const Denominate = ({
   decimals,
 }: DenominateType) => {
   const {
-    activeTestnet: { denomination, decimals: configDecimals },
+    config: { denomination, decimals: configDecimals },
   } = useContext();
 
   decimals = decimals !== undefined ? decimals : configDecimals;
