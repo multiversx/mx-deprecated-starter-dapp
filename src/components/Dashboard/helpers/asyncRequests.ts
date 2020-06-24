@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fakeTransactions from './twoTransactions';
 interface DetailsType {
   nodeUrl: string;
   accountAddress: string;
@@ -45,34 +46,52 @@ export async function getLatestTransactions({
       data: {
         hits: { hits, total },
       },
-    } = await axios.post(
-      `${elasticUrl}/transactions/_search`,
-      {
-        query: {
-          bool: {
-            should: [
-              { match: { sender: accountAddress } },
-              { match: { receiver: accountAddress } },
-            ],
-          },
-        },
-        sort: {
-          timestamp: {
-            order: 'desc',
-          },
-        },
-      },
-      { timeout }
-    );
+    } = { data: fakeTransactions };
 
-    return {
-      transactions: hits.map((transaction: any) => ({
-        ...transaction._source,
-        hash: transaction._id,
-      })),
-      transactionsFetched: true,
-      totalTransactions: total.value || total,
-    };
+    // await axios.post(
+    //   `${elasticUrl}/transactions/_search`,
+    //   {
+    //     query: {
+    //       bool: {
+    //         should: [
+    //           { match: { sender: accountAddress } },
+    //           { match: { receiver: accountAddress } },
+    //         ],
+    //       },
+    //     },
+    //     sort: {
+    //       timestamp: {
+    //         order: 'desc',
+    //       },
+    //     },
+    //     from: 1,
+    //     size: 10,
+    //   },
+    //   { timeout }
+    // );
+
+    return new Promise((resolve) => {
+      const data = {
+        transactions: hits.map((transaction: any) => ({
+          ...transaction._source,
+          hash: transaction._id,
+        })),
+        transactionsFetched: true,
+        totalTransactions: total.value || total,
+      };
+      setTimeout(() => {
+        resolve(data);
+      }, 10);
+    });
+
+    // return {
+    //   transactions: hits.map((transaction: any) => ({
+    //     ...transaction._source,
+    //     hash: transaction._id,
+    //   })),
+    //   transactionsFetched: true,
+    //   totalTransactions: total.value || total,
+    // };
   } catch (err) {
     return {
       transactions: [],
