@@ -1,6 +1,7 @@
 import React from 'react';
 import { withPageTitle } from './sharedComponents';
 import Login from './components/Login';
+import Transaction from './components/Transaction';
 import Dashboard from './components/Dashboard';
 
 interface RouteType {
@@ -19,6 +20,11 @@ const routes: RouteType[] = [
     path: '/dashboard',
     title: 'Dashboard',
     component: Dashboard,
+  },
+  {
+    path: '/transaction',
+    title: 'Transaction',
+    component: Transaction,
   },
 ];
 
