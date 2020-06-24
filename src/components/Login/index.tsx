@@ -9,13 +9,13 @@ const Login = () => {
 
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    elrond.login({ callbackUrl: window.location.pathname });
+    elrond.login({ callbackUrl: 'http://localhost:3000/' });
   };
 
   const listen = () => {
     const handler = (event: any) => {
       try {
-        const queryString = event.data.split('/?').join('');
+        const queryString = event.data.split('?').pop();
         const accountAddress = new URLSearchParams(queryString).get('accountAddress');
         if (accountAddress) {
           dispatch({ type: 'login', accountAddress });
