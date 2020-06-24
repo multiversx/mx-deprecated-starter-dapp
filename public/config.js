@@ -1,10 +1,7 @@
 const CONFIG = {
-  // walletUrl: 'https://wallet.elrond.com',
-  // walletUrl: 'http://localhost:3001',
-  // selfUrl: 'http://localhost:3000',
   nodeUrl: 'https://api.elrond.com',
   elasticUrl: 'https://elastic-aws.elrond.com',
-  contractAddress: '...', // -> catre aici fac sendurile
+  contractAddress: 'erd1cevsw7mq5uvqymjqzwqvpqtdrhckehwfz99n7praty3y7q2j7yps842mqh',
   decimals: 2,
   denomination: 18,
 };
