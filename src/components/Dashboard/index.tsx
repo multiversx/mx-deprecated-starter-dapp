@@ -5,6 +5,7 @@ import initialState from 'context/state';
 import { getWalletDetails, getLatestTransactions } from './helpers/asyncRequests';
 import pushInTransactions from './helpers/pushInTransactions';
 import TopInfo from './TopInfo';
+import Actions from './Actions';
 import Transactions from './Transactions';
 
 const Dashboard = () => {
@@ -76,6 +77,7 @@ const Dashboard = () => {
       <div className="row">
         <div className="col-12">
           <TopInfo />
+          <Actions />
         </div>
       </div>
       <Transactions />
