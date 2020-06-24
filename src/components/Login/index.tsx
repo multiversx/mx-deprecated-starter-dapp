@@ -9,18 +9,21 @@ const Login = () => {
 
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    //TODO: encoding. Mai e nevoie de un url? Pot doar cu modal true
     elrond.login({ callbackUrl: 'http://localhost:3000/' });
   };
 
   const listen = () => {
     const handler = (event: any) => {
       try {
-        const queryString = event.data.split('?').pop();
-        const accountAddress = new URLSearchParams(queryString).get('accountAddress');
-        if (accountAddress) {
-          dispatch({ type: 'login', accountAddress });
-          elrond.closeWindow();
-          history.push('/dashboard');
+        if (typeof event.data === 'string') {
+          const queryString = event.data.split('?').pop();
+          const accountAddress = new URLSearchParams(queryString).get('accountAddress');
+          if (accountAddress) {
+            dispatch({ type: 'login', accountAddress });
+            elrond.closeWindow();
+            history.push('/dashboard');
+          }
         }
       } catch {
         elrond.closeWindow();
