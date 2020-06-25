@@ -41,8 +41,8 @@ const Transaction = () => {
   ) : (
     <PageState
       svgComponent={<FontAwesomeIcon icon={faTimes} className="text-danger" />}
-      title="This is transaction"
-      description="This is description."
+      title="This failed"
+      description="Try again."
     />
   );
 };
