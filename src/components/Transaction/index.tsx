@@ -11,40 +11,43 @@ const Transaction = () => {
 
   const success = query.get('success');
   const txHash = query.get('txHash');
-  const sender = query.get('sender');
   const nonce = query.get('nonce');
 
-  return success === 'true' ? (
-    <PageState
-      svgComponent={<FontAwesomeIcon icon={faCheck} className="text-danger" />}
-      title="Transaction success"
-      description={
-        <>
-          Hash:{' '}
-          <a
-            href={`${explorerAddr}transactions/${txHash}`}
-            {...{
-              target: '_blank',
-            }}
-            className="tx-link"
-            title="View in Explorer"
-          >
-            {txHash}
-          </a>
-          <br />
-          Sender: {sender}
-          <br />
-          Nonce: {nonce}
-        </>
-      }
-    />
-  ) : (
-    <PageState
-      svgComponent={<FontAwesomeIcon icon={faTimes} className="text-danger" />}
-      title="This failed"
-      description="Try again."
-    />
-  );
+  switch (success) {
+    case 'true':
+      return (
+        <PageState
+          svgComponent={<FontAwesomeIcon icon={faCheck} className="text-danger" />}
+          title="Transaction success"
+          description={
+            <>
+              Hash:{' '}
+              <a
+                href={`${explorerAddr}transactions/${txHash}`}
+                {...{
+                  target: '_blank',
+                }}
+                className="tx-link"
+                title="View in Explorer"
+              >
+                {txHash}
+              </a>
+              <br />
+              Nonce: {nonce}
+            </>
+          }
+        />
+      );
+
+    default:
+      return (
+        <PageState
+          svgComponent={<FontAwesomeIcon icon={faTimes} className="text-danger" />}
+          title="This failed"
+          description="Try again."
+        />
+      );
+  }
 };
 
 export default Transaction;
