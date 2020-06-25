@@ -7,18 +7,14 @@ import { PageState } from 'sharedComponents';
 const Transactions = () => {
   const { newTransactions } = useContext();
 
-  return (
-    <>
-      {newTransactions.length > 0 ? (
-        <TransactionsList transactions={newTransactions} />
-      ) : (
-        <PageState
-          svgComponent={<NoTransactionsIcon />}
-          title="No Transactions"
-          description="No transactions found for this wallet."
-        />
-      )}
-    </>
+  return newTransactions.length > 0 ? (
+    <TransactionsList transactions={newTransactions} />
+  ) : (
+    <PageState
+      svgComponent={<NoTransactionsIcon />}
+      title="No Transactions"
+      description="No transactions found for this wallet."
+    />
   );
 };
 
