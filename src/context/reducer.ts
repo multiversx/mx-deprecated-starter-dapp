@@ -8,9 +8,6 @@ export type ActionType =
       nonce: StateType['nonce'];
       detailsFetched: StateType['detailsFetched'];
       newTransactions: StateType['newTransactions'];
-    }
-  | {
-      type: 'setActiveTestnet';
     };
 
 export function reducer(state: StateType, action: ActionType): StateType {
