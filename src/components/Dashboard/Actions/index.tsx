@@ -9,20 +9,19 @@ const Actions = () => {
   } = useContext();
   const history = useHistory();
 
-  //TODO: pagini de post-transaction cu PageState iconita si link catre explorer
   const firstAction = () => {
     elrond.sendTransaction({
       receiver: contractAddress,
       value: '100000000000000000',
       gasLimit: '54500',
-      data: 'a%@     -👍',
+      data: 'a%@',
       callbackUrl: '/transaction',
     });
   };
 
   const listen = () => {
     const handler = (event: any) => {
-      if (typeof event.data === 'string') {
+      if (typeof event.data === 'string' && event.data !== '') {
         elrond.closeWindow();
         history.push(decodeURIComponent(event.data));
       }
