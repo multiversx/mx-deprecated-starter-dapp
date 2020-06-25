@@ -1,31 +1,19 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'context';
 import { elrond } from 'helpers';
 
 const Login = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    //TODO: encoding. Mai e nevoie de un url? Pot doar cu modal true
-    elrond.login({ callbackUrl: 'http://localhost:3000/' });
+    elrond.login({ callbackUrl: `/dashboard` });
   };
 
   const listen = () => {
     const handler = (event: any) => {
-      try {
-        if (typeof event.data === 'string') {
-          const queryString = event.data.split('?').pop();
-          const accountAddress = new URLSearchParams(queryString).get('accountAddress');
-          if (accountAddress) {
-            dispatch({ type: 'login', accountAddress });
-            elrond.closeWindow();
-            history.push('/dashboard');
-          }
-        }
-      } catch {
+      if (typeof event.data === 'string' && event.data !== '') {
+        history.push(event.data);
         elrond.closeWindow();
       }
     };

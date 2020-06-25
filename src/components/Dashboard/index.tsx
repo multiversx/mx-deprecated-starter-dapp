@@ -1,26 +1,42 @@
 import * as React from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { ReactComponent as Unavailable } from 'assets/img/unavailable.svg';
 import { useContext, useDispatch } from 'context';
 import initialState from 'context/state';
 import { getWalletDetails, getLatestTransactions } from './helpers/asyncRequests';
 import pushInTransactions from './helpers/pushInTransactions';
+import { PageState } from 'sharedComponents';
+import { addressIsBech32 } from 'helpers';
 import TopInfo from './TopInfo';
 import Actions from './Actions';
 import Transactions from './Transactions';
 
 const Dashboard = () => {
   const ref = React.useRef(null);
+  const { search } = useLocation();
+  const history = useHistory();
   const {
-    accountAddress,
     balance,
-    newTransactions: oldTransactions,
+    newTransactions: transactions,
     timeout,
+    detailsFetched,
     config: { nodeUrl, elasticUrl, contractAddress },
   } = useContext();
 
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  const setAddress = () => {
+    const address = new URLSearchParams(search).get('accountAddress') || '';
+    if (addressIsBech32(address)) {
+      fetchData(address);
+    } else {
+      history.push('/');
+    }
+  };
+
+  React.useEffect(setAddress, [search]);
+
+  const fetchData = (accountAddress: string) => {
     if (accountAddress) {
       Promise.all([
         getWalletDetails({
@@ -37,12 +53,12 @@ const Dashboard = () => {
         const initialCallFailed =
           (!transactionsFetched || !balanceFetched) &&
           balance === initialState().balance &&
-          oldTransactions.length === 0;
-
+          transactions.length === 0;
+        dispatch({ type: 'login', accountAddress });
         if (detailsFetched) {
           dispatch({
             type: 'setBalanceAndTransactions',
-            newTransactions: pushInTransactions(oldTransactions, newTransactions),
+            newTransactions: pushInTransactions(transactions, newTransactions),
             balance: newBalance,
             nonce,
             detailsFetched,
@@ -66,23 +82,33 @@ const Dashboard = () => {
         }
       });
     }
-  });
+  };
 
-  if (!accountAddress) {
-    return <Redirect to="/" />;
-  }
+  const unavailable = !detailsFetched && balance === '';
 
-  return (
-    <div className="container pt-3 pb-3" ref={ref}>
-      <div className="row">
-        <div className="col-12">
-          <TopInfo />
-          <Actions />
+  const loading =
+    !detailsFetched && (transactions.length === 0 || balance === initialState().balance);
+
+  switch (true) {
+    case unavailable:
+      return <PageState svgComponent={<Unavailable />} title="Unavailable" />;
+
+    case loading:
+      return <PageState svgComponent={<></>} spin />;
+
+    default:
+      return (
+        <div className="container pt-3 pb-3" ref={ref}>
+          <div className="row">
+            <div className="col-12">
+              <TopInfo />
+              <Actions />
+            </div>
+          </div>
+          <Transactions />
         </div>
-      </div>
-      <Transactions />
-    </div>
-  );
+      );
+  }
 };
 
 export default Dashboard;

@@ -83,7 +83,7 @@ export async function getLatestTransactions({
       };
       setTimeout(() => {
         resolve(data);
-      }, 10);
+      }, 2000);
     });
 
     // return {
