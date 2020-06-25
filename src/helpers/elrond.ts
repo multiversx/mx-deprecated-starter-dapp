@@ -20,7 +20,8 @@ const elrond: ElrondType = {
       callbackUrl,
       modal: 'true',
     });
-    var URL = `http://localhost:3001/hook/login?${queryString}`;
+    // var URL = `http://localhost:3001/hook/login?${queryString}`;
+    var URL = `https://wallet.elrond.com/hook/login?${queryString}`;
     elrond.window = window.open(URL, '_blank', elrond.strWindowFeatures);
   },
   closeWindow: () => {
@@ -34,7 +35,8 @@ const elrond: ElrondType = {
       data: encodeURIComponent(props.data),
       modal: 'true',
     });
-    var URL = `http://localhost:3001/hook/transaction?${queryString}`;
+    // var URL = `http://localhost:3001/hook/transaction?${queryString}`;
+    var URL = `https://wallet.elrond.com/hook/transaction?${queryString}`;
     elrond.window = window.open(URL, '_blank', elrond.strWindowFeatures);
   },
 };
