@@ -15,7 +15,7 @@ const Actions = () => {
       receiver: contractAddress,
       value: '100000000000000000',
       gasLimit: '54500',
-      data: 'a%@ -',
+      data: 'a%@     -👍',
       callbackUrl: '/transaction',
     });
   };

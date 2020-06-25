@@ -17,7 +17,7 @@ const elrond: ElrondType = {
   strWindowFeatures: 'location=yes,height=570,width=520,scrollbars=yes,status=yes',
   login: function ({ callbackUrl }) {
     var queryString = new URLSearchParams({
-      callbackUrl: encodeURIComponent(callbackUrl),
+      callbackUrl,
       modal: 'true',
     });
     var URL = `http://localhost:3001/hook/login?${queryString}`;
@@ -31,7 +31,6 @@ const elrond: ElrondType = {
   sendTransaction: function (props) {
     var queryString = new URLSearchParams({
       ...props,
-      callBackUrl: encodeURIComponent(props.callbackUrl),
       data: encodeURIComponent(props.data),
       modal: 'true',
     });
