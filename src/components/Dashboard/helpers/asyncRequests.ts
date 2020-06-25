@@ -32,6 +32,7 @@ export async function getWalletDetails({ nodeUrl, accountAddress, timeout }: Det
 interface GetLatestTransactionsType {
   elasticUrl: string;
   accountAddress: string;
+  contractAddress: string;
   timeout: number;
   page?: number;
 }
@@ -39,6 +40,7 @@ interface GetLatestTransactionsType {
 export async function getLatestTransactions({
   elasticUrl,
   accountAddress,
+  contractAddress,
   timeout,
 }: GetLatestTransactionsType) {
   try {
@@ -55,7 +57,7 @@ export async function getLatestTransactions({
     //       bool: {
     //         should: [
     //           { match: { sender: accountAddress } },
-    //           { match: { receiver: accountAddress } },
+    //           { match: { receiver: contractAddress } },
     //         ],
     //       },
     //     },

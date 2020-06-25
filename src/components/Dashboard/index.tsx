@@ -15,7 +15,7 @@ const Dashboard = () => {
     balance,
     newTransactions: oldTransactions,
     timeout,
-    config: { nodeUrl, elasticUrl },
+    config: { nodeUrl, elasticUrl, contractAddress },
   } = useContext();
 
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Dashboard = () => {
           nodeUrl,
           timeout,
         }),
-        getLatestTransactions({ elasticUrl, accountAddress, timeout }),
+        getLatestTransactions({ elasticUrl, accountAddress, timeout, contractAddress }),
       ]).then(([walletData, transactionData]: any) => {
         const { balance: newBalance, nonce, detailsFetched: balanceFetched } = walletData;
         const { transactions: newTransactions, transactionsFetched } = transactionData;
