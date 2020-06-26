@@ -51,51 +51,56 @@ const TransactionList = ({ transactions }: { transactions: TransactionType[] }) 
 
   return (
     <div className="p-3 mt-3">
-      <h3 className="mb-3 font-weight-normal">Transactions</h3>
-      <table className="table mb-0">
-        <thead>
-          <tr className="bg-light">
-            <th className="border-0 font-weight-normal">#</th>
-            <th className="border-0 font-weight-normal">Address</th>
-            <th className="border-0 font-weight-normal">Date</th>
-            <th className="border-0 font-weight-normal">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedTransactions.map((tx: TransactionType, i) => {
-            const incomingTransaction = incoming(tx.sender);
-            const senderOrReceiver =
-              incomingTransaction || tx.sender === fakeSender ? tx.receiver : tx.sender;
+      <h4 className="mb-3 font-weight-normal">Transactions</h4>
+      <div className="table-responsive">
+        <table className="transactions table pb-3">
+          <thead>
+            <tr className="bg-light">
+              <th className="border-0 font-weight-normal"></th>
+              <th className="border-0 font-weight-normal">Tx hash</th>
+              <th className="border-0 font-weight-normal">Date</th>
+              <th className="border-0 font-weight-normal">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedTransactions.map((tx: TransactionType, i) => {
+              const incomingTransaction = incoming(tx.sender);
+              const senderOrReceiver =
+                incomingTransaction || tx.sender === fakeSender ? tx.receiver : tx.sender;
 
-            return (
-              <tr key={tx.hash + i}>
-                <td>
-                  <span title={status(tx.status)}>
-                    <StatusIcon tx={tx} incomingTransaction={incomingTransaction} />
-                  </span>
-                </td>
-                <td>
-                  <a
-                    href={`${explorerAddr}transactions/${tx.hash}`}
-                    {...{
-                      target: '_blank',
-                    }}
-                    className="tx-link"
-                    title="View in Explorer"
-                  >
-                    {senderOrReceiver}
-                  </a>
-                </td>
-                <td>{moment.unix(tx.timestamp).format('MMMM Do YYYY, h:mm A')}</td>
-                <td>
-                  {tx.value === '0' ? '' : <>{tx.sender === accountAddress ? '-' : '+'}</>}
-                  <Denominate value={tx.value} />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              return (
+                <tr key={tx.hash + i}>
+                  <td>
+                    <div
+                      className="transaction-icon shadow-sm d-flex align-items-center justify-content-center"
+                      title={status(tx.status)}
+                    >
+                      <StatusIcon tx={tx} incomingTransaction={incomingTransaction} />
+                    </div>
+                  </td>
+                  <td>
+                    <a
+                      href={`${explorerAddr}transactions/${tx.hash}`}
+                      {...{
+                        target: '_blank',
+                      }}
+                      className="tx-link"
+                      title="View in Explorer"
+                    >
+                      {senderOrReceiver}
+                    </a>
+                  </td>
+                  <td>{moment.unix(tx.timestamp).format('MMMM Do YYYY, h:mm A')}</td>
+                  <td>
+                    {tx.value === '0' ? '' : <>{tx.sender === accountAddress ? '-' : '+'}</>}
+                    <Denominate value={tx.value} />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       <div className="d-flex justify-content-center">
         <a
           href={`${explorerAddr}address/${accountAddress}`}

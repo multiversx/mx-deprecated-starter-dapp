@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar as BsNavbar, NavItem, Nav } from 'react-bootstrap';
 import { useContext } from 'context';
-import { ReactComponent as ElrondLogo } from 'assets/img/elrond-symbol.svg';
+import { ReactComponent as ElrondLogo } from 'assets/img/elrond.svg';
 
 const Navbar = () => {
   const { accountAddress } = useContext();
@@ -11,8 +11,7 @@ const Navbar = () => {
       <div className="container-fluid">
         <NavItem className="d-flex align-items-center">
           <ElrondLogo className="elrond-logo mr-2" />
-          <span className="logo-text pr-2">Elrond</span>
-          <span className="text-muted ml-2">Dapp</span>
+          <span className="dapp-name text-muted pl-2">Dapp</span>
         </NavItem>
 
         <Nav className="ml-auto">

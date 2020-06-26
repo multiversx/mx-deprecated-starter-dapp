@@ -1,16 +1,21 @@
-@import './../../../node_modules/bootstrap/scss/mixins';
-@import './../../../node_modules/bootstrap/scss/functions';
-@import './../../../node_modules/bootstrap/scss/variables';
-
 /* Bootstrap overrides
 -------------------------------------------------- */
 $google-fonts-import: 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600|Roboto+Mono' !default; // Includes: Poppins: Light, Regular, Medium, Semi-bold; Roboto Mono: Regular
-
 $font-family-system-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-family-poppins-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-family-roboto-mono-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 $headings-font-weight: 300 !important;
+$primary: #1b46c2;
+$light: #fafafa;
+
+/* Do not move the imports from here. 
+Override Bootstrap variables only above.
+-------------------------------------------------- */
+@import './../../../node_modules/bootstrap/scss/mixins';
+@import './../../../node_modules/bootstrap/scss/functions';
+@import './../../../node_modules/bootstrap/scss/variables';
+@import './../../../node_modules/bootstrap/scss/bootstrap.scss';
 
 /* Base
 -------------------------------------------------- */
@@ -30,14 +35,13 @@ html {
 /* Navbar
 -------------------------------------------------- */
 .elrond-logo {
-  width: 26px;
-  height: 26px;
+  width: 85px;
+  height: 25px;
 }
 
-.logo-text {
-  font-size: 1.3rem;
+.dapp-name {
   line-height: 1;
-  border-right: 1px solid $gray-600;
+  border-left: 1px solid $gray-400;
 }
 
 /* Dashboard
@@ -58,6 +62,89 @@ html {
   }
 }
 
+.transactions {
+  .transaction-icon {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+
+  &.table {
+    td {
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    tr:last-of-type {
+      td {
+        border-bottom: 1px solid #dee2e6;
+      }
+    }
+  }
+}
+
+/* Loader, Transaction Success/Fail
+-------------------------------------------------- */
+.page-state {
+  .lds-ellipsis {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+  }
+  .lds-ellipsis div {
+    position: absolute;
+    top: 27px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .bg-blue .lds-ellipsis div {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .lds-ellipsis div:nth-child(1) {
+    left: 6px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(2) {
+    left: 6px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(3) {
+    left: 26px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+  .lds-ellipsis div:nth-child(4) {
+    left: 45px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(19px, 0);
+    }
+  }
+}
 
 /* Footer
 -------------------------------------------------- */
@@ -87,9 +174,3 @@ footer {
     }
   }
 }
-
-/* Do not move the import from here or write stuff 
-below. This needs to remain here in order to 
-override bootstrap variables.
--------------------------------------------------- */
-@import './../../../node_modules/bootstrap/scss/bootstrap.scss';

@@ -11,7 +11,7 @@ const Transaction = () => {
 
   const success = query.get('success') === 'true' ? true : false;
   const txHash = query.get('txHash');
-  const nonce = query.get('nonce');
+  // const nonce = query.get('nonce');
 
   return (
     <div className="d-flex flex-fill align-items-center container">
@@ -21,7 +21,7 @@ const Transaction = () => {
             <div className="card-body text-center">
               {success ? (
                 <PageState
-                  svgComponent={<FontAwesomeIcon icon={faCheck} className="text-danger" />}
+                  svgComponent={<FontAwesomeIcon icon={faCheck} className="text-success fa-3x" />}
                   title="Transaction submitted successfully"
                   showBackBtn={true}
                   description={
@@ -41,7 +41,7 @@ const Transaction = () => {
                 />
               ) : (
                 <PageState
-                  svgComponent={<FontAwesomeIcon icon={faTimes} className="text-danger" />}
+                  svgComponent={<FontAwesomeIcon icon={faTimes} className="text-danger fa-3x" />}
                   title="Error sending transaction"
                   description="Try again"
                   showBackBtn={true}

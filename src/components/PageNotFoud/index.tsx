@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const PageNotFound = () => {
   const { pathname } = useLocation();
@@ -11,7 +11,7 @@ const PageNotFound = () => {
         <div className="col-12 col-md-8 col-lg-5 mx-auto">
           <div className="card shadow-sm rounded p-4 border-0">
             <div className="card-body text-center d-flex flex-column justify-content-center">
-              <FontAwesomeIcon icon={faTimes} className="mx-auto m-2" />
+              <FontAwesomeIcon icon={faSearch} className="mx-auto fa-3x mb-2" />
               <span className="h4 empty-heading">Page not found</span>
               <span className="empty-details">{pathname}</span>
             </div>
