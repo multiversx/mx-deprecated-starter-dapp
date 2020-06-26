@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { elrond } from 'helpers';
 import { useContext } from 'context';
+import { faArrowUp, faArrowDown, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Actions = () => {
   const {
@@ -33,12 +35,27 @@ const Actions = () => {
   React.useEffect(listen, []);
 
   return (
-    <div className="d-flex">
-      <button className="btn btn-outline-primary" onClick={firstAction}>
+    <div className="d-flex mt-4 justify-content-center">
+      <div className="action-btn">
+        <button className="btn btn-light" onClick={firstAction}>
+          <FontAwesomeIcon icon={faArrowUp} />
+        </button>
         First action
-      </button>
-      <button className="btn btn-outline-secondary">Second action</button>
-      <button className="btn btn-outline-info">Third action</button>
+      </div>
+
+      <div className="action-btn">
+        <button className="btn btn-light">
+          <FontAwesomeIcon icon={faArrowDown} />
+        </button>
+        Second action
+      </div>
+
+      <div className="action-btn">
+        <button className="btn btn-light">
+          <FontAwesomeIcon icon={faCaretDown} />
+        </button>
+        Third action
+      </div>
     </div>
   );
 };

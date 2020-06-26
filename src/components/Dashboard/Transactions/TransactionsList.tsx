@@ -50,14 +50,15 @@ const TransactionList = ({ transactions }: { transactions: TransactionType[] }) 
   ].filter((el: any) => el !== undefined) as any).sort(sortByDate);
 
   return (
-    <>
-      <table className="table">
+    <div className="p-3 mt-3">
+      <h3 className="mb-3 font-weight-normal">Transactions</h3>
+      <table className="table mb-0">
         <thead>
-          <tr>
-            <th>#</th>
-            <th>Address</th>
-            <th>Date</th>
-            <th>Amount</th>
+          <tr className="bg-light">
+            <th className="border-0 font-weight-normal">#</th>
+            <th className="border-0 font-weight-normal">Address</th>
+            <th className="border-0 font-weight-normal">Date</th>
+            <th className="border-0 font-weight-normal">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -101,12 +102,11 @@ const TransactionList = ({ transactions }: { transactions: TransactionType[] }) 
           {...{
             target: '_blank',
           }}
-          className="btn btn-light btn-block"
         >
           See more transactions
         </a>
       </div>
-    </>
+    </div>
   );
 };
 

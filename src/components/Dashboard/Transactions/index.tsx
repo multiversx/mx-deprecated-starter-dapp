@@ -10,11 +10,13 @@ const Transactions = () => {
   return newTransactions.length > 0 ? (
     <TransactionsList transactions={newTransactions} />
   ) : (
-    <PageState
-      svgComponent={<NoTransactionsIcon />}
-      title="No Transactions"
-      description="No transactions found for this wallet."
-    />
+    <div className="my-5">
+      <PageState
+        svgComponent={<NoTransactionsIcon />}
+        title="No Transactions"
+        description="No transactions found for this wallet."
+      />
+    </div>
   );
 };
 

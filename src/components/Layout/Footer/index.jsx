@@ -1,10 +1,9 @@
 import React from 'react';
 import { ReactComponent as HeartIcon } from '../../../assets/img/heart.svg';
-import './footer.scss';
 
 const Footer = () => {
   return (
-    <footer className="text-center text-muted mt-2 mb-3">
+    <footer className="text-center mt-2 mb-3">
       <div>
         <a
           {...{

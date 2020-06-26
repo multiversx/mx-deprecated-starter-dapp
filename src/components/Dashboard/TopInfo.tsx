@@ -9,22 +9,19 @@ const TopInfo = () => {
     config: { contractAddress },
   } = useContext();
   return (
-    <div className="card mb-4">
-      <div className="card-body">
-        <div className="item row">
-          <div className="key col-md-3">Your address</div>
-          <div className="value col-md-9">{accountAddress}</div>
-        </div>
-        <div className="item row">
-          <div className="key col-md-3">Contract address</div>
-          <div className="value col-md-9">{contractAddress}</div>
-        </div>
-        <div className="item row">
-          <div className="key col-md-3">Available ERD balance</div>
-          <div className="value col-md-9">
-            <Denominate value={balance} />
-          </div>
-        </div>
+    <div className="text-white">
+      <div className="mb-1">
+        <span className="opacity-6 mr-1">Your address:</span>
+        <span>{accountAddress}</span>
+      </div>
+      <div className="mb-4">
+        <span className="opacity-6 mr-1">Contract address:</span>
+        <span>{contractAddress}</span>
+      </div>
+      <div>
+        <h3 className="mb-0">
+          <Denominate value={balance} />
+        </h3>
       </div>
     </div>
   );

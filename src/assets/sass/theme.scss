@@ -1,31 +1,95 @@
+@import './../../../node_modules/bootstrap/scss/mixins';
+@import './../../../node_modules/bootstrap/scss/functions';
+@import './../../../node_modules/bootstrap/scss/variables';
+
+/* Bootstrap overrides
+-------------------------------------------------- */
 $google-fonts-import: 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600|Roboto+Mono' !default; // Includes: Poppins: Light, Regular, Medium, Semi-bold; Roboto Mono: Regular
 
 $font-family-system-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-family-poppins-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$font-family-system-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $font-family-roboto-mono-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 $headings-font-weight: 300 !important;
 
-/* Sticky footer styles
+/* Base
 -------------------------------------------------- */
 html {
   min-height: 100%;
   font-size: 14px;
 }
 
-#root {
-  position: relative;
+.wrapper {
+  min-height: 100vh;
 }
 
-body {
-  margin-bottom: 50px; /* Margin bottom by footer height */
-  background: #fafafa;
+.opacity-6 {
+  opacity: 0.6;
 }
 
-.footer {
-  position: absolute;
-  bottom: -60px;
-  width: 100%;
-  height: 50px;
+/* Navbar
+-------------------------------------------------- */
+.elrond-logo {
+  width: 26px;
+  height: 26px;
 }
+
+.logo-text {
+  font-size: 1.3rem;
+  line-height: 1;
+  border-right: 1px solid $gray-600;
+}
+
+/* Dashboard
+-------------------------------------------------- */
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: $white;
+  margin: 0 7px;
+
+  button {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: $white;
+  }
+}
+
+
+/* Footer
+-------------------------------------------------- */
+footer {
+  div {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.155rem;
+
+    a {
+      color: $black;
+
+      &:hover {
+        color: $black;
+      }
+
+      #heart {
+        height: 16px;
+        width: 16px;
+
+        path {
+          fill: #c00;
+        }
+      }
+    }
+  }
+}
+
+/* Do not move the import from here or write stuff 
+below. This needs to remain here in order to 
+override bootstrap variables.
+-------------------------------------------------- */
+@import './../../../node_modules/bootstrap/scss/bootstrap.scss';

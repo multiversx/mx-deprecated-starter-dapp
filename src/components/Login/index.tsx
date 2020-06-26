@@ -24,16 +24,21 @@ const Login = () => {
   React.useEffect(listen, []);
 
   return (
-    <div className="container pt-3 pb-3">
-      <div className="row">
-        <div className="col-12">
-          <div className="card">
-            <div className="card-body card-details">
-              <div className="empty">
-                <button onClick={onClick} className="btn btn-primary">
-                  Login
-                </button>
-              </div>
+    <div className="d-flex flex-fill align-items-center container">
+      <div className="row w-100">
+        <div className="col-12 col-md-8 col-lg-5 mx-auto">
+          <div className="card shadow-sm rounded p-4 border-0">
+            <div className="card-body text-center">
+              <h2 className="mb-3">Dapp</h2>
+
+              <p className="mb-3">
+                This is an Elrond dapp sample.
+                <br /> Login using your Elrond wallet.
+              </p>
+
+              <button onClick={onClick} className="btn btn-primary mt-3">
+                Login with Elrond
+              </button>
             </div>
           </div>
         </div>

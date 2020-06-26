@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React from 'react';
 import Layout from './components/Layout';
