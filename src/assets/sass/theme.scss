@@ -1,9 +1,5 @@
 /* Bootstrap overrides
 -------------------------------------------------- */
-$google-fonts-import: 'https://fonts.googleapis.com/css?family=Poppins:300,400,500,600|Roboto+Mono' !default; // Includes: Poppins: Light, Regular, Medium, Semi-bold; Roboto Mono: Regular
-$font-family-system-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$font-family-poppins-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$font-family-roboto-mono-first: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 $headings-font-weight: 300 !important;
 $primary: #1b46c2;
@@ -12,9 +8,6 @@ $light: #fafafa;
 /* Do not move the imports from here. 
 Override Bootstrap variables only above.
 -------------------------------------------------- */
-@import './../../../node_modules/bootstrap/scss/mixins';
-@import './../../../node_modules/bootstrap/scss/functions';
-@import './../../../node_modules/bootstrap/scss/variables';
 @import './../../../node_modules/bootstrap/scss/bootstrap.scss';
 
 /* Base

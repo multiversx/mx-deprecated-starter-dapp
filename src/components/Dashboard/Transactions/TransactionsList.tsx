@@ -72,7 +72,7 @@ const TransactionList = ({ transactions }: { transactions: TransactionType[] }) 
                 <tr key={tx.hash + i}>
                   <td>
                     <div
-                      className="transaction-icon shadow-sm d-flex align-items-center justify-content-center"
+                      className="transaction-icon bg-light d-flex align-items-center justify-content-center"
                       title={status(tx.status)}
                     >
                       <StatusIcon tx={tx} incomingTransaction={incomingTransaction} />

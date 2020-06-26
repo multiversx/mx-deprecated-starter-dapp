@@ -38,21 +38,21 @@ const Actions = () => {
     <div className="d-flex mt-4 justify-content-center">
       <div className="action-btn">
         <button className="btn" onClick={firstAction}>
-          <FontAwesomeIcon icon={faArrowUp} />
+          <FontAwesomeIcon icon={faArrowUp} className="text-primary" />
         </button>
         First action
       </div>
 
       <div className="action-btn">
         <button className="btn">
-          <FontAwesomeIcon icon={faArrowDown} />
+          <FontAwesomeIcon icon={faArrowDown} className="text-primary" />
         </button>
         Second action
       </div>
 
       <div className="action-btn">
         <button className="btn">
-          <FontAwesomeIcon icon={faCaretDown} />
+          <FontAwesomeIcon icon={faCaretDown} className="text-primary" />
         </button>
         Third action
       </div>

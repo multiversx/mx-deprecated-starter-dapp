@@ -19,7 +19,7 @@ const TopInfo = () => {
         <span>{contractAddress}</span>
       </div>
       <div>
-        <h3 className="mb-0">
+        <h3 className="py-2">
           <Denominate value={balance} />
         </h3>
       </div>
