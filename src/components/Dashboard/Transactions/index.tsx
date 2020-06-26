@@ -1,8 +1,9 @@
 import React from 'react';
 import { useContext } from 'context';
-import { ReactComponent as NoTransactionsIcon } from 'assets/img/chat-smile-3-line.svg';
 import TransactionsList from './TransactionsList';
 import { PageState } from 'sharedComponents';
+import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Transactions = () => {
   const { newTransactions } = useContext();
@@ -12,9 +13,8 @@ const Transactions = () => {
   ) : (
     <div className="my-5">
       <PageState
-        svgComponent={<NoTransactionsIcon />}
+        svgComponent={<FontAwesomeIcon icon={faExchangeAlt} className="text-muted fa-3x" />}
         title="No Transactions"
-        description="No transactions found for this wallet."
       />
     </div>
   );
