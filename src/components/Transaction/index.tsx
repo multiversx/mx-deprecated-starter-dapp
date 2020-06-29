@@ -13,45 +13,35 @@ const Transaction = () => {
   const txHash = query.get('txHash');
   // const nonce = query.get('nonce');
 
-  return (
-    <div className="d-flex flex-fill align-items-center container">
-      <div className="row w-100">
-        <div className="col-12 col-md-8 col-lg-5 mx-auto">
-          <div className="card shadow-sm rounded p-4 border-0">
-            <div className="card-body text-center">
-              {success ? (
-                <PageState
-                  svgComponent={<FontAwesomeIcon icon={faCheck} className="text-success fa-3x" />}
-                  title="Transaction submitted successfully"
-                  showBackBtn={true}
-                  description={
-                    <>
-                      <a
-                        href={`${explorerAddr}transactions/${txHash}`}
-                        {...{
-                          target: '_blank',
-                        }}
-                        className="tx-link"
-                        title="View in Explorer"
-                      >
-                        {txHash}
-                      </a>
-                    </>
-                  }
-                />
-              ) : (
-                <PageState
-                  svgComponent={<FontAwesomeIcon icon={faTimes} className="text-danger fa-3x" />}
-                  title="Error sending transaction"
-                  description="Try again"
-                  showBackBtn={true}
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  return success ? (
+    <PageState
+      svgComponent={<FontAwesomeIcon icon={faCheck} className="text-success fa-3x" />}
+      className="dapp-icon icon-medium"
+      title="Transaction submitted successfully"
+      showBackBtn={true}
+      description={
+        <>
+          <a
+            href={`${explorerAddr}transactions/${txHash}`}
+            {...{
+              target: '_blank',
+            }}
+            className="tx-link"
+            title="View in Explorer"
+          >
+            {txHash}
+          </a>
+        </>
+      }
+    />
+  ) : (
+    <PageState
+      svgComponent={<FontAwesomeIcon icon={faTimes} className="text-danger fa-3x" />}
+      className="dapp-icon icon-medium"
+      title="Error sending transaction"
+      description="Try again"
+      showBackBtn={true}
+    />
   );
 };
 
