@@ -13,8 +13,11 @@ const Login = () => {
   const listen = () => {
     const handler = (event: any) => {
       if (typeof event.data === 'string' && event.data !== '') {
-        history.push(event.data);
         elrond.closeWindow();
+        const decodedUrl = decodeURIComponent(event.data);
+        if (decodedUrl.includes('/')) {
+          history.push(decodedUrl);
+        }
       }
     };
     window.addEventListener('message', handler);

@@ -14,7 +14,7 @@ const Actions = () => {
   const firstAction = () => {
     elrond.sendTransaction({
       receiver: contractAddress,
-      value: '100000000000000000',
+      value: '1200000000000000000',
       gasLimit: '54500',
       data: 'a%@',
       callbackUrl: '/transaction',
@@ -25,7 +25,10 @@ const Actions = () => {
     const handler = (event: any) => {
       if (typeof event.data === 'string' && event.data !== '') {
         elrond.closeWindow();
-        history.push(decodeURIComponent(event.data));
+        const decodedUrl = decodeURIComponent(event.data);
+        if (decodedUrl.includes('/')) {
+          history.push(decodedUrl);
+        }
       }
     };
     window.addEventListener('message', handler);
