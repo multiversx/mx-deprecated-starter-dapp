@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { ReactComponent as Unavailable } from 'assets/img/unavailable.svg';
 import { useContext, useDispatch } from 'context';
 import initialState from 'context/state';
 import { getWalletDetails, getLatestTransactions } from './helpers/asyncRequests';
@@ -10,6 +9,8 @@ import { addressIsBech32 } from 'helpers';
 import TopInfo from './TopInfo';
 import Actions from './Actions';
 import Transactions from './Transactions';
+import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Dashboard = () => {
   const ref = React.useRef(null);
@@ -91,7 +92,13 @@ const Dashboard = () => {
 
   switch (true) {
     case unavailable:
-      return <PageState svgComponent={<Unavailable />} title="Unavailable" />;
+      return (
+        <PageState
+          svgComponent={<FontAwesomeIcon icon={faBan} className="text-secondary fa-3x" />}
+          title="Unavailable"
+          className="dapp-icon icon-medium"
+        />
+      );
 
     case loading:
       return <PageState svgComponent={<></>} spin />;

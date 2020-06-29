@@ -25,6 +25,23 @@ html {
   opacity: 0.6;
 }
 
+.dapp-icon {
+  padding: 5px;
+  border-radius: 50%;
+  background-color: $light;
+  width: 65px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+
+  &.icon-medium {
+    width: 80px;
+    height: 80px;
+  }
+}
+
 /* Navbar
 -------------------------------------------------- */
 .elrond-logo {

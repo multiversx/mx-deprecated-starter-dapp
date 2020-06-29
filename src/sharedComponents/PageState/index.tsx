@@ -19,33 +19,37 @@ const PageState = ({
   const { accountAddress } = useContext();
 
   return (
-    <div className="mx-auto my-auto text-center page-state">
-      {spin ? (
-        <div className="col-12 text-center">
-          <div className="lds-ellipsis mx-auto mt-5 mb-5">
-            <div />
-            <div />
-            <div />
-            <div />
+    <div className="d-flex flex-fill align-items-center container page-state">
+      <div className="row w-100">
+        {spin ? (
+          <div className="col-12 text-center">
+            <div className="lds-ellipsis mx-auto mt-5 mb-5">
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
           </div>
-        </div>
-      ) : (
-        <>
-          <i>
-            <div className={`icon ${className ? className : ''}`}>{svgComponent}</div>
-          </i>
-          {title && <p className="h3 mt-3">{title}</p>}
-          {description && <p className="mt-3">{description}</p>}
-          {showBackBtn && (
-            <a
-              href={`/dashboard?accountAddress=${accountAddress}`}
-              className="btn btn-primary mt-3"
-            >
-              Back to dashboard
-            </a>
-          )}
-        </>
-      )}
+        ) : (
+          <div className="col-12 col-md-8 col-lg-5 mx-auto">
+            <div className="card shadow-sm rounded p-5 border-0">
+              <div className="card-body text-center d-flex flex-column justify-content-center">
+                <div className={`icon ${className ? className : ''}`}>{svgComponent}</div>
+                {title && <p className="h3 mt-3">{title}</p>}
+                {description && <p className="mt-3">{description}</p>}
+                {showBackBtn && (
+                  <a
+                    href={`/dashboard?accountAddress=${accountAddress}`}
+                    className="btn btn-primary mt-3"
+                  >
+                    Back to dashboard
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

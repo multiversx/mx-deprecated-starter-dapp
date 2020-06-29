@@ -21,7 +21,7 @@ const StatusIcon = ({ tx, incomingTransaction }: StatusIconType) => {
       Icon = () => (
         <FontAwesomeIcon
           icon={incomingTransaction ? faArrowUp : faArrowDown}
-          className="text-primary"
+          className="text-secondary"
         />
       );
       break;
@@ -29,7 +29,7 @@ const StatusIcon = ({ tx, incomingTransaction }: StatusIconType) => {
       Icon = () => (
         <FontAwesomeIcon
           icon={incomingTransaction ? faArrowUp : faArrowDown}
-          className="text-primary"
+          className="text-secondary"
         />
       );
   }
