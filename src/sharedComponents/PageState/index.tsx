@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useContext } from 'context';
 
 const PageState = ({
   title,
@@ -7,17 +6,13 @@ const PageState = ({
   svgComponent,
   className,
   spin = false,
-  showBackBtn = false,
 }: {
   title?: string;
   description?: string | React.ReactNode;
   svgComponent: React.ReactNode;
   className?: string;
   spin?: boolean;
-  showBackBtn?: boolean;
 }) => {
-  const { accountAddress } = useContext();
-
   return (
     <div className="d-flex flex-fill align-items-center container page-state">
       <div className="row w-100">
@@ -36,15 +31,7 @@ const PageState = ({
               <div className="card-body text-center d-flex flex-column justify-content-center">
                 <div className={`icon ${className ? className : ''}`}>{svgComponent}</div>
                 {title && <p className="h3 mt-3">{title}</p>}
-                {description && <p className="mt-3">{description}</p>}
-                {showBackBtn && (
-                  <a
-                    href={`/dashboard?accountAddress=${accountAddress}`}
-                    className="btn btn-primary mt-3"
-                  >
-                    Back to dashboard
-                  </a>
-                )}
+                {description && <div className="mt-3">{description}</div>}
               </div>
             </div>
           </div>
