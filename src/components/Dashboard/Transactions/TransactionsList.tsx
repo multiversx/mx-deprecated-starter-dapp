@@ -87,7 +87,7 @@ const TransactionList = ({ transactions }: { transactions: TransactionType[] }) 
                       className="tx-link"
                       title="View in Explorer"
                     >
-                      {senderOrReceiver}
+                      {tx.hash}
                     </a>
                   </td>
                   <td>{moment.unix(tx.timestamp).format('MMMM Do YYYY, h:mm A')}</td>
