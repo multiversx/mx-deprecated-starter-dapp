@@ -11,7 +11,28 @@ const Actions = () => {
   } = useContext();
   const history = useHistory();
 
-  const firstAction = () => {
+  const firstAction = (e: React.MouseEvent) => {
+    e.preventDefault();
+    elrond.sendTransaction({
+      receiver: contractAddress,
+      value: '1200000000000000000',
+      gasLimit: '54500',
+      data: 'a%@',
+      callbackUrl: '/transaction',
+    });
+  };
+  const secondAction = (e: React.MouseEvent) => {
+    e.preventDefault();
+    elrond.sendTransaction({
+      receiver: contractAddress,
+      value: '1200000000000000000',
+      gasLimit: '54500',
+      data: 'a%@',
+      callbackUrl: '/transaction',
+    });
+  };
+  const thirdAction = (e: React.MouseEvent) => {
+    e.preventDefault();
     elrond.sendTransaction({
       receiver: contractAddress,
       value: '1200000000000000000',
@@ -43,21 +64,27 @@ const Actions = () => {
         <button className="btn" onClick={firstAction}>
           <FontAwesomeIcon icon={faArrowUp} className="text-primary" />
         </button>
-        First action
+        <a href="/" onClick={firstAction} className="text-white text-decoration-none">
+          First action
+        </a>
       </div>
 
       <div className="action-btn">
-        <button className="btn">
+        <button className="btn" onClick={secondAction}>
           <FontAwesomeIcon icon={faArrowDown} className="text-primary" />
         </button>
-        Second action
+        <a href="/" onClick={secondAction} className="text-white text-decoration-none">
+          Second action
+        </a>
       </div>
 
       <div className="action-btn">
-        <button className="btn">
+        <button className="btn" onClick={thirdAction}>
           <FontAwesomeIcon icon={faCaretDown} className="text-primary" />
         </button>
-        Third action
+        <a href="/" onClick={thirdAction} className="text-white text-decoration-none">
+          Third action
+        </a>
       </div>
     </div>
   );
