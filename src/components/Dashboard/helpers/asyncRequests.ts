@@ -52,10 +52,7 @@ export async function getLatestTransactions({
       {
         query: {
           bool: {
-            should: [
-              { match: { sender: accountAddress } },
-              { match: { receiver: contractAddress } },
-            ],
+            must: [{ match: { sender: accountAddress } }, { match: { receiver: contractAddress } }],
           },
         },
         sort: {
