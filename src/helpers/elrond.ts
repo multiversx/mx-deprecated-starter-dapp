@@ -3,6 +3,7 @@ interface ElrondType {
   windowHeight: number;
   windowWidth: number;
   strWindowFeatures: () => string;
+  openWindow: (URL: string) => void;
   login: ({ callbackUrl }: { callbackUrl: string }) => void;
   closeWindow: () => void;
   sendTransaction: (props: {
@@ -16,7 +17,7 @@ interface ElrondType {
 
 const elrond: ElrondType = {
   window: null,
-  windowHeight: 730,
+  windowHeight: 710,
   windowWidth: 520,
   strWindowFeatures: () => {
     // Fixes dual-screen position                             Most browsers      Firefox
@@ -38,7 +39,7 @@ const elrond: ElrondType = {
     const left = (width - elrond.windowWidth) / 2 / systemZoom + dualScreenLeft;
     const top = (height - elrond.windowHeight) / 2 / systemZoom + dualScreenTop;
     return [
-      'location=yes,scrollbars=yes,status=yes',
+      'location=yes,scrollbars=no,status=yes',
       `height=${elrond.windowHeight}`,
       `width=${elrond.windowWidth}`,
       `top=${top}`,
@@ -46,28 +47,37 @@ const elrond: ElrondType = {
     ].join(',');
   },
   login: function ({ callbackUrl }) {
-    var queryString = new URLSearchParams({
+    const queryString = new URLSearchParams({
       callbackUrl,
       modal: 'true',
     });
-    var URL = `http://localhost:3001/hook/login?${queryString}`;
-    // var URL = `https://wallet.elrond.com/hook/login?${queryString}`;
-    elrond.window = window.open(URL, '_blank', elrond.strWindowFeatures());
+    const URL = `http://localhost:3001/hook/login?${queryString}`;
+    // const URL = `https://wallet.elrond.com/hook/login?${queryString}`;
+    elrond.openWindow(URL);
   },
   closeWindow: () => {
     if (elrond.window) {
       elrond.window.close();
     }
   },
+  openWindow: (URL: string) => {
+    elrond.window = window.open(URL, '_blank', elrond.strWindowFeatures());
+    var css = 'body{ overflow-x:hidden;overflow-y:hidden; }',
+      head = elrond.window!.document.head || document.getElementsByTagName('head')[0],
+      style = document.createElement('style');
+    head.appendChild(style);
+    style.type = 'text/css';
+    style.appendChild(elrond.window!.document.createTextNode(css));
+  },
   sendTransaction: function (props) {
-    var queryString = new URLSearchParams({
+    const queryString = new URLSearchParams({
       ...props,
       data: encodeURIComponent(props.data),
       modal: 'true',
     });
-    var URL = `http://localhost:3001/hook/transaction?${queryString}`;
-    // var URL = `https://wallet.elrond.com/hook/transaction?${queryString}`;
-    elrond.window = window.open(URL, '_blank', elrond.strWindowFeatures());
+    const URL = `http://localhost:3001/hook/transaction?${queryString}`;
+    // const URL = `https://wallet.elrond.com/hook/transaction?${queryString}`;
+    elrond.openWindow(URL);
   },
 };
 
