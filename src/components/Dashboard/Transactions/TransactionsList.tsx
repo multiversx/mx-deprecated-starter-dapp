@@ -4,7 +4,7 @@ import { Denominate } from 'sharedComponents';
 import { TransactionType } from 'context/state';
 import StatusIcon from './StatusIcon';
 import { useContext } from 'context';
-import txStatus from './helpers/txStatus';
+import { txStatus } from 'helpers';
 
 function sortByDate(a: TransactionType, b: TransactionType) {
   if (a.timestamp < b.timestamp) {
@@ -65,9 +65,6 @@ const TransactionList = ({ transactions }: { transactions: TransactionType[] }) 
           <tbody>
             {sortedTransactions.map((tx: TransactionType, i) => {
               const incomingTransaction = incoming(tx.sender);
-              const senderOrReceiver =
-                incomingTransaction || tx.sender === fakeSender ? tx.receiver : tx.sender;
-
               return (
                 <tr key={tx.hash + i}>
                   <td>

@@ -2,7 +2,7 @@ import React from 'react';
 import { faArrowUp, faArrowDown, faBan, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TransactionType } from 'context/state';
-import txStatus from './helpers/txStatus';
+import { txStatus } from 'helpers';
 interface StatusIconType {
   tx: TransactionType;
   incomingTransaction: boolean;
