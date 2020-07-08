@@ -1,4 +1,18 @@
 import { StateType, TransactionType } from './state';
+import Cookies from 'js-cookie';
+
+const mergeSessionTransactions = (
+  accountAddress: string,
+  fetchedTransactions: TransactionType[]
+) => {
+  const sessionTransactions: TransactionType[] =
+    Cookies.getJSON(`transactions-${accountAddress}`) || [];
+  const existingHashes = sessionTransactions.map((tx) => tx.hash);
+  const newHashes = fetchedTransactions.map((tx) => tx.hash);
+  const missingHashes = existingHashes.filter((hash) => !newHashes.includes(hash));
+  const missingTransactions = sessionTransactions.filter((tx) => missingHashes.includes(tx.hash));
+  return [...missingTransactions, ...fetchedTransactions];
+};
 
 export type ActionType =
   | { type: 'login'; accountAddress: StateType['accountAddress'] }
@@ -20,13 +34,17 @@ export function reducer(state: StateType, action: ActionType): StateType {
       return { ...state, accountAddress };
     }
     case 'setBalanceAndTransactions': {
-      const { balance, nonce, newTransactions, detailsFetched } = action;
+      const { balance, nonce, newTransactions: fetchedTransactions, detailsFetched } = action;
+      const newTransactions = mergeSessionTransactions(state.accountAddress, fetchedTransactions);
+      Cookies.set(`transactions-${state.accountAddress}`, newTransactions);
       return { ...state, balance, nonce, detailsFetched, newTransactions };
     }
     case 'addNewTransaction': {
+      const newTransactions = [action.newTransaction, ...state.newTransactions];
+      Cookies.set(`transactions-${state.accountAddress}`, newTransactions);
       const newState: StateType = {
         ...state,
-        newTransactions: [action.newTransaction, ...state.newTransactions],
+        newTransactions,
       };
       return newState;
     }
