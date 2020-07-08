@@ -15,9 +15,7 @@ const Denominate = ({
   showErd = true,
   decimals,
 }: DenominateType) => {
-  const {
-    config: { denomination, decimals: configDecimals },
-  } = useContext();
+  const { denomination, decimals: configDecimals } = useContext();
 
   decimals = decimals !== undefined ? decimals : configDecimals;
 

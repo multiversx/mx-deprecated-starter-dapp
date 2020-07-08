@@ -1,4 +1,4 @@
-import { object, string, number, InferType } from 'yup';
+import { object, string, InferType } from 'yup';
 
 const configKey: any = 'CONFIG';
 const config: ConfigType = window[configKey] as any;
@@ -7,8 +7,6 @@ const schema = object({
   nodeUrl: string().required(),
   elasticUrl: string().required(),
   contractAddress: string().required(),
-  decimals: number().required(),
-  denomination: number().required(),
 }).defined();
 
 export type ConfigType = InferType<typeof schema>;
@@ -38,11 +36,14 @@ export interface TransactionType {
 export interface StateType {
   config: ConfigType;
   accountAddress: string;
+  denomination: number;
+  decimals: number;
   balance: string;
   nonce: number;
   detailsFetched: boolean;
   timeout: number;
   newTransactions: TransactionType[];
+  lastTransaction: TransactionType | undefined;
 }
 
 const initialState = (): StateType => {
@@ -51,11 +52,14 @@ const initialState = (): StateType => {
   });
   return {
     config,
+    denomination: 18,
+    decimals: 2,
     accountAddress: '',
     balance: '...',
     nonce: 0,
     detailsFetched: false,
     newTransactions: [],
+    lastTransaction: undefined,
     timeout: 3000,
   };
 };
