@@ -1,3 +1,11 @@
+export interface ElrondTransaction {
+  receiver: string;
+  value: string;
+  gasLimit: string;
+  data: string;
+  callbackUrl: string;
+}
+
 interface ElrondType {
   window: Window | null;
   windowHeight: number;
@@ -5,13 +13,7 @@ interface ElrondType {
   strWindowFeatures: () => string;
   login: ({ callbackUrl }: { callbackUrl: string }) => void;
   closeWindow: () => void;
-  sendTransaction: (props: {
-    receiver: string;
-    value: string;
-    gasLimit: string;
-    data: string;
-    callbackUrl: string;
-  }) => void;
+  sendTransaction: (props: ElrondTransaction) => void;
 }
 
 const elrond: ElrondType = {

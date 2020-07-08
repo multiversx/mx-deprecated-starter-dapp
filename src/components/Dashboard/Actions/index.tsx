@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { elrond } from 'helpers';
-import { useContext } from 'context';
+import { newTransaction } from 'helpers';
+import elrond, { ElrondTransaction } from 'helpers/elrond';
+import { useContext, useDispatch } from 'context';
 import { faArrowUp, faArrowDown, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -10,36 +11,21 @@ const Actions = () => {
     config: { contractAddress },
   } = useContext();
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const firstAction = (e: React.MouseEvent) => {
+  const sendTransaction = (transaction: ElrondTransaction) => (e: React.MouseEvent) => {
     e.preventDefault();
-    elrond.sendTransaction({
-      receiver: contractAddress,
-      value: '1200000000000000000',
-      gasLimit: '54500',
-      data: 'a%@',
-      callbackUrl: '/transaction',
-    });
+    const lastTransaction = newTransaction(transaction);
+    dispatch({ type: 'setLastTransaction', lastTransaction });
+    elrond.sendTransaction({ ...transaction });
   };
-  const secondAction = (e: React.MouseEvent) => {
-    e.preventDefault();
-    elrond.sendTransaction({
-      receiver: contractAddress,
-      value: '1200000000000000000',
-      gasLimit: '54500',
-      data: 'a%@',
-      callbackUrl: '/transaction',
-    });
-  };
-  const thirdAction = (e: React.MouseEvent) => {
-    e.preventDefault();
-    elrond.sendTransaction({
-      receiver: contractAddress,
-      value: '1200000000000000000',
-      gasLimit: '54500',
-      data: 'a%@',
-      callbackUrl: '/transaction',
-    });
+
+  const firstTransaction = {
+    receiver: contractAddress,
+    data: 'a%@',
+    value: '1200000000000000000',
+    gasLimit: '54500',
+    callbackUrl: '/transaction',
   };
 
   const listen = () => {
@@ -61,28 +47,40 @@ const Actions = () => {
   return (
     <div className="d-flex mt-4 justify-content-center">
       <div className="action-btn">
-        <button className="btn" onClick={firstAction}>
+        <button className="btn" onClick={sendTransaction(firstTransaction)}>
           <FontAwesomeIcon icon={faArrowUp} className="text-primary" />
         </button>
-        <a href="/" onClick={firstAction} className="text-white text-decoration-none">
+        <a
+          href="/"
+          onClick={sendTransaction(firstTransaction)}
+          className="text-white text-decoration-none"
+        >
           First action
         </a>
       </div>
 
       <div className="action-btn">
-        <button className="btn" onClick={secondAction}>
+        <button className="btn" onClick={sendTransaction(firstTransaction)}>
           <FontAwesomeIcon icon={faArrowDown} className="text-primary" />
         </button>
-        <a href="/" onClick={secondAction} className="text-white text-decoration-none">
+        <a
+          href="/"
+          onClick={sendTransaction(firstTransaction)}
+          className="text-white text-decoration-none"
+        >
           Second action
         </a>
       </div>
 
       <div className="action-btn">
-        <button className="btn" onClick={thirdAction}>
+        <button className="btn" onClick={sendTransaction(firstTransaction)}>
           <FontAwesomeIcon icon={faCaretDown} className="text-primary" />
         </button>
-        <a href="/" onClick={thirdAction} className="text-white text-decoration-none">
+        <a
+          href="/"
+          onClick={sendTransaction(firstTransaction)}
+          className="text-white text-decoration-none"
+        >
           Third action
         </a>
       </div>

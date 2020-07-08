@@ -1,7 +1,10 @@
-import { StateType } from './state';
+import { StateType, TransactionType } from './state';
 
 export type ActionType =
   | { type: 'login'; accountAddress: StateType['accountAddress'] }
+  | { type: 'addNewTransaction'; newTransaction: TransactionType }
+  | { type: 'setLastTransaction'; lastTransaction: TransactionType }
+  | { type: 'removeLastTransaction' }
   | {
       type: 'setBalanceAndTransactions';
       balance: StateType['balance'];
@@ -19,6 +22,19 @@ export function reducer(state: StateType, action: ActionType): StateType {
     case 'setBalanceAndTransactions': {
       const { balance, nonce, newTransactions, detailsFetched } = action;
       return { ...state, balance, nonce, detailsFetched, newTransactions };
+    }
+    case 'addNewTransaction': {
+      const newState: StateType = {
+        ...state,
+        newTransactions: [action.newTransaction, ...state.newTransactions],
+      };
+      return newState;
+    }
+    case 'setLastTransaction': {
+      return { ...state, lastTransaction: action.lastTransaction };
+    }
+    case 'removeLastTransaction': {
+      return { ...state, lastTransaction: undefined };
     }
     default: {
       throw new Error(`Unhandled action type: ${action!.type}`);
