@@ -1,9 +1,7 @@
 const CONFIG = {
   nodeUrl: 'https://api.elrond.com',
   elasticUrl: 'https://elastic-aws.elrond.com',
-  contractAddress: 'erd1cevsw7mq5uvqymjqzwqvpqtdrhckehwfz99n7praty3y7q2j7yps842mqh',
-  decimals: 2,
-  denomination: 18,
+  contractAddress: 'erd1x2mj2v7qwgx066gjfujzylkunfzpyq2vgutrv4rduwrrjehhnzdspaz7py',
 };
 
 window.CONFIG = CONFIG;
