@@ -9,15 +9,21 @@ export async function getWalletDetails({ nodeUrl, accountAddress, timeout }: Det
   try {
     const {
       data: {
-        account: { balance, nonce },
+        data: {
+          account: { balance, nonce },
+        },
+        code,
+        error,
       },
     } = await axios.get(`${nodeUrl}/address/${accountAddress}`, { timeout });
 
-    return {
-      balance,
-      nonce,
-      detailsFetched: true,
-    };
+    if (code === 'successful') {
+      return {
+        balance,
+        nonce,
+        detailsFetched: true,
+      };
+    } else throw new Error(error);
   } catch (err) {
     console.error(err);
     return {
