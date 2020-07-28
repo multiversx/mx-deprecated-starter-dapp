@@ -52,8 +52,8 @@ const elrond: ElrondType = {
       callbackUrl,
       modal: 'true',
     });
-    const URL = `http://localhost:3001/hook/login?${queryString}`;
-    // const URL = `https://wallet.elrond.com/hook/login?${queryString}`;
+    // const URL = `http://localhost:3001/hook/login?${queryString}`;
+    const URL = `https://wallet.elrond.com/hook/login?${queryString}`;
     elrond.window = window.open(URL, '_blank', elrond.strWindowFeatures());
   },
   closeWindow: () => {
@@ -67,8 +67,8 @@ const elrond: ElrondType = {
       data: encodeURIComponent(props.data),
       modal: 'true',
     });
-    const URL = `http://localhost:3001/hook/transaction?${queryString}`;
-    // const URL = `https://wallet.elrond.com/hook/transaction?${queryString}`;
+    // const URL = `http://localhost:3001/hook/transaction?${queryString}`;
+    const URL = `https://wallet.elrond.com/hook/transaction?${queryString}`;
     elrond.window = window.open(URL, '_blank', elrond.strWindowFeatures());
   },
 };
