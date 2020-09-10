@@ -28,6 +28,21 @@ const Actions = () => {
     callbackUrl: '/transaction',
   };
 
+  const secondTransaction = {
+    receiver: contractAddress,
+    data: 'a%@',
+    value: '1200000000000000000',
+    gasLimit: '54500a',
+    callbackUrl: '/transaction',
+  };
+
+  const thirdTransaction = {
+    receiver: 'erd1cevsw7mq5uvqymjqzwqvpqtdrhckehwfz99n7praty3y7q2j7yps842mqh',
+    data: '',
+    value: '0',
+    callbackUrl: '/transaction',
+  };
+
   const listen = () => {
     const handler = (event: any) => {
       if (typeof event.data === 'string' && event.data !== '') {
@@ -60,12 +75,12 @@ const Actions = () => {
       </div>
 
       <div className="action-btn">
-        <button className="btn" onClick={sendTransaction(firstTransaction)}>
+        <button className="btn" onClick={sendTransaction(secondTransaction)}>
           <FontAwesomeIcon icon={faArrowDown} className="text-primary" />
         </button>
         <a
           href="/"
-          onClick={sendTransaction(firstTransaction)}
+          onClick={sendTransaction(secondTransaction)}
           className="text-white text-decoration-none"
         >
           Second action
@@ -73,12 +88,12 @@ const Actions = () => {
       </div>
 
       <div className="action-btn">
-        <button className="btn" onClick={sendTransaction(firstTransaction)}>
+        <button className="btn" onClick={sendTransaction(thirdTransaction)}>
           <FontAwesomeIcon icon={faCaretDown} className="text-primary" />
         </button>
         <a
           href="/"
-          onClick={sendTransaction(firstTransaction)}
+          onClick={sendTransaction(thirdTransaction)}
           className="text-white text-decoration-none"
         >
           Third action
