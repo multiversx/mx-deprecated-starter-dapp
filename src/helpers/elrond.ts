@@ -1,7 +1,7 @@
 export interface ElrondTransaction {
   receiver: string;
   value: string;
-  gasLimit: string;
+  gasLimit?: string;
   data: string;
   callbackUrl: string;
 }
@@ -52,7 +52,7 @@ const elrond: ElrondType = {
       callbackUrl,
       modal: 'true',
     });
-    // const URL = `http://localhost:3001/hook/login?${queryString}`;
+    // const URL = `https://localhost:3000/hook/login?${queryString}`;
     const URL = `https://wallet.elrond.com/hook/login?${queryString}`;
     elrond.window = window.open(URL, '_blank', elrond.strWindowFeatures());
   },
@@ -62,12 +62,14 @@ const elrond: ElrondType = {
     }
   },
   sendTransaction: function (props) {
+    const { gasLimit, ...rest } = props;
     const queryString = new URLSearchParams({
-      ...props,
+      ...rest,
       data: encodeURIComponent(props.data),
+      ...(gasLimit !== undefined ? { gasLimit } : {}),
       modal: 'true',
     });
-    // const URL = `http://localhost:3001/hook/transaction?${queryString}`;
+    // const URL = `https://localhost:3000/hook/transaction?${queryString}`;
     const URL = `https://wallet.elrond.com/hook/transaction?${queryString}`;
     elrond.window = window.open(URL, '_blank', elrond.strWindowFeatures());
   },
