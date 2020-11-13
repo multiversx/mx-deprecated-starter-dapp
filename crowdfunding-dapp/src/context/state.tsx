@@ -2,6 +2,7 @@ import {IDappProvider, WalletProvider, ProxyProvider, WALLET_PROVIDER_TESTNET} f
 
 interface DappState {
   provider: IDappProvider,
+  proxy: ProxyProvider,
 }
 
 export interface StateType {

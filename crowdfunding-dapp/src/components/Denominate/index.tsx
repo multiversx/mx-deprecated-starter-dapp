@@ -44,7 +44,7 @@ const Denominate = ({
     <span data-testid="denominateComponent">
       <span className="int-amount">{valueParts[0]}</span>
       {valueParts.length > 1 && <span className="decimals">.{valueParts[1]}</span>}
-      {showErd && <span className="symbol">&nbsp;ERD</span>}
+      {showErd && <span className="symbol">&nbsp;eGLD</span>}
     </span>
   );
 };
