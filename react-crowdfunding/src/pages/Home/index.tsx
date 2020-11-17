@@ -22,7 +22,7 @@ const Home = () => {
       setRaised(value);
     }).catch(err => console.warn(err))
       .finally(() => setValueLoading(false));
-  });
+  }, []);
 
   return (
     <div ref={ref} className="d-flex flex-fill align-items-center container">

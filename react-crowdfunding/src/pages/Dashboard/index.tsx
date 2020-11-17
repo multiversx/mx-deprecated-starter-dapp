@@ -1,18 +1,24 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import { faExchangeAlt, faArrowUp, faArrowDown, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faExchangeAlt, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import PageState from "../../components/PageState";
 import Denominate from "../../components/Denominate";
 import {useContext} from "../../context";
+import {addresses, Crowdfund} from '../../contracts';
 
 const Dashboard = () => {
 
-  const { loggedIn } = useContext();
+  const { loggedIn, address, dapp } = useContext();
   if (!loggedIn) {
     return <Redirect to="/" />
   }
+
+  const handleSendFunds = () => {
+    const crowdfundContract = new Crowdfund(addresses["crowdfunding_testnet"], dapp.proxy, dapp.provider);
+    crowdfundContract.sendFunds().then();
+  };
 
   return (
     <div className="container py-4">
@@ -25,11 +31,11 @@ const Dashboard = () => {
                   <div className="text-white">
                     <div className="mb-1">
                       <span className="opacity-6 mr-1">Your address:</span>
-                      <span>erd1....</span>
+                      <span>{address}</span>
                     </div>
                     <div className="mb-4">
                       <span className="opacity-6 mr-1">Contract address:</span>
-                      <span>erd1qqqqq</span>
+                      <span>{addresses["crowdfunding_testnet"]}</span>
                     </div>
                     <div>
                       <h3 className="py-2">
@@ -39,41 +45,15 @@ const Dashboard = () => {
                   </div>
                   <div className="d-flex mt-4 justify-content-center">
                     <div className="action-btn">
-                      <button className="btn" onClick={() => false}>
+                      <button className="btn" onClick={() => handleSendFunds()}>
                         <FontAwesomeIcon icon={faArrowUp} className="text-primary" />
                       </button>
                       <a
-                        href="/"
-                        onClick={() => false}
+                        href="#"
+                        onClick={() => handleSendFunds()}
                         className="text-white text-decoration-none"
                       >
-                        First action
-                      </a>
-                    </div>
-
-                    <div className="action-btn">
-                      <button className="btn" onClick={() => false}>
-                        <FontAwesomeIcon icon={faArrowDown} className="text-primary" />
-                      </button>
-                      <a
-                        href="/"
-                        onClick={() => false}
-                        className="text-white text-decoration-none"
-                      >
-                        Second action
-                      </a>
-                    </div>
-
-                    <div className="action-btn">
-                      <button className="btn" onClick={() => false}>
-                        <FontAwesomeIcon icon={faCaretDown} className="text-primary" />
-                      </button>
-                      <a
-                        href="/"
-                        onClick={() => false}
-                        className="text-white text-decoration-none"
-                      >
-                        Third action
+                        Send Funds
                       </a>
                     </div>
                   </div>

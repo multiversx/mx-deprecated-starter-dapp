@@ -1,4 +1,5 @@
 import {initialState, StateType} from "./state";
+import {setItem, removeItem} from '../storage/session';
 
 export type DispatchType = (action: ActionType) => void;
 
@@ -13,6 +14,8 @@ export function reducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
     case 'login': {
       const { address } = action;
+      setItem('logged_in', true);
+      setItem('address', address);
       return {
         ...state,
         address,
@@ -40,6 +43,8 @@ export function reducer(state: StateType, action: ActionType): StateType {
     }
 
     case 'logout': {
+      removeItem('logged_in');
+      removeItem('address');
       return initialState()
     }
 
