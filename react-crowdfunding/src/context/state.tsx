@@ -21,8 +21,8 @@ export const initialState = () => {
     denomination: 18,
     decimals: 2,
     dapp: {
-      //provider: new WalletProvider(WALLET_PROVIDER_TESTNET),
-      provider: new WalletProvider("https://localhost:3000/dapp/init"),
+      provider: new WalletProvider(WALLET_PROVIDER_TESTNET),
+      //provider: new WalletProvider("https://localhost:3000/dapp/init"),
       proxy: new ProxyProvider("https://testnet-api.elrond.com", 4000),
     },
     loading: false,
