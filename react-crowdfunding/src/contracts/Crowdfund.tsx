@@ -21,7 +21,7 @@ export default class Crowdfund {
     const qResponse = await this.contract.runQuery(this.proxyProvider, {func});
     qResponse.assertSuccess();
 
-    return new BigNumber(qResponse.firstResult().asBigInt.toString());
+    return new BigNumber(qResponse.firstResult()?.asBigInt.toString() || 0);
   }
 
   async sendFunds(): Promise<boolean> {
