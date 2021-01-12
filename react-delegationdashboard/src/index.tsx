@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { StateInspector } from 'reinspect';
 import App from './App';
-import './assets/sass/theme.scss';
+import './assets/styles/theme.scss';
 
 let MountedApp = (
   <React.StrictMode>

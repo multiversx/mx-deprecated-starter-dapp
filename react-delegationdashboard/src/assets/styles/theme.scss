@@ -10,6 +10,9 @@ Override Bootstrap variables only above.
 -------------------------------------------------- */
 @import './../../../node_modules/bootstrap/scss/bootstrap.scss';
 
+// Main Shards Dashboard
+@import './shards-dashboard/shards-dashboards';
+
 /* Base
 -------------------------------------------------- */
 html {
@@ -69,6 +72,21 @@ html {
     width: 40px;
     height: 40px;
     background-color: $white;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.sp-action-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 7px;
+
+  button {
+    margin: 4px;
 
     &:hover {
       opacity: 0.9;
