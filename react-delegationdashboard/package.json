@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@elrondnetwork/erdjs": "1.1.4",
+    "@elrondnetwork/erdjs": "1.1.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
@@ -20,11 +20,13 @@
     "node-sass": "^4.0.0",
     "packages": "0.0.8",
     "react": "^16.13.1",
-    "react-bootstrap": "^1.4.0",
+    "react-bootstrap": "1.4.3",
     "react-dom": "^16.13.1",
+    "react-modal": "3.12.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "4.0.1",
     "reinspect": "^1.1.0",
+    "shards-ui": "3.0.0",
     "typescript": "^3.8.3"
   },
   "scripts": {
