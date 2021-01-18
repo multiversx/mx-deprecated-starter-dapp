@@ -1,5 +1,5 @@
 const addresses = {
-  "crowdfunding_testnet": "erd1qqqqqqqqqqqqqpgq2j4t5v0lu0cvrwapl9z5zr88zfcepvjsd8ssc6sfq6"
+  "crowdfunding_testnet": "erd1qqqqqqqqqqqqqpgqhf8qase6a8nw8phjwm2wd7uvkutexk67d8sszf9xuu"
 };
 
 export default addresses;
