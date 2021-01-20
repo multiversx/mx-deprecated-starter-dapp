@@ -1,7 +1,8 @@
 import {
   ProxyProvider, ContractFunction,
   Transaction, TransactionPayload, Balance, GasLimit, IDappProvider,
-  WalletProvider, HWProvider, Address, SmartContract} from "@elrondnetwork/erdjs";
+  WalletProvider, HWProvider, Address, SmartContract
+} from "@elrondnetwork/erdjs";
 import { nominateValToHex } from "../helpers/nominate";
 import { setItem } from '../storage/session';
 import { delegationContractData } from "../config";
@@ -20,19 +21,39 @@ export default class Delegation {
   }
 
   async sendDelegate(value: string): Promise<boolean> {
-
     if (!this.signerProvider) {
       throw new Error("You need a singer to send a transaction, use either WalletProvider or LedgerProvider");
     }
 
     switch (this.signerProvider.constructor) {
       case WalletProvider:
-        return this.sendDelegateWalletProvider(value);
+        // Can use something like this to handle callback redirect
+        setItem("transaction_identifier", true, 120);
+        return this.sendDelegateTransaction(value);
       case HWProvider:
-        return this.sendDelegateHWProvider(value);
+        return this.sendDelegateTransaction(value);
       default:
         console.warn("invalid signerProvider");
     }
+
+    return true;
+  }
+
+  private async sendDelegateTransaction(value: string): Promise<boolean> {
+    const func = new ContractFunction(delegationContractData.delegate.data);
+    let payload = TransactionPayload.contractCall()
+      .setFunction(func)
+      .build();
+
+    let transaction = new Transaction({
+      receiver: this.contract.getAddress(),
+      value: new Balance(BigInt(value)),
+      gasLimit: new GasLimit(delegationContractData.delegate.gasLimit),
+      data: payload
+    });
+
+    // @ts-ignore
+    await this.signerProvider.sendTransaction(transaction);
 
     return true;
   }
@@ -83,16 +104,18 @@ export default class Delegation {
 
     switch (this.signerProvider.constructor) {
       case WalletProvider:
-        return this.sendWithdrawWalletProvider();
+        // Can use something like this to handle callback redirect
+        setItem("transaction_identifier", true, 120);
+        return this.sendWithdrawTransaction();
       case HWProvider:
-        return this.sendWithdrawWalletProvider();
+        return this.sendWithdrawTransaction();
       default:
         console.warn("invalid signerProvider");
     }
 
     return true;
   }
-  private async sendWithdrawWalletProvider(): Promise<boolean> {
+  private async sendWithdrawTransaction(): Promise<boolean> {
     const func = new ContractFunction(delegationContractData.withdraw.data);
     let payload = TransactionPayload.contractCall()
       .setFunction(func)
@@ -104,9 +127,6 @@ export default class Delegation {
       gasLimit: new GasLimit(delegationContractData.withdraw.gasLimit),
       data: payload
     });
-
-    // Can use something like this to handle callback redirect
-    setItem("transaction_identifier", true, 120);
     // @ts-ignore
     await this.signerProvider.sendTransaction(transaction);
 
@@ -121,16 +141,19 @@ export default class Delegation {
 
     switch (this.signerProvider.constructor) {
       case WalletProvider:
-        return this.sendClaimRewardsWalletProvider();
+        // Can use something like this to handle callback redirect
+        setItem("transaction_identifier", true, 120);
+        return this.sendClaimRewardsTransaction();
       case HWProvider:
-        return this.sendClaimRewardsWalletProvider();
+        return this.sendClaimRewardsTransaction();
       default:
         console.warn("invalid signerProvider");
     }
 
     return true;
   }
-  private async sendClaimRewardsWalletProvider(): Promise<boolean> {
+
+  private async sendClaimRewardsTransaction(): Promise<boolean> {
     const func = new ContractFunction(delegationContractData.claim.data);
     let payload = TransactionPayload.contractCall()
       .setFunction(func)
@@ -143,8 +166,6 @@ export default class Delegation {
       data: payload
     });
 
-    // Can use something like this to handle callback redirect
-    setItem("transaction_identifier", true, 120);
     // @ts-ignore
     await this.signerProvider.sendTransaction(transaction);
 
@@ -159,16 +180,18 @@ export default class Delegation {
 
     switch (this.signerProvider.constructor) {
       case WalletProvider:
-        return this.sendReDelegateRewardsWalletProvider();
+        // Can use something like this to handle callback redirect
+        setItem("transaction_identifier", true, 120);
+        return this.sendRedelegateRewardsTransaction();
       case HWProvider:
-        return this.sendReDelegateRewardsWalletProvider();
+        return this.sendRedelegateRewardsTransaction();
       default:
         console.warn("invalid signerProvider");
     }
 
     return true;
   }
-  private async sendReDelegateRewardsWalletProvider(): Promise<boolean> {
+  private async sendRedelegateRewardsTransaction(): Promise<boolean> {
     const func = new ContractFunction(delegationContractData.reDelegateRewards.data);
     let payload = TransactionPayload.contractCall()
       .setFunction(func)
@@ -181,53 +204,8 @@ export default class Delegation {
       data: payload
     });
 
-    // Can use something like this to handle callback redirect
-    setItem("transaction_identifier", true, 120);
     // @ts-ignore
     await this.signerProvider.sendTransaction(transaction);
-
-    return true;
-  }
-
-  private async sendDelegateWalletProvider(value: string): Promise<boolean> {
-    const func = new ContractFunction(delegationContractData.delegate.data);
-    let payload = TransactionPayload.contractCall()
-      .setFunction(func)
-      .build();
-
-    let transaction = new Transaction({
-      receiver: this.contract.getAddress(),
-      value: new Balance(BigInt(value)),
-      gasLimit: new GasLimit(delegationContractData.delegate.gasLimit),
-      data: payload
-    });
-    console.log("Send delegation transaction ", transaction)
-    // Can use something like this to handle callback redirect
-    setItem("transaction_identifier", true, 120);
-    // @ts-ignore
-    await this.signerProvider.sendTransaction(transaction);
-
-    return true;
-  }
-
-  private async sendDelegateHWProvider(value: string): Promise<boolean> {
-    const func = new ContractFunction(delegationContractData.delegate.data);
-    let payload = TransactionPayload.contractCall()
-      .setFunction(func)
-      .build();
-
-    let transaction = new Transaction({
-      receiver: this.contract.getAddress(),
-      value: new Balance(BigInt(value)),
-      gasLimit: new GasLimit(delegationContractData.delegate.gasLimit),
-      data: payload
-    });
-
-    console.log("Send delegation transaction ", transaction)
-    // Can use something like this to handle callback redirect
-    setItem("transaction_identifier", true, 120);
-    // @ts-ignore
-    await this.signerProvider.sendTransaction(this.transaction);
 
     return true;
   }
