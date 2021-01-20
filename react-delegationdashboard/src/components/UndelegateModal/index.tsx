@@ -1,9 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useContext } from '../../context';
-import entireBalance from '../../helpers/entireBalance';
 import { ErrorMessage, Formik } from 'formik';
-import BigNumber from 'bignumber.js';
 
 import { object, string } from 'yup';
 import Denominate from '../Denominate';
@@ -51,7 +49,6 @@ const UndelegateModal = ({ show, title, description, handleClose, handleContinue
                 values,
                 handleBlur,
                 handleChange,
-                setFieldValue,
               } = props;
 
               return (

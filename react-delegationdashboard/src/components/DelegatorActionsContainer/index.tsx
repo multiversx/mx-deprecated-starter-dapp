@@ -23,6 +23,7 @@ const DelegatorActionsContainer = () => {
     }
 
     const handleViewRewards = () => {
+        
     }
     const handleCalculateRewards = () => {
     }
@@ -36,16 +37,8 @@ const DelegatorActionsContainer = () => {
                     <BaseAction actionTitle="Withdraw" handleContinue={() => handleWithdraw()} />
                     <BaseAction actionTitle="Claim Rewards" handleContinue={() => handleClaimRewards()} />
                     <BaseAction actionTitle="Redelegate Rewards" handleContinue={() => handleRedelegateRewards()} />
-                    <div>
-                        <button onClick={() => handleViewRewards()} className="btn btn-primary mt-3">
-                            View Rewards
-                        </button>
-                    </div>
-                    <div>
-                        <button onClick={() => handleCalculateRewards()} className="btn btn-primary mt-3">
-                            Calculate Rewards
-                        </button>
-                    </div>
+                    <BaseAction actionTitle="View Rewards" handleContinue={() => handleViewRewards()} />
+                    <BaseAction actionTitle="Calculate Rewards" handleContinue={() => handleCalculateRewards()} />
                 </div>
             </div>
         </div>
