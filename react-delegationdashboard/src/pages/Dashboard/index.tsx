@@ -1,24 +1,22 @@
-import React from 'react';
-import {Redirect} from 'react-router-dom';
-import { faExchangeAlt, faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
-import PageState from "../../components/PageState";
 import Denominate from "../../components/Denominate";
-import {useContext} from "../../context";
-import {addresses, Crowdfund} from '../../contracts';
+import { useContext } from "../../context";
+import { addresses } from '../../contracts';
+import StakeProviderArea from '../../components/StakeProviderArea';
+import DelegatorArea from '../../components/DelegatorArea';
+import { Address } from '@elrondnetwork/erdjs/out';
 
 const Dashboard = () => {
-
   const { loggedIn, address, dapp } = useContext();
+  const [balance, setBalance] = useState("")
+  useEffect(function () {
+          dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
+      }, [])
   if (!loggedIn) {
     return <Redirect to="/" />
   }
-
-  const handleSendFunds = () => {
-    const crowdfundContract = new Crowdfund(addresses["crowdfunding_testnet"], dapp.proxy, dapp.provider);
-    crowdfundContract.sendFunds().then();
-  };
 
   return (
     <div className="container py-4">
@@ -35,36 +33,18 @@ const Dashboard = () => {
                     </div>
                     <div className="mb-4">
                       <span className="opacity-6 mr-1">Contract address:</span>
-                      <span>{addresses["crowdfunding_testnet"]}</span>
+                      <span>{addresses["delegation_smart_contract"]}</span>
                     </div>
                     <div>
-                      <h3 className="py-2">
-                        <Denominate value="10000" />
+                      <h3 className="text-white">
+                        <Denominate value={balance} />
                       </h3>
-                    </div>
-                  </div>
-                  <div className="d-flex mt-4 justify-content-center">
-                    <div className="action-btn">
-                      <button className="btn" onClick={() => handleSendFunds()}>
-                        <FontAwesomeIcon icon={faArrowUp} className="text-primary" />
-                      </button>
-                      <a
-                        href="#"
-                        onClick={() => handleSendFunds()}
-                        className="text-white text-decoration-none"
-                      >
-                        Send Funds
-                      </a>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="my-5">
-                <PageState
-                  svgComponent={<FontAwesomeIcon icon={faExchangeAlt} className="text-muted fa-3x" />}
-                  title="No info to show"
-                />
-              </div>
+              <StakeProviderArea />
+              <DelegatorArea />
             </div>
           </div>
         </div>

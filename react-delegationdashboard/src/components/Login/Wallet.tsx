@@ -1,3 +1,4 @@
+import { Address } from "@elrondnetwork/erdjs/out";
 import React, {useEffect} from "react";
 import {useContext, useDispatch} from "../../context";
 import {getItem, removeItem, setItem} from "../../storage/session";
@@ -40,7 +41,11 @@ const WalletLogin = () => {
             .then(address => {
               removeItem('wallet_login');
               dispatch({type: "login", address});
-            }).catch(err => {
+            }).then((value)=>
+            dapp.proxy.getAccount(new Address(getItem("address"))).then(account=> 
+              dispatch({type: "setBalance", balance: account.balance.toString()}))
+             
+            ).catch(err => {
             dispatch({type: 'loading', loading: false});
           });
         })

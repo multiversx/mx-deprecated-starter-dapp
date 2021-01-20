@@ -1,5 +1,16 @@
-import {IDappProvider, WalletProvider, ProxyProvider, WALLET_PROVIDER_TESTNET} from "@elrondnetwork/erdjs";
-import {getItem} from '../storage/session';
+import { IDappProvider, ProxyProvider, WalletProvider } from "@elrondnetwork/erdjs";
+import { denomination, decimals, networks, NetworkType } from "../config";
+import { getItem } from '../storage/session';
+
+export const defaultNetwork: NetworkType= {
+  default: false,
+  id: 'not-configured',
+  name: 'NOT CONFIGURED',
+  erdLabel: '',
+  theme: '',
+  walletAddress: '',
+  explorerAddress: '',
+};
 
 interface DappState {
   provider: IDappProvider,
@@ -12,22 +23,36 @@ export interface StateType {
   error: string,
   loggedIn: boolean,
   address: string,
+  erdLabel: string,
   denomination: number,
   decimals: number,
+  account: AccountType
 }
+export const emptyAccount: AccountType = {
+  balance: '...',
+  nonce: 0
+};
 
-export const initialState = () => {
+
+export const initialState = (optionalConfig?: NetworkType[]) => {
+  const sessionNetwork = networks.filter((network) => network.default).pop() || defaultNetwork;
   return {
-    denomination: 18,
-    decimals: 2,
+    denomination: denomination,
+    decimals: decimals,
     dapp: {
-      provider: new WalletProvider(WALLET_PROVIDER_TESTNET),
-      //provider: new WalletProvider("https://localhost:3000/dapp/init"),
-      proxy: new ProxyProvider("https://testnet-api.elrond.com", 4000),
+      provider: new WalletProvider(sessionNetwork.walletAddress),
+      proxy: new ProxyProvider(sessionNetwork.explorerAddress!==undefined?sessionNetwork?.explorerAddress: "https://explorer.elrond.com/", 4000),
     },
     loading: false,
     error: '',
     loggedIn: !!getItem("logged_in"),
     address: getItem("address"),
+    account: emptyAccount,
+    erdLabel: sessionNetwork?.erdLabel,
   }
-};
+};  
+
+export interface AccountType {
+  balance: string;
+  nonce: number;
+}

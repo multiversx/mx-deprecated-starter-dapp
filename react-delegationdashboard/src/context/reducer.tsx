@@ -1,5 +1,5 @@
-import {initialState, StateType} from "./state";
-import {setItem, removeItem} from '../storage/session';
+import { initialState, StateType } from "./state";
+import { setItem, removeItem } from '../storage/session';
 
 export type DispatchType = (action: ActionType) => void;
 
@@ -8,7 +8,8 @@ export type ActionType =
   | { type: 'logout' }
   | { type: 'loading'; loading: StateType['loading'] }
   | { type: 'setProvider'; provider: StateType['dapp']["provider"] }
-;
+  | { type: 'setBalance'; balance: StateType['account']["balance"] }
+  ;
 
 export function reducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -38,6 +39,17 @@ export function reducer(state: StateType, action: ActionType): StateType {
         dapp: {
           ...state.dapp,
           provider: provider,
+        }
+      }
+    }
+
+    case 'setBalance': {
+      const { balance } = action;
+      return {
+        ...state,
+        account: {
+          ...state.account,
+          balance: balance
         }
       }
     }

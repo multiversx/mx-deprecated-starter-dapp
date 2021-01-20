@@ -8,16 +8,15 @@ import {useContext} from "../../context";
 import LedgerLogin from "../../components/Login/Ledger";
 import WalletLogin from "../../components/Login/Wallet";
 import {addresses, Crowdfund} from '../../contracts';
-import Denominate from '../../components/Denominate';
 
 const Home = () => {
   const {loading, error, loggedIn, dapp} = useContext();
-  const [raised, setRaised] = useState(new BigNumber(0));
-  const [valueLoading, setValueLoading] = useState(true);
+  const [, setRaised] = useState(new BigNumber(0));
+  const [, setValueLoading] = useState(true);
   const ref = React.useRef(null);
 
   useEffect(() => {
-    const crowdfundContract = new Crowdfund(addresses["crowdfunding_testnet"], dapp.proxy);
+    const crowdfundContract = new Crowdfund(addresses["delegation_smart_contract"], dapp.proxy);
     crowdfundContract.currentFunds().then((value: BigNumber) => {
       setRaised(value);
     }).catch(err => console.warn(err))
@@ -39,16 +38,7 @@ const Home = () => {
           <PageState svgComponent={<></>} spin /> :
 
           <div className="row w-100 d-flex flex-column login__container">
-            <h1 className="text-center">Welcome to our Croudfunding App</h1>
-            <p className="text-center">We currently raised&nbsp;
-              {valueLoading ?
-                "..."
-                 :
-                <span>
-                  <Denominate value={raised.toString()} showLastNonZeroDecimal={true}/>
-                </span>
-              }
-            </p>
+            <h1 className="text-center">Welcome to our Delegation Dashboard App</h1>
             <LedgerLogin />
             <WalletLogin />
           </div>
