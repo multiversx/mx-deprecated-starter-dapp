@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useContext } from '../../context';
 import entireBalance from '../../helpers/entireBalance';
@@ -19,11 +19,14 @@ interface BaseModalType {
 }
 
 const DelegateModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
-
-  const { erdLabel, denomination, decimals, account } = useContext();
+  const { erdLabel, denomination, decimals, account, dapp, address } = useContext();
+  const [balance, setBalance] = useState("")
   var transaction = new Transaction()
   transaction.receiver = new Address(addresses["delegation_smart_contract"])
   transaction.value = new Balance(BigInt(0))
+  useEffect(function () {
+    dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
+  }, [])
 
   const available = entireBalance({
     balance: account.balance,
@@ -86,7 +89,7 @@ const DelegateModal = ({ show, title, description, handleClose, handleContinue }
                       </span>
                     </div>
                     <small className="form-text text-secondary mt-0">
-                      Available: <Denominate value={account.balance} />
+                      Available: <Denominate value={balance} />
                     </small>
                     <ErrorMessage name="amount" />
                   </div>
