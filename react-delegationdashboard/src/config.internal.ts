@@ -1,4 +1,5 @@
-import { object, string, boolean, array, InferType } from 'yup';
+import { object, string, boolean, InferType } from 'yup';
+import { DelegationContractType } from './helpers/types';
 
 export const decimals: number = 2;
 export const denomination: number = 18;
@@ -10,8 +11,8 @@ export const networks: NetworkType[] = [
         name: 'Mainnet',
         theme: 'light',
         erdLabel: 'EGLD',
-        walletAddress: 'https://wallet.elrond.com/',
-        explorerAddress: 'https://explorer.elrond.com/',
+        walletAddress: 'https://wallet.elrond.com/dapp/init',
+        apiAddress: 'https://api.elrond.com',
         delegationContract: 'erd1qqqqqqqqqqqqqpgqxwakt2g7u9atsnr03gqcgmhcv38pt7mkd94q6shuwt',
     },
     {
@@ -20,8 +21,8 @@ export const networks: NetworkType[] = [
         name: 'Testnet',
         theme: 'testnet',
         erdLabel: 'xEGLD',
-        walletAddress: 'https://testnet-wallet.elrond.com/',
-        explorerAddress: 'https://testnet-explorer.elrond.com/',
+        walletAddress: 'http://internal-wallet.elrond.com/dapp/init',
+        apiAddress: 'http://35.216.213.14:8080',
         delegationContract: 'erd1qqqqqqqqqqqqqpgqp699jngundfqw07d8jzkepucvpzush6k3wvqyc44rx',
     },
 ];
@@ -34,12 +35,13 @@ const networkBaseSchema = object({
     theme: string(),
     delegationContract: string(),
     walletAddress: string(),
-    explorerAddress: string(),
+    apiAddress: string(),
 }).required();
 
 
 const schema = networkBaseSchema;
 export type NetworkType = InferType<typeof schema>;
+
 
 networks.forEach((network) => {
     schema.validate(network, { strict: true }).catch(({ errors }) => {
@@ -47,69 +49,118 @@ networks.forEach((network) => {
     });
 });
 
-export const delegationContractData = {
-    createNewDelegationContract: {
+
+export const delegationContractData: DelegationContractType[] = [
+    {
+        name: "createNewDelegationContract",
         gasLimit: 6000000,
         data: 'createNewDelegationContract@',
     },
-    setAutomaticActivation: {
+    {
+        name: "setAutomaticActivation",
         gasLimit: 6000000,
         data: 'setAutomaticActivation@',
     },
-    changeServiceFee: {
+    {
+        name: "changeServiceFee",
         gasLimit: 6000000,
         data: 'changeServiceFee@',
     },
-    modifyTotalDelegationCap: {
+    {
+        name: "modifyTotalDelegationCap",
         gasLimit: 6000000,
         data: 'modifyTotalDelegationCap@',
     },
-    addNodes: {
+    {
+        name: "addNodes",
         gasLimit: 12000000,
         data: 'addNodes@',
     },
-    removeNodes: {
+    {
+        name: "removeNodes",
         gasLimit: 12000000,
         data: 'removeNodes@',
     },
-    stakeNodes: {
+    {
+        name: "stakeNodes",
         gasLimit: 12000000,
         data: 'stakeNodes@',
     },
-    reStakeUnStaked: {
+    {
+        name: "reStakeUnStaked",
         gasLimit: 12000000,
-        data: 'reStakeUnStakedNodes@',
+        data: 'reStakeUnStaked@',
     },
-    unStake: {
+    {
+        name: "unStake",
         gasLimit: 12000000,
-        data: 'unStakeNodes@',
+        data: 'reStakeUnStaked@',
     },
-    unBond: {
+    {
+        name: "unBond",
         gasLimit: 12000000,
-        data: 'unBondNodes@',
+        data: 'unBond@',
     },
-    unJail: {
+    {
+        name: "unJail",
         gasLimit: 12000000,
-        data: 'unJailNodes@',
+        data: 'unJail@',
     },
-    delegate: {
+    {
+        name: "delegate",
         gasLimit: 12000000,
         data: 'delegate',
     },
-    undelegate: {
+    {
+        name: "undelegate",
         gasLimit: 12000000,
         data: 'undelegate@',
     },
-    withdraw: {
+    {
+        name: "withdraw",
         gasLimit: 12000000,
         data: 'withdraw',
     },
-    claim: {
-        gasLimit: 6000000,
-        data: 'claimRewards',
+    {
+        name: "claim",
+        gasLimit: 12000000,
+        data: 'claim',
     },
-    reDelegateRewards: {
+    {
+        name: "reDelegateRewards",
         gasLimit: 12000000,
         data: 'reDelegateRewards',
-    },
-};
+    }
+]
+
+export const vmQueries = [
+    {
+        func: "getNumNodes",
+    }, {
+        func: "getAllNodeStates",
+    }, {
+        func: "getUserUnBondable",
+    }, {
+        func: "getUserActiveStake",
+    }, {
+        func: "getUserUnDelegatedList",
+    }, {
+        func: "getUserUnStakedValue",
+    }, {
+        func: "getTotalActiveStake",
+    }, {
+        func: "getTotalUnStaked",
+    }, {
+        func: "getNumUsers",
+    }, {
+        func: "getTotalCumulatedRewards",
+    }, {
+        func: "getClaimableRewards",
+    }, {
+        func: "getTotalUnStakedFromNodes",
+    }, {
+        func: "getTotalUnBondedFromNodes",
+    }, {
+        func: "getContractConfig",
+    }
+];
