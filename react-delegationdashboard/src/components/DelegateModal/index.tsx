@@ -24,9 +24,9 @@ const DelegateModal = ({ show, title, description, handleClose, handleContinue }
   var transaction = new Transaction()
   transaction.receiver = new Address(addresses["delegation_smart_contract"])
   transaction.value = new Balance(BigInt(0))
-  useEffect(function () {
-    dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
-  }, [])
+  useEffect(() => {
+      dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
+    }, [address, dapp.proxy])
 
   const available = entireBalance({
     balance: account.balance,
