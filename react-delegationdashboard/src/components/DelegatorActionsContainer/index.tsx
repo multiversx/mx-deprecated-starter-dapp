@@ -9,23 +9,17 @@ const DelegatorActionsContainer = () => {
     const { dapp } = useContext();
     const handleClaimRewards = () => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendClaimRewards().then();
+        delegationContract.sendTransaction("0","claimRewards").then();
     }
 
     const handleRedelegateRewards = () => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendReDelegateRewards().then();
+        delegationContract.sendTransaction("0","reDelegateRewards").then();
     }
 
     const handleWithdraw = () => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendWithdraw().then();
-    }
-
-    const handleViewRewards = () => {
-        
-    }
-    const handleCalculateRewards = () => {
+        delegationContract.sendTransaction("0","withdraw").then();
     }
 
     return (
@@ -37,10 +31,9 @@ const DelegatorActionsContainer = () => {
                     <BaseAction actionTitle="Withdraw" handleContinue={() => handleWithdraw()} />
                     <BaseAction actionTitle="Claim Rewards" handleContinue={() => handleClaimRewards()} />
                     <BaseAction actionTitle="Redelegate Rewards" handleContinue={() => handleRedelegateRewards()} />
-                    <BaseAction actionTitle="View Rewards" handleContinue={() => handleViewRewards()} />
-                    <BaseAction actionTitle="Calculate Rewards" handleContinue={() => handleCalculateRewards()} />
                 </div>
             </div>
+
         </div>
     )
 };

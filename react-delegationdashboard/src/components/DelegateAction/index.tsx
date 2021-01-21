@@ -12,7 +12,7 @@ const DelegateAction = () => {
 
   const handleDelegate = (value: string) => {
     const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-    delegationContract.sendDelegate(value).then();
+    delegationContract.sendTransaction(value,"delegate").then();
   }
   return (
     <div>
