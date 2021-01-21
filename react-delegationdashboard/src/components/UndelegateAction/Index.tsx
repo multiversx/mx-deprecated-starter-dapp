@@ -11,7 +11,7 @@ const UndelegateAction = () => {
 
   const handleUndelegate = (value: string) => {
     const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-    delegationContract.sendUndelegate(value).then();
+    delegationContract.sendTransaction(value,"undelegate", true).then();
   }
   return (
     <div>

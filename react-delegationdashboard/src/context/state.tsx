@@ -9,7 +9,8 @@ export const defaultNetwork: NetworkType= {
   erdLabel: '',
   theme: '',
   walletAddress: '',
-  explorerAddress: '',
+  apiAddress: '',
+  delegationContract: ''
 };
 
 interface DappState {
@@ -41,7 +42,7 @@ export const initialState = (optionalConfig?: NetworkType[]) => {
     decimals: decimals,
     dapp: {
       provider: new WalletProvider(sessionNetwork.walletAddress),
-      proxy: new ProxyProvider(sessionNetwork.explorerAddress!==undefined?sessionNetwork?.explorerAddress: "https://explorer.elrond.com/", 4000),
+      proxy: new ProxyProvider(sessionNetwork.apiAddress!==undefined?sessionNetwork?.apiAddress: "https://explorer.elrond.com/", 4000),
     },
     loading: false,
     error: '',

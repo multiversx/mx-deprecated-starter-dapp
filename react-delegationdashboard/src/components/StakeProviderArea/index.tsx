@@ -16,7 +16,7 @@ const StakeProviderArea = () => {
 
     const handleUpdateFee = () => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendDelegate("").then();
+        delegationContract.sendTransaction("", "").then();
     }
 
     return (
