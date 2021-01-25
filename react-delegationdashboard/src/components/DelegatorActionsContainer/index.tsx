@@ -23,17 +23,22 @@ const DelegatorActionsContainer = () => {
     }
 
     return (
-        <div className="card rounded border-3 ">
-            <div className="card-body text-center p-4">
-                <div className="d-flex mt-4 justify-content-center sp-action-btn">
+        <div className="row full-width">
+        <div className="col-12 mb-spacer">
+            <div className="card card-small">
+                {"My actions" && (
+                    <div className="card-header border-bottom">
+                        <h6 className="m-0">{"My actions"}</h6>
+                    </div>
+                )}<div className="card-body d-flex flex-wrap p-3 sp-action-btn">
                     <DelegateAction />
                     <UndelegateAction />
                     <BaseAction actionTitle="Withdraw" handleContinue={() => handleWithdraw()} />
                     <BaseAction actionTitle="Claim Rewards" handleContinue={() => handleClaimRewards()} />
                     <BaseAction actionTitle="Redelegate Rewards" handleContinue={() => handleRedelegateRewards()} />
+                    </div>
                 </div>
             </div>
-
         </div>
     )
 };

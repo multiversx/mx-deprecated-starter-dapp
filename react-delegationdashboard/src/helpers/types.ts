@@ -10,4 +10,9 @@ export interface AccountType {
     gasLimit: number;
     data: string;
   }
+
+  export class StatCardType {
+    title!: string;
+    value!: number;
+}
   
