@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-
 import Denominate from "../../components/Denominate";
 import { useContext } from "../../context";
 import { addresses } from '../../contracts';
@@ -9,14 +7,13 @@ import DelegatorArea from '../../components/DelegatorArea';
 import { Address } from '@elrondnetwork/erdjs/out';
 
 const Dashboard = () => {
-  const { loggedIn, address, dapp } = useContext();
+  const { address, dapp } = useContext();
   const [balance, setBalance] = useState("")
+
   useEffect(function () {
-          dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
-      }, [])
-  if (!loggedIn) {
-    return <Redirect to="/" />
-  }
+    dapp.proxy.getAccount(new Address(address))
+      .then((value) => setBalance(value.balance.toString()))
+  }, [])
 
   return (
     <div className="container py-4">

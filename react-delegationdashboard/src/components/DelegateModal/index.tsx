@@ -46,7 +46,7 @@ const DelegateModal = ({ show, title, description, handleClose, handleContinue }
           <p className="lead mb-spacer">{description}</p>
 
           <Formik initialValues={{
-            amount: ''
+            amount: "10"
           }}
             onSubmit={(values) => {
               handleContinue(values.amount);
