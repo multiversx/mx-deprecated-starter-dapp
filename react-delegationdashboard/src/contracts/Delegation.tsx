@@ -3,10 +3,10 @@ import {
   Transaction, TransactionPayload, Balance, GasLimit, IDappProvider,
   WalletProvider, HWProvider, Address, SmartContract
 } from "@elrondnetwork/erdjs";
-import { nominateValToHex } from "../helpers/nominate";
 import { setItem } from '../storage/session';
 import { delegationContractData } from "../config";
 import addresses from "./addresses";
+import { Query, QueryResponse } from "@elrondnetwork/erdjs/out/smartcontracts/query";
 
 export default class Delegation {
   contract: SmartContract;
@@ -21,7 +21,7 @@ export default class Delegation {
   }
 
 
-  async sendTransaction(value: string, transcationType: string, hasArg: boolean = false): Promise<boolean> {
+  async sendTransaction(value: string, transcationType: string, args: string = ""): Promise<boolean> {
     if (!this.signerProvider) {
       throw new Error("You need a singer to send a transaction, use either WalletProvider or LedgerProvider");
     }
@@ -30,9 +30,9 @@ export default class Delegation {
       case WalletProvider:
         // Can use something like this to handle callback redirect
         setItem("transaction_identifier", true, 120);
-        return this.sendTransactionBasedOnType(value, transcationType, hasArg);
+        return this.sendTransactionBasedOnType(value, transcationType, args);
       case HWProvider:
-        return this.sendTransactionBasedOnType(value, transcationType, hasArg);
+        return this.sendTransactionBasedOnType(value, transcationType, args);
       default:
         console.warn("invalid signerProvider");
     }
@@ -40,24 +40,23 @@ export default class Delegation {
     return true;
   }
 
-  private async sendTransactionBasedOnType(value: string, transcationType: string, hasArg: boolean): Promise<boolean> {
+  private async sendTransactionBasedOnType(value: string, transcationType: string, args: string = ""): Promise<boolean> {
     let delegationContract = delegationContractData.find(d => d.name === transcationType)
     if (!delegationContract) {
       throw new Error("The contract for this action in not defined");
     }
     else {
       let funcName = delegationContract.data
-      if (hasArg){
-        funcName = `${delegationContract.data}${nominateValToHex(value)}`
+      if (args!==""){
+        funcName = `${delegationContract.data}${args}`
       }
       const func = new ContractFunction(funcName);
       let payload = TransactionPayload.contractCall()
         .setFunction(func)
         .build();
-
       let transaction = new Transaction({
         receiver: this.contract.getAddress(),
-        value: new Balance(BigInt(value)),
+        value:  new Balance(BigInt(value)),
         gasLimit: new GasLimit(delegationContract.gasLimit),
         data: payload
       });

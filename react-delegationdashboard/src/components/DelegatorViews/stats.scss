@@ -1,0 +1,36 @@
+.stats {
+    .stats-card {
+      border-radius: $card-border-radius;
+      color: $white;
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0px;
+  
+      &.blue {
+        background: linear-gradient(153.43deg, #1233b2, #3464d0);
+      }
+  
+      &.light-blue {
+        background: linear-gradient(153.43deg, #3585dd, #64adeb);
+      }
+  
+      &.green {
+        background: linear-gradient(153.43deg, #209d67, #4bc197);
+      }
+  
+      &.orange {
+        background: linear-gradient(153.43deg, #eaa822, #f2c64b);
+      }
+  
+      .h5 {
+        color: $white;
+      }
+    }
+  }
+
+  .full-width{
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+  }
+  
