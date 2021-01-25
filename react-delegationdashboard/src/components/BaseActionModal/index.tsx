@@ -1,9 +1,8 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { useContext } from '../../context';
 import { ErrorMessage, Formik } from 'formik';
+
 import { object, string } from 'yup';
-import Denominate from '../Denominate';
 
 interface BaseModalType {
   show: boolean;
@@ -13,15 +12,14 @@ interface BaseModalType {
   handleContinue: (value: string) => void
 }
 
-const UndelegateModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
-  const { erdLabel, account } = useContext();
+const BaseActionModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
 
       <div className="card card-small">
         <div className="card-body text-center p-spacer">
-          <p className="h3" data-testid="undelegateTitle">
+          <p className="h3" data-testid="baseActionModal">
             {title}
           </p>
           <p className="lead mb-spacer">{description}</p>
@@ -47,16 +45,12 @@ const UndelegateModal = ({ show, title, description, handleClose, handleContinue
               return (
                 <form onSubmit={handleSubmit} className="text-left">
                   <div className="form-group mb-spacer">
-                    <label htmlFor="amount">Amount {erdLabel}</label>
                     <div className="input-group input-group-seamless">
                       <input type="text" className="form-control" id="amount" name="amount" data-testid="amount"
                         required={true} value={values.amount} autoComplete="off"
                         onChange={handleChange}
                         onBlur={handleBlur} />
                     </div>
-                    <small className="form-text text-secondary mt-0">
-                      Available: <Denominate value={account.balance} />
-                    </small>
                     <ErrorMessage name="amount" />
                   </div>
                   <div className="d-flex align-items-center flex-column mt-spacer">
@@ -77,4 +71,4 @@ const UndelegateModal = ({ show, title, description, handleClose, handleContinue
   );
 };
 
-export default UndelegateModal;
+export default BaseActionModal;

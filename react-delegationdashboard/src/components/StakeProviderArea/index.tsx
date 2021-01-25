@@ -1,55 +1,48 @@
-import { Address } from "@elrondnetwork/erdjs/out";
+import { Address, ContractFunction } from "@elrondnetwork/erdjs/out";
+import { Query } from "@elrondnetwork/erdjs/out/smartcontracts/query";
 import React, { useEffect, useState } from "react"
 import { useContext } from "../../context"
-import Delegation from "../../contracts/Delegation";
+import { addresses } from "../../contracts";
+import { encode } from "../../helpers/bech32";
+import StakeProviderActionsContainer from "../StakeProviderActionsContainer";
+import StakeProviderViews from "../StakeProviderViews";
 
 const StakeProviderArea = () => {
-    const { loggedIn, address, dapp } = useContext()    
-    const [, setBalance] = useState("")
-    useEffect(function () {
-            dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
-        }, [])
+    const { dapp, address } = useContext()
+    const [isOwner, setIsOwner] = useState(false)
 
-    if (!loggedIn) {
+    const getContractConfig = () => {
+        const query = new Query({
+            address: new Address(addresses["delegation_smart_contract"]),
+            func: new ContractFunction("getContractConfig")
+        })
+
+        dapp.proxy.queryContract(query)
+            .then((value) => {
+                let ownerAddress = encode(value.returnData[0].asHex)
+                console.log("Owner address ", ownerAddress);
+
+                setIsOwner(address.localeCompare(ownerAddress) < 0 ? false : true);
+            })
+            .catch(e => {
+                console.log("error ", e)
+            })
+    }
+
+
+    useEffect(function () {
+        let resp = getContractConfig()
+        console.log("response ", resp)
+    }, [])
+
+    if (!isOwner) {
         return (<div></div>)
     }
 
-    const handleUpdateFee = () => {
-        const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("", "").then();
-    }
-
     return (
-        <div className="card rounded border-3 app-center-content">
-            <div className="card-body text-center p-4">
-                <div className="d-flex mt-4 justify-content-center sp-action-btn">
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Update Fee
-                        </button>
-                    </div>
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Set Delegation Cap
-                        </button>
-                    </div>
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Add Nodes
-                        </button>
-                    </div>
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Activate Nodes
-                        </button>
-                    </div>
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Deactivate Nodes
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <StakeProviderViews />
+            <StakeProviderActionsContainer />
         </div>
     )
 };
