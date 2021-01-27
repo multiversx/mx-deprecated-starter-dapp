@@ -6,7 +6,6 @@ import {
 import { setItem } from '../storage/session';
 import { delegationContractData } from "../config";
 import addresses from "./addresses";
-import { Query, QueryResponse } from "@elrondnetwork/erdjs/out/smartcontracts/query";
 
 export default class Delegation {
   contract: SmartContract;
