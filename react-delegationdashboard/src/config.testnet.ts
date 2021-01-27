@@ -52,7 +52,6 @@ networks.forEach((network) => {
     });
 });
 
-
 export const delegationContractData: DelegationContractType[] = [
     {
         name: "createNewDelegationContract",
@@ -90,24 +89,24 @@ export const delegationContractData: DelegationContractType[] = [
         data: 'stakeNodes@',
     },
     {
-        name: "reStakeUnStaked",
-        gasLimit: 12000000,
-        data: 'reStakeUnStaked@',
+        name: "reStakeUnStakedNodes",
+        gasLimit: 120000000,
+        data: 'reStakeUnStakedNodes@',
     },
     {
-        name: "unStake",
+        name: "unStakeNodes",
         gasLimit: 12000000,
         data: 'unStakeNodes@',
     },
     {
-        name: "unBond",
+        name: "unBondNodes",
         gasLimit: 12000000,
-        data: 'unBond@',
+        data: 'unBondNodes@',
     },
     {
-        name: "unJail",
+        name: "unJailNodes",
         gasLimit: 12000000,
-        data: 'unJail@',
+        data: 'unJailNodes@',
     },
     {
         name: "delegate",

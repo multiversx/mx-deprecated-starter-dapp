@@ -25,7 +25,7 @@ export const nodeTransactions = {
     },
     reStake: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "reStakeunStakeNodes", blsKey).then();
+        delegationContract.sendTransaction("0", "reStakeUnStakedNodes", blsKey).then();
     },
     unJail: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);

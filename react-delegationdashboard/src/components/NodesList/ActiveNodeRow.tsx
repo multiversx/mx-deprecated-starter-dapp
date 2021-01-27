@@ -1,8 +1,10 @@
 import { Address, Argument, ContractFunction } from "@elrondnetwork/erdjs/out";
 import { Query } from "@elrondnetwork/erdjs/out/smartcontracts/query";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisV, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import moment from "moment";
 import React from "react";
+import { Nav, NavDropdown } from "react-bootstrap";
 import { useContext } from "../../context";
 import { addresses } from "../../contracts";
 import { NodeType } from "../../helpers/types";
@@ -14,8 +16,7 @@ type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake';
 const allowedActions: { [key: string]: ActionType[] } = {
     staked: ['unStake'],
     jailed: ['unJail'],
-    unStaked: ['unBond'],
-    reStake: ['reStake'],
+    unStaked: ['unBond', 'reStake']
 };
 
 const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
@@ -81,31 +82,47 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
             </td>
 
             <td>
-                {Object.keys(nodeActions).map((entry) => {
-                    const action: ActionType = entry as any;
-                    let actionAllowed = allowedActions[key.status.key].includes(action);
-                    if (actionAllowed && action === 'unBond' && remaining !== 0) {
-                        actionAllowed = false;
-                    }
-                    return (
-                        <button
-                            className={`btn btn-primary node-action-btn ${actionAllowed ? '' : 'disabled'}`}
-                            key={action}
-                            onClick={(e: React.MouseEvent) => {
-                                e.preventDefault();
-                                if (actionAllowed) {
-                                    nodeTransactions[action](key.blsKey, dapp);
-                                }
-                            }}
-                        >
-                            {nodeActions[action].label}{' '}
-                            {action === 'unBond' && (
-                                <span className="text-muted">
-                                </span>
-                            )}
-                        </button>
-                    );
-                })}
+                <Nav className="hide-caret">
+                    <NavDropdown
+                        title={
+                            <span className="link">
+                                <FontAwesomeIcon icon={faEllipsisV} className="side-action" />
+                            </span>
+                        }
+                        id="basic-nav-dropdown"
+                    >
+                        {Object.keys(nodeActions).map((entry) => {
+                            const action: ActionType = entry as any;
+                            let actionAllowed = allowedActions[key.status.key].includes(action);
+                            if (actionAllowed && action === 'unBond' && remaining !== 0) {
+                                actionAllowed = false;
+                            }
+                            return (
+                                <a
+                                    className={`dropdown-item ${actionAllowed ? '' : 'disabled'}`}
+                                    key={action}
+                                    onClick={(e: React.MouseEvent) => {
+                                        e.preventDefault();
+                                        if (actionAllowed) {
+                                            nodeTransactions[action](key.blsKey, dapp);
+                                        }
+                                    }}
+                                >
+                                    {nodeActions[action].label}{' '}
+                                    {action === 'unBond' && remaining !== 0 && (
+                                        <span className="text-muted">
+                                            (
+                                            {moment
+                                                .utc(moment.duration(remaining, 'seconds').asMilliseconds())
+                                                .format('HH:mm:ss')}{' '}left)
+                                        </span>
+                                    )}
+                                </a>
+
+                            );
+                        })}
+                    </NavDropdown>
+                </Nav>
             </td>
         </tr>
     )
