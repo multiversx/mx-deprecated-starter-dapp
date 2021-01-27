@@ -22,7 +22,9 @@ const NodesTable = () => {
     useEffect(() => {
         getAllNodesStatus();
         getBlsKeysStatus()
-    }, [])
+    }, 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [])
     const getAllNodesStatus = () => {
         const query = new Query({
             address: new Address(addresses["delegation_smart_contract"]),
@@ -49,7 +51,7 @@ const NodesTable = () => {
 
     const getBlsKeysStatus = () => {
         const query = new Query({
-            address: new Address(addresses["delegation_smart_contract"]),
+            address: new Address(addresses["auction_smart_contract"]),
             func: new ContractFunction('getBlsKeysStatus'),
             args: [Argument.fromPubkey(new Address(address))]
         })

@@ -2,10 +2,9 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useContext } from "../../context";
-import { Delegation } from "../../contracts";
 import { NodeType } from "../../helpers/types";
 import Trim from "../Trim";
-import { inactiveNodeActions, nodeActions, nodeTransactions } from "./NodeTypes";
+import { inactiveNodeActions, nodeTransactions } from "./NodeTypes";
 
 const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
 
