@@ -21,7 +21,9 @@ const Home = () => {
       setRaised(value);
     }).catch(err => console.warn(err))
       .finally(() => setValueLoading(false));
-  }, []);
+  }, 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  []);
 
   return (
     <div ref={ref} className="d-flex flex-fill align-items-center container">

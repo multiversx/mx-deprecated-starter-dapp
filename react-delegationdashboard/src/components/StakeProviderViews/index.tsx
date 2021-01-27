@@ -1,4 +1,4 @@
-import { Address, ContractFunction, Argument } from '@elrondnetwork/erdjs/out';
+import { Address, ContractFunction } from '@elrondnetwork/erdjs/out';
 import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import * as React from 'react';
 import { decimals, denomination } from '../../config';
@@ -19,7 +19,9 @@ const StakeProviderViews = ({serviceFee="0", maxDelegationCap="0"}: StakeProvide
     React.useEffect(() => {
         getNumberOfNodes();
         getTotalStake();
-    }, [])
+    }, 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [])
 
     const getNumberOfNodes = () => {
         const query = new Query({

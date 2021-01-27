@@ -32,10 +32,9 @@ const StakeProviderArea = () => {
     }
 
 
-    useEffect(function () {
-        let resp = getContractConfig()
-        console.log("response ", resp)
-    }, [])
+    useEffect(getContractConfig,
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [])
 
     if (!isOwner) {
         return (<div></div>)
