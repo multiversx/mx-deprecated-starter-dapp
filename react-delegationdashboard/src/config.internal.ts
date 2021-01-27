@@ -13,6 +13,7 @@ export const networks: NetworkType[] = [
         erdLabel: 'EGLD',
         walletAddress: 'https://wallet.elrond.com/dapp/init',
         apiAddress: 'https://api.elrond.com',
+        explorerAddress: 'http://internal-explorer.elrond.com',
         delegationContract: 'erd1qqqqqqqqqqqqqpgqxwakt2g7u9atsnr03gqcgmhcv38pt7mkd94q6shuwt',
     },
     {
@@ -22,7 +23,8 @@ export const networks: NetworkType[] = [
         theme: 'testnet',
         erdLabel: 'xEGLD',
         walletAddress: 'http://internal-wallet.elrond.com/dapp/init',
-        apiAddress: 'http://35.216.213.14:8080',
+        apiAddress: 'http://35.210.167.16:8080',
+        explorerAddress: 'http://internal-explorer.elrond.com/',
         delegationContract: 'erd1qqqqqqqqqqqqqpgqp699jngundfqw07d8jzkepucvpzush6k3wvqyc44rx',
     },
 ];
@@ -36,6 +38,7 @@ const networkBaseSchema = object({
     delegationContract: string(),
     walletAddress: string(),
     apiAddress: string(),
+    explorerAddress: string(),
 }).required();
 
 
@@ -87,24 +90,24 @@ export const delegationContractData: DelegationContractType[] = [
         data: 'stakeNodes@',
     },
     {
-        name: "reStakeUnStaked",
+        name: "reStakeUnStakedNodes",
         gasLimit: 12000000,
-        data: 'reStakeUnStaked@',
+        data: 'reStakeUnStakedNodes@',
     },
     {
-        name: "unStake",
+        name: "unStakeNodes",
         gasLimit: 12000000,
-        data: 'reStakeUnStaked@',
+        data: 'unStakeNodes@',
     },
     {
-        name: "unBond",
+        name: "unBondNodes",
         gasLimit: 12000000,
-        data: 'unBond@',
+        data: 'unBondNodes@',
     },
     {
-        name: "unJail",
+        name: "unJailNodes",
         gasLimit: 12000000,
-        data: 'unJail@',
+        data: 'unJailNodes@',
     },
     {
         name: "delegate",
