@@ -16,15 +16,9 @@ const NodeStatus: { [key: string]: string } = {
 }
 
 const NodesTable = () => {
-    const { dapp, address } = useContext();
+    const { dapp } = useContext();
     const [keys, setKeys] = useState(new Array<NodeType>())
 
-    useEffect(() => {
-        getAllNodesStatus();
-        getBlsKeysStatus()
-    }, 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [])
     const getAllNodesStatus = () => {
         const query = new Query({
             address: new Address(addresses["delegation_smart_contract"]),
@@ -53,13 +47,28 @@ const NodesTable = () => {
         const query = new Query({
             address: new Address(addresses["auction_smart_contract"]),
             func: new ContractFunction('getBlsKeysStatus'),
-            args: [Argument.fromPubkey(new Address(address))]
+            args: [Argument.fromPubkey(new Address(addresses["delegation_smart_contract"]))]
         })
         dapp.proxy.queryContract(query)
             .then((value) => {
-                console.log("getBlsKeysStatus ", value)
-            })
-            .catch(e => console.log("error ", e))
+                let blsKeys = new Array<NodeType>()
+                let returnData = value.returnData
+
+                console.log("blskeys returned", value.returnData)
+                keys.forEach(key => {
+                    let index = returnData.findIndex(i => i.asHex === key.blsKey)
+                    if (index) {
+                        let updatedNode = new NodeType(key.blsKey, { key: "jailed", value: NodeStatus["jailed"] })
+                        blsKeys.push(updatedNode)
+                    }
+                    else {
+                        blsKeys.push(key)
+                    }
+                })
+                console.log("blskeys ", blsKeys)
+                setKeys(blsKeys)
+            }).then(()=> getBlsKeysStatus())
+            .catch(e => console.log("error getBlsKeysStatus", e))
     }
 
     const isStatus = (value: string) => {
@@ -68,6 +77,10 @@ const NodesTable = () => {
         }
         return false;
     }
+    useEffect(getAllNodesStatus, 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [])
+    
     return (
         <>
             <div className="card card-small full-width">
@@ -85,7 +98,7 @@ const NodesTable = () => {
                                             <div className="ml-2">#</div>
                                         </th>
                                         <th className="border-0">Public key</th>
-                                        <th className="border-0">Status</th>
+                                        <th className="border-0">Status</th> 
                                         <th className="border-0">Actions</th>
                                     </tr>
                                 </thead>
@@ -102,11 +115,10 @@ const NodesTable = () => {
                 </div>
             </div>
             <div className="card card-small full-width">
-                {"My nodes" && (
-                    <div className="card-header border-bottom">
-                        <h6 className="m-0">Inactive Nodes</h6>
-                    </div>
-                )}<div className="card-body d-flex flex-wrap p-3">
+                <div className="card-header border-bottom">
+                    <h6 className="m-0">Inactive Nodes</h6>
+                </div>
+                <div className="card-body d-flex flex-wrap p-3">
                     {
                         keys.length > 0 && keys.find(key => key.status.key === "notStaked") !== undefined ? (
                             <div className="table-responsive">
