@@ -10,10 +10,11 @@ export const defaultNetwork: NetworkType= {
   theme: '',
   walletAddress: '',
   apiAddress: '',
+  explorerAddress: '',
   delegationContract: ''
 };
 
-interface DappState {
+export interface DappState {
   provider: IDappProvider,
   proxy: ProxyProvider,
 }
@@ -27,7 +28,8 @@ export interface StateType {
   erdLabel: string,
   denomination: number,
   decimals: number,
-  account: AccountType
+  account: AccountType,
+  explorerAddress: string
 }
 export const emptyAccount: AccountType = {
   balance: '...',
@@ -50,6 +52,7 @@ export const initialState = (optionalConfig?: NetworkType[]) => {
     address: getItem("address"),
     account: emptyAccount,
     erdLabel: sessionNetwork?.erdLabel,
+    explorerAddress: sessionNetwork.explorerAddress || "https://explorer.elrond.com"
   }
 };  
 

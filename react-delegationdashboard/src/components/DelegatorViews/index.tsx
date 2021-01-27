@@ -10,10 +10,10 @@ interface StatCardType {
 }
 
 const DelegatorViews = ({ title = "" }: StatCardType) => {
-    const { dapp, address } = useContext();
+    const { dapp, address, erdLabel } = useContext();
 
-    const [totalRewards, setTotalRewards] = React.useState(0);
-    const [claimableRewards, setClaimableRewards] = React.useState(1);
+    const [totalRewards, setTotalRewards] = React.useState("0");
+    const [claimableRewards, setClaimableRewards] = React.useState("0");
     React.useEffect(() => {
         getClaimableRewards();
         getTotalCumulatedRewards();
@@ -26,7 +26,7 @@ const DelegatorViews = ({ title = "" }: StatCardType) => {
         })
         dapp.proxy.queryContract(query)
             .then((value) => {
-                setClaimableRewards(value.returnData[0].asNumber)
+                setClaimableRewards(value.returnData[0].asString || "0")
             })
             .catch(e => console.log("error getClaimableRewards", e))
     }
@@ -40,7 +40,7 @@ const DelegatorViews = ({ title = "" }: StatCardType) => {
         dapp.proxy.queryContract(query)
             .then((value) => {
                 console.log("getTotalCumulatedRewards, ", value)
-                setTotalRewards(value.returnData[0].asNumber)
+                setTotalRewards(value.returnData[0].asString || "")
             })
             .catch(e => {
                 console.log("error getTotalCumulatedRewards", e)
@@ -55,10 +55,9 @@ const DelegatorViews = ({ title = "" }: StatCardType) => {
                             <h6 className="m-0">{title}</h6>
                         </div>
                     )}<div className="card-body d-flex flex-wrap p-3">
-                        <StatCard title="Claimable rewards" value={claimableRewards}></StatCard>
-                        <StatCard title="Total rewards" value={totalRewards}></StatCard>
-                        <StatCard title="Future rewards" value={totalRewards}></StatCard>
-                        <StatCard title="Future rewards" value={totalRewards}></StatCard>
+                        <StatCard title="Claimable rewards" value={claimableRewards} valueUnit={erdLabel}></StatCard>
+                        <StatCard title="Total rewards" value={totalRewards} valueUnit={erdLabel}></StatCard>
+                        <StatCard title="Future rewards" value={totalRewards} valueUnit={erdLabel}></StatCard>
                     </div>
                 </div>
             </div>
