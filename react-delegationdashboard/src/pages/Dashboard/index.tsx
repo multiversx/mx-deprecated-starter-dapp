@@ -13,7 +13,9 @@ const Dashboard = () => {
   useEffect(function () {
     dapp.proxy.getAccount(new Address(address))
       .then((value) => setBalance(value.balance.toString()))
-  }, [])
+  }, 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [])
 
   return (
     <div className="container py-4">

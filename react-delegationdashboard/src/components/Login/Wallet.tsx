@@ -1,14 +1,14 @@
 import { Address } from "@elrondnetwork/erdjs/out";
-import React, {useEffect} from "react";
-import {useContext, useDispatch} from "../../context";
-import {getItem, removeItem, setItem} from "../../storage/session";
+import React, { useEffect } from "react";
+import { useContext, useDispatch } from "../../context";
+import { getItem, removeItem, setItem } from "../../storage/session";
 
 const WalletLogin = () => {
 
   const dispatch = useDispatch();
-  const {dapp} = useContext();
+  const { dapp } = useContext();
   const handleOnClick = () => {
-    dispatch({type: 'loading', loading: true});
+    dispatch({ type: 'loading', loading: true });
     dapp.provider.init()
       .then(initialised => {
         if (initialised) {
@@ -17,42 +17,42 @@ const WalletLogin = () => {
           setItem('wallet_login', {}, 60); // Set a 60s session only
           dapp.provider.login();
         } else {
-          dispatch({type: 'loading', loading: true});
+          dispatch({ type: 'loading', loading: true });
           console.warn('Something went wrong trying to redirect to wallet login..');
         }
       }).catch(err => {
-        dispatch({type: 'loading', loading: false});
+        dispatch({ type: 'loading', loading: false });
         console.warn(err);
-    });
+      });
   };
 
   // The wallet login component can check for the session and the address get param
   useEffect(() => {
     if (getItem('wallet_login')) {
-      dispatch({type: 'loading', loading: true});
+      dispatch({ type: 'loading', loading: true });
       dapp.provider.init()
         .then(initialised => {
           if (!initialised) {
-            dispatch({type: 'loading', loading: false});
+            dispatch({ type: 'loading', loading: false });
             return;
           }
 
           dapp.provider.getAddress()
             .then(address => {
               removeItem('wallet_login');
-              dispatch({type: "login", address});
-            }).then((value)=>
-            dapp.proxy.getAccount(new Address(getItem("address"))).then(account=> 
-              dispatch({type: "setBalance", balance: account.balance.toString()}))
-             
+              dispatch({ type: "login", address });
+            }).then((value) =>
+              dapp.proxy.getAccount(new Address(getItem("address"))).then(account =>
+                dispatch({ type: "setBalance", balance: account.balance.toString() }))
+
             ).catch(err => {
-            dispatch({type: 'loading', loading: false});
-          });
+              dispatch({ type: 'loading', loading: false });
+            });
         })
 
     }
 
-  }, [dapp.provider, dispatch]);
+  }, [dapp.provider, dapp.proxy, dispatch]);
 
   return (
     <div className="col-12 col-md-8 col-lg-5 mx-auto login-card__container">
