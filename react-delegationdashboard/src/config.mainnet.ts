@@ -91,7 +91,7 @@ export const delegationContractData: DelegationContractType[] = [
     },
     {
         name: "reStakeUnStakedNodes",
-        gasLimit: 12000000,
+        gasLimit: 120000000,
         data: 'reStakeUnStakedNodes@',
     },
     {

@@ -90,7 +90,7 @@ const NodesTable = () => {
                     </div>
                 )}<div className="card-body d-flex flex-wrap p-3">
                     {keys.length > 0 ? (
-                        <div className="table-responsive">
+                        <div className="table-responsive table-overflow">
                             <table className="table mb-0">
                                 <thead className="py-2 text-semibold border-bottom">
                                     <tr>
