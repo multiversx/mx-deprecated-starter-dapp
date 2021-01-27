@@ -4,12 +4,15 @@ import React, { useEffect, useState } from "react"
 import { useContext } from "../../context"
 import { addresses } from "../../contracts";
 import { encode } from "../../helpers/bech32";
+import NodesTable from "../NodesList";
 import StakeProviderActionsContainer from "../StakeProviderActionsContainer";
 import StakeProviderViews from "../StakeProviderViews";
 
 const StakeProviderArea = () => {
     const { dapp, address } = useContext()
     const [isOwner, setIsOwner] = useState(false)
+    const [serviceFee, setServiceFee] = useState("0")
+    const [maxDelegationCap, setMaxDelegationCap] = useState("0")
 
     const getContractConfig = () => {
         const query = new Query({
@@ -20,13 +23,12 @@ const StakeProviderArea = () => {
         dapp.proxy.queryContract(query)
             .then((value) => {
                 let ownerAddress = encode(value.returnData[0].asHex)
-                console.log("Owner address ", ownerAddress);
-
                 setIsOwner(address.localeCompare(ownerAddress) < 0 ? false : true);
+                setServiceFee((parseFloat(value.returnData[1].asHex) / 100).toString())
+                setMaxDelegationCap(value.returnData[2].asString || "0")
+                console.log("getContractConfig", value)
             })
-            .catch(e => {
-                console.log("error ", e)
-            })
+            .catch(e => console.log("error ", e))
     }
 
 
@@ -41,8 +43,9 @@ const StakeProviderArea = () => {
 
     return (
         <div>
-            <StakeProviderViews />
+            <StakeProviderViews serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
             <StakeProviderActionsContainer />
+            <NodesTable />
         </div>
     )
 };

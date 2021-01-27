@@ -6,7 +6,7 @@ const DelegatorArea = () => {
 
     return (
         <div className="row app-center-content">
-            <DelegatorViews title="My network"/>
+            <DelegatorViews title="My delegation"/>
             <DelegatorActionsContainer />
         </div>
     )
