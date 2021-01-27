@@ -7,6 +7,10 @@ export const nodeActions = {
         label: 'Unstake',
         transaction: 'unStake',
     },
+    reStake: {
+        label: 'ReStake',
+        transaction: 'reSreStakeUnStakedNodestake',
+    },
     unBond: { label: 'Unbond', transaction: 'unBond' }
 };
 
@@ -19,13 +23,17 @@ export const nodeTransactions = {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
         delegationContract.sendTransaction("0", "unStakeNodes", blsKey).then();
     },
+    reStake: (blsKey: string, dapp: DappState) => {
+        const delegationContract = new Delegation(dapp.proxy, dapp.provider);
+        delegationContract.sendTransaction("0", "reStakeunStakeNodes", blsKey).then();
+    },
     unJail: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "unJail", blsKey).then();
+        delegationContract.sendTransaction("0", "unJailNodes", blsKey).then();
     },
     unBond: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "unBond", blsKey).then();
+        delegationContract.sendTransaction("0", "unBondNodes", blsKey).then();
     },
     stake: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
