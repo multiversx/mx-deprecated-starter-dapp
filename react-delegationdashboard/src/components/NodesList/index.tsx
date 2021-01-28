@@ -1,12 +1,11 @@
 import { Address, Argument, ContractFunction } from '@elrondnetwork/erdjs/out';
-import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import { ContractReturnData, Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import React, { useEffect, useState } from 'react';
 import { useContext } from '../../context';
 import { addresses } from '../../contracts';
 import { NodeType } from '../../helpers/types';
 import ActiveNodeRow from './ActiveNodeRow';
 import InactiveNodeRow from './InactiveNodeRow';
-
 
 const NodeStatus: { [key: string]: string } = {
     "notStaked": "Inactive",
@@ -24,23 +23,15 @@ const NodesTable = () => {
             address: new Address(addresses["delegation_smart_contract"]),
             func: new ContractFunction('getAllNodeStates')
         })
-        dapp.proxy.queryContract(query)
-            .then((value) => {
-                console.log("getAllNodeStates ", value)
-                let nodes = new Array<NodeType>()
-                let responseValues = value.returnData
-                let status: { [key: string]: string }
-                responseValues.forEach(value => {
-                    if (isStatus(value.asString)) {
-                        status = { key: value.asString, value: NodeStatus[value.asString] }
-                    }
-                    else {
-                        nodes.push(new NodeType(value.asHex, status))
-                    }
-                })
-                setKeys(nodes)
-            })
-            .catch(e => console.log("error ", e))
+        return new Promise<Array<NodeType>>((resolve, reject) => {
+            dapp.proxy.queryContract(query)
+                .then((value) => {
+                    let nodes = new Array<NodeType>()
+                    let responseValues = value.returnData
+                    mapNodes(responseValues, isStatus, nodes);
+                    return resolve(nodes);
+                }).catch(e => console.log("error ", e))
+        })
     }
 
     const getBlsKeysStatus = () => {
@@ -49,26 +40,16 @@ const NodesTable = () => {
             func: new ContractFunction('getBlsKeysStatus'),
             args: [Argument.fromPubkey(new Address(addresses["delegation_smart_contract"]))]
         })
-        dapp.proxy.queryContract(query)
-            .then((value) => {
-                let blsKeys = new Array<NodeType>()
-                let returnData = value.returnData
-
-                console.log("blskeys returned", value.returnData)
-                keys.forEach(key => {
-                    let index = returnData.findIndex(i => i.asHex === key.blsKey)
-                    if (index) {
-                        let updatedNode = new NodeType(key.blsKey, { key: "jailed", value: NodeStatus["jailed"] })
-                        blsKeys.push(updatedNode)
-                    }
-                    else {
-                        blsKeys.push(key)
-                    }
+        return new Promise<Array<NodeType>>((resolve) => {
+            dapp.proxy.queryContract(query)
+                .then((value) => {
+                    let nodes = new Array<NodeType>()
+                    let responseValues = value.returnData
+                    mapNodes(responseValues.reverse(), isStatus, nodes);
+                    return resolve(nodes);
                 })
-                console.log("blskeys ", blsKeys)
-                setKeys(blsKeys)
-            }).then(()=> getBlsKeysStatus())
-            .catch(e => console.log("error getBlsKeysStatus", e))
+                .catch(e => console.log("error", e))
+        })
     }
 
     const isStatus = (value: string) => {
@@ -77,10 +58,37 @@ const NodesTable = () => {
         }
         return false;
     }
-    useEffect(getAllNodesStatus, 
+
+    const mapNodes = (responseValues: ContractReturnData[], isStatus: (value: string) => boolean, nodes: NodeType[]) => {
+        let status: { [key: string]: string; };
+        responseValues.forEach(value => {
+            if (isStatus(value.asString)) {
+                status = { key: value.asString, value: NodeStatus[value.asString] };
+            }
+            else {
+                nodes.push(new NodeType(value.asHex, status));
+            }
+        });
+    }
+
+    const getDiplayNodes = () => {
+        Promise.all([getAllNodesStatus(), getBlsKeysStatus()]).then(
+            ([nodesStatus, blsKeys]) => {
+                let temp = nodesStatus
+                temp.map(item => {
+                    let index = blsKeys.findIndex(i => i.blsKey === item.blsKey)
+                    if (index > 0) {
+                        item.status = blsKeys[index].status
+                    }
+                })
+                setKeys(temp)
+            }).catch(error => console.log("error display Nodes", error))
+    }
+
+    useEffect(getDiplayNodes,
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [])
-    
+        []);
+
     return (
         <>
             <div className="card card-small full-width">
@@ -98,7 +106,7 @@ const NodesTable = () => {
                                             <div className="ml-2">#</div>
                                         </th>
                                         <th className="border-0">Public key</th>
-                                        <th className="border-0">Status</th> 
+                                        <th className="border-0">Status</th>
                                         <th className="border-0">Actions</th>
                                     </tr>
                                 </thead>
@@ -149,5 +157,4 @@ const NodesTable = () => {
         </>
     );
 };
-
 export default NodesTable;
