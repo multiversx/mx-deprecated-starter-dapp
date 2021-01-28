@@ -43,7 +43,9 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
         }
     };
 
-    React.useEffect(fetchUnBondPeriod, [key.blsKey, key.status]);
+    React.useEffect(fetchUnBondPeriod, 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [key.blsKey, key.status]);
 
     const statusColor = key.status.key === 'staked' ? 'success' : key.status.key === 'jailed' ? 'danger' : 'warning';
     return (
