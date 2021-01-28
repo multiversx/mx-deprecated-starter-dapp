@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useContext } from "../../context";
 import { Delegation } from "../../contracts";
@@ -30,67 +29,73 @@ const StakeProviderActionsContainer = () => {
     const getPemPubKeysWithSignature = (pemFiles: DropzoneFileType[]) => {
         let keysData = '';
         pemFiles.forEach(({ pubKey, signature }) => {
-          keysData += `${pubKey}@${signature}`;
+            keysData += `${pubKey}@${signature}`;
         });
         return keysData;
-      };
+    };
 
     const addNodesRequest = {
         data: (pemFiles: DropzoneFileType[]) => {
-          return `${getPemPubKeysWithSignature(pemFiles)}`;
+            return `${getPemPubKeysWithSignature(pemFiles)}`;
         },
         variables: [
-          {
-            name: 'pemFiles',
-            type: 'pemUpload',
-          },
+            {
+                name: 'pemFiles',
+                type: 'pemUpload',
+            },
         ]
-      }
+    }
 
     return (
-        <div className="card rounded border-3 ">
-            <div className="card-body text-center p-4">
-                <div className="d-flex mt-4 justify-content-center sp-action-btn">
-                    <div>
-                        <button onClick={() => setShowUpdateFeeModal(true)} className="btn btn-primary mt-3">
-                            Update fee
-                       </button>
-                        <BaseActionModal show={showUpdateFeeModal} title="Change service fee"
-                            description={`Add the percentage fee `}
-                            handleClose={() => {
-                                setShowUpdateFeeModal(false);
-                            }} handleContinue={(value) => handleUpdateFee(value)} />
-                    </div>
-                    <div>
-                        <button onClick={() => setShowDelegationCapModal(true)} className="btn btn-primary mt-3">
-                            Update Delegation Cap
-                       </button>
-                        <BaseActionModal show={showDelegationCapModal} title="Delegation cap"
-                            description={`Set Delegation Cap`}
-                            handleClose={() => {
-                                setShowDelegationCapModal(false);
-                            }} handleContinue={(value) => handleUpdateDelegationCap(value)} />
-                    </div>
+        <>
+            <div className="mb-spacer">
+                <div className="card card-small">
+                    {"Actions" && (
+                        <div className="card-header border-bottom">
+                            <h6 className="m-0">{"Actions"}</h6>
+                        </div>
+                    )}<div className="card-body d-flex flex-wrap p-3 sp-action-btn">
 
-                    <div>
-                        <button onClick={() => setAddNodesModal(true)} className="btn btn-primary mt-3">
-                            Add nodes
+                        <div>
+                            <button onClick={() => setShowUpdateFeeModal(true)} className="btn btn-primary mt-3">
+                                Update fee
                        </button>
-                        <RequestVariablesModal
-                            name="Add nodes"
-                            show={showAddNodes}
-                            handleClose={() => {
-                                setAddNodesModal(false);
-                            }}
-                            triggerDispatchEvent={(variablesData: string) => handleAddNodes(variablesData)}
-                            variables={addNodesRequest.variables}
-                            data={addNodesRequest.data}
-                        />
+                            <BaseActionModal show={showUpdateFeeModal} title="Change service fee"
+                                description={`Add the percentage fee `}
+                                handleClose={() => {
+                                    setShowUpdateFeeModal(false);
+                                }} handleContinue={(value) => handleUpdateFee(value)} />
+                        </div>
+                        <div>
+                            <button onClick={() => setShowDelegationCapModal(true)} className="btn btn-primary mt-3">
+                                Update Delegation Cap
+                       </button>
+                            <BaseActionModal show={showDelegationCapModal} title="Delegation cap"
+                                description={`Set Delegation Cap`}
+                                handleClose={() => {
+                                    setShowDelegationCapModal(false);
+                                }} handleContinue={(value) => handleUpdateDelegationCap(value)} />
+                        </div>
+
+                        <div>
+                            <button onClick={() => setAddNodesModal(true)} className="btn btn-primary mt-3">
+                                Add nodes
+                       </button>
+                            <RequestVariablesModal
+                                name="Add nodes"
+                                show={showAddNodes}
+                                handleClose={() => {
+                                    setAddNodesModal(false);
+                                }}
+                                triggerDispatchEvent={(variablesData: string) => handleAddNodes(variablesData)}
+                                variables={addNodesRequest.variables}
+                                data={addNodesRequest.data}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
-
-        </div>
+            </div >
+        </>
     )
 };
 

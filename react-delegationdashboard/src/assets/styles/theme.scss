@@ -13,7 +13,7 @@ Override Bootstrap variables only above.
 
 // Main Shards Dashboard
 @import './shards-dashboard/shards-dashboards';
-@import './../../components/DelegatorViews/stats.scss';
+@import './../../components/StatCard/stats.scss';
 @import './../../components/Trim/trim.scss';
 @import './../../components/NodesList/nodes.scss';
 

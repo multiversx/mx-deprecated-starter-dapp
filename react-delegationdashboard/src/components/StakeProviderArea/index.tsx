@@ -31,21 +31,20 @@ const StakeProviderArea = () => {
             .catch(e => console.log("error ", e))
     }
 
-
     useEffect(getContractConfig,
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [])
 
     if (!isOwner) {
-        return (<div></div>)
+        return (<></>)
     }
 
     return (
-        <div>
+        <>
             <StakeProviderViews serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
             <StakeProviderActionsContainer />
             <NodesTable />
-        </div>
+        </>
     )
 };
 
