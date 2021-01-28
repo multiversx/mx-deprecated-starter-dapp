@@ -7,11 +7,11 @@ interface BaseActionType {
 const BaseAction  = ({ actionTitle, handleContinue }: BaseActionType) => {
   
    return (
-    <div>
+    <>
       <button onClick={() => handleContinue()} className="btn btn-primary mt-3">
         {actionTitle}
       </button>
-    </div>
+    </>
   );
 };
 
