@@ -36,6 +36,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
                 .then((value) => {
                     const remainingUnBondPeriod = value.returnData[0].asNumber;
                     const newRemaining = remainingUnBondPeriod !== undefined ? remainingUnBondPeriod : 0;
+                    
                     if (ref.current !== null) {
                         setRemaining(newRemaining * 6);
                     }
@@ -48,7 +49,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
 
     const statusColor = key.status.key === 'staked' ? 'success' : key.status.key === 'jailed' ? 'danger' : 'warning';
     return (
-        <tr>
+        <tr ref={ref}>
             <td>
                 <div className="ml-2">{index + 1}</div>
             </td>
@@ -64,11 +65,11 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
                 </div>
             </td>
             <td>
-                {key.status.key === 'queued' ? (
+                {key.status.key === 'queued' && key.queueIndex && key.queueSize ?(
                     <div className={`status-badge ${statusColor}`}>
                         <div className="d-flex align-items-center">
                             <span className={`led mr-1 bg-${statusColor}`} />
-                            {key.status.value}
+                            {key.status.value} ({key.queueIndex}/{key.queueSize})
                         </div>
                     </div>
                 ) : (

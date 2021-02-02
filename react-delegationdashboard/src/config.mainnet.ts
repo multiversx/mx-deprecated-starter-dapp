@@ -115,9 +115,9 @@ export const delegationContractData: DelegationContractType[] = [
         data: 'delegate',
     },
     {
-        name: 'undelegate',
+        name: 'unDelegate',
         gasLimit: 12000000,
-        data: 'undelegate@',
+        data: 'unDelegate@',
     },
     {
         name: 'withdraw',
@@ -125,9 +125,9 @@ export const delegationContractData: DelegationContractType[] = [
         data: 'withdraw',
     },
     {
-        name: 'claim',
-        gasLimit: 12000000,
-        data: 'claim',
+        name: 'claimRewards',
+        gasLimit: 6000000,
+        data: 'claimRewards',
     },
     {
         name: 'reDelegateRewards',

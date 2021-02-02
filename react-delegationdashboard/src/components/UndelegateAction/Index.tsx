@@ -12,14 +12,14 @@ const UndelegateAction = () => {
 
   const handleUndelegate = (value: string) => {
     const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-    delegationContract.sendTransaction(value,'undelegate', nominateValToHex(value)).then();
+    delegationContract.sendTransaction('0', 'unDelegate', nominateValToHex(value)).then();
   };
   return (
     <div>
       <button onClick={() => setShowModal(true)} className="btn btn-primary mt-3">
         Undelegate
       </button>
-      <UndelegateModal show={showModal} title = "Undelegate now" description={`Select the amount of ${erdLabel} you want to undelegate.`}
+      <UndelegateModal show={showModal} title="Undelegate now" description={`Select the amount of ${erdLabel} you want to undelegate.`}
         handleClose={() => {
           setShowModal(false);
         }}
