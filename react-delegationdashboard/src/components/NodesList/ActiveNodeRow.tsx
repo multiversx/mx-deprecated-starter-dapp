@@ -9,7 +9,8 @@ import { useContext } from '../../context';
 import { addresses } from '../../contracts';
 import { NodeType } from '../../helpers/types';
 import Trim from '../Trim';
-import { nodeActions, nodeTransactions } from './NodesHelper';
+import { nodeActions } from './NodeTypes';
+import { nodeTransactions } from './StakeHooks';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake';
 
@@ -104,7 +105,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
                                     onClick={(e: React.MouseEvent) => {
                                         e.preventDefault();
                                         if (actionAllowed) {
-                                            nodeTransactions[action](key.blsKey, dapp);
+                                            nodeTransactions[action](key.blsKey, dapp).then().catch(e=> console.error('error',e));
                                         }
                                     }}
                                 >

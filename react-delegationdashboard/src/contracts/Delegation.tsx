@@ -55,7 +55,7 @@ export default class Delegation {
         .build();
       let transaction = new Transaction({
         receiver: this.contract.getAddress(),
-        value: new Balance(BigInt(value)),
+        value: Balance.eGLD(value),
         gasLimit: new GasLimit(delegationContract.gasLimit),
         data: payload
       });
