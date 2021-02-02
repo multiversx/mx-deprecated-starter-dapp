@@ -15,9 +15,7 @@ Override Bootstrap variables only above.
 @import './shards-dashboard/shards-dashboards';
 
 // custom styles
-@import './stats/stats.scss';
-@import './trim/trim.scss';
-@import './nodes/nodes.scss';
+@import 'modules/modules';
 
 /* Base
 -------------------------------------------------- */
