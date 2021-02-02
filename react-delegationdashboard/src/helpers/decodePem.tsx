@@ -1,6 +1,5 @@
 import { Address } from '@elrondnetwork/erdjs/out';
 import { BLS, ValidatorSecretKey } from '@elrondnetwork/erdjs/out/walletcore/validatorKeys';
-import { addresses } from '../contracts';
 
 function hexStringToByte(str: string) {
   if (!str) {
@@ -18,11 +17,11 @@ function getPubKey(file: string, indices: any[]) {
   return headerParts[4] ? headerParts[4] : '';
 }
 
-export default async function decodePem(file: string) {
+export default async function decodePem(file: string, delegationContract?: string) {
 
   await BLS.initIfNecessary();
   let myKey = ValidatorSecretKey.fromPem(file);
-  let dsc = new Address(addresses['delegation_smart_contract']);
+  let dsc = new Address(delegationContract);
   let signature = myKey.sign(Buffer.from(dsc.pubkey())).toString('hex');
 
   const regex = /-----/gi; 

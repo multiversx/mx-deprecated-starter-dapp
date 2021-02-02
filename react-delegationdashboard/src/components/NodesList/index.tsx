@@ -2,7 +2,6 @@ import { Address, Argument, ContractFunction } from '@elrondnetwork/erdjs/out';
 import { ContractReturnData, Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import React, { useEffect, useState } from 'react';
 import { useContext } from '../../context';
-import { addresses } from '../../contracts';
 import { NodeType } from '../../helpers/types';
 import ActiveNodeRow from './ActiveNodeRow';
 import InactiveNodeRow from './InactiveNodeRow';
@@ -15,12 +14,12 @@ const NodeStatus: { [key: string]: string } = {
 };
 
 const NodesTable = () => {
-    const { dapp } = useContext();
+    const { dapp, delegationContract, auctionContract } = useContext();
     const [keys, setKeys] = useState(new Array<NodeType>());
 
     const getAllNodesStatus = () => {
         const query = new Query({
-            address: new Address(addresses['delegation_smart_contract']),
+            address: new Address(delegationContract),
             func: new ContractFunction('getAllNodeStates')
         });
         return new Promise<Array<NodeType>>((resolve, reject) => {
@@ -36,9 +35,9 @@ const NodesTable = () => {
 
     const getBlsKeysStatus = () => {
         const query = new Query({
-            address: new Address(addresses['auction_smart_contract']),
+            address: new Address(auctionContract),
             func: new ContractFunction('getBlsKeysStatus'),
-            args: [Argument.fromPubkey(new Address(addresses['delegation_smart_contract']))]
+            args: [Argument.fromPubkey(new Address(delegationContract))]
         });
         return new Promise<Array<NodeType>>((resolve) => {
             dapp.proxy.queryContract(query)

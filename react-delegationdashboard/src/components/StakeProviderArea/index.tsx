@@ -2,21 +2,20 @@ import { Address, ContractFunction } from '@elrondnetwork/erdjs/out';
 import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import React, { useEffect, useState } from 'react';
 import { useContext } from '../../context';
-import { addresses } from '../../contracts';
 import { encode } from '../../helpers/bech32';
 import NodesTable from '../NodesList';
 import StakeProviderActionsContainer from '../StakeProviderActionsContainer';
 import StakeProviderViews from '../StakeProviderViews';
 
 const StakeProviderArea = () => {
-    const { dapp, address } = useContext();
+    const { dapp, address, delegationContract } = useContext();
     const [isOwner, setIsOwner] = useState(false);
     const [serviceFee, setServiceFee] = useState('0');
     const [maxDelegationCap, setMaxDelegationCap] = useState('0');
 
     const getContractConfig = () => {
         const query = new Query({
-            address: new Address(addresses['delegation_smart_contract']),
+            address: new Address(delegationContract),
             func: new ContractFunction('getContractConfig')
         });
 

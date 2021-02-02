@@ -4,11 +4,9 @@ import { useContext } from '../../context';
 import entireBalance from '../../helpers/entireBalance';
 import { ErrorMessage, Formik } from 'formik';
 import BigNumber from 'bignumber.js';
-
 import { object, string } from 'yup';
 import Denominate from '../Denominate';
 import { Address, Balance, Transaction } from '@elrondnetwork/erdjs/out';
-import { addresses } from '../../contracts';
 
 interface BaseModalType {
   show: boolean;
@@ -19,14 +17,14 @@ interface BaseModalType {
 }
 
 const DelegateModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
-  const { erdLabel, denomination, decimals, account, dapp, address } = useContext();
+  const { erdLabel, denomination, decimals, account, dapp, address, delegationContract } = useContext();
   const [balance, setBalance] = useState('');
   let transaction = new Transaction();
-  transaction.receiver = new Address(addresses['delegation_smart_contract']);
+  transaction.receiver = new Address(delegationContract);
   transaction.value = Balance.eGLD(0);
   useEffect(() => {
-      dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
-    }, [address, dapp.proxy]);
+    dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
+  }, [address, dapp.proxy]);
 
   const available = entireBalance({
     balance: account.balance,

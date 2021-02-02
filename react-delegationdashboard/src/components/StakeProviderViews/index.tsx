@@ -3,7 +3,6 @@ import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import * as React from 'react';
 import { decimals, denomination } from '../../config';
 import { useContext } from '../../context';
-import { addresses } from '../../contracts';
 import denominate from '../Denominate/formatters';
 import StatCard from '../StatCard';
 interface StakeProviderType {
@@ -12,8 +11,7 @@ interface StakeProviderType {
 }
 
 const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeProviderType) => {
-    const { dapp, erdLabel } = useContext();
-
+    const { dapp, erdLabel, delegationContract } = useContext();
     const [totalActiveStake, setTotalActiveStake] = React.useState('0');
     const [noNodes, setNoNodes] = React.useState('0');
     React.useEffect(() => {
@@ -23,12 +21,11 @@ const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeP
 
     const getNumberOfNodes = () => {
         const query = new Query({
-            address: new Address(addresses['delegation_smart_contract']),
+            address: new Address(delegationContract),
             func: new ContractFunction('getNumNodes')
         });
         dapp.proxy.queryContract(query)
             .then((value) => {
-                console.log('getNumNodes ', value);
                 setNoNodes(value.returnData[0].asNumber.toString() || '0');
             })
             .catch(e => {
@@ -38,12 +35,11 @@ const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeP
 
     const getTotalStake = () => {
         const query = new Query({
-            address: new Address(addresses['delegation_smart_contract']),
+            address: new Address(delegationContract),
             func: new ContractFunction('getTotalActiveStake')
         });
         dapp.proxy.queryContract(query)
             .then((value) => {
-                console.log('getTotalActiveStake ', value);
                 let input = value.returnData[0].asBigInt.toString();
                 setTotalActiveStake(denominate({ input, denomination, decimals, showLastNonZeroDecimal: true }).toString() || '0');
             })
