@@ -54,9 +54,6 @@ const UndelegateModal = ({ show, title, description, handleClose, handleContinue
                         onChange={handleChange}
                         onBlur={handleBlur} />
                     </div>
-                    <small className="form-text text-secondary mt-0">
-                      Available: <Denominate value={account.balance} />
-                    </small>
                     <ErrorMessage name="amount" />
                   </div>
                   <div className="d-flex align-items-center flex-column mt-spacer">

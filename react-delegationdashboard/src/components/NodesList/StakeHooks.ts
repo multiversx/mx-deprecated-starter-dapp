@@ -12,7 +12,7 @@ export const nodeTransactions = {
     },
     unJail: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        return delegationContract.sendTransaction('0', 'unJailNodes', blsKey);
+        return delegationContract.sendTransaction('2.5', 'unJailNodes', blsKey);
     },
     unBond: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
