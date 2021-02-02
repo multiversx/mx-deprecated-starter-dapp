@@ -1,6 +1,6 @@
-import { Address } from "@elrondnetwork/erdjs/out";
-import { BLS, ValidatorSecretKey } from "@elrondnetwork/erdjs/out/walletcore/validatorKeys";
-import { addresses } from "../contracts";
+import { Address } from '@elrondnetwork/erdjs/out';
+import { BLS, ValidatorSecretKey } from '@elrondnetwork/erdjs/out/walletcore/validatorKeys';
+import { addresses } from '../contracts';
 
 function hexStringToByte(str: string) {
   if (!str) {
@@ -22,8 +22,8 @@ export default async function decodePem(file: string) {
 
   await BLS.initIfNecessary();
   let myKey = ValidatorSecretKey.fromPem(file);
-  let dsc = new Address(addresses["delegation_smart_contract"])
-  let signature = myKey.sign(Buffer.from(dsc.pubkey())).toString("hex");
+  let dsc = new Address(addresses['delegation_smart_contract']);
+  let signature = myKey.sign(Buffer.from(dsc.pubkey())).toString('hex');
 
   const regex = /-----/gi; 
   let result;

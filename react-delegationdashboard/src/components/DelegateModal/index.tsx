@@ -15,23 +15,23 @@ interface BaseModalType {
   title: string;
   description: string;
   handleClose: () => void;
-  handleContinue: (value: string) => void
+  handleContinue: (value: string) => void;
 }
 
 const DelegateModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
   const { erdLabel, denomination, decimals, account, dapp, address } = useContext();
-  const [balance, setBalance] = useState("")
-  var transaction = new Transaction()
-  transaction.receiver = new Address(addresses["delegation_smart_contract"])
-  transaction.value = new Balance(BigInt(0))
+  const [balance, setBalance] = useState('');
+  var transaction = new Transaction();
+  transaction.receiver = new Address(addresses['delegation_smart_contract']);
+  transaction.value = new Balance(BigInt(0));
   useEffect(() => {
       dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
-    }, [address, dapp.proxy])
+    }, [address, dapp.proxy]);
 
   const available = entireBalance({
     balance: account.balance,
-    gasPrice: "12000000",
-    gasLimit: "12000000",
+    gasPrice: '12000000',
+    gasLimit: '12000000',
     denomination,
     decimals,
   });
@@ -46,7 +46,7 @@ const DelegateModal = ({ show, title, description, handleClose, handleContinue }
           <p className="lead mb-spacer">{description}</p>
 
           <Formik initialValues={{
-            amount: "10"
+            amount: '10'
           }}
             onSubmit={(values) => {
               handleContinue(values.amount);
@@ -55,7 +55,7 @@ const DelegateModal = ({ show, title, description, handleClose, handleContinue }
               amount: string()
                 .required('Required')
                 .test('minimum', `Minimum 10 ${erdLabel}`, (value) => {
-                  const bnAmount = new BigNumber(value !== undefined ? value : "");
+                  const bnAmount = new BigNumber(value !== undefined ? value : '');
                   return bnAmount.comparedTo(10) >= 0;
                 })
             })}

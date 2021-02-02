@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useContext } from "../../context";
-import { Delegation } from "../../contracts";
-import BaseActionModal from "../BaseActionModal";
-import { DropzoneFileType } from "../DropzonePem";
-import RequestVariablesModal from "../DropzonePem/RequestVariablesModal";
+import React, { useState } from 'react';
+import { useContext } from '../../context';
+import { Delegation } from '../../contracts';
+import BaseActionModal from '../BaseActionModal';
+import { DropzoneFileType } from '../DropzonePem';
+import RequestVariablesModal from '../DropzonePem/RequestVariablesModal';
 
 const StakeProviderActionsContainer = () => {
     const { dapp } = useContext();
@@ -13,18 +13,18 @@ const StakeProviderActionsContainer = () => {
 
     const handleUpdateFee = (value: string) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "changeServiceFee", (parseFloat(value) * 100).toString()).then();
-    }
+        delegationContract.sendTransaction('0', 'changeServiceFee', (parseFloat(value) * 100).toString()).then();
+    };
 
     const handleUpdateDelegationCap = (value: string) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "modifyTotalDelegationCap", value).then();
-    }
+        delegationContract.sendTransaction('0', 'modifyTotalDelegationCap', value).then();
+    };
 
     const handleAddNodes = (value: string) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "addNodes", value).then();
-    }
+        delegationContract.sendTransaction('0', 'addNodes', value).then();
+    };
 
     const getPemPubKeysWithSignature = (pemFiles: DropzoneFileType[]) => {
         let keysData = '';
@@ -44,24 +44,23 @@ const StakeProviderActionsContainer = () => {
                 type: 'pemUpload',
             },
         ]
-    }
+    };
 
     return (
         <>
             <div className="mb-spacer">
                 <div className="card card-small">
-                    {"Actions" && (
-                        <div className="card-header border-bottom">
-                            <h6 className="m-0">{"Actions"}</h6>
-                        </div>
-                    )}<div className="card-body d-flex flex-wrap p-3 sp-action-btn">
+                    <div className="card-header border-bottom">
+                        <h6 className="m-0">{'Actions'}</h6>
+                    </div>
+                    <div className="card-body d-flex flex-wrap p-3 sp-action-btn">
 
                         <div>
                             <button onClick={() => setShowUpdateFeeModal(true)} className="btn btn-primary mt-3">
                                 Update fee
                        </button>
-                            <BaseActionModal show={showUpdateFeeModal} title="Change service fee"
-                                description={`Add the percentage fee `}
+                            <BaseActionModal show={showUpdateFeeModal} title='Change service fee'
+                                description="Add the percentage fee"
                                 handleClose={() => {
                                     setShowUpdateFeeModal(false);
                                 }} handleContinue={(value) => handleUpdateFee(value)} />
@@ -70,8 +69,8 @@ const StakeProviderActionsContainer = () => {
                             <button onClick={() => setShowDelegationCapModal(true)} className="btn btn-primary mt-3">
                                 Update Delegation Cap
                        </button>
-                            <BaseActionModal show={showDelegationCapModal} title="Delegation cap"
-                                description={`Set Delegation Cap`}
+                            <BaseActionModal show={showDelegationCapModal} title='Delegation cap'
+                                description='Set Delegation Cap'
                                 handleClose={() => {
                                     setShowDelegationCapModal(false);
                                 }} handleContinue={(value) => handleUpdateDelegationCap(value)} />
@@ -96,7 +95,7 @@ const StakeProviderActionsContainer = () => {
                 </div>
             </div >
         </>
-    )
+    );
 };
 
 export default StakeProviderActionsContainer;

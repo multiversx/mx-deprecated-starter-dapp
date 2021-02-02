@@ -1,10 +1,10 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { useContext } from "../../context";
-import { NodeType } from "../../helpers/types";
-import Trim from "../Trim";
-import { inactiveNodeActions, nodeTransactions } from "./NodeTypes";
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { useContext } from '../../context';
+import { NodeType } from '../../helpers/types';
+import Trim from '../Trim';
+import { inactiveNodeActions, nodeTransactions } from './NodeTypes';
 
 const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
 
@@ -50,12 +50,12 @@ const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: numb
                     key="stake"
                     onClick={(e: React.MouseEvent) => {
                         e.preventDefault();
-                        nodeTransactions["stake"](key.blsKey, dapp);
+                        nodeTransactions['stake'](key.blsKey, dapp);
                     }}>
-                    {inactiveNodeActions["stake"].label}{' '}
+                    {inactiveNodeActions['stake'].label}{' '}
                 </button>
             </td>
         </tr>
-    )
-}
+    );
+};
 export default InactiveNodeRow;

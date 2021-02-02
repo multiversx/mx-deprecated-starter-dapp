@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useContext } from '../../context';
 
 import DelegateModal from '../DelegateModal';
@@ -12,8 +12,8 @@ const DelegateAction = () => {
 
   const handleDelegate = (value: string) => {
     const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-    delegationContract.sendTransaction(value,"delegate").then();
-  }
+    delegationContract.sendTransaction(value, 'delegate').then();
+  };
   return (
     <div>
       <button onClick={() => setShowDelegateModal(true)} className="btn btn-primary mt-3">
