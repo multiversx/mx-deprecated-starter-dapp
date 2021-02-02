@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 interface BaseActionType {
     actionTitle: string;
-    handleContinue: () => void
+    handleContinue: () => void;
   }
 
 const BaseAction  = ({ actionTitle, handleContinue }: BaseActionType) => {

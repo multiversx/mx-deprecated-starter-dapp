@@ -2,10 +2,10 @@ import React, {  } from 'react';
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
-import PageState from "../../components/PageState";
-import {useContext} from "../../context";
-import LedgerLogin from "../../components/Login/Ledger";
-import WalletLogin from "../../components/Login/Wallet";
+import PageState from '../../components/PageState';
+import {useContext} from '../../context';
+import LedgerLogin from '../../components/Login/Ledger';
+import WalletLogin from '../../components/Login/Wallet';
 
 const Home = () => {
   const {loading, error, loggedIn} = useContext();
@@ -33,7 +33,7 @@ const Home = () => {
           </div>
       }
     </div>
-  )
+  );
 };
 
 export default Home;

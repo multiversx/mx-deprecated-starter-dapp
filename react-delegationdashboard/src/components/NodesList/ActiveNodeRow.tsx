@@ -1,15 +1,15 @@
-import { Address, Argument, ContractFunction } from "@elrondnetwork/erdjs/out";
-import { Query } from "@elrondnetwork/erdjs/out/smartcontracts/query";
-import { faEllipsisV, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import moment from "moment";
-import React from "react";
-import { Nav, NavDropdown } from "react-bootstrap";
-import { useContext } from "../../context";
-import { addresses } from "../../contracts";
-import { NodeType } from "../../helpers/types";
-import Trim from "../Trim";
-import { nodeActions, nodeTransactions } from "./NodeTypes";
+import { Address, Argument, ContractFunction } from '@elrondnetwork/erdjs/out';
+import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import { faEllipsisV, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment';
+import React from 'react';
+import { Nav, NavDropdown } from 'react-bootstrap';
+import { useContext } from '../../context';
+import { addresses } from '../../contracts';
+import { NodeType } from '../../helpers/types';
+import Trim from '../Trim';
+import { nodeActions, nodeTransactions } from './NodeTypes';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake';
 
@@ -26,10 +26,10 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
     const [remaining, setRemaining] = React.useState(0);
     const fetchUnBondPeriod = () => {
         const query = new Query({
-            address: new Address(addresses["staking_smart_contract"]),
+            address: new Address(addresses['staking_smart_contract']),
             func: new ContractFunction('getRemainingUnBondPeriod'),
             args: [Argument.fromHex(key.blsKey)]
-        })
+        });
         if (key.status.key === 'unStaked') {
             dapp.proxy.queryContract(query)
                 .then((value) => {
@@ -39,13 +39,11 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
                         setRemaining(newRemaining * 6);
                     }
                 })
-                .catch(e => console.log("error ", e))
+                .catch(e => console.log('error ', e));
         }
     };
 
-    React.useEffect(fetchUnBondPeriod, 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [key.blsKey, key.status]);
+    React.useEffect(fetchUnBondPeriod, [key.blsKey, key.status]);
 
     const statusColor = key.status.key === 'staked' ? 'success' : key.status.key === 'jailed' ? 'danger' : 'warning';
     return (
@@ -127,7 +125,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
                 </Nav>
             </td>
         </tr>
-    )
-}
+    );
+};
 
 export default ActiveNodeRow;
