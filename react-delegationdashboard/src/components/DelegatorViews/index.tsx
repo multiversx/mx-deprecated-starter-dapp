@@ -26,7 +26,7 @@ const DelegatorViews = ({ title = '' }: StatCardType) => {
             .then((value) => {
                 setClaimableRewards(DenominateResponse(value) || '0');
             })
-            .catch(e => console.log('error getClaimableRewards', e));
+            .catch(e => console.error('getClaimableRewards error', e));
     };
 
     const getUserActiveStake = () => {
@@ -39,7 +39,7 @@ const DelegatorViews = ({ title = '' }: StatCardType) => {
             .then((value) => {
                 setUserActiveState(DenominateResponse(value) || '');
             })
-            .catch(e => console.log('error', e));
+            .catch(e => console.error('getUserActiveStake error', e));
     };
 
     const getUserUnStakeValue = () => {
@@ -52,7 +52,7 @@ const DelegatorViews = ({ title = '' }: StatCardType) => {
             .then((value) => {
                 setUserUnstakedValue(DenominateResponse(value) || '');
             })
-            .catch(e => console.log('error', e));
+            .catch(e => console.error('GetUserUnStakeValue error', e));
     };
 
     const getAllData = () => {
@@ -73,9 +73,9 @@ const DelegatorViews = ({ title = '' }: StatCardType) => {
                             <h6 className="m-0">{title}</h6>
                         </div>
                     )}<div className="card-body d-flex flex-wrap p-3">
-                        <StatCard title="Claimable rewards" value={claimableRewards} valueUnit={erdLabel}></StatCard>
-                        <StatCard title="Active stake" value={userActiveStake} valueUnit={erdLabel}></StatCard>
-                        <StatCard title="Unstaked value" value={userUnstakeValue} valueUnit={erdLabel}></StatCard>
+                        <StatCard title="Claimable rewards" value={claimableRewards} valueUnit={erdLabel} />
+                        <StatCard title="Active stake" value={userActiveStake} valueUnit={erdLabel} />
+                        <StatCard title="Unstaked value" value={userUnstakeValue} valueUnit={erdLabel} />
                     </div>
                 </div>
             </div>

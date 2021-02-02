@@ -28,7 +28,7 @@ const StakeProviderArea = () => {
                 setMaxDelegationCap(value.returnData[2].asString || '0');
                 console.log('getContractConfig', value);
             })
-            .catch(e => console.log('error ', e));
+            .catch(e => console.error('getContractConfig error ', e));
     };
 
     useEffect(getContractConfig, []);

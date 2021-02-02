@@ -4,7 +4,7 @@ import { ErrorMessage, Formik } from 'formik';
 
 import { object, string } from 'yup';
 
-interface BaseModalType {
+interface RequestTransactionModalType {
   show: boolean;
   title: string;
   description: string;
@@ -12,7 +12,7 @@ interface BaseModalType {
   handleContinue: (value: string) => void;
 }
 
-const BaseActionModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
+const RequestTransactionModal = ({ show, title, description, handleClose, handleContinue }: RequestTransactionModalType) => {
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
@@ -71,4 +71,4 @@ const BaseActionModal = ({ show, title, description, handleClose, handleContinue
   );
 };
 
-export default BaseActionModal;
+export default RequestTransactionModal;

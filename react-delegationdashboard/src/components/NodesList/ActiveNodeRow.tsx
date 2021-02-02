@@ -9,7 +9,7 @@ import { useContext } from '../../context';
 import { addresses } from '../../contracts';
 import { NodeType } from '../../helpers/types';
 import Trim from '../Trim';
-import { nodeActions, nodeTransactions } from './NodeTypes';
+import { nodeActions, nodeTransactions } from './NodesHelper';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake';
 
@@ -39,7 +39,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
                         setRemaining(newRemaining * 6);
                     }
                 })
-                .catch(e => console.log('error ', e));
+                .catch(e => console.error('fetchUnBondPeriod error ', e));
         }
     };
 
