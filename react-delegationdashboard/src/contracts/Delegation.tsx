@@ -5,15 +5,14 @@ import {
 } from '@elrondnetwork/erdjs';
 import { setItem } from '../storage/session';
 import { delegationContractData } from '../config';
-import addresses from './addresses';
 
 export default class Delegation {
   contract: SmartContract;
   proxyProvider: ProxyProvider;
   signerProvider?: IDappProvider;
 
-  constructor(provider: ProxyProvider, signer?: IDappProvider) {
-    const address = new Address(addresses['delegation_smart_contract']);
+  constructor(provider: ProxyProvider, delegationContract?: string, signer?: IDappProvider) {
+    const address = new Address(delegationContract);
     this.contract = new SmartContract({ address });
     this.proxyProvider = provider;
     this.signerProvider = signer;

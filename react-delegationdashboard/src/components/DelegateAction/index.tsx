@@ -5,14 +5,14 @@ import DelegateModal from '../DelegateModal';
 import Delegation from '../../contracts/Delegation';
 
 const DelegateAction = () => {
-  const { dapp, erdLabel } = useContext();
+  const { dapp, erdLabel, delegationContract } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(
     false
   );
 
   const handleDelegate = (value: string) => {
-    const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-    delegationContract.sendTransaction(value, 'delegate').then();
+    const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
+    delegation.sendTransaction(value, 'delegate').then();
   };
   return (
     <div>

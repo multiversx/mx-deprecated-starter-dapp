@@ -14,7 +14,9 @@ export const networks: NetworkType[] = [
         walletAddress: 'https://wallet.elrond.com/dapp/init',
         apiAddress: 'https://api.elrond.com',
         explorerAddress: 'http://testenet-explorer.elrond.com/',
-        delegationContract: 'erd1qqqqqqqqqqqqqpgqxwakt2g7u9atsnr03gqcgmhcv38pt7mkd94q6shuwt',
+        delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
+        auctionContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
+        stakingContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7'
     },
     {
         default: true,
@@ -25,7 +27,9 @@ export const networks: NetworkType[] = [
         walletAddress: 'https://testnet-wallet.elrond.com/dapp/init',
         apiAddress: 'https://testnet-api.elrond.com',
         explorerAddress: 'http://testenet-explorer.elrond.com/',
-        delegationContract: 'erd1qqqqqqqqqqqqqpgqp699jngundfqw07d8jzkepucvpzush6k3wvqyc44rx',
+        delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
+        auctionContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
+        stakingContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7'
     },
 ];
 
@@ -36,6 +40,8 @@ const networkBaseSchema = object({
     name: string().defined().required(),
     theme: string(),
     delegationContract: string(),
+    auctionContract: string(),
+    stakingContract: string(),
     walletAddress: string(),
     apiAddress: string(),
     explorerAddress: string(),

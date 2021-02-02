@@ -11,7 +11,9 @@ export const defaultNetwork: NetworkType= {
   walletAddress: '',
   apiAddress: '',
   explorerAddress: '',
-  delegationContract: ''
+  delegationContract: '',
+  auctionContract: '',
+  stakingContract: ''
 };
 
 export interface DappState {
@@ -30,6 +32,9 @@ export interface StateType {
   decimals: number;
   account: AccountType;
   explorerAddress: string;
+  delegationContract?: string;
+  auctionContract?: string;
+  stakingContract?: string;
 }
 export const emptyAccount: AccountType = {
   balance: '...',
@@ -52,7 +57,10 @@ export const initialState = (optionalConfig?: NetworkType[]) => {
     address: getItem('address'),
     account: emptyAccount,
     erdLabel: sessionNetwork?.erdLabel,
-    explorerAddress: sessionNetwork.explorerAddress || 'https://explorer.elrond.com'
+    explorerAddress: sessionNetwork.explorerAddress || 'https://explorer.elrond.com',
+    delegationContract: sessionNetwork.delegationContract,
+    auctionContract: sessionNetwork.auctionContract,
+    stakingContract: sessionNetwork.stakingContract
   };
 };  
 
