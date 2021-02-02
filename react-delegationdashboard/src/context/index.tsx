@@ -1,6 +1,6 @@
 import React from 'react';
 import { StateType, initialState } from './state';
-import { DispatchType, reducer } from "./reducer";
+import { DispatchType, reducer } from './reducer';
 
 export interface ContextType {
   children: React.ReactNode;

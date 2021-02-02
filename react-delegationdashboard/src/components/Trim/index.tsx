@@ -25,9 +25,7 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
     };
   };
 
-  React.useEffect(effect, 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [debounce]);
+  React.useEffect(effect, [debounce]);
 
   React.useEffect(() => {
     if (childRef.current && wrapperRef.current) {

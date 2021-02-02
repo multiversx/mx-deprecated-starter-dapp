@@ -59,9 +59,7 @@ const DropzonePem = ({
       setFieldValue(fieldName, updatedFiles);
     }
   };
-  React.useEffect(updateFieldValue, 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [files]);
+  React.useEffect(updateFieldValue, [files]);
 
   const getUpdatedFiles = ({
     existing,
@@ -100,13 +98,12 @@ const DropzonePem = ({
     onDrop: async (files: any) => {
       const onload = (fileReader: any, name: string) => async (e: any) => {
         try {
-          let { value, pubKey, signature } = await decodePem(fileReader.result!)
+          let { value, pubKey, signature } = await decodePem(fileReader.result!);
           setFiles((existing) => {
-            debugger
             return getUpdatedFiles({ existing, value, pubKey, name, signature });
           });
         } catch (e) {
-          console.log("error decode pem", e)
+          console.log('error decode pem', e);
           setFiles((existing) => {
             return getUpdatedFiles({ existing, value: '', pubKey: '', name, signature: '' });
           });

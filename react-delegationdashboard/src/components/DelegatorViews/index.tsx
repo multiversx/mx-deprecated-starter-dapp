@@ -10,60 +10,59 @@ interface StatCardType {
     title: string;
 }
 
-const DelegatorViews = ({ title = "" }: StatCardType) => {
+const DelegatorViews = ({ title = '' }: StatCardType) => {
     const { dapp, address, erdLabel } = useContext();
 
-    const [userActiveStake, setUserActiveState] = React.useState("0");
-    const [userUnstakeValue, setUserUnstakedValue] = React.useState("0");
-    const [claimableRewards, setClaimableRewards] = React.useState("0");
+    const [userActiveStake, setUserActiveState] = React.useState('0');
+    const [userUnstakeValue, setUserUnstakedValue] = React.useState('0');
+    const [claimableRewards, setClaimableRewards] = React.useState('0');
     const getClaimableRewards = () => {
         const query = new Query({
-            address: new Address(addresses["delegation_smart_contract"]),
+            address: new Address(addresses['delegation_smart_contract']),
             func: new ContractFunction('getClaimableRewards'),
             args: [Argument.fromPubkey(new Address(address))]
-        })
+        });
         dapp.proxy.queryContract(query)
             .then((value) => {
-                setClaimableRewards(DenominateResponse(value) || "0")
+                setClaimableRewards(DenominateResponse(value) || '0');
             })
-            .catch(e => console.log("error getClaimableRewards", e))
-    }
+            .catch(e => console.log('error getClaimableRewards', e));
+    };
 
     const getUserActiveStake = () => {
         const query = new Query({
-            address: new Address(addresses["delegation_smart_contract"]),
+            address: new Address(addresses['delegation_smart_contract']),
             func: new ContractFunction('getUserActiveStake'),
             args: [Argument.fromPubkey(new Address(address))]
-        })
+        });
         dapp.proxy.queryContract(query)
             .then((value) => {
-                setUserActiveState(DenominateResponse(value) || "")
+                setUserActiveState(DenominateResponse(value) || '');
             })
-            .catch(e => console.log("error", e))
-    }
+            .catch(e => console.log('error', e));
+    };
 
     const getUserUnStakeValue = () => {
         const query = new Query({
-            address: new Address(addresses["delegation_smart_contract"]),
+            address: new Address(addresses['delegation_smart_contract']),
             func: new ContractFunction('getUserUnStakedValue'),
             args: [Argument.fromPubkey(new Address(address))]
-        })
+        });
         dapp.proxy.queryContract(query)
             .then((value) => {
-                setUserUnstakedValue(DenominateResponse(value) || "")
+                setUserUnstakedValue(DenominateResponse(value) || '');
             })
-            .catch(e => console.log("error", e))
-    }
+            .catch(e => console.log('error', e));
+    };
 
     const getAllData = () => {
         getClaimableRewards();
         getUserActiveStake();
         getUserUnStakeValue();
-    }
+    };
 
     React.useEffect(getAllData, 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [])
+        []);
 
     return (
         <div className="row stats full-width">

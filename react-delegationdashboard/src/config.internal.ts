@@ -55,115 +55,83 @@ networks.forEach((network) => {
 
 export const delegationContractData: DelegationContractType[] = [
     {
-        name: "createNewDelegationContract",
+        name: 'createNewDelegationContract',
         gasLimit: 6000000,
         data: 'createNewDelegationContract@',
     },
     {
-        name: "setAutomaticActivation",
+        name: 'setAutomaticActivation',
         gasLimit: 6000000,
         data: 'setAutomaticActivation@',
     },
     {
-        name: "changeServiceFee",
+        name: 'changeServiceFee',
         gasLimit: 6000000,
         data: 'changeServiceFee@',
     },
     {
-        name: "modifyTotalDelegationCap",
+        name: 'modifyTotalDelegationCap',
         gasLimit: 6000000,
         data: 'modifyTotalDelegationCap@',
     },
     {
-        name: "addNodes",
+        name: 'addNodes',
         gasLimit: 12000000,
         data: 'addNodes@',
     },
     {
-        name: "removeNodes",
+        name: 'removeNodes',
         gasLimit: 12000000,
         data: 'removeNodes@',
     },
     {
-        name: "stakeNodes",
+        name: 'stakeNodes',
         gasLimit: 12000000,
         data: 'stakeNodes@',
     },
     {
-        name: "reStakeUnStakedNodes",
+        name: 'reStakeUnStakedNodes',
         gasLimit: 120000000,
         data: 'reStakeUnStakedNodes@',
     },
     {
-        name: "unStakeNodes",
+        name: 'unStakeNodes',
         gasLimit: 12000000,
         data: 'unStakeNodes@',
     },
     {
-        name: "unBondNodes",
+        name: 'unBondNodes',
         gasLimit: 12000000,
         data: 'unBondNodes@',
     },
     {
-        name: "unJailNodes",
+        name: 'unJailNodes',
         gasLimit: 12000000,
         data: 'unJailNodes@',
     },
     {
-        name: "delegate",
+        name: 'delegate',
         gasLimit: 12000000,
         data: 'delegate',
     },
     {
-        name: "undelegate",
+        name: 'undelegate',
         gasLimit: 12000000,
         data: 'undelegate@',
     },
     {
-        name: "withdraw",
+        name: 'withdraw',
         gasLimit: 12000000,
         data: 'withdraw',
     },
     {
-        name: "claim",
+        name: 'claim',
         gasLimit: 12000000,
         data: 'claim',
     },
     {
-        name: "reDelegateRewards",
+        name: 'reDelegateRewards',
         gasLimit: 12000000,
         data: 'reDelegateRewards',
-    }
-]
-
-export const vmQueries = [
-    {
-        func: "getNumNodes",
-    }, {
-        func: "getAllNodeStates",
-    }, {
-        func: "getUserUnBondable",
-    }, {
-        func: "getUserActiveStake",
-    }, {
-        func: "getUserUnDelegatedList",
-    }, {
-        func: "getUserUnStakedValue",
-    }, {
-        func: "getTotalActiveStake",
-    }, {
-        func: "getTotalUnStaked",
-    }, {
-        func: "getNumUsers",
-    }, {
-        func: "getTotalCumulatedRewards",
-    }, {
-        func: "getClaimableRewards",
-    }, {
-        func: "getTotalUnStakedFromNodes",
-    }, {
-        func: "getTotalUnBondedFromNodes",
-    }, {
-        func: "getContractConfig",
     }
 ];

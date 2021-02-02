@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import Denominate from "../../components/Denominate";
-import { useContext } from "../../context";
+import Denominate from '../../components/Denominate';
+import { useContext } from '../../context';
 import { addresses } from '../../contracts';
 import StakeProviderArea from '../../components/StakeProviderArea';
 import DelegatorArea from '../../components/DelegatorArea';
 import { Address } from '@elrondnetwork/erdjs/out';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const Dashboard = () => {
   const { address, dapp } = useContext();
-  const [balance, setBalance] = useState("")
+  const [balance, setBalance] = useState('');
 
   useEffect(function () {
     dapp.proxy.getAccount(new Address(address))
-      .then((value) => setBalance(value.balance.toString()))
+      .then((value) => setBalance(value.balance.toString()));
   }, 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  [])
+  []);
 
   return (
     <div className="container py-4">
@@ -32,7 +32,7 @@ const Dashboard = () => {
                     </div>
                     <div className="mb-4">
                       <span className="opacity-6 mr-1">Contract address:</span>
-                      <span>{addresses["delegation_smart_contract"]}</span>
+                      <span>{addresses['delegation_smart_contract']}</span>
                     </div>
                     <div>
                       <h3 className="text-white">
@@ -50,7 +50,7 @@ const Dashboard = () => {
       </div>
     </div>
 
-  )
+  );
 };
 
 export default Dashboard;

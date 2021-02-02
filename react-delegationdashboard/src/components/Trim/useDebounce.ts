@@ -9,9 +9,7 @@ export default (value: any, timeout: number) => {
     return () => clearTimeout(handler);
   };
 
-  useEffect(effect, 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value]);
+  useEffect(effect, [value]);
 
   return state;
 };

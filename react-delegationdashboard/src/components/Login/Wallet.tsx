@@ -1,7 +1,7 @@
-import { Address } from "@elrondnetwork/erdjs/out";
-import React, { useEffect } from "react";
-import { useContext, useDispatch } from "../../context";
-import { getItem, removeItem, setItem } from "../../storage/session";
+import { Address } from '@elrondnetwork/erdjs/out';
+import React, { useEffect } from 'react';
+import { useContext, useDispatch } from '../../context';
+import { getItem, removeItem, setItem } from '../../storage/session';
 
 const WalletLogin = () => {
 
@@ -40,16 +40,15 @@ const WalletLogin = () => {
           dapp.provider.getAddress()
             .then(address => {
               removeItem('wallet_login');
-              dispatch({ type: "login", address });
+              dispatch({ type: 'login', address });
             }).then((value) =>
-              dapp.proxy.getAccount(new Address(getItem("address"))).then(account =>
-                dispatch({ type: "setBalance", balance: account.balance.toString() }))
+              dapp.proxy.getAccount(new Address(getItem('address'))).then(account =>
+                dispatch({ type: 'setBalance', balance: account.balance.toString() }))
 
             ).catch(err => {
               dispatch({ type: 'loading', loading: false });
             });
-        })
-
+        });
     }
 
   }, [dapp.provider, dapp.proxy, dispatch]);
@@ -71,7 +70,7 @@ const WalletLogin = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default WalletLogin;

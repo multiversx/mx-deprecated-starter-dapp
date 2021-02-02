@@ -10,7 +10,7 @@ interface BaseModalType {
   title: string;
   description: string;
   handleClose: () => void;
-  handleContinue: (value: string) => void
+  handleContinue: (value: string) => void;
 }
 
 const UndelegateModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {

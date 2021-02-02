@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useContext } from '../../context';
 import Delegation from '../../contracts/Delegation';
 import { nominateValToHex } from '../../helpers/nominate';
@@ -12,8 +12,8 @@ const UndelegateAction = () => {
 
   const handleUndelegate = (value: string) => {
     const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-    delegationContract.sendTransaction(value,"undelegate", nominateValToHex(value)).then();
-  }
+    delegationContract.sendTransaction(value,'undelegate', nominateValToHex(value)).then();
+  };
   return (
     <div>
       <button onClick={() => setShowModal(true)} className="btn btn-primary mt-3">

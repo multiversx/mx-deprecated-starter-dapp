@@ -1,4 +1,4 @@
-import { initialState, StateType } from "./state";
+import { initialState, StateType } from './state';
 import { setItem, removeItem } from '../storage/session';
 
 export type DispatchType = (action: ActionType) => void;
@@ -7,8 +7,8 @@ export type ActionType =
   | { type: 'login'; address: StateType['address'] }
   | { type: 'logout' }
   | { type: 'loading'; loading: StateType['loading'] }
-  | { type: 'setProvider'; provider: StateType['dapp']["provider"] }
-  | { type: 'setBalance'; balance: StateType['account']["balance"] }
+  | { type: 'setProvider'; provider: StateType['dapp']['provider'] }
+  | { type: 'setBalance'; balance: StateType['account']['balance'] }
   ;
 
 export function reducer(state: StateType, action: ActionType): StateType {
@@ -29,7 +29,7 @@ export function reducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         loading
-      }
+      };
     }
 
     case 'setProvider': {
@@ -40,7 +40,7 @@ export function reducer(state: StateType, action: ActionType): StateType {
           ...state.dapp,
           provider: provider,
         }
-      }
+      };
     }
 
     case 'setBalance': {
@@ -51,13 +51,13 @@ export function reducer(state: StateType, action: ActionType): StateType {
           ...state.account,
           balance: balance
         }
-      }
+      };
     }
 
     case 'logout': {
       removeItem('logged_in');
       removeItem('address');
-      return initialState()
+      return initialState();
     }
 
     default: {

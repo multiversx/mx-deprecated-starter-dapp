@@ -1,7 +1,7 @@
 import React from 'react';
-import Dashboard from "./pages/Dashboard";
-import Home from "./pages/Home";
-import withPageTitle from "./components/PageTitle";
+import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
+import withPageTitle from './components/PageTitle';
 
 interface RouteType {
   path: string;

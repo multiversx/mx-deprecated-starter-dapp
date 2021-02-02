@@ -1,4 +1,4 @@
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js';
 
 export default function nominate(input: string, paramDenomination?: number) {
     const parts = input.toString().split('.');
