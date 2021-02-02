@@ -1,57 +1,49 @@
-import { Address } from "@elrondnetwork/erdjs/out";
-import React, { useEffect, useState } from "react"
-import { useContext } from "../../context"
-import Delegation from "../../contracts/Delegation";
+import { Address, ContractFunction } from '@elrondnetwork/erdjs/out';
+import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import React, { useEffect, useState } from 'react';
+import { useContext } from '../../context';
+import { addresses } from '../../contracts';
+import { encode } from '../../helpers/bech32';
+import NodesTable from '../NodesList';
+import StakeProviderActionsContainer from '../StakeProviderActionsContainer';
+import StakeProviderViews from '../StakeProviderViews';
 
 const StakeProviderArea = () => {
-    const { loggedIn, address, dapp } = useContext()    
-    const [, setBalance] = useState("")
-    useEffect(function () {
-            dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
-        }, [])
+    const { dapp, address } = useContext();
+    const [isOwner, setIsOwner] = useState(false);
+    const [serviceFee, setServiceFee] = useState('0');
+    const [maxDelegationCap, setMaxDelegationCap] = useState('0');
 
-    if (!loggedIn) {
-        return (<div></div>)
-    }
+    const getContractConfig = () => {
+        const query = new Query({
+            address: new Address(addresses['delegation_smart_contract']),
+            func: new ContractFunction('getContractConfig')
+        });
 
-    const handleUpdateFee = () => {
-        const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("", "").then();
+        dapp.proxy.queryContract(query)
+            .then((value) => {
+                let ownerAddress = encode(value.returnData[0].asHex);
+                setIsOwner(address.localeCompare(ownerAddress) < 0 ? false : true);
+                setServiceFee((parseFloat(value.returnData[1].asHex) / 100).toString());
+                setMaxDelegationCap(value.returnData[2].asString || '0');
+                console.log('getContractConfig', value);
+            })
+            .catch(e => console.error('getContractConfig error ', e));
+    };
+
+    useEffect(getContractConfig, []);
+
+    if (!isOwner) {
+        return (<></>);
     }
 
     return (
-        <div className="card rounded border-3 app-center-content">
-            <div className="card-body text-center p-4">
-                <div className="d-flex mt-4 justify-content-center sp-action-btn">
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Update Fee
-                        </button>
-                    </div>
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Set Delegation Cap
-                        </button>
-                    </div>
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Add Nodes
-                        </button>
-                    </div>
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Activate Nodes
-                        </button>
-                    </div>
-                    <div>
-                        <button onClick={() => handleUpdateFee()} className="btn btn-primary mt-3">
-                            Deactivate Nodes
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+        <>
+            <StakeProviderViews serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
+            <StakeProviderActionsContainer />
+            <NodesTable />
+        </>
+    );
 };
 
 export default StakeProviderArea;

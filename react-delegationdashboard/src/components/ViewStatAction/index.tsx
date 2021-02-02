@@ -1,18 +1,17 @@
-import React from 'react'
 interface BaseActionType {
     actionTitle: string;
-    handleContinue: () => void
+    handleContinue: () => void;
   }
 
-const BaseAction  = ({ actionTitle, handleContinue }: BaseActionType) => {
+const ViewStatAction  = ({ actionTitle, handleContinue }: BaseActionType) => {
   
    return (
-    <div>
+    <>
       <button onClick={() => handleContinue()} className="btn btn-primary mt-3">
         {actionTitle}
       </button>
-    </div>
+    </>
   );
 };
 
-export default BaseAction;
+export default ViewStatAction;

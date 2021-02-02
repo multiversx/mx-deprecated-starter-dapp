@@ -4,6 +4,7 @@
 $headings-font-weight: 300 !important;
 $primary: #1b46c2;
 $light: #fafafa;
+$success: #28a745;
 
 /* Do not move the imports from here. 
 Override Bootstrap variables only above.
@@ -12,6 +13,9 @@ Override Bootstrap variables only above.
 
 // Main Shards Dashboard
 @import './shards-dashboard/shards-dashboards';
+
+// custom styles
+@import 'modules/modules';
 
 /* Base
 -------------------------------------------------- */
@@ -92,6 +96,12 @@ html {
       opacity: 0.9;
     }
   }
+}
+
+.node-action-btn {
+    justify-content: center;
+    align-items: center;
+    margin: 0 7px;
 }
 
 .transactions {
@@ -214,4 +224,10 @@ footer {
 }
 .login-card__container {
   margin-bottom: 40px;
+}
+
+.led {
+  height: 0.625rem;
+  width: 0.625rem;
+  border-radius: 50%;
 }

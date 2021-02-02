@@ -2,26 +2,19 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useContext } from '../../context';
 import { ErrorMessage, Formik } from 'formik';
-
 import { object, string } from 'yup';
 import Denominate from '../Denominate';
-import { Address, Balance, Transaction } from '@elrondnetwork/erdjs/out';
-import { addresses } from '../../contracts';
 
 interface BaseModalType {
   show: boolean;
   title: string;
   description: string;
   handleClose: () => void;
-  handleContinue: (value: string) => void
+  handleContinue: (value: string) => void;
 }
 
 const UndelegateModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
-
   const { erdLabel, account } = useContext();
-  var transaction = new Transaction()
-  transaction.receiver = new Address(addresses["delegation_smart_contract"])
-  transaction.value = new Balance(BigInt(0))
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>

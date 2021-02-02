@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, {  } from 'react';
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
-import BigNumber from "bignumber.js";
-import PageState from "../../components/PageState";
-import {useContext} from "../../context";
-import LedgerLogin from "../../components/Login/Ledger";
-import WalletLogin from "../../components/Login/Wallet";
-import {addresses, Crowdfund} from '../../contracts';
+import PageState from '../../components/PageState';
+import {useContext} from '../../context';
+import LedgerLogin from '../../components/Login/Ledger';
+import WalletLogin from '../../components/Login/Wallet';
 
 const Home = () => {
-  const {loading, error, loggedIn, dapp} = useContext();
-  const [, setRaised] = useState(new BigNumber(0));
-  const [, setValueLoading] = useState(true);
-  const ref = React.useRef(null);
+  const {loading, error, loggedIn} = useContext();
 
-  useEffect(() => {
-    const crowdfundContract = new Crowdfund(addresses["delegation_smart_contract"], dapp.proxy);
-    crowdfundContract.currentFunds().then((value: BigNumber) => {
-      setRaised(value);
-    }).catch(err => console.warn(err))
-      .finally(() => setValueLoading(false));
-  }, []);
+  const ref = React.useRef(null);
 
   return (
     <div ref={ref} className="d-flex flex-fill align-items-center container">
@@ -44,7 +33,7 @@ const Home = () => {
           </div>
       }
     </div>
-  )
+  );
 };
 
 export default Home;
