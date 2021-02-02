@@ -57,10 +57,10 @@ const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeP
                         <h6 className="m-0">Network overview</h6>
                     </div>
                     <div className="card-body d-flex flex-wrap p-3">
-                        <StatCard title="Number of nodes" value={noNodes} valueUnit="nodes"></StatCard>
-                        <StatCard title="Total Stake" value={totalActiveStake} valueUnit={erdLabel}></StatCard>
-                        <StatCard title="Service Fee" value={serviceFee} valueUnit="%"></StatCard>
-                        <StatCard title="Max delegation cap" value={maxDelegationCap} valueUnit=""></StatCard>
+                        <StatCard title="Number of nodes" value={noNodes} valueUnit="nodes" />
+                        <StatCard title="Total Stake" value={totalActiveStake} valueUnit={erdLabel} />
+                        <StatCard title="Service Fee" value={serviceFee} valueUnit="%" />
+                        <StatCard title="Max delegation cap" value={maxDelegationCap} valueUnit="" />
                     </div>
                 </div>
             </div>
