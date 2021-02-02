@@ -25,7 +25,6 @@ const StakeProviderArea = () => {
                 setIsOwner(address.localeCompare(ownerAddress) < 0 ? false : true);
                 setServiceFee((parseFloat(value.returnData[1].asHex) / 100).toString());
                 setMaxDelegationCap(value.returnData[2].asString || '0');
-                console.log('getContractConfig', value);
             })
             .catch(e => console.error('getContractConfig error ', e));
     };
