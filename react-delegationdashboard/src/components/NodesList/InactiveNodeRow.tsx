@@ -4,7 +4,8 @@ import React from 'react';
 import { useContext } from '../../context';
 import { NodeType } from '../../helpers/types';
 import Trim from '../Trim';
-import { inactiveNodeActions, nodeTransactions } from './NodesHelper';
+import { inactiveNodeActions } from './NodeTypes';
+import { nodeTransactions } from './StakeHooks';
 
 const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
 
@@ -48,7 +49,7 @@ const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: numb
                     key="stake"
                     onClick={(e: React.MouseEvent) => {
                         e.preventDefault();
-                        nodeTransactions['stake'](key.blsKey, dapp);
+                        nodeTransactions['stake'](key.blsKey, dapp).then().catch(e=> console.error('error',e));
                     }}>
                     {inactiveNodeActions['stake'].label}{' '}
                 </button>
