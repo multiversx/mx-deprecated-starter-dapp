@@ -103,7 +103,7 @@ const DropzonePem = ({
             return getUpdatedFiles({ existing, value, pubKey, name, signature });
           });
         } catch (e) {
-          console.log('error decode pem', e);
+          console.error('error decode pem', e);
           setFiles((existing) => {
             return getUpdatedFiles({ existing, value: '', pubKey: '', name, signature: '' });
           });

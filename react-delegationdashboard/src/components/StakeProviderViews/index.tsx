@@ -32,7 +32,7 @@ const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeP
                 setNoNodes(value.returnData[0].asNumber.toString() || '0');
             })
             .catch(e => {
-                console.log('error ', e);
+                console.error('getNumberOfNodes error ', e);
             });
     };
 
@@ -47,7 +47,7 @@ const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeP
                 let input = value.returnData[0].asBigInt.toString();
                 setTotalActiveStake(denominate({ input, denomination, decimals, showLastNonZeroDecimal: true }).toString() || '0');
             })
-            .catch(e => console.error('error ', e));
+            .catch(e => console.error('getTotalStake error ', e));
     };
     return (
         <div className="stats full-width">

@@ -30,7 +30,7 @@ const NodesTable = () => {
                     let responseValues = value.returnData;
                     mapNodes(responseValues, isStatus, nodes);
                     return resolve(nodes);
-                }).catch(e => console.log('error ', e));
+                }).catch(e => console.error('GetAllNodesStatus error ', e));
         });
     };
 
@@ -48,7 +48,7 @@ const NodesTable = () => {
                     mapNodes(responseValues.reverse(), isStatus, nodes);
                     return resolve(nodes);
                 })
-                .catch(e => console.log('error', e));
+                .catch(e => console.error('GetBlsKeysStatus error', e));
         });
     };
 
@@ -82,7 +82,7 @@ const NodesTable = () => {
                     }
                 });
                 setKeys(temp);
-            }).catch(error => console.log('error display Nodes', error));
+            }).catch(error => console.error('getDiplayNodes error', error));
     };
 
     useEffect(getDiplayNodes, []);
