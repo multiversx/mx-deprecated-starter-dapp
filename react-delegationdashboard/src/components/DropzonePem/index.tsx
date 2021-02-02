@@ -1,6 +1,7 @@
 import moment from 'moment';
 import * as React from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useContext } from '../../context';
 import decodePem from '../../helpers/decodePem';
 interface DropzonePemType {
   setFieldValue: any;
@@ -92,13 +93,14 @@ const DropzonePem = ({
     return updated;
   };
 
+  const {delegationContract} = useContext();
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: '.pem',
     multiple,
     onDrop: async (files: any) => {
       const onload = (fileReader: any, name: string) => async (e: any) => {
         try {
-          let { value, pubKey, signature } = await decodePem(fileReader.result!);
+          let { value, pubKey, signature } = await decodePem(fileReader.result!, delegationContract);
           setFiles((existing) => {
             return getUpdatedFiles({ existing, value, pubKey, name, signature });
           });

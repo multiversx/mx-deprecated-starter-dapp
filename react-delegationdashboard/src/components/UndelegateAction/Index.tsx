@@ -5,14 +5,14 @@ import { nominateValToHex } from '../../helpers/nominate';
 import UndelegateModal from '../UndelegateModal';
 
 const UndelegateAction = () => {
-  const { dapp, erdLabel } = useContext();
+  const { dapp, erdLabel, delegationContract } = useContext();
   const [showModal, setShowModal] = useState(
     false
   );
 
   const handleUndelegate = (value: string) => {
-    const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-    delegationContract.sendTransaction('0', 'unDelegate', nominateValToHex(value)).then();
+    const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
+    delegation.sendTransaction('0', 'unDelegate', nominateValToHex(value)).then();
   };
   return (
     <div>
