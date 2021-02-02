@@ -4,7 +4,7 @@ import React from 'react';
 import { useContext } from '../../context';
 import { NodeType } from '../../helpers/types';
 import Trim from '../Trim';
-import { inactiveNodeActions, nodeTransactions } from './NodeTypes';
+import { inactiveNodeActions, nodeTransactions } from './NodesHelper';
 
 const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
 
@@ -29,7 +29,6 @@ const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: numb
                 {key.status.key === 'queued' ? (
                     <div className={`status-badge ${statusColor}`}>
                         <div className="d-flex align-items-center">
-
                             <span className={`led mr-1 bg-${statusColor}`} />
                             {key.status.value}
                         </div>
@@ -37,7 +36,6 @@ const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: numb
                 ) : (
                         <div className={`status-badge ${statusColor}`}>
                             <div className="d-flex align-items-center">
-
                                 <span className={`led mr-1 bg-${statusColor}`} />
                                 {key.status.value}
                             </div>

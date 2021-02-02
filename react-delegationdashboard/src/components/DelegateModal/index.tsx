@@ -21,7 +21,7 @@ interface BaseModalType {
 const DelegateModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
   const { erdLabel, denomination, decimals, account, dapp, address } = useContext();
   const [balance, setBalance] = useState('');
-  var transaction = new Transaction();
+  let transaction = new Transaction();
   transaction.receiver = new Address(addresses['delegation_smart_contract']);
   transaction.value = new Balance(BigInt(0));
   useEffect(() => {

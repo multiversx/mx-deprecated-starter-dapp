@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useContext } from '../../context';
 import { Delegation } from '../../contracts';
-import BaseActionModal from '../BaseActionModal';
+import RequestTransactionModal from '../RequestTransactionModal';
 import { DropzoneFileType } from '../DropzonePem';
 import RequestVariablesModal from '../DropzonePem/RequestVariablesModal';
 
@@ -59,7 +59,7 @@ const StakeProviderActionsContainer = () => {
                             <button onClick={() => setShowUpdateFeeModal(true)} className="btn btn-primary mt-3">
                                 Update fee
                        </button>
-                            <BaseActionModal show={showUpdateFeeModal} title='Change service fee'
+                            <RequestTransactionModal show={showUpdateFeeModal} title='Change service fee'
                                 description="Add the percentage fee"
                                 handleClose={() => {
                                     setShowUpdateFeeModal(false);
@@ -69,7 +69,7 @@ const StakeProviderActionsContainer = () => {
                             <button onClick={() => setShowDelegationCapModal(true)} className="btn btn-primary mt-3">
                                 Update Delegation Cap
                        </button>
-                            <BaseActionModal show={showDelegationCapModal} title='Delegation cap'
+                            <RequestTransactionModal show={showDelegationCapModal} title='Delegation cap'
                                 description='Set Delegation Cap'
                                 handleClose={() => {
                                     setShowDelegationCapModal(false);
