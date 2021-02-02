@@ -9,7 +9,7 @@ interface BaseModalType {
   title: string;
   description: string;
   handleClose: () => void;
-  handleContinue: (value: string) => void
+  handleContinue: (value: string) => void;
 }
 
 const BaseActionModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {

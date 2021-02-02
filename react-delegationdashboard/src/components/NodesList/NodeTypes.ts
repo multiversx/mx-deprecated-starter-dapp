@@ -1,5 +1,5 @@
-import { DappState } from "../../context/state";
-import { Delegation } from "../../contracts";
+import { DappState } from '../../context/state';
+import { Delegation } from '../../contracts';
 
 export const nodeActions = {
     unJail: { label: 'Unjail', transaction: 'unJail' },
@@ -21,22 +21,22 @@ export const inactiveNodeActions = {
 export const nodeTransactions = {
     unStake: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "unStakeNodes", blsKey).then();
+        delegationContract.sendTransaction('0', 'unStakeNodes', blsKey).then();
     },
     reStake: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "reStakeUnStakedNodes", blsKey).then();
+        delegationContract.sendTransaction('0', 'reStakeUnStakedNodes', blsKey).then();
     },
     unJail: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "unJailNodes", blsKey).then();
+        delegationContract.sendTransaction('0', 'unJailNodes', blsKey).then();
     },
     unBond: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "unBondNodes", blsKey).then();
+        delegationContract.sendTransaction('0', 'unBondNodes', blsKey).then();
     },
     stake: (blsKey: string, dapp: DappState) => {
         const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction("0", "stakeNodes", `${blsKey}`).then();
+        delegationContract.sendTransaction('0', 'stakeNodes', `${blsKey}`).then();
     },
 };

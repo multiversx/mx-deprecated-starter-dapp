@@ -1,6 +1,6 @@
-import React from "react";
-import DelegatorActionsContainer from "../DelegatorActionsContainer";
-import DelegatorViews from "../DelegatorViews";
+import React from 'react';
+import DelegatorActionsContainer from '../DelegatorActionsContainer';
+import DelegatorViews from '../DelegatorViews';
 
 const DelegatorArea = () => {
 
@@ -9,7 +9,7 @@ const DelegatorArea = () => {
             <DelegatorViews title="My delegation"/>
             <DelegatorActionsContainer />
         </div>
-    )
+    );
 };
 
 export default DelegatorArea;
