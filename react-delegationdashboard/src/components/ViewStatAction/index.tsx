@@ -1,10 +1,9 @@
-import React from 'react';
 interface BaseActionType {
     actionTitle: string;
     handleContinue: () => void;
   }
 
-const BaseAction  = ({ actionTitle, handleContinue }: BaseActionType) => {
+const ViewStatAction  = ({ actionTitle, handleContinue }: BaseActionType) => {
   
    return (
     <>
@@ -15,4 +14,4 @@ const BaseAction  = ({ actionTitle, handleContinue }: BaseActionType) => {
   );
 };
 
-export default BaseAction;
+export default ViewStatAction;
