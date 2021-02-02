@@ -6,7 +6,6 @@ import moment from 'moment';
 import React from 'react';
 import { Nav, NavDropdown } from 'react-bootstrap';
 import { useContext } from '../../context';
-import { addresses } from '../../contracts';
 import { NodeType } from '../../helpers/types';
 import Trim from '../Trim';
 import { nodeActions } from './NodeTypes';
@@ -21,13 +20,13 @@ const allowedActions: { [key: string]: ActionType[] } = {
 };
 
 const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
-    const { explorerAddress, dapp } = useContext();
+    const { explorerAddress, dapp, stakingContract } = useContext();
     const ref = React.useRef(null);
 
     const [remaining, setRemaining] = React.useState(0);
     const fetchUnBondPeriod = () => {
         const query = new Query({
-            address: new Address(addresses['staking_smart_contract']),
+            address: new Address(stakingContract),
             func: new ContractFunction('getRemainingUnBondPeriod'),
             args: [Argument.fromHex(key.blsKey)]
         });

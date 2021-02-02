@@ -6,23 +6,23 @@ import DelegateAction from '../DelegateAction';
 import UndelegateAction from '../UndelegateAction/Index';
 
 const DelegatorActionsContainer = () => {
-    const { dapp } = useContext();
+    const { dapp, delegationContract } = useContext();
     const handleClaimRewards = () => {
-        const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction('0', 'claimRewards').then()
-        .catch(e=> console.error('handleClaimRewards error', e));
+        const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
+        delegation.sendTransaction('0', 'claimRewards').then()
+            .catch(e => console.error('handleClaimRewards error', e));
     };
 
     const handleRedelegateRewards = () => {
-        const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction('0', 'reDelegateRewards').then()
-        .catch(e=> console.error('handleRedelegateRewards error', e));
+        const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
+        delegation.sendTransaction('0', 'reDelegateRewards').then()
+            .catch(e => console.error('handleRedelegateRewards error', e));
     };
 
     const handleWithdraw = () => {
-        const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction('0', 'withdraw').then()
-        .catch(e=> console.error('handleWithdraw error', e));
+        const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
+        delegation.sendTransaction('0', 'withdraw').then()
+            .catch(e => console.error('handleWithdraw error', e));
     };
 
     return (

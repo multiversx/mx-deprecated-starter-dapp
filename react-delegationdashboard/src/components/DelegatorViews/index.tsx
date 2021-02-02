@@ -2,7 +2,6 @@ import { Address, ContractFunction, Argument } from '@elrondnetwork/erdjs/out';
 import { Query, QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import * as React from 'react';
 import { useContext } from '../../context';
-import { addresses } from '../../contracts';
 import denominate from '../Denominate/formatters';
 import StatCard from '../StatCard';
 
@@ -11,14 +10,14 @@ interface StatCardType {
 }
 
 const DelegatorViews = ({ title = '' }: StatCardType) => {
-    const { dapp, address, erdLabel } = useContext();
+    const { dapp, address, erdLabel, delegationContract } = useContext();
 
     const [userActiveStake, setUserActiveState] = React.useState('0');
     const [userUnstakeValue, setUserUnstakedValue] = React.useState('0');
     const [claimableRewards, setClaimableRewards] = React.useState('0');
     const getClaimableRewards = () => {
         const query = new Query({
-            address: new Address(addresses['delegation_smart_contract']),
+            address: new Address(delegationContract),
             func: new ContractFunction('getClaimableRewards'),
             args: [Argument.fromPubkey(new Address(address))]
         });
@@ -31,7 +30,7 @@ const DelegatorViews = ({ title = '' }: StatCardType) => {
 
     const getUserActiveStake = () => {
         const query = new Query({
-            address: new Address(addresses['delegation_smart_contract']),
+            address: new Address(delegationContract),
             func: new ContractFunction('getUserActiveStake'),
             args: [Argument.fromPubkey(new Address(address))]
         });
@@ -44,7 +43,7 @@ const DelegatorViews = ({ title = '' }: StatCardType) => {
 
     const getUserUnStakeValue = () => {
         const query = new Query({
-            address: new Address(addresses['delegation_smart_contract']),
+            address: new Address(delegationContract),
             func: new ContractFunction('getUserUnStakedValue'),
             args: [Argument.fromPubkey(new Address(address))]
         });

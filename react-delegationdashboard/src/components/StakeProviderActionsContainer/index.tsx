@@ -6,18 +6,18 @@ import { DropzoneFileType } from '../DropzonePem';
 import RequestVariablesModal from '../DropzonePem/RequestVariablesModal';
 
 const StakeProviderActionsContainer = () => {
-    const { dapp } = useContext();
+    const { dapp, delegationContract } = useContext();
     const [showUpdateFeeModal, setShowUpdateFeeModal] = useState(false);
     const [showAddNodes, setAddNodesModal] = useState(false);
 
     const handleUpdateFee = (value: string) => {
-        const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction('0', 'changeServiceFee', (parseFloat(value) * 100).toString()).then();
+        const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
+        delegation.sendTransaction('0', 'changeServiceFee', (parseFloat(value) * 100).toString()).then();
     };
 
     const handleAddNodes = (value: string) => {
-        const delegationContract = new Delegation(dapp.proxy, dapp.provider);
-        delegationContract.sendTransaction('0', 'addNodes', value).then();
+        const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
+        delegation.sendTransaction('0', 'addNodes', value).then();
     };
 
     const getPemPubKeysWithSignature = (pemFiles: DropzoneFileType[]) => {
