@@ -5,17 +5,12 @@ import { useContext } from '../../context';
 import { NodeType } from '../../helpers/types';
 import ActiveNodeRow from './ActiveNodeRow';
 import InactiveNodeRow from './InactiveNodeRow';
-
-const NodeStatus: { [key: string]: string } = {
-    'notStaked': 'Inactive',
-    'unStaked': 'UnStaked',
-    'staked': 'Staked',
-    'jailed': 'Jail'
-};
+import { NodeStatus } from './NodeTypes';
 
 const NodesTable = () => {
-    const { dapp, delegationContract, auctionContract } = useContext();
+    const { dapp, delegationContract, auctionContract, stakingContract } = useContext();
     const [keys, setKeys] = useState(new Array<NodeType>());
+    const queued: any = [];
 
     const getAllNodesStatus = () => {
         const query = new Query({
@@ -50,6 +45,36 @@ const NodesTable = () => {
                 .catch(e => console.error('GetBlsKeysStatus error', e));
         });
     };
+    const getQueueSize = () => {
+        const query = new Query({
+            address: new Address(stakingContract),
+            func: new ContractFunction('getQueueSize')
+        });
+        return new Promise((resolve) => {
+            dapp.proxy.queryContract(query)
+                .then((value) => {
+                    return resolve(value.returnData[0].asString);
+                })
+                .catch(e => console.error('getQueueSize error', e));
+        });
+    };
+
+    const getQueueIndex = (blsKey: any) => {
+        const query = new Query({
+            address: new Address(stakingContract),
+            func: new ContractFunction('getQueueIndex'),
+            caller: new Address(auctionContract),
+            args: [Argument.fromHex(blsKey)]
+        });
+        return new Promise((resolve) => {
+            dapp.proxy.queryContract(query)
+                .then((value) => {
+                    console.log('Queue Index ', value);
+                    return resolve(value.returnData[0].asString);
+                })
+                .catch(e => console.error('getQueueIndex error', e));
+        });
+    };
 
     const isStatus = (value: string) => {
         if (NodeStatus[value]) {
@@ -65,6 +90,9 @@ const NodesTable = () => {
                 status = { key: value.asString, value: NodeStatus[value.asString] };
             }
             else {
+                if (status.key === 'queued') {
+                    queued.push(value.asHex);
+                }
                 nodes.push(new NodeType(value.asHex, status));
             }
         });
@@ -72,14 +100,33 @@ const NodesTable = () => {
 
     const getDiplayNodes = () => {
         Promise.all([getAllNodesStatus(), getBlsKeysStatus()]).then(
-            ([nodesStatus, blsKeys]) => {
+            async ([nodesStatus, blsKeys]) => {
                 let temp = nodesStatus;
                 temp.map(item => {
                     let index = blsKeys.findIndex(i => i.blsKey === item.blsKey);
-                    if (index > 0) {
+                    if (index >= 0) {
                         item.status = blsKeys[index].status;
                     }
                 });
+                if (queued.length) {
+                    const results = await Promise.all(
+                        [getQueueSize(), ...queued.map((blsKey: any) => getQueueIndex(blsKey))]
+                    );
+
+                    let queueSize: any;
+                    results.forEach(([result], index) => {
+                        if (index === 0) {
+                            queueSize = result;
+                        } else {
+                            const [found] = temp.filter(({ blsKey }: any) => {
+                                return blsKey === queued[index - 1];
+                            });
+
+                            found.queueIndex = result;
+                            found.queueSize = queueSize;
+                        }
+                    });
+                }
                 setKeys(temp);
             }).catch(error => console.error('getDiplayNodes error', error));
     };
