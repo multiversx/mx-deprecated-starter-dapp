@@ -8,3 +8,11 @@ export const nodeActions = {
 export const inactiveNodeActions = {
     stake: { label: 'Stake', transaction: 'stake' },
 };
+
+export const NodeStatus: { [key: string]: string } = {
+    'notStaked': 'Inactive',
+    'unStaked': 'UnStaked',
+    'staked': 'Staked',
+    'jailed': 'Jail',
+    'queued': 'Queued'
+};
