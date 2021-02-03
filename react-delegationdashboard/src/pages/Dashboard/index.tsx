@@ -4,11 +4,16 @@ import { useContext } from '../../context';
 import StakeProviderArea from '../../components/StakeProviderArea';
 import DelegatorArea from '../../components/DelegatorArea';
 import { Address } from '@elrondnetwork/erdjs/out';
+import { Redirect } from 'react-router-dom';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const Dashboard = () => {
-  const { address, dapp, delegationContract } = useContext();
+  const { address, dapp, delegationContract, loggedIn } = useContext();
   const [balance, setBalance] = useState('');
+
+  if (!loggedIn) {
+    return <Redirect to="/" />;
+  }
 
   useEffect(function () {
     dapp.proxy.getAccount(new Address(address))
