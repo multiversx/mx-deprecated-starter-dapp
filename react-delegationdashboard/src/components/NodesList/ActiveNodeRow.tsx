@@ -20,7 +20,7 @@ const allowedActions: { [key: string]: ActionType[] } = {
 };
 
 const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
-    const { explorerAddress, dapp, stakingContract } = useContext();
+    const { explorerAddress, dapp, stakingContract, delegationContract } = useContext();
     const ref = React.useRef(null);
 
     const [remaining, setRemaining] = React.useState(0);
@@ -105,7 +105,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
                                     onClick={(e: React.MouseEvent) => {
                                         e.preventDefault();
                                         if (actionAllowed) {
-                                            nodeTransactions[action](key.blsKey, dapp).then().catch(e=> console.error('error',e));
+                                            nodeTransactions[action](key.blsKey, dapp, delegationContract).then().catch(e=> console.error('error',e));
                                         }
                                     }}
                                 >
