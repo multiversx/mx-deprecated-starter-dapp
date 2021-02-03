@@ -16,7 +16,8 @@ type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake';
 const allowedActions: { [key: string]: ActionType[] } = {
     staked: ['unStake'],
     jailed: ['unJail'],
-    unStaked: ['unBond', 'reStake']
+    unStaked: ['unBond', 'reStake'],
+    queued: ['unStake']
 };
 
 const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
