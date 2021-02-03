@@ -9,8 +9,8 @@ import { nodeTransactions } from './StakeHooks';
 
 const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
 
-    const { explorerAddress, dapp } = useContext();
-   
+    const { explorerAddress, dapp, delegationContract } = useContext();
+
     const statusColor = key.status.key === 'staked' ? 'success' : key.status.key === 'jailed' ? 'danger' : 'warning';
     return (
         <tr>
@@ -21,7 +21,7 @@ const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: numb
                 <div className="d-flex align-items-center text-nowrap bls-trim trim-fs-sm">
                     <Trim text={key.blsKey} />
                     <a href={`${explorerAddress}nodes/${key.blsKey}`}
-                        {...{target: '_blank', }} className="side-action">
+                        {...{ target: '_blank', }} className="side-action">
                         <FontAwesomeIcon icon={faSearch} />
                     </a>
                 </div>
@@ -49,7 +49,7 @@ const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: numb
                     key="stake"
                     onClick={(e: React.MouseEvent) => {
                         e.preventDefault();
-                        nodeTransactions['stake'](key.blsKey, dapp).then().catch(e=> console.error('error',e));
+                        nodeTransactions['stake'](key.blsKey, dapp, delegationContract).then().catch(e => console.error('error', e));
                     }}>
                     {inactiveNodeActions['stake'].label}{' '}
                 </button>
