@@ -31,7 +31,7 @@ const UndelegatedValueRow = ({ undelegatedValue: value, index }: { undelegatedVa
             </td>
             <td>
                 <div className="d-flex align-items-center text-nowrap bls-trim trim-fs-sm">
-                    {moment.utc(moment.duration(value.timeLeft, 'seconds').asMilliseconds()).format('HH:mm:ss')}{' '}left)
+                    {moment.utc(moment.duration(value.timeLeft, 'seconds').asMilliseconds()).format('HH:mm:ss')}{' '}left
                 </div>
             </td>
             <td>
