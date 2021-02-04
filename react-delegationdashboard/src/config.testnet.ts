@@ -25,9 +25,9 @@ export const networks: NetworkType[] = [
         theme: 'testnet',
         erdLabel: 'xEGLD',
         walletAddress: 'https://testnet-wallet.elrond.com/dapp/init',
-        apiAddress: 'https://testnet-api.elrond.com',
+        apiAddress: 'https://testnet-gateway.elrond.com',
         explorerAddress: 'http://testenet-explorer.elrond.com/',
-        delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
+        delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp0llllswfeycs',
         auctionContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
         stakingContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7'
     },
