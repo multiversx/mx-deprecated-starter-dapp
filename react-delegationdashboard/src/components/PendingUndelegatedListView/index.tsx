@@ -9,11 +9,12 @@ import UndelegatedValueRow from './UndelegatedValueRow';
 
 const UndelegatedListView = () => {
     const { dapp, address, denomination, decimals, delegationContract } = useContext();
+    const { getUserUnDelegatedList, } = contractViews;
 
     const [userUnstakeValue, setUserUnstakedValue] = React.useState(Array<UndelegatedValueType>());
 
     const denomintateValue = (value: string): string => {
-        return denominate({ input: value, denomination: denomination, decimals: decimals, showLastNonZeroDecimal: false });
+        return denominate({ denomination, decimals, input: value, showLastNonZeroDecimal: false });
     };
 
     const mapUndelegetedValueType = (value: QueryResponse, index: number, undelegatedList: UndelegatedValueType[]) => {
@@ -23,8 +24,8 @@ const UndelegatedListView = () => {
         undelegatedList.push(element);
         return index;
     };
-    const getUserUnDelegatedList = () => {
-        contractViews['getUserUnDelegatedList'](dapp, address, delegationContract)
+    const getUserUnDelegated = () => {
+        getUserUnDelegatedList(dapp, address, delegationContract)
             .then((value) => {
                 console.log('getUserUnDelegatedList', value.returnData);
                 let undelegatedList = new Array<UndelegatedValueType>();
@@ -38,7 +39,7 @@ const UndelegatedListView = () => {
             .catch(e => console.error('getUserUnDelegatedList error', e));
     };
 
-    React.useEffect(getUserUnDelegatedList, []);
+    React.useEffect(getUserUnDelegated, []);
 
     return (
         <div className="row stats full-width">

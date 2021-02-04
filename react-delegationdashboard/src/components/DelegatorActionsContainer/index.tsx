@@ -9,9 +9,10 @@ import { contractViews } from '../../contracts/ContractViews';
 const DelegatorActionsContainer = () => {
     const { dapp, delegationContract, address } = useContext();
     const [displayRewards, setDisplayRewards] = React.useState(false);
+    const { getClaimableRewards } = contractViews;
 
     React.useEffect(() => {
-        contractViews['getClaimableRewards'](dapp, address, delegationContract)
+        getClaimableRewards(dapp, address, delegationContract)
             .then((result) => {
                 if (result.returnData[0].asNumber !== 0) {
                     setDisplayRewards(true);
