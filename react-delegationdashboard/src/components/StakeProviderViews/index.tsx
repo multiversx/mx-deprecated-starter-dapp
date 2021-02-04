@@ -1,8 +1,7 @@
-import { Address, ContractFunction } from '@elrondnetwork/erdjs/out';
-import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import * as React from 'react';
 import { decimals, denomination } from '../../config';
 import { useContext } from '../../context';
+import { contractViews } from '../../contracts/ContractViews';
 import denominate from '../Denominate/formatters';
 import StatCard from '../StatCard';
 interface StakeProviderType {
@@ -12,20 +11,12 @@ interface StakeProviderType {
 
 const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeProviderType) => {
     const { dapp, erdLabel, delegationContract } = useContext();
+    const { getTotalActiveStake, getNumNodes } = contractViews;    
     const [totalActiveStake, setTotalActiveStake] = React.useState('0');
     const [noNodes, setNoNodes] = React.useState('0');
-    React.useEffect(() => {
-        getNumberOfNodes();
-        getTotalStake();
-    }, []);
 
     const getNumberOfNodes = () => {
-        const query = new Query({
-            address: new Address(delegationContract),
-            func: new ContractFunction('getNumNodes')
-        });
-        dapp.proxy.queryContract(query)
-            .then((value) => {
+        getNumNodes(dapp, delegationContract).then((value) => {
                 setNoNodes(value.returnData[0].asNumber.toString() || '0');
             })
             .catch(e => {
@@ -34,17 +25,17 @@ const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeP
     };
 
     const getTotalStake = () => {
-        const query = new Query({
-            address: new Address(delegationContract),
-            func: new ContractFunction('getTotalActiveStake')
-        });
-        dapp.proxy.queryContract(query)
-            .then((value) => {
+        getTotalActiveStake(dapp, delegationContract).then((value) => {
                 let input = value.returnData[0].asBigInt.toString();
                 setTotalActiveStake(denominate({ input, denomination, decimals, showLastNonZeroDecimal: true }).toString() || '0');
             })
             .catch(e => console.error('getTotalStake error ', e));
     };
+
+    React.useEffect(() => {
+        getNumberOfNodes();
+        getTotalStake();
+    }, []);
     return (
         <div className="stats full-width">
             <div className="mb-spacer">
@@ -56,7 +47,7 @@ const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeP
                         <StatCard title="Number of nodes" value={noNodes} valueUnit="nodes" />
                         <StatCard title="Total Stake" value={totalActiveStake} valueUnit={erdLabel} />
                         <StatCard title="Service Fee" value={serviceFee} valueUnit="%" />
-                        <StatCard title="Max delegation cap" value={maxDelegationCap} valueUnit="" />
+                        <StatCard title="Max delegation cap" value={maxDelegationCap} valueUnit={erdLabel} />
                     </div>
                 </div>
             </div>

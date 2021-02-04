@@ -26,5 +26,19 @@ export const contractViews = {
             args: [Argument.fromPubkey(new Address(address))]
         });
         return dapp.proxy.queryContract(query);
+    },
+    getTotalActiveStake: (dapp: DappState, delegationContract?: string) => {
+        const query = new Query({
+            address: new Address(delegationContract),
+            func: new ContractFunction('getTotalActiveStake')
+        });
+        return dapp.proxy.queryContract(query);
+    },
+    getNumNodes: (dapp: DappState, delegationContract?: string) => {
+        const query = new Query({
+            address: new Address(delegationContract),
+            func: new ContractFunction('getNumNodes')
+        });
+        return dapp.proxy.queryContract(query);
     }
 };
