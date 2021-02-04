@@ -13,7 +13,7 @@ export const networks: NetworkType[] = [
         erdLabel: 'EGLD',
         walletAddress: 'https://wallet.elrond.com/dapp/init',
         apiAddress: 'https://api.elrond.com',
-        explorerAddress: 'http://testenet-explorer.elrond.com/',
+        explorerAddress: 'http://testnet-explorer.elrond.com/',
         delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
         auctionContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
         stakingContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7'
@@ -26,7 +26,7 @@ export const networks: NetworkType[] = [
         erdLabel: 'xEGLD',
         walletAddress: 'https://testnet-wallet.elrond.com/dapp/init',
         apiAddress: 'https://testnet-gateway.elrond.com',
-        explorerAddress: 'http://testenet-explorer.elrond.com/',
+        explorerAddress: 'http://testnet-explorer.elrond.com/',
         delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp0llllswfeycs',
         auctionContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
         stakingContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7'

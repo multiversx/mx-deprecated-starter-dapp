@@ -5,7 +5,7 @@ export type DispatchType = (action: ActionType) => void;
 
 export type ActionType =
   | { type: 'login'; address: StateType['address'] }
-  | { type: 'logout' }
+  | { type: 'logout'; provider: StateType['dapp']['provider'] }
   | { type: 'loading'; loading: StateType['loading'] }
   | { type: 'setProvider'; provider: StateType['dapp']['provider'] }
   | { type: 'setBalance'; balance: StateType['account']['balance'] }
@@ -55,6 +55,9 @@ export function reducer(state: StateType, action: ActionType): StateType {
     }
 
     case 'logout': {
+
+      const { provider } = action;
+      provider.logout().then().catch(e => console.log('logout', e));
       removeItem('logged_in');
       removeItem('address');
       return initialState();
