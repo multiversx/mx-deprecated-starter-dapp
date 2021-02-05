@@ -8,31 +8,25 @@ import { object, string } from 'yup';
 import Denominate from '../Denominate';
 import { Address, Balance, Transaction } from '@elrondnetwork/erdjs/out';
 
-interface BaseModalType {
+interface DelegateModalType {
   show: boolean;
   title: string;
   description: string;
+  balance: string;
   handleClose: () => void;
   handleContinue: (value: string) => void;
 }
 
-const DelegateModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
-  const { erdLabel, denomination, decimals, account, dapp, address, delegationContract } = useContext();
-  const [balance, setBalance] = useState('');
-  let transaction = new Transaction();
-  transaction.receiver = new Address(delegationContract);
-  transaction.value = Balance.eGLD(0);
-  useEffect(() => {
-    dapp.proxy.getAccount(new Address(address)).then((value) => setBalance(value.balance.toString()));
-  }, [address, dapp.proxy]);
-
+const DelegateModal = ({ show, title, description, balance, handleClose, handleContinue }: DelegateModalType) => {
+  const { erdLabel, denomination, decimals, delegationContract } = useContext();
   const available = entireBalance({
-    balance: account.balance,
+    balance: balance,
     gasPrice: '12000000',
     gasLimit: '12000000',
     denomination,
     decimals,
   });
+  
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
 
@@ -57,7 +51,7 @@ const DelegateModal = ({ show, title, description, handleClose, handleContinue }
                   return bnAmount.comparedTo(10) >= 0;
                 })
                 .test('number', 'String not allows, only numbers. For example (12.20)', (value) => {
-                  const regex=/^(\d+(?:[\.]\d{1,2})?)$/;
+                  const regex=/^(\d+(?:[\.]\d+)?)$/;
                   return regex.test(value || '');
                 })
             })}
@@ -86,9 +80,14 @@ const DelegateModal = ({ show, title, description, handleClose, handleContinue }
                         required={true} value={values.amount} autoComplete="off"
                         onChange={handleChange}
                         onBlur={handleBlur} />
-                      <span className="input-group-append">
-                        <a href="/#" className="input-group-text" data-testid="maxBtn" onClick={getEntireBalance}>Max</a>
-                      </span>
+                      {values.amount !== available && available !== '0' && (
+                        <span className="input-group-append">
+                          <a href="/#" className="input-group-text"
+                            onClick={getEntireBalance} data-testid="maxBtn">
+                            Max
+                          </a>
+                        </span>
+                      )}
                     </div>
                     <small className="form-text text-secondary mt-0">
                       Available: <Denominate value={balance} />
