@@ -5,6 +5,15 @@ import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
 import { ActionModalType } from 'helpers/types';
 
+const UndelegateSchema = object().shape({
+  amount: string()
+    .required('Required')
+    .test('number', 'String not allows, only numbers. For example (12.20)', value => {
+      const regex = /^(\d+(?:[\.]\d{1,2})?)$/;
+      return regex.test(value || '');
+    }),
+});
+
 const UndelegateModal = ({
   show,
   title,
@@ -30,14 +39,7 @@ const UndelegateModal = ({
             onSubmit={values => {
               handleContinue(values.amount);
             }}
-            validationSchema={object().shape({
-              amount: string()
-                .required('Required')
-                .test('number', 'String not allows, only numbers. For example (12.20)', value => {
-                  const regex = /^(\d+(?:[\.]\d{1,2})?)$/;
-                  return regex.test(value || '');
-                }),
-            })}
+            validationSchema={UndelegateSchema}
           >
             {props => {
               const { handleSubmit, values, handleBlur, handleChange } = props;

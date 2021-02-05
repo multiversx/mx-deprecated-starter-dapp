@@ -4,8 +4,8 @@ import { useContext } from 'context';
 import { ErrorMessage, Formik } from 'formik';
 import BigNumber from 'bignumber.js';
 import { object, number } from 'yup';
-import { contractViews } from '../../../../../contracts/ContractViews';
-import denominate from '../../../../../components/Denominate/formatters';
+import { contractViews } from 'contracts/ContractViews';
+import denominate from 'components/Denominate/formatters';
 import { ActionModalType } from 'helpers/types';
 
 const DelegationCapModal = ({

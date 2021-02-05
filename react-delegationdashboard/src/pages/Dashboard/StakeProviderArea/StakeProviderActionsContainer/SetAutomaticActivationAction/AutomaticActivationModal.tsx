@@ -27,7 +27,6 @@ const AutomaticActivationModal = ({
             onSubmit={values => {
               handleContinue(values.option);
             }}
-            validationSchema={object().shape({})}
           >
             {props => {
               const { handleSubmit, values, handleBlur, handleChange } = props;
