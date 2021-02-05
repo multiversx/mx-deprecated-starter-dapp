@@ -49,7 +49,7 @@ const AutomaticActivationModal = ({ show, title, description, handleClose, handl
                       className="dropdown full-width" value={values.option} onChange={handleChange}
                         onBlur={handleBlur}>
                         <option value="yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="no">No</option>
                       </select>
                     </div>
                   </div>
