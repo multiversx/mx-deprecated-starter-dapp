@@ -23,7 +23,8 @@ const StakeProviderArea = () => {
         dapp.proxy.queryContract(query)
             .then((value) => {
                 let ownerAddress = encode(value.returnData[0].asHex);
-                setIsOwner(address.localeCompare(ownerAddress) < 0 ? false : true);
+                let loginAddress = new Address(address).hex();
+                setIsOwner(loginAddress.localeCompare(ownerAddress) < 0 ? false : true);
                 setServiceFee((parseFloat(value.returnData[1].asHex) / 100).toString());
                 let delegationCap = denominate({ decimals, denomination, 
                     input: value.returnData[2].asBigInt.toString(), showLastNonZeroDecimal: false });
