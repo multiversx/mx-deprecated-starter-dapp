@@ -32,6 +32,10 @@ const RequestTransactionModal = ({ show, title, description, handleClose, handle
             }}
             validationSchema={object().shape({
               amount: string().required('Required')
+              .test('number', 'String not allows, only numbers. For example (12.20)', (value) => {
+                const regex=/^(\d+(?:[\.]\d{1,2})?)$/;
+                return regex.test(value || '');
+              })
             })}
           >
             {(props) => {

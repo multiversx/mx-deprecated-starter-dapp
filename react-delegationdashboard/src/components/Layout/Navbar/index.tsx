@@ -4,11 +4,11 @@ import { ReactComponent as ElrondLogo } from '../../../assets/img/elrond.svg';
 import {useContext, useDispatch} from '../../../context';
 
 const Navbar = () => {
-  const {loggedIn} = useContext();
+  const {loggedIn, dapp} = useContext();
   const dispatch = useDispatch();
 
   const logOut = () => {
-    dispatch({type: 'logout'});
+    dispatch({type: 'logout', provider: dapp.provider});
   };
 
   return (

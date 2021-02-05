@@ -11,15 +11,15 @@ const Dashboard = () => {
   const { address, dapp, delegationContract, loggedIn } = useContext();
   const [balance, setBalance] = useState('');
 
+  useEffect(() => {
+      dapp.proxy.getAccount(new Address(address))
+        .then((value) => setBalance(value.balance.toString()));
+    }, 
+  []);
+
   if (!loggedIn) {
     return <Redirect to="/" />;
   }
-
-  useEffect(function () {
-    dapp.proxy.getAccount(new Address(address))
-      .then((value) => setBalance(value.balance.toString()));
-  }, 
-  []);
 
   return (
     <div className="container py-4">

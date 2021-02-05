@@ -7,7 +7,7 @@ import { useContext } from '../../context';
 const UndelegatedValueRow = ({ undelegatedValue: value, index }: { undelegatedValue: UndelegatedValueType; index: number }) => {
 
     const { dapp, delegationContract } = useContext();
-    const [disabled, setDisabled] = React.useState('disabled');
+    const [isDisabled, setIsDisabled] = React.useState(true);
     const handleWithdraw = () => {
         const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
         delegation.sendTransaction('0', 'withdraw').then()
@@ -15,7 +15,7 @@ const UndelegatedValueRow = ({ undelegatedValue: value, index }: { undelegatedVa
     };
     useEffect(() => {
         if (value.timeLeft === 0) {
-            setDisabled('');
+            setIsDisabled(false);
         }
     }, [value.value, value.timeLeft]);
 
@@ -35,7 +35,7 @@ const UndelegatedValueRow = ({ undelegatedValue: value, index }: { undelegatedVa
                 </div>
             </td>
             <td>
-                <button onClick={() => handleWithdraw()} className={`btn btn-primary mt-3 ${disabled}`}>
+                <button disabled={isDisabled} onClick={() => handleWithdraw()} className="btn btn-primary mt-3">
                     Withdraw
                 </button>
             </td>

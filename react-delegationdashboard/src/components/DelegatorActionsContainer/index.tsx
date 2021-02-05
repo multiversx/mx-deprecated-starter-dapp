@@ -9,13 +9,20 @@ import { contractViews } from '../../contracts/ContractViews';
 const DelegatorActionsContainer = () => {
     const { dapp, delegationContract, address } = useContext();
     const [displayRewards, setDisplayRewards] = React.useState(false);
-    const { getClaimableRewards } = contractViews;
+    const [displayUndelegate, setDisplayUndelegate] = React.useState(false);
+    const { getClaimableRewards, getUserActiveStake } = contractViews;
 
     React.useEffect(() => {
         getClaimableRewards(dapp, address, delegationContract)
             .then((result) => {
                 if (result.returnData[0].asNumber !== 0) {
                     setDisplayRewards(true);
+                }
+            }).catch(e => console.error('getClaimableRewards error', e));
+        getUserActiveStake(dapp, address, delegationContract)
+            .then((result) => {
+                if (result.returnData[0].asNumber !== 0) {
+                    setDisplayUndelegate(true);
                 }
             }).catch(e => console.error('getClaimableRewards error', e));
     }, []);
@@ -41,7 +48,7 @@ const DelegatorActionsContainer = () => {
                     </div>
                     <div className="card-body d-flex flex-wrap p-3 sp-action-btn">
                         <DelegateAction />
-                        <UndelegateAction />
+                        {displayUndelegate ? (<UndelegateAction />) : <></>}
                         {displayRewards ? (<ViewStatAction actionTitle="Claim Rewards" handleContinue={() => handleClaimRewards()} />) : <></>}
                         {displayRewards ? (<ViewStatAction actionTitle="Redelegate Rewards" handleContinue={() => handleRedelegateRewards()} />) : <></>}
                     </div>

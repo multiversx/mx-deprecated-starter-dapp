@@ -1,32 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useContext } from '../../context';
-import entireBalance from '../../helpers/entireBalance';
 import { ErrorMessage, Formik } from 'formik';
 import BigNumber from 'bignumber.js';
-import { object, string } from 'yup';
-import Denominate from '../Denominate';
-import { Address, Balance, Transaction } from '@elrondnetwork/erdjs/out';
+import { object, number } from 'yup';
+import { contractViews } from '../../contracts/ContractViews';
+import denominate from '../Denominate/formatters';
 
-interface DelegateModalType {
+interface BaseModalType {
   show: boolean;
   title: string;
   description: string;
-  balance: string;
   handleClose: () => void;
   handleContinue: (value: string) => void;
 }
 
-const DelegateModal = ({ show, title, description, balance, handleClose, handleContinue }: DelegateModalType) => {
-  const { erdLabel, denomination, decimals, delegationContract } = useContext();
-  const available = entireBalance({
-    balance: balance,
-    gasPrice: '12000000',
-    gasLimit: '12000000',
-    denomination,
-    decimals,
-  });
-  
+const DelegationCapModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
+  const { erdLabel, denomination, decimals, dapp, delegationContract } = useContext();
+  const { getTotalActiveStake } = contractViews;   
+  const [totalActiveStake, setTotalActiveStake] = React.useState('0'); 
+  const getTotalStake = () => {
+    getTotalActiveStake(dapp, delegationContract).then((value) => {
+            let input = value.returnData[0].asBigInt.toString();
+            setTotalActiveStake(denominate({ input, denomination, decimals, showLastNonZeroDecimal: false, addCommas: false }).toString());
+        })
+        .catch(e => console.error('getTotalStake error ', e));
+};
+
+  useEffect(getTotalStake, []);
+
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
 
@@ -38,21 +40,21 @@ const DelegateModal = ({ show, title, description, balance, handleClose, handleC
           <p className="lead mb-spacer">{description}</p>
 
           <Formik initialValues={{
-            amount: '10'
+            amount: totalActiveStake
           }}
             onSubmit={(values) => {
               handleContinue(values.amount);
             }}
             validationSchema={object().shape({
-              amount: string()
+              amount: number()
                 .required('Required')
-                .test('minimum', `Minimum 10 ${erdLabel}`, (value) => {
+                .test('minimum', `Minimum ${totalActiveStake} ${erdLabel}`, (value) => {
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
-                  return bnAmount.comparedTo(10) >= 0;
+                  return bnAmount.comparedTo(totalActiveStake) >= 0;
                 })
                 .test('number', 'String not allows, only numbers. For example (12.20)', (value) => {
-                  const regex=/^(\d+(?:[\.]\d+)?)$/;
-                  return regex.test(value || '');
+                  const regex=/^(\d+(?:[\.]\d{1,2})?)$/;
+                  return regex.test(value?.toString() || '');
                 })
             })}
           >
@@ -62,36 +64,17 @@ const DelegateModal = ({ show, title, description, balance, handleClose, handleC
                 values,
                 handleBlur,
                 handleChange,
-                setFieldValue,
               } = props;
 
-              const getEntireBalance = (e: React.MouseEvent) => {
-                e.preventDefault();
-                if (available !== undefined) {
-                  setFieldValue('amount', available);
-                }
-              };
               return (
                 <form onSubmit={handleSubmit} className="text-left">
                   <div className="form-group mb-spacer">
-                    <label htmlFor="amount">Amount {erdLabel}</label>
                     <div className="input-group input-group-seamless">
                       <input type="text" className="form-control" id="amount" name="amount" data-testid="amount"
                         required={true} value={values.amount} autoComplete="off"
                         onChange={handleChange}
                         onBlur={handleBlur} />
-                      {values.amount !== available && available !== '0' && (
-                        <span className="input-group-append">
-                          <a href="/#" className="input-group-text"
-                            onClick={getEntireBalance} data-testid="maxBtn">
-                            Max
-                          </a>
-                        </span>
-                      )}
                     </div>
-                    <small className="form-text text-secondary mt-0">
-                      Available: <Denominate value={balance} />
-                    </small>
                     <ErrorMessage name="amount" />
                   </div>
                   <div className="d-flex align-items-center flex-column mt-spacer">
@@ -112,4 +95,4 @@ const DelegateModal = ({ show, title, description, balance, handleClose, handleC
   );
 };
 
-export default DelegateModal;
+export default DelegationCapModal;
