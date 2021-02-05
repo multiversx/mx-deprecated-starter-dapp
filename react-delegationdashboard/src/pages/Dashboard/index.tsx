@@ -12,10 +12,8 @@ const Dashboard = () => {
   const [balance, setBalance] = useState('');
 
   useEffect(() => {
-      dapp.proxy.getAccount(new Address(address))
-        .then((value) => setBalance(value.balance.toString()));
-    }, 
-  []);
+    dapp.proxy.getAccount(new Address(address)).then(value => setBalance(value.balance.toString()));
+  }, []);
 
   if (!loggedIn) {
     return <Redirect to="/" />;
@@ -53,7 +51,6 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

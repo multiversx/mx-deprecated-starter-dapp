@@ -8,39 +8,43 @@ import StakeProviderActionsContainer from '../StakeProviderActionsContainer';
 import StakeProviderViews from '../StakeProviderViews';
 
 const StakeProviderArea = () => {
-    const { dapp, address, delegationContract, decimals, denomination } = useContext();
-    const { getContractConfig, } = contractViews;
-    const [isOwner, setIsOwner] = useState(false);
-    const [serviceFee, setServiceFee] = useState('0');
-    const [maxDelegationCap, setMaxDelegationCap] = useState('0');
+  const { dapp, address, delegationContract, decimals, denomination } = useContext();
+  const { getContractConfig } = contractViews;
+  const [isOwner, setIsOwner] = useState(false);
+  const [serviceFee, setServiceFee] = useState('0');
+  const [maxDelegationCap, setMaxDelegationCap] = useState('0');
 
-    const getContractConfiguration = () => {
-       getContractConfig(dapp, delegationContract)
-            .then((value) => {
-                let ownerAddress = value.returnData[0].asHex;
-                let loginAddress = new Address(address).hex();
-                setIsOwner(loginAddress.localeCompare(ownerAddress) < 0 ? false : true);
-                setServiceFee((parseFloat(value.returnData[1].asHex) / 100).toString());
-                let delegationCap = denominate({ decimals, denomination, 
-                    input: value.returnData[2].asBigInt.toString(), showLastNonZeroDecimal: false });
-                setMaxDelegationCap(delegationCap || '0');
-            })
-            .catch(e => console.error('getContractConfig error ', e));
-    };
+  const getContractConfiguration = () => {
+    getContractConfig(dapp, delegationContract)
+      .then(value => {
+        let ownerAddress = value.returnData[0].asHex;
+        let loginAddress = new Address(address).hex();
+        setIsOwner(loginAddress.localeCompare(ownerAddress) < 0 ? false : true);
+        setServiceFee((parseFloat(value.returnData[1].asHex) / 100).toString());
+        let delegationCap = denominate({
+          decimals,
+          denomination,
+          input: value.returnData[2].asBigInt.toString(),
+          showLastNonZeroDecimal: false,
+        });
+        setMaxDelegationCap(delegationCap || '0');
+      })
+      .catch(e => console.error('getContractConfig error ', e));
+  };
 
-    useEffect(getContractConfiguration, []);
+  useEffect(getContractConfiguration, []);
 
-    if (!isOwner) {
-        return (<></>);
-    }
+  if (!isOwner) {
+    return <></>;
+  }
 
-    return (
-        <>
-            <StakeProviderViews serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
-            <StakeProviderActionsContainer />
-            <NodesTable />
-        </>
-    );
+  return (
+    <>
+      <StakeProviderViews serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
+      <StakeProviderActionsContainer />
+      <NodesTable />
+    </>
+  );
 };
 
 export default StakeProviderArea;

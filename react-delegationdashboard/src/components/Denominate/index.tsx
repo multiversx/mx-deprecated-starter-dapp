@@ -10,11 +10,11 @@ interface DenominateType {
 }
 
 const Denominate = ({
-                      value,
-                      showLastNonZeroDecimal = false,
-                      showErd = true,
-                      decimals,
-                    }: DenominateType) => {
+  value,
+  showLastNonZeroDecimal = false,
+  showErd = true,
+  decimals,
+}: DenominateType) => {
   const { denomination, decimals: configDecimals, erdLabel } = useContext();
 
   decimals = decimals !== undefined ? decimals : configDecimals;

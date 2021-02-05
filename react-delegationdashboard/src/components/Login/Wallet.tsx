@@ -4,12 +4,12 @@ import { useContext, useDispatch } from '../../context';
 import { getItem, removeItem, setItem } from '../../storage/session';
 
 const WalletLogin = () => {
-
   const dispatch = useDispatch();
   const { dapp } = useContext();
   const handleOnClick = () => {
     dispatch({ type: 'loading', loading: true });
-    dapp.provider.init()
+    dapp.provider
+      .init()
       .then(initialised => {
         if (initialised) {
           // Wallet provider will redirect, we can set a session information so we know when we are getting back
@@ -20,7 +20,8 @@ const WalletLogin = () => {
           dispatch({ type: 'loading', loading: true });
           console.warn('Something went wrong trying to redirect to wallet login..');
         }
-      }).catch(err => {
+      })
+      .catch(err => {
         dispatch({ type: 'loading', loading: false });
         console.warn(err);
       });
@@ -30,27 +31,30 @@ const WalletLogin = () => {
   useEffect(() => {
     if (getItem('wallet_login')) {
       dispatch({ type: 'loading', loading: true });
-      dapp.provider.init()
-        .then(initialised => {
-          if (!initialised) {
+      dapp.provider.init().then(initialised => {
+        if (!initialised) {
+          dispatch({ type: 'loading', loading: false });
+          return;
+        }
+
+        dapp.provider
+          .getAddress()
+          .then(address => {
+            removeItem('wallet_login');
+            dispatch({ type: 'login', address });
+          })
+          .then(value =>
+            dapp.proxy
+              .getAccount(new Address(getItem('address')))
+              .then(account =>
+                dispatch({ type: 'setBalance', balance: account.balance.toString() })
+              )
+          )
+          .catch(err => {
             dispatch({ type: 'loading', loading: false });
-            return;
-          }
-
-          dapp.provider.getAddress()
-            .then(address => {
-              removeItem('wallet_login');
-              dispatch({ type: 'login', address });
-            }).then((value) =>
-              dapp.proxy.getAccount(new Address(getItem('address'))).then(account =>
-                dispatch({ type: 'setBalance', balance: account.balance.toString() }))
-
-            ).catch(err => {
-              dispatch({ type: 'loading', loading: false });
-            });
-        });
+          });
+      });
     }
-
   }, [dapp.provider, dapp.proxy, dispatch]);
 
   return (
@@ -64,7 +68,7 @@ const WalletLogin = () => {
             <br /> Login with:
           </p>
 
-          <button onClick={() => handleOnClick()} className="btn btn-primary mt-3">
+          <button onClick={handleOnClick} className="btn btn-primary mt-3">
             www.wallet.elrond.com
           </button>
         </div>

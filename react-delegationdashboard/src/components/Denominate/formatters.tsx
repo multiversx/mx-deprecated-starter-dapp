@@ -72,12 +72,12 @@ interface DenominateType {
 }
 
 export default function denominate({
-                                     input,
-                                     denomination,
-                                     decimals,
-                                     showLastNonZeroDecimal = false,
-                                     addCommas = true,
-                                   }: DenominateType): string {
+  input,
+  denomination,
+  decimals,
+  showLastNonZeroDecimal = false,
+  addCommas = true,
+}: DenominateType): string {
   if (input === '...') {
     return input;
   }

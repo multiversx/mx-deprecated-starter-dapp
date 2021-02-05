@@ -34,17 +34,17 @@ const RequestVariablesModal = ({
     }
   };
 
-  const isPemUpload = variables && variables.some((variable) => variable.type === 'pemUpload');
+  const isPemUpload = variables && variables.some(variable => variable.type === 'pemUpload');
 
   return (
     <Modal show={show} className="modal-container" animation={false} centered>
       <div className="card card-small">
-      <div className="card-body text-center p-spacer">
+        <div className="card-body text-center p-spacer">
           <p className="h3" data-testid="delegateTitle">
             {name}
           </p>
           <div className="mt-4 lead">
-            {variables?.map((variable) => {
+            {variables?.map(variable => {
               return (
                 <div key={variable.name}>
                   {variable.type === 'input' && (
@@ -56,7 +56,7 @@ const RequestVariablesModal = ({
                           className="form-control"
                           id={variable.name}
                           name={variable.name}
-                          onChange={(e) => {
+                          onChange={e => {
                             const vals = { ...modalValues };
                             vals[variable.name] = e.target.value;
                             setModalValues(vals);

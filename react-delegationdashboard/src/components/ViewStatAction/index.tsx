@@ -1,13 +1,17 @@
-interface BaseActionType {
-    actionTitle: string;
-    handleContinue: () => void;
-  }
+interface ViewStatActionType {
+  actionTitle: string;
+  handleContinue: () => void;
+}
 
-const ViewStatAction  = ({ actionTitle, handleContinue }: BaseActionType) => {
-  
-   return (
+const ViewStatAction = ({ actionTitle, handleContinue }: ViewStatActionType) => {
+  return (
     <>
-      <button onClick={() => handleContinue()} className="btn btn-primary mt-3">
+      <button
+        onClick={() => {
+          handleContinue();
+        }}
+        className="btn btn-primary mt-3"
+      >
         {actionTitle}
       </button>
     </>

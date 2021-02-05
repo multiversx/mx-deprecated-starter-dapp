@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 const PageState = ({
-                     title,
-                     description,
-                     svgComponent,
-                     className,
-                     spin = false,
-                   }: {
+  title,
+  description,
+  svgComponent,
+  className,
+  spin = false,
+}: {
   title?: string;
   description?: string | React.ReactNode;
   svgComponent: React.ReactNode;

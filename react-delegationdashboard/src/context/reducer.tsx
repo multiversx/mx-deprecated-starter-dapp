@@ -8,8 +8,7 @@ export type ActionType =
   | { type: 'logout'; provider: StateType['dapp']['provider'] }
   | { type: 'loading'; loading: StateType['loading'] }
   | { type: 'setProvider'; provider: StateType['dapp']['provider'] }
-  | { type: 'setBalance'; balance: StateType['account']['balance'] }
-  ;
+  | { type: 'setBalance'; balance: StateType['account']['balance'] };
 
 export function reducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -28,7 +27,7 @@ export function reducer(state: StateType, action: ActionType): StateType {
       const { loading } = action;
       return {
         ...state,
-        loading
+        loading,
       };
     }
 
@@ -39,7 +38,7 @@ export function reducer(state: StateType, action: ActionType): StateType {
         dapp: {
           ...state.dapp,
           provider: provider,
-        }
+        },
       };
     }
 
@@ -49,15 +48,17 @@ export function reducer(state: StateType, action: ActionType): StateType {
         ...state,
         account: {
           ...state.account,
-          balance: balance
-        }
+          balance: balance,
+        },
       };
     }
 
     case 'logout': {
-
       const { provider } = action;
-      provider.logout().then().catch(e => console.log('logout', e));
+      provider
+        .logout()
+        .then()
+        .catch(e => console.log('logout', e));
       removeItem('logged_in');
       removeItem('address');
       return initialState();

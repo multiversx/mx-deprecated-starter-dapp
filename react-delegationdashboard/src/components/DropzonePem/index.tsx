@@ -40,7 +40,7 @@ const DropzonePem = ({
     }
 
     if (unique === true) {
-      const found = existing.filter((file) => file.pubKey === pubKey);
+      const found = existing.filter(file => file.pubKey === pubKey);
       if (found.length > 1) {
         errors.push('unique');
       }
@@ -53,7 +53,7 @@ const DropzonePem = ({
     if (files.length > 0) {
       const updatedFiles = [...files];
 
-      updatedFiles.forEach((file) => {
+      updatedFiles.forEach(file => {
         file.errors = getKeyErrors(file.pubKey, updatedFiles);
       });
 
@@ -67,7 +67,7 @@ const DropzonePem = ({
     name,
     pubKey,
     value,
-    signature
+    signature,
   }: {
     existing: DropzoneFileType[];
     name: string;
@@ -76,7 +76,7 @@ const DropzonePem = ({
     signature: any;
   }) => {
     const updated = [...existing];
-    const file = updated.find((item) => item.name === name);
+    const file = updated.find(item => item.name === name);
 
     if (file) {
       file.value = value;
@@ -93,20 +93,23 @@ const DropzonePem = ({
     return updated;
   };
 
-  const {delegationContract} = useContext();
+  const { delegationContract } = useContext();
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: '.pem',
     multiple,
     onDrop: async (files: any) => {
       const onload = (fileReader: any, name: string) => async (e: any) => {
         try {
-          let { value, pubKey, signature } = await decodePem(fileReader.result!, delegationContract);
-          setFiles((existing) => {
+          let { value, pubKey, signature } = await decodePem(
+            fileReader.result!,
+            delegationContract
+          );
+          setFiles(existing => {
             return getUpdatedFiles({ existing, value, pubKey, name, signature });
           });
         } catch (e) {
           console.error('error decode pem', e);
-          setFiles((existing) => {
+          setFiles(existing => {
             return getUpdatedFiles({ existing, value: '', pubKey: '', name, signature: '' });
           });
           return;
@@ -129,9 +132,9 @@ const DropzonePem = ({
     e.stopPropagation();
   };
   const remove = (id: string) => {
-    setFiles((existing) => {
+    setFiles(existing => {
       let updated = [...existing];
-      updated = updated.filter((item) => item.id !== id);
+      updated = updated.filter(item => item.id !== id);
       setFieldValue(fieldName, updated);
       return updated;
     });
@@ -160,49 +163,50 @@ const DropzonePem = ({
             </a>
           </div>
         ) : (
-            <>
-              {files.length > 0 ? (
-                <div className="dropzone-area text-center has-file">
-                  {files.map(({ id, name, errors }, i) => (
-                    <div
-                      key={id}
-                      className={`file border rounded m-1 ${errors.length > 0 ? 'border-danger' : ''
-                        } `}
-                      onClick={disabledOnClick}
-                    >
-                      <div className="d-flex justify-content-between align-items-center">
-                        <p className="ml-2 mb-0" id={id} data-testid={`uploadLabel${i}`}>
-                          {name}
-                        </p>
-                        <span
-                          className="lead pr-2"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            remove(id);
-                          }}
-                          style={{
-                            cursor: 'pointer',
-                            userSelect: 'none',
-                            verticalAlign: '-0.1rem',
-                          }}
-                        >
-                          <span aria-hidden="true">×</span>
-                        </span>
-                      </div>
+          <>
+            {files.length > 0 ? (
+              <div className="dropzone-area text-center has-file">
+                {files.map(({ id, name, errors }, i) => (
+                  <div
+                    key={id}
+                    className={`file border rounded m-1 ${
+                      errors.length > 0 ? 'border-danger' : ''
+                    } `}
+                    onClick={disabledOnClick}
+                  >
+                    <div className="d-flex justify-content-between align-items-center">
+                      <p className="ml-2 mb-0" id={id} data-testid={`uploadLabel${i}`}>
+                        {name}
+                      </p>
+                      <span
+                        className="lead pr-2"
+                        onClick={e => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          remove(id);
+                        }}
+                        style={{
+                          cursor: 'pointer',
+                          userSelect: 'none',
+                          verticalAlign: '-0.1rem',
+                        }}
+                      >
+                        <span aria-hidden="true">×</span>
+                      </span>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                  <div className={`dropzone-area text-center ${isInvalid}`}>
-                    Drag and drop your PEM {fileWord} here, or{' '}
-                    <a href="/" onClick={onclick}>
-                      Select {fileWord}
-                    </a>
                   </div>
-                )}
-            </>
-          )}
+                ))}
+              </div>
+            ) : (
+              <div className={`dropzone-area text-center ${isInvalid}`}>
+                Drag and drop your PEM {fileWord} here, or{' '}
+                <a href="/" onClick={onclick}>
+                  Select {fileWord}
+                </a>
+              </div>
+            )}
+          </>
+        )}
       </div>
       {isInvalid && (
         <p data-testid="pemError">

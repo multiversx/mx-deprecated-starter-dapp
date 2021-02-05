@@ -1,14 +1,14 @@
 import React from 'react';
 import { Navbar as BsNavbar, NavItem, Nav } from 'react-bootstrap';
 import { ReactComponent as ElrondLogo } from '../../../assets/img/elrond.svg';
-import {useContext, useDispatch} from '../../../context';
+import { useContext, useDispatch } from '../../../context';
 
 const Navbar = () => {
-  const {loggedIn, dapp} = useContext();
+  const { loggedIn, dapp } = useContext();
   const dispatch = useDispatch();
 
   const logOut = () => {
-    dispatch({type: 'logout', provider: dapp.provider});
+    dispatch({ type: 'logout', provider: dapp.provider });
   };
 
   return (
@@ -22,7 +22,9 @@ const Navbar = () => {
         <Nav className="ml-auto">
           {loggedIn && (
             <NavItem>
-              <a href="/" onClick={() => logOut()}>Close</a>
+              <a href="/" onClick={logOut}>
+                Close
+              </a>
             </NavItem>
           )}
         </Nav>
