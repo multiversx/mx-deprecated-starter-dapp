@@ -22,7 +22,7 @@ const StakeProviderArea = () => {
 
         dapp.proxy.queryContract(query)
             .then((value) => {
-                let ownerAddress = encode(value.returnData[0].asHex);
+                let ownerAddress = value.returnData[0].asHex;
                 let loginAddress = new Address(address).hex();
                 setIsOwner(loginAddress.localeCompare(ownerAddress) < 0 ? false : true);
                 setServiceFee((parseFloat(value.returnData[1].asHex) / 100).toString());
