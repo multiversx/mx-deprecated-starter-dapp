@@ -12,22 +12,20 @@ const Dashboard = () => {
   const [balance, setBalance] = useState('');
 
   useEffect(() => {
-      dapp.proxy.getAccount(new Address(address))
-        .then((value) => setBalance(value.balance.toString()));
-    }, 
-  []);
+    dapp.proxy.getAccount(new Address(address)).then(value => setBalance(value.balance.toString()));
+  }, []);
 
   if (!loggedIn) {
     return <Redirect to="/" />;
   }
 
   return (
-    <div className="container py-4">
+    <div className="dashboard container py-4">
       <div className="row">
         <div className="col-12 col-md-10 mx-auto">
           <div className="card shadow-sm rounded border-0">
             <div className="card-body p-1">
-              <div className="card rounded border-0 bg-primary">
+              <div className="card rounded mb-spacer border-0 bg-primary">
                 <div className="card-body text-center p-4">
                   <div className="text-white">
                     <div className="mb-1">
@@ -53,7 +51,6 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

@@ -2,11 +2,11 @@ import React from 'react';
 import Footer from './Footer';
 import Navbar from './Navbar';
 
-const Layout = ({children}: { children: React.ReactNode }) => {
+const Layout = ({ children, page }: { children: React.ReactNode; page: string }) => {
   return (
-    <div className="bg-light d-flex flex-column flex-fill wrapper">
-      <Navbar />
-      <main className="d-flex flex-column flex-grow-1">{children}</main>
+    <div className={`layout d-flex flex-column min-vh-100 ${page}`}>
+      {page !== 'home' && <Navbar />}
+      <main className="container flex-grow-1 d-flex">{children}</main>
       <Footer />
     </div>
   );
