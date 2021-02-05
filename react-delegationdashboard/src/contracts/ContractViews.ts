@@ -40,5 +40,12 @@ export const contractViews = {
             func: new ContractFunction('getNumNodes')
         });
         return dapp.proxy.queryContract(query);
+    },
+    getContractConfig: (dapp: DappState, delegationContract?: string) => {
+        const query = new Query({
+            address: new Address(delegationContract),
+            func: new ContractFunction('getContractConfig')
+        });
+        return dapp.proxy.queryContract(query);
     }
 };

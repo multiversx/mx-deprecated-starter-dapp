@@ -2,25 +2,24 @@ import BigNumber from 'bignumber.js';
 import denominate from '../components/Denominate/formatters';
 
 interface EntireBalanceType {
-  balance?: string;
+  balance: string;
   gasPrice: string;
-  gasLimit?: string;
+  gasLimit: string;
   denomination: number;
   decimals: number;
 }
 
 export default function entireBalance({
-  balance = '0',
-  gasLimit = '0',
+  balance,
+  gasLimit,
   gasPrice,
   denomination,
   decimals,
 }: EntireBalanceType) {
-  const bnBalance = new BigNumber(balance);
+  const bnBalance = new BigNumber(parseInt(balance));
   const bnGasPrice = new BigNumber(gasPrice);
   const bnGasLimit = new BigNumber(gasLimit);
   const entireBalance = bnBalance.minus(bnGasPrice.times(bnGasLimit));
-  // entireBalance >= 0
   if (entireBalance.comparedTo(0) === 1) {
     const input = entireBalance.toString(10);
     return denominate({
@@ -34,18 +33,3 @@ export default function entireBalance({
   return '0';
 }
 
-export function entireTokenBalance({ balance = '0', denomination = 18, decimals = 4 }) {
-  const bnBalance = new BigNumber(balance);
-  // entireBalance >= 0
-  if (bnBalance.comparedTo(0) === 1) {
-    const input = bnBalance.toString(10);
-    return denominate({
-      input,
-      denomination,
-      decimals,
-      showLastNonZeroDecimal: true,
-      addCommas: false,
-    });
-  }
-  return '0';
-}
