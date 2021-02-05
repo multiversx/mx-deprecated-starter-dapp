@@ -1,0 +1,14 @@
+.footer {
+  a {
+    color: $dark;
+    svg {
+      fill: $red;
+    }
+  }
+}
+
+.home .footer {
+  a {
+    color: $white;
+  }
+}

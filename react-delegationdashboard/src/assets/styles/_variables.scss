@@ -1,0 +1,37 @@
+@import './../../../node_modules/bootstrap/scss/functions';
+@import './../../../node_modules/bootstrap/scss/variables';
+@import './../../../node_modules/bootstrap/scss/mixins';
+
+$body-background: $body-bg;
+$spacer-val: $spacer * 2;
+
+// SPACING
+$spacers: (
+  spacer: (
+    $spacer-val,
+  ),
+);
+
+// TEXT
+$body-color: $body;
+$headings-color: $body;
+$text-muted: $muted;
+$link-color: $primary;
+
+// CARDS
+$card-border-radius: 0.65rem;
+$card-small-box-shadow: 0 0.3125rem 0.3125rem 0 rgba($standard-box-shadow, 0.1);
+$card-cap-bg: $card-bg;
+
+// INPUT
+$input-border-color: $border-color;
+$input-focus-border-color: $primary;
+
+// DROPDOWN
+$dropdown-bg: $card-bg;
+$dropdown-link-color: $secondary;
+$dropdown-link-hover-bg: $light;
+$dropdown-link-hover-color: $link-color;
+$dropdown-border-color: $border-color;
+$dropdown-link-active-color: $link-color;
+$dropdown-link-active-bg: $card-bg;
