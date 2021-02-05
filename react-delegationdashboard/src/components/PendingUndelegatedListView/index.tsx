@@ -29,7 +29,9 @@ const UndelegatedListView = () => {
         let arrayWithdraw = undelegatedList.filter(x => x.timeLeft !== 0);
         const withdrawValue = undelegatedList
             .filter(x => x.timeLeft === 0).reduce((a, b) => a + (parseInt(b.value) || 0), 0);
-        arrayWithdraw.push(new UndelegatedValueType(withdrawValue.toString(), 0));
+        if (withdrawValue !== 0) {
+            arrayWithdraw.push(new UndelegatedValueType(withdrawValue.toString(), 0));
+        }
         return arrayWithdraw;
     };
 
