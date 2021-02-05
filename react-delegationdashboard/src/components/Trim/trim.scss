@@ -66,25 +66,21 @@
 a:hover > .trim span {
   color: $link-hover-color !important;
 }
-
 a > .trim span {
   color: $primary !important;
 }
 
 .table .trim {
   max-width: 10rem;
-}
-
-.table .trim-only-sm .trim {
-  max-width: none;
-
-  @include media-breakpoint-down(sm) {
-    max-width: 13rem;
+  .trim-only-sm .trim {
+    max-width: none;
+    @include media-breakpoint-down(sm) {
+      max-width: 13rem;
+    }
   }
-}
-
-.table .trim-size-xl .trim {
-  @include media-breakpoint-up(md) {
-    max-width: 13rem;
+  .trim-size-xl .trim {
+    @include media-breakpoint-up(md) {
+      max-width: 13rem;
+    }
   }
 }

@@ -7,7 +7,11 @@ $muted: #cacbcc;
 $light: #f5f5f5;
 $success: #28a745;
 
-$dapp_color: $secondary;
+$dapp-color: $secondary;
+$blue-stats-card-bg: linear-gradient(153.43deg, #1233b2, #3464d0);
+$light-blue-stats-card-bg: linear-gradient(153.43deg, #3585dd, #64adeb);
+$green-stats-card-bg: linear-gradient(153.43deg, #209d67, #4bc197);
+$orange-stats-card-bg: linear-gradient(153.43deg, #eaa822, #f2c64b);
 
 $primary-accent: lighten($primary, 20%);
 
