@@ -4,10 +4,10 @@ import { useContext } from 'context';
 import { contractViews } from 'contracts/ContractViews';
 import denominate from 'components/Denominate/formatters';
 import NodesTable from './NodesTable';
-import StakeProviderActionsContainer from './StakeProviderActionsContainer';
-import StakeProviderViews from './StakeProviderViews';
+import Actions from './Actions';
+import Views from './Views';
 
-const StakeProviderArea = () => {
+const Owner = () => {
   const { dapp, address, delegationContract, decimals, denomination } = useContext();
   const { getContractConfig } = contractViews;
   const [isOwner, setIsOwner] = useState(false);
@@ -40,11 +40,11 @@ const StakeProviderArea = () => {
 
   return (
     <>
-      <StakeProviderViews serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
-      <StakeProviderActionsContainer />
+      <Views serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
+      <Actions />
       <NodesTable />
     </>
   );
 };
 
-export default StakeProviderArea;
+export default Owner;

@@ -1,6 +1,6 @@
 import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
-import AutomaticActivationModal from 'pages/Dashboard/StakeProviderArea/StakeProviderActionsContainer/SetAutomaticActivationAction/AutomaticActivationModal';
+import AutomaticActivationModal from './AutomaticActivationModal';
 
 const SetAutomaticActivationAction = () => {
   const { delegation } = useDelegation();

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Denominate from '../../components/Denominate';
 import { useContext } from '../../context';
-import StakeProviderArea from './StakeProviderArea';
-import DelegatorArea from './DelegatorArea';
+import Owner from './Owner';
+import Delegator from './Delegator';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { Redirect } from 'react-router-dom';
 
@@ -43,8 +43,8 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <StakeProviderArea />
-              <DelegatorArea />
+              <Owner />
+              <Delegator />
             </div>
           </div>
         </div>

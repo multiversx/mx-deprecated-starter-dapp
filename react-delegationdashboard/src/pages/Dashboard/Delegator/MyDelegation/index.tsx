@@ -4,7 +4,7 @@ import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
 import { contractViews } from 'contracts/ContractViews';
 
-const DelegatorViews = () => {
+const MyDelegation = () => {
   const { dapp, address, erdLabel, delegationContract, denomination, decimals } = useContext();
   const { getClaimableRewards, getUserActiveStake } = contractViews;
   const [userActiveStake, setUserActiveState] = React.useState('0');
@@ -56,4 +56,4 @@ const DelegatorViews = () => {
   );
 };
 
-export default DelegatorViews;
+export default MyDelegation;

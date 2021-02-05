@@ -6,10 +6,10 @@ import moment from 'moment';
 import React from 'react';
 import { Nav, NavDropdown } from 'react-bootstrap';
 import { useContext } from 'context';
-import { NodeType } from 'helpers/types';
 import Trim from 'components/Trim';
 import { nodeActions } from './helpers/nodeTypes';
 import { nodeTransactions } from './helpers/stakeHooks';
+import { NodeType } from 'helpers/types';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake';
 

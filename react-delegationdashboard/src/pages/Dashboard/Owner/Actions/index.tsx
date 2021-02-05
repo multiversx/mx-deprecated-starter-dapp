@@ -4,7 +4,7 @@ import SetPercentageFeeAction from './SetPercentageFeeAction';
 import SetAutomaticActivationAction from './SetAutomaticActivationAction';
 import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 
-const StakeProviderActionsContainer = () => {
+const Actions = () => {
   return (
     <>
       <div className="mb-spacer">
@@ -24,4 +24,4 @@ const StakeProviderActionsContainer = () => {
   );
 };
 
-export default StakeProviderActionsContainer;
+export default Actions;

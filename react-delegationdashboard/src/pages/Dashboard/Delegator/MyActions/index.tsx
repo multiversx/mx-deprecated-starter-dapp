@@ -1,12 +1,12 @@
 import React from 'react';
 import { useContext } from 'context';
 import ViewStatAction from 'components/ViewStatAction';
-import DelegateAction from 'pages/Dashboard/DelegatorArea/DelegatorActionsContainer/DelegateAction';
-import UndelegateAction from 'pages/Dashboard/DelegatorArea/DelegatorActionsContainer/UndelegateAction/Index';
+import DelegateAction from 'pages/Dashboard/Delegator/MyActions/DelegateAction';
+import UndelegateAction from 'pages/Dashboard/Delegator/MyActions/UndelegateAction/Index';
 import { contractViews } from 'contracts/ContractViews';
 import { useDelegation } from 'helpers';
 
-const DelegatorActionsContainer = () => {
+const MyActions = () => {
   const { dapp, delegationContract, address } = useContext();
   const { delegation } = useDelegation();
   const [displayRewards, setDisplayRewards] = React.useState(false);
@@ -74,4 +74,4 @@ const DelegatorActionsContainer = () => {
   );
 };
 
-export default DelegatorActionsContainer;
+export default MyActions;

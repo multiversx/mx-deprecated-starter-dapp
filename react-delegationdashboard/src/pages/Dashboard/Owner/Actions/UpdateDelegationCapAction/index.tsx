@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
 import nominate from 'helpers/nominate';
-import DelegationCapModal from 'pages/Dashboard/StakeProviderArea/StakeProviderActionsContainer/UpdateDelegationCapAction/DelegationCapModal';
+import DelegationCapModal from './DelegationCapModal';
 
 const UpdateDelegationCapAction = () => {
   const { delegation } = useDelegation();

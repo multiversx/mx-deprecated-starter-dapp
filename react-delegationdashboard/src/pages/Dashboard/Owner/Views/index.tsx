@@ -4,12 +4,12 @@ import { useContext } from 'context';
 import { contractViews } from 'contracts/ContractViews';
 import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
-interface StakeProviderType {
+interface ViewsType {
   serviceFee: string;
   maxDelegationCap: string;
 }
 
-const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeProviderType) => {
+const Views = ({ serviceFee = '0', maxDelegationCap = '0' }: ViewsType) => {
   const { dapp, erdLabel, delegationContract } = useContext();
   const { getTotalActiveStake, getNumNodes } = contractViews;
   const [totalActiveStake, setTotalActiveStake] = React.useState('0');
@@ -59,4 +59,4 @@ const StakeProviderViews = ({ serviceFee = '0', maxDelegationCap = '0' }: StakeP
   );
 };
 
-export default StakeProviderViews;
+export default Views;

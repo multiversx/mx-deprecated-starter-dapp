@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ErrorMessage, Formik } from 'formik';
-
 import { object, string } from 'yup';
 
 const SetPercentageFeeSchema = object().shape({
