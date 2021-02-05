@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Denominate from '../../components/Denominate';
 import { useContext } from '../../context';
-import StakeProviderArea from '../../components/StakeProviderArea';
-import DelegatorArea from '../../components/DelegatorArea';
+import Owner from './Owner';
+import Delegator from './Delegator';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { Redirect } from 'react-router-dom';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const Dashboard = () => {
   const { address, dapp, delegationContract, loggedIn } = useContext();
   const [balance, setBalance] = useState('');
 
   useEffect(() => {
-      dapp.proxy.getAccount(new Address(address))
-        .then((value) => setBalance(value.balance.toString()));
-    }, 
-  []);
+    dapp.proxy.getAccount(new Address(address)).then(value => setBalance(value.balance.toString()));
+  }, []);
 
   if (!loggedIn) {
     return <Redirect to="/" />;
@@ -46,14 +43,13 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <StakeProviderArea />
-              <DelegatorArea />
+              <Owner />
+              <Delegator />
             </div>
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 

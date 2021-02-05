@@ -17,13 +17,17 @@ export class StatCardType {
   valueUnit!: string;
 }
 
-
 export class NodeType {
   blsKey!: string;
   status!: { [key: string]: string };
   queueIndex?: string;
   queueSize?: string;
-  public constructor(blsKey: string, status: { [key: string]: string }, queueIndex?: string, queueSize?: string) {
+  public constructor(
+    blsKey: string,
+    status: { [key: string]: string },
+    queueIndex?: string,
+    queueSize?: string
+  ) {
     this.blsKey = blsKey;
     this.status = status;
     this.queueIndex = queueIndex;
@@ -38,4 +42,12 @@ export class UndelegatedValueType {
     this.value = value;
     this.timeLeft = timeLeft;
   }
+}
+
+export interface ActionModalType {
+  show: boolean;
+  title: string;
+  description: string;
+  handleClose: () => void;
+  handleContinue: (value: string) => void;
 }
