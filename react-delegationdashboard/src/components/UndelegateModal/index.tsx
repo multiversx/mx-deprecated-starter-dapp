@@ -3,7 +3,6 @@ import { Modal } from 'react-bootstrap';
 import { useContext } from '../../context';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
-import Denominate from '../Denominate';
 
 interface BaseModalType {
   show: boolean;
@@ -14,7 +13,7 @@ interface BaseModalType {
 }
 
 const UndelegateModal = ({ show, title, description, handleClose, handleContinue }: BaseModalType) => {
-  const { erdLabel, account } = useContext();
+  const { erdLabel } = useContext();
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
@@ -34,6 +33,10 @@ const UndelegateModal = ({ show, title, description, handleClose, handleContinue
             }}
             validationSchema={object().shape({
               amount: string().required('Required')
+              .test('number', 'String not allows, only numbers. For example (12.20)', (value) => {
+                const regex=/^(\d+(?:[\.]\d{1,2})?)$/;
+                return regex.test(value || '');
+              })
             })}
           >
             {(props) => {

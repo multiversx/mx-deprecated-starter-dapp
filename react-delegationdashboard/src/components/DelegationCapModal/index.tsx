@@ -52,6 +52,10 @@ const DelegationCapModal = ({ show, title, description, handleClose, handleConti
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
                   return bnAmount.comparedTo(totalActiveStake) >= 0;
                 })
+                .test('number', 'String not allows, only numbers. For example (12.20)', (value) => {
+                  const regex=/^(\d+(?:[\.]\d{1,2})?)$/;
+                  return regex.test(value?.toString() || '');
+                })
             })}
           >
             {(props) => {
