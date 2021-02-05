@@ -58,7 +58,7 @@ export function reducer(state: StateType, action: ActionType): StateType {
       provider
         .logout()
         .then()
-        .catch(e => console.log('logout', e));
+        .catch(e => console.error('logout', e));
       removeItem('logged_in');
       removeItem('address');
       return initialState();

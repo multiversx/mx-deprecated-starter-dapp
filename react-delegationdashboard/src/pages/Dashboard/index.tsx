@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Denominate from '../../components/Denominate';
 import { useContext } from '../../context';
-import StakeProviderArea from '../../components/StakeProviderArea';
-import DelegatorArea from '../../components/DelegatorArea';
+import StakeProviderArea from './StakeProviderArea';
+import DelegatorArea from './DelegatorArea';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { Redirect } from 'react-router-dom';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const Dashboard = () => {
   const { address, dapp, delegationContract, loggedIn } = useContext();
   const [balance, setBalance] = useState('');
