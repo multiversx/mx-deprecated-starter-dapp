@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useContext } from 'context';
 import Delegator from './Delegator';
 import { Address } from '@elrondnetwork/erdjs/out';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { contractViews } from 'contracts/ContractViews';
 import Header from 'components/Header';
 
 const Dashboard = () => {
   const { address, dapp, delegationContract, loggedIn } = useContext();
-  const [mounted, setMounted] = useState(false);
   const { getContractConfig } = contractViews;
   const [isAdminFlag, setIsAdminFlag] = useState(false);
 
@@ -26,10 +25,6 @@ const Dashboard = () => {
     let loginAddress = new Address(address).hex();
     return loginAddress.localeCompare(ownerAddress) < 0 ? false : true;
   };
-
-  const handleViewOwnerPanel = () => {
-    return <Redirect to="owner" />;
-  };
   if (!loggedIn) {
     return <Redirect to="/" />;
   }
@@ -41,14 +36,9 @@ const Dashboard = () => {
             <div className="card-body p-1">
               <Header />
               {isAdminFlag ? (
-                <button
-                  onClick={() => {
-                    handleViewOwnerPanel();
-                  }}
-                  className="btn btn-primary"
-                >
+                <Link to="/owner" className="btn btn-primary">
                   View Owner Panel
-                </button>
+                </Link>
               ) : (
                 <></>
               )}

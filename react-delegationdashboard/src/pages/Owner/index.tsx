@@ -7,11 +7,9 @@ import NodesTable from './NodesTable';
 import Actions from './Actions';
 import Views from './Views';
 import Header from 'components/Header';
-import { Redirect, useHistory } from 'react-router-dom';
 
 const Owner = () => {
   const { dapp, address, delegationContract, decimals, denomination } = useContext();
-  const history = useHistory();
   const { getContractConfig } = contractViews;
   const [isOwner, setIsOwner] = useState(false);
   const [serviceFee, setServiceFee] = useState('0');
@@ -35,19 +33,10 @@ const Owner = () => {
       .catch(e => console.error('getContractConfig error ', e));
   };
 
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      getContractConfiguration();
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  useEffect(getContractConfiguration, []);
 
   if (!isOwner) {
-    return history.push('/dashboard/delegator');
+    <></>;
   }
 
   return (
