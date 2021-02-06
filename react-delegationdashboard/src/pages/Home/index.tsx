@@ -29,7 +29,7 @@ const Home = () => {
         <div className="m-auto login-container">
           <div className="card my-3 text-center">
             <div className="card-body">
-              <Logo className="logo mb-4" />
+              <Logo className="logo my-4" />
               <h4 className="mb-4">Delegation Manager</h4>
               <p className="mb-4">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem

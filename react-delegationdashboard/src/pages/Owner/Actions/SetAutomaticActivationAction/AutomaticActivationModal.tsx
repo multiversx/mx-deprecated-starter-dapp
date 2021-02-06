@@ -47,10 +47,10 @@ const AutomaticActivationModal = ({
                       </select>
                     </div>
                   </div>
-                  <div className="d-flex align-items-center flex-column mt-spacer">
+                  <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
                     <button
                       type="submit"
-                      className="btn btn-primary px-spacer"
+                      className="btn btn-outline-primary mx-2"
                       id="continueDelegate"
                       data-testid="continueDelegate"
                     >
@@ -58,7 +58,7 @@ const AutomaticActivationModal = ({
                     </button>
                     <button
                       id="closeButton"
-                      className="btn btn-primary px-spacer mt-3"
+                      className="btn btn-outline-primary mx-2"
                       onClick={handleClose}
                     >
                       Close

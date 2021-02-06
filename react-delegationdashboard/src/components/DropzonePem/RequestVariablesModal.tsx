@@ -75,10 +75,10 @@ const RequestVariablesModal = ({
           </div>
           {!isPemUpload && (
             <>
-              <div className="d-flex align-items-center flex-column mt-spacer">
+              <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
                 <button
                   type="submit"
-                  className="btn btn-primary px-spacer"
+                  className="btn btn-oultine-primary mx-2"
                   id="continueReq"
                   onClick={() => {
                     onSubmit();
@@ -86,7 +86,7 @@ const RequestVariablesModal = ({
                 >
                   Continue
                 </button>
-                <div className="mt-3 btn btn-link" onClick={handleClose}>
+                <div className="btn btn-oultine-primary mx-2" onClick={handleClose}>
                   Close
                 </div>
               </div>
