@@ -17,7 +17,7 @@ const MyDelegation = () => {
           denominate({
             denomination,
             decimals,
-            input: value.returnData[0].asBigInt.toString(),
+            input: value.returnData[0]?.asBigInt.toString(),
             showLastNonZeroDecimal: false,
           }) || ''
         );

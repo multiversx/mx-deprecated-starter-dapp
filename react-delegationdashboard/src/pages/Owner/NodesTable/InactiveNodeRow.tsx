@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useContext } from 'context';
 import { NodeType } from 'helpers/types';
-import Trim from '../../../../components/Trim';
+import Trim from '../../../components/Trim';
 import { nodeTransactions } from './helpers/stakeHooks';
 import { inactiveNodeActions } from './helpers/nodeTypes';
 

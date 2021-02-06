@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useContext } from 'context';
 import ViewStatAction from 'components/ViewStatAction';
-import DelegateAction from 'pages/Dashboard/Delegator/MyActions/DelegateAction';
-import UndelegateAction from 'pages/Dashboard/Delegator/MyActions/UndelegateAction/Index';
 import { contractViews } from 'contracts/ContractViews';
 import { useDelegation } from 'helpers';
+import DelegateAction from './DelegateAction';
+import UndelegateAction from './UndelegateAction/Index';
 
 const MyActions = () => {
   const { dapp, delegationContract, address } = useContext();
@@ -16,14 +16,14 @@ const MyActions = () => {
   React.useEffect(() => {
     getClaimableRewards(dapp, address, delegationContract)
       .then(result => {
-        if (result.returnData[0].asNumber !== 0) {
+        if (result.returnData[0]?.asNumber !== 0) {
           setDisplayRewards(true);
         }
       })
       .catch(e => console.error('getClaimableRewards error', e));
     getUserActiveStake(dapp, address, delegationContract)
       .then(result => {
-        if (result.returnData[0].asNumber !== 0) {
+        if (result.returnData[0]?.asNumber !== 0) {
           setDisplayUndelegate(true);
         }
       })

@@ -4,12 +4,10 @@ import { useContext } from 'context';
 import { contractViews } from 'contracts/ContractViews';
 import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
-interface ViewsType {
-  serviceFee: string;
-  maxDelegationCap: string;
-}
+import { ContractOverview } from 'helpers/types';
+import moment from 'moment';
 
-const Views = ({ serviceFee = '0', maxDelegationCap = '0' }: ViewsType) => {
+const Views = (contractOverview: { contractOverview: ContractOverview }) => {
   const { dapp, erdLabel, delegationContract } = useContext();
   const { getTotalActiveStake, getNumNodes } = contractViews;
   const [totalActiveStake, setTotalActiveStake] = React.useState('0');
@@ -50,8 +48,27 @@ const Views = ({ serviceFee = '0', maxDelegationCap = '0' }: ViewsType) => {
           <div className="card-body d-flex flex-wrap p-3">
             <StatCard title="Number of nodes" value={noNodes} valueUnit="nodes" />
             <StatCard title="Total Stake" value={totalActiveStake} valueUnit={erdLabel} />
-            <StatCard title="Service Fee" value={serviceFee} valueUnit="%" />
-            <StatCard title="Max delegation cap" value={maxDelegationCap} valueUnit={erdLabel} />
+            <StatCard
+              title="Service Fee"
+              value={contractOverview.contractOverview.serviceFee || ''}
+              valueUnit="%"
+            />
+            <StatCard
+              title="Max delegation cap"
+              value={contractOverview.contractOverview.maxDelegationCap || ''}
+              valueUnit={erdLabel}
+            />
+            <StatCard
+              title="Unbound period"
+              value={moment
+                .utc(
+                  moment
+                    .duration(contractOverview.contractOverview.unBondPeriod, 'seconds')
+                    .asMilliseconds()
+                )
+                .format('HH:mm:ss')}
+              valueUnit=""
+            />
           </div>
         </div>
       </div>
