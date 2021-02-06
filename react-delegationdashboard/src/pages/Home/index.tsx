@@ -4,10 +4,10 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
-import PageState from '../../components/PageState';
-import { useContext } from '../../context';
-import LedgerLogin from '../../components/Login/Ledger';
-import WalletLogin from '../../components/Login/Wallet';
+import PageState from 'components/PageState';
+import { useContext } from 'context';
+import LedgerLogin from './Login/Ledger';
+import WalletLogin from './Login/Wallet';
 
 const Home = () => {
   const { loading, error, loggedIn } = useContext();

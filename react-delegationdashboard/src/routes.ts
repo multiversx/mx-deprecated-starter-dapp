@@ -2,6 +2,7 @@ import React from 'react';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import withPageTitle from './components/PageTitle';
+import Owner from 'pages/Owner';
 
 interface RouteType {
   path: string;
@@ -22,6 +23,11 @@ const routes: RouteType[] = [
     page: 'dashboard',
     title: 'Dashboard',
     component: Dashboard,
+  },
+  {
+    path: '/owner',
+    title: 'Owner',
+    component: Owner,
   },
 ];
 

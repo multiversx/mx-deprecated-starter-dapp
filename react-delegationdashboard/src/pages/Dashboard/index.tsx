@@ -1,32 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import Denominate from '../../components/Denominate';
-import { useContext } from '../../context';
-import StakeProviderArea from '../../components/StakeProviderArea';
-import DelegatorArea from '../../components/DelegatorArea';
+import { useContext } from 'context';
+import Delegator from './Delegator';
 import { Address } from '@elrondnetwork/erdjs/out';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { contractViews } from 'contracts/ContractViews';
+import Header from 'components/Header';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const Dashboard = () => {
   const { address, dapp, delegationContract, loggedIn } = useContext();
-  const [balance, setBalance] = useState('');
+  const { getContractConfig } = contractViews;
+  const [isAdminFlag, setIsAdminFlag] = useState(false);
 
   useEffect(() => {
-    dapp.proxy.getAccount(new Address(address)).then(value => setBalance(value.balance.toString()));
+    getContractConfig(dapp, delegationContract)
+      .then(respone => {
+        if (isAdmin(respone.returnData[0].asHex)) {
+          setIsAdminFlag(true);
+        }
+      })
+      .catch(e => console.error('getContractConfig error ', e));
   }, []);
 
+  const isAdmin = (ownerAddress: string) => {
+    let loginAddress = new Address(address).hex();
+    return loginAddress.localeCompare(ownerAddress) < 0 ? false : true;
+  };
   if (!loggedIn) {
     return <Redirect to="/" />;
   }
-
   return (
     <div className="dashboard container py-4">
       <div className="row">
-        <div className="col-12 col-md-10 mx-auto card p-4">
-          <div className="rounded mb-spacer p-4 bg-primary text-center text-white">
-            <div className="mb-1">
-              <span className="opacity-6 mr-1">Your address:</span>
-              <span>{address}</span>
+        <div className="col-12 col-md-10 mx-auto  card p-4">
+          <div className="card shadow-sm rounded border-0">
+            <div className="card-body p-1">
+              <Header />
+              {isAdminFlag ? (
+                <Link to="/owner" className="btn btn-primary">
+                  View Owner Panel
+                </Link>
+              ) : (
+                <></>
+              )}
+              <Delegator />
             </div>
             <div className="mb-4">
               <span className="opacity-6 mr-1">Contract address:</span>

@@ -22,7 +22,7 @@ const Navbar = () => {
         <Nav className="ml-auto">
           {loggedIn && (
             <NavItem>
-              <a href="/" onClick={() => logOut()}>
+              <a href="/" onClick={logOut}>
                 Close
               </a>
             </NavItem>

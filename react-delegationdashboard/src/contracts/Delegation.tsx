@@ -1,7 +1,15 @@
 import {
-  ProxyProvider, ContractFunction,
-  Transaction, TransactionPayload, Balance, GasLimit, IDappProvider,
-  WalletProvider, HWProvider, Address, SmartContract
+  ProxyProvider,
+  ContractFunction,
+  Transaction,
+  TransactionPayload,
+  Balance,
+  GasLimit,
+  IDappProvider,
+  WalletProvider,
+  HWProvider,
+  Address,
+  SmartContract,
 } from '@elrondnetwork/erdjs';
 import { setItem } from '../storage/session';
 import { delegationContractData } from '../config';
@@ -18,10 +26,15 @@ export default class Delegation {
     this.signerProvider = signer;
   }
 
-
-  async sendTransaction(value: string, transcationType: string, args: string = ''): Promise<boolean> {
+  async sendTransaction(
+    value: string,
+    transcationType: string,
+    args: string = ''
+  ): Promise<boolean> {
     if (!this.signerProvider) {
-      throw new Error('You need a singer to send a transaction, use either WalletProvider or LedgerProvider');
+      throw new Error(
+        'You need a singer to send a transaction, use either WalletProvider or LedgerProvider'
+      );
     }
 
     switch (this.signerProvider.constructor) {
@@ -38,12 +51,15 @@ export default class Delegation {
     return true;
   }
 
-  private async sendTransactionBasedOnType(value: string, transcationType: string, args: string = ''): Promise<boolean> {
+  private async sendTransactionBasedOnType(
+    value: string,
+    transcationType: string,
+    args: string = ''
+  ): Promise<boolean> {
     let delegationContract = delegationContractData.find(d => d.name === transcationType);
     if (!delegationContract) {
       throw new Error('The contract for this action in not defined');
-    }
-    else {
+    } else {
       let funcName = delegationContract.data;
       if (args !== '') {
         funcName = `${delegationContract.data}${args}`;
@@ -56,7 +72,7 @@ export default class Delegation {
         receiver: this.contract.getAddress(),
         value: Balance.eGLD(value),
         gasLimit: new GasLimit(delegationContract.gasLimit),
-        data: payload
+        data: payload,
       });
 
       // @ts-ignore

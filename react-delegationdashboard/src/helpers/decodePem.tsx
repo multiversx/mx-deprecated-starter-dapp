@@ -13,18 +13,20 @@ function hexStringToByte(str: string) {
 }
 
 function getPubKey(file: string, indices: any[]) {
-  const headerParts = file.toString().substring(indices[0], indices[1]).split(' ');
+  const headerParts = file
+    .toString()
+    .substring(indices[0], indices[1])
+    .split(' ');
   return headerParts[4] ? headerParts[4] : '';
 }
 
 export default async function decodePem(file: string, delegationContract?: string) {
-
   await BLS.initIfNecessary();
   let myKey = ValidatorSecretKey.fromPem(file);
   let dsc = new Address(delegationContract);
   let signature = myKey.sign(Buffer.from(dsc.pubkey())).toString('hex');
 
-  const regex = /-----/gi; 
+  const regex = /-----/gi;
   let result;
   const indices = [];
   while ((result = regex.exec(file.toString()))) {

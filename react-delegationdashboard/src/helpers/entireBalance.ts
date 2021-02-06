@@ -32,4 +32,3 @@ export default function entireBalance({
   }
   return '0';
 }
-

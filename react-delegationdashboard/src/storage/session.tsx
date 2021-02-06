@@ -2,10 +2,13 @@ import moment from 'moment';
 
 export const setItem = (key: string, item: any, ttl: number = 3600) => {
   const expires = moment().unix() + ttl;
-  sessionStorage.setItem(key, JSON.stringify({
-    expires,
-    data: item,
-  }));
+  sessionStorage.setItem(
+    key,
+    JSON.stringify({
+      expires,
+      data: item,
+    })
+  );
 };
 
 export const getItem = (key: string): any => {

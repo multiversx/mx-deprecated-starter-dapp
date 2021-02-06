@@ -23,15 +23,19 @@ const PlaygroundPemUpload = ({
         pemFiles: array()
           .of(mixed())
           .test('validKeyLength', 'Invalid PEM file', (value: DropzoneFileType[] | undefined) => {
-            return !!value && value.every((file) => !file.errors.includes('length'));
+            return !!value && value.every(file => !file.errors.includes('length'));
           })
-          .test('keyIsUnique', 'Duplicate key detected', (value: DropzoneFileType[]| undefined) => {
-            return !!value && value.every((file) => !file.errors.includes('unique'));
-          })
+          .test(
+            'keyIsUnique',
+            'Duplicate key detected',
+            (value: DropzoneFileType[] | undefined) => {
+              return !!value && value.every(file => !file.errors.includes('unique'));
+            }
+          )
           .required('PEM file is required'),
       })}
     >
-      {(props) => {
+      {props => {
         const { setFieldValue, handleSubmit, errors } = props;
 
         return (
