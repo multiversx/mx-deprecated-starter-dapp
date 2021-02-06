@@ -1,11 +1,11 @@
 .navbar {
   svg.logo {
-    height: 1.5rem;
+    height: $logo-height;
     width: auto;
   }
   .dapp-name {
     color: $dapp-color;
-    line-height: 1.5rem;
+    line-height: $logo-height;
     border-left: 1px solid $gray-400;
   }
 }
