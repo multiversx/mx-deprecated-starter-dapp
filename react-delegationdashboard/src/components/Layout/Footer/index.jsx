@@ -1,5 +1,4 @@
 import React from 'react';
-import { ReactComponent as HeartIcon } from '../../../assets/images/heart.svg';
 
 const Footer = () => {
   return (
@@ -7,11 +6,12 @@ const Footer = () => {
       <a
         {...{
           target: '_blank',
+          rel: 'noopener noreferrer',
         }}
         className="align-items-center"
         href="https://elrond.com/"
       >
-        Made with <HeartIcon className="mx-1" /> by Elrond Network.
+        Powered by Elrond Network.
       </a>
     </footer>
   );

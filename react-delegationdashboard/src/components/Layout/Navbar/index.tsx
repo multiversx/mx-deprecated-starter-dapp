@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar as BsNavbar, NavItem, Nav } from 'react-bootstrap';
-import { ReactComponent as ElrondSymbol } from '../../../assets/images/elrond-symbol.svg';
+import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
 import { useContext, useDispatch } from '../../../context';
 
 const Navbar = () => {
@@ -15,8 +15,8 @@ const Navbar = () => {
     <BsNavbar className="navbar bg-white border-bottom px-4 py-3">
       <div className="container-fluid">
         <NavItem className="d-flex align-items-center">
-          <ElrondSymbol className="elrond-symbol mr-2" />
-          <span className="dapp-name pl-2">Dapp</span>
+          <Logo className="logo mr-2" />
+          <span className="dapp-name pl-2">Delegation Manager</span>
         </NavItem>
 
         <Nav className="ml-auto">

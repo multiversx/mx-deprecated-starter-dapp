@@ -58,22 +58,9 @@ const WalletLogin = () => {
   }, [dapp.provider, dapp.proxy, dispatch]);
 
   return (
-    <div className="login-card__container">
-      <div className="p-4 border-0">
-        <div className="card-body text-center">
-          <h2 className="mb-3">Wallet</h2>
-
-          <p className="mb-3">
-            Login with keystore file.
-            <br /> Login with:
-          </p>
-
-          <button onClick={handleOnClick} className="btn btn-primary mt-3">
-            www.wallet.elrond.com
-          </button>
-        </div>
-      </div>
-    </div>
+    <button onClick={handleOnClick} className="btn btn-outline-primary mx-sm-2">
+      Login with Wallet
+    </button>
   );
 };
 

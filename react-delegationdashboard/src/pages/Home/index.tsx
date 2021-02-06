@@ -1,9 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import Tabs from 'react-bootstrap/Tabs';
-import Tab from 'react-bootstrap/Tab';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { ReactComponent as Logo } from '../../assets/images/logo.svg';
 import PageState from 'components/PageState';
 import { useContext } from 'context';
 import LedgerLogin from './Login/Ledger';
@@ -27,23 +26,19 @@ const Home = () => {
       ) : loading ? (
         <PageState svgComponent={<></>} spin />
       ) : (
-        <div className="m-auto">
-          <div className="card my-3 text-center ">
-            <div className="card-body px-0">
-              <h4 className="p-spacer">Welcome to our Delegation Dashboard App</h4>
-              <Tabs
-                defaultActiveKey="login"
-                className="login-tabs justify-content-center"
-                id="wallet-login"
-                transition={false}
-              >
-                <Tab eventKey="login" title="Ledger">
-                  <LedgerLogin />
-                </Tab>
-                <Tab eventKey="wallet" title="Wallet">
-                  <WalletLogin />
-                </Tab>
-              </Tabs>
+        <div className="m-auto login-container">
+          <div className="card my-3 text-center">
+            <div className="card-body">
+              <Logo className="logo mb-4" />
+              <h4 className="mb-4">Delegation Manager</h4>
+              <p className="mb-4">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                Ipsum has been the industry's
+              </p>
+              <div className="mb-4">
+                <LedgerLogin />
+                <WalletLogin />
+              </div>
             </div>
           </div>
         </div>

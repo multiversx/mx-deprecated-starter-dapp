@@ -66,8 +66,8 @@ const Owner = () => {
         <div className="col-12 col-md-10 mx-auto card p-3">
           <div className="card-body p-1">
             <Header />
-            <Views contractOverview={contractOverview} />
             <Actions />
+            <Views contractOverview={contractOverview} />
             <NodesTable />
           </div>
         </div>

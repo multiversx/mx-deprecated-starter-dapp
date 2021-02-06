@@ -6,9 +6,9 @@ import UndelegatedListView from './PendingUndelegatedListView';
 const Delegator = () => {
   return (
     <div className="delegator">
+      <MyActions />
       <MyDelegation />
       <UndelegatedListView />
-      <MyActions />
     </div>
   );
 };

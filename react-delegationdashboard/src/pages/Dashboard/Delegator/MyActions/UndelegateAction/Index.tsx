@@ -14,7 +14,7 @@ const UndelegateAction = () => {
   };
   return (
     <div>
-      <button onClick={() => setShowModal(true)} className="btn btn-primary mt-3">
+      <button onClick={() => setShowModal(true)} className="btn btn-outline-primary mb-2">
         Undelegate
       </button>
       <UndelegateModal

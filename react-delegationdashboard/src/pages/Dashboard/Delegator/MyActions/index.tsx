@@ -46,11 +46,9 @@ const MyActions = () => {
 
   return (
     <div className="stats w-100 mb-spacer">
-      <div className="card card-small">
-        <div className="card-header border-bottom">
-          <h6 className="m-0">My actions</h6>
-        </div>
-        <div className="card-body d-flex flex-wrap p-3 sp-action-btn">
+      <div className="d-flex flex-wrap justify-content-between align-items-center">
+        <h4 className="mb-2">Delegation Manager</h4>
+        <div className="d-flex flex-wrap">
           <DelegateAction />
           {displayUndelegate ? <UndelegateAction /> : <></>}
           {displayRewards ? (
