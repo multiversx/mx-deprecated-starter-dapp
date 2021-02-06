@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useContext } from '../../../../context';
-import { NodeType } from '../../../../helpers/types';
+import { useContext } from '../../../context';
+import { NodeType } from '../../../helpers/types';
 import ActiveNodeRow from './ActiveNodeRow';
 import InactiveNodeRow from './InactiveNodeRow';
 import {

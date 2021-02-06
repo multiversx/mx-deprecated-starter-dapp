@@ -6,9 +6,12 @@ import denominate from 'components/Denominate/formatters';
 import NodesTable from './NodesTable';
 import Actions from './Actions';
 import Views from './Views';
+import Header from 'components/Header';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const Owner = () => {
   const { dapp, address, delegationContract, decimals, denomination } = useContext();
+  const history = useHistory();
   const { getContractConfig } = contractViews;
   const [isOwner, setIsOwner] = useState(false);
   const [serviceFee, setServiceFee] = useState('0');
@@ -32,18 +35,36 @@ const Owner = () => {
       .catch(e => console.error('getContractConfig error ', e));
   };
 
-  useEffect(getContractConfiguration, []);
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      getContractConfiguration();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   if (!isOwner) {
-    return <></>;
+    return history.push('/dashboard/delegator');
   }
 
   return (
-    <>
-      <Views serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
-      <Actions />
-      <NodesTable />
-    </>
+    <div className="container py-4">
+      <div className="row">
+        <div className="col-12 col-md-10 mx-auto">
+          <div className="card shadow-sm rounded border-0">
+            <div className="card-body p-1">
+              <Header />
+              <Views serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
+              <Actions />
+              <NodesTable />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
