@@ -1,0 +1,14 @@
+.home {
+  .login-tabs {
+    .nav-link {
+      outline: none;
+      color: $secondary;
+      border-width: 0 0 1px 0;
+      &.active {
+        color: $primary;
+        border-width: 0 0 2px 0;
+        border-color: $primary;
+      }
+    }
+  }
+}
