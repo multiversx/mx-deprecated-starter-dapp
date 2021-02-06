@@ -16,14 +16,14 @@ const MyActions = () => {
   React.useEffect(() => {
     getClaimableRewards(dapp, address, delegationContract)
       .then(result => {
-        if (result.returnData[0].asNumber !== 0) {
+        if (result.returnData[0]?.asNumber !== 0) {
           setDisplayRewards(true);
         }
       })
       .catch(e => console.error('getClaimableRewards error', e));
     getUserActiveStake(dapp, address, delegationContract)
       .then(result => {
-        if (result.returnData[0].asNumber !== 0) {
+        if (result.returnData[0]?.asNumber !== 0) {
           setDisplayUndelegate(true);
         }
       })
