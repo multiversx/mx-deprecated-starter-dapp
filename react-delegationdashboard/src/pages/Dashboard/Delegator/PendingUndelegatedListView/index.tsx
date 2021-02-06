@@ -59,36 +59,30 @@ const UndelegatedListView = () => {
   return (
     <>
       {userUnstakeValue.length > 0 ? (
-        <div className="row stats full-width">
-          <div className="col-12 mb-spacer">
-            <div className="card card-small">
-              <div className="card-header border-bottom">
-                <h6 className="m-0">Pending undelegated list</h6>
-              </div>
-              <div className="card-body d-flex flex-wrap p-3">
-                <div className="table-responsive">
-                  <table className="table mb-0">
-                    <thead className="py-2 text-semibold border-bottom">
-                      <tr>
-                        <th className="border-0">
-                          <div className="ml-2">#</div>
-                        </th>
-                        <th className="border-0">Undelegated Value</th>
-                        <th className="border-0">Time remaining</th>
-                        <th className="border-0"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {userUnstakeValue.map((undelegatedValue, i) => (
-                        <UndelegatedValueRow
-                          undelegatedValue={undelegatedValue}
-                          key={i}
-                          index={i}
-                        />
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+        <div className="stats w-100 mb-spacer">
+          <div className="card card-small">
+            <div className="card-header border-bottom">
+              <h6 className="m-0">Pending undelegated list</h6>
+            </div>
+            <div className="card-body d-flex flex-wrap p-3">
+              <div className="table-responsive">
+                <table className="table mb-0">
+                  <thead className="py-2 text-semibold border-bottom">
+                    <tr>
+                      <th className="border-0">
+                        <div className="ml-2">#</div>
+                      </th>
+                      <th className="border-0">Undelegated Value</th>
+                      <th className="border-0">Time remaining</th>
+                      <th className="border-0"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {userUnstakeValue.map((undelegatedValue, i) => (
+                      <UndelegatedValueRow undelegatedValue={undelegatedValue} key={i} index={i} />
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

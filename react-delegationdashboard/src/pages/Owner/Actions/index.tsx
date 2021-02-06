@@ -7,7 +7,7 @@ import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 const Actions = () => {
   return (
     <>
-      <div className="mb-spacer">
+      <div className="stats w-100 mb-spacer">
         <div className="card card-small">
           <div className="card-header border-bottom">
             <h6 className="m-0">{'Actions'}</h6>

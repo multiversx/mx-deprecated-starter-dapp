@@ -45,29 +45,27 @@ const MyActions = () => {
   };
 
   return (
-    <div className="row full-width">
-      <div className="col-12 mb-spacer">
-        <div className="card card-small">
-          <div className="card-header border-bottom">
-            <h6 className="m-0">My actions</h6>
-          </div>
-          <div className="card-body d-flex flex-wrap p-3 sp-action-btn">
-            <DelegateAction />
-            {displayUndelegate ? <UndelegateAction /> : <></>}
-            {displayRewards ? (
-              <ViewStatAction actionTitle="Claim Rewards" handleContinue={handleClaimRewards} />
-            ) : (
-              <></>
-            )}
-            {displayRewards ? (
-              <ViewStatAction
-                actionTitle="Redelegate Rewards"
-                handleContinue={handleRedelegateRewards}
-              />
-            ) : (
-              <></>
-            )}
-          </div>
+    <div className="stats w-100 mb-spacer">
+      <div className="card card-small">
+        <div className="card-header border-bottom">
+          <h6 className="m-0">My actions</h6>
+        </div>
+        <div className="card-body d-flex flex-wrap p-3 sp-action-btn">
+          <DelegateAction />
+          {displayUndelegate ? <UndelegateAction /> : <></>}
+          {displayRewards ? (
+            <ViewStatAction actionTitle="Claim Rewards" handleContinue={handleClaimRewards} />
+          ) : (
+            <></>
+          )}
+          {displayRewards ? (
+            <ViewStatAction
+              actionTitle="Redelegate Rewards"
+              handleContinue={handleRedelegateRewards}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

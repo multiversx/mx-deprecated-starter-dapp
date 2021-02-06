@@ -40,16 +40,14 @@ const MyDelegation = () => {
   React.useEffect(getAllData, []);
 
   return (
-    <div className="row stats full-width">
-      <div className="col-12 mb-spacer">
-        <div className="card card-small">
-          <div className="card-header border-bottom">
-            <h6 className="m-0">My delegation</h6>
-          </div>
-          <div className="card-body d-flex flex-wrap p-3">
-            <StatCard title="Claimable rewards" value={claimableRewards} valueUnit={erdLabel} />
-            <StatCard title="Active stake" value={userActiveStake} valueUnit={erdLabel} />
-          </div>
+    <div className="stats w-100 mb-spacer">
+      <div className="card card-small">
+        <div className="card-header border-bottom">
+          <h6 className="m-0">My delegation</h6>
+        </div>
+        <div className="card-body d-flex flex-wrap p-3">
+          <StatCard title="Claimable rewards" value={claimableRewards} valueUnit={erdLabel} />
+          <StatCard title="Active stake" value={userActiveStake} valueUnit={erdLabel} />
         </div>
       </div>
     </div>

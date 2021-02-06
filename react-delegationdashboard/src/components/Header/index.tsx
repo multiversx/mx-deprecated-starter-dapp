@@ -12,7 +12,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="card rounded border-0 bg-primary">
+    <div className="card rounded border-0 bg-primary mb-spacer">
       <div className="card-body text-center p-4">
         <div className="text-white">
           <div className="mb-1">

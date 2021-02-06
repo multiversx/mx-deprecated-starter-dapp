@@ -40,16 +40,14 @@ const Owner = () => {
   }
 
   return (
-    <div className="container py-4">
+    <div className="owner container py-4">
       <div className="row">
-        <div className="col-12 col-md-10 mx-auto">
-          <div className="card shadow-sm rounded border-0">
-            <div className="card-body p-1">
-              <Header />
-              <Views serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
-              <Actions />
-              <NodesTable />
-            </div>
+        <div className="col-12 col-md-10 mx-auto card p-3">
+          <div className="card-body">
+            <Header />
+            <Views serviceFee={serviceFee} maxDelegationCap={maxDelegationCap} />
+            <Actions />
+            <NodesTable />
           </div>
         </div>
       </div>

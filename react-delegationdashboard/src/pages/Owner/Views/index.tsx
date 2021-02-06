@@ -41,18 +41,16 @@ const Views = ({ serviceFee = '0', maxDelegationCap = '0' }: ViewsType) => {
     getTotalStake();
   }, []);
   return (
-    <div className="stats full-width">
-      <div className="mb-spacer">
-        <div className="card card-small">
-          <div className="card-header border-bottom">
-            <h6 className="m-0">Network overview</h6>
-          </div>
-          <div className="card-body d-flex flex-wrap p-3">
-            <StatCard title="Number of nodes" value={noNodes} valueUnit="nodes" />
-            <StatCard title="Total Stake" value={totalActiveStake} valueUnit={erdLabel} />
-            <StatCard title="Service Fee" value={serviceFee} valueUnit="%" />
-            <StatCard title="Max delegation cap" value={maxDelegationCap} valueUnit={erdLabel} />
-          </div>
+    <div className="stats w-100 mb-spacer">
+      <div className="card card-small">
+        <div className="card-header border-bottom">
+          <h6 className="m-0">Network overview</h6>
+        </div>
+        <div className="card-body d-flex flex-wrap p-3">
+          <StatCard title="Number of nodes" value={noNodes} valueUnit="nodes" />
+          <StatCard title="Total Stake" value={totalActiveStake} valueUnit={erdLabel} />
+          <StatCard title="Service Fee" value={serviceFee} valueUnit="%" />
+          <StatCard title="Max delegation cap" value={maxDelegationCap} valueUnit={erdLabel} />
         </div>
       </div>
     </div>

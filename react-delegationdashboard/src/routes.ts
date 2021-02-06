@@ -26,6 +26,7 @@ const routes: RouteType[] = [
   },
   {
     path: '/owner',
+    page: 'owner',
     title: 'Owner',
     component: Owner,
   },
