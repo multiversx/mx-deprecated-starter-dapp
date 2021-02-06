@@ -22,7 +22,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard container py-4">
       <div className="row">
-        <div className="col-12 col-md-10 mx-auto">
+        <div className="col-12 col-md-10 mx-auto card p-4">
           <div className="rounded mb-spacer p-4 bg-primary text-center text-white">
             <div className="mb-1">
               <span className="opacity-6 mr-1">Your address:</span>
