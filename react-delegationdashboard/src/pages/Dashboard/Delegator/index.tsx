@@ -5,7 +5,7 @@ import UndelegatedListView from './PendingUndelegatedListView';
 
 const Delegator = () => {
   return (
-    <div className="row app-center-content">
+    <div className="delegator">
       <MyDelegation />
       <UndelegatedListView />
       <MyActions />

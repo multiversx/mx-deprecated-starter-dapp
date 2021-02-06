@@ -23,7 +23,7 @@ const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: numb
           <a
             href={`${explorerAddress}nodes/${key.blsKey}`}
             {...{ target: '_blank' }}
-            className="side-action"
+            className="side-action ml-2"
           >
             <FontAwesomeIcon icon={faSearch} />
           </a>

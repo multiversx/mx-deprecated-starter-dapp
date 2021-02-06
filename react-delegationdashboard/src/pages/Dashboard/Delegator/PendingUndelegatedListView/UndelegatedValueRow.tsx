@@ -43,7 +43,11 @@ const UndelegatedValueRow = ({
         </div>
       </td>
       <td>
-        <button disabled={isDisabled} onClick={handleWithdraw} className="btn btn-primary mt-3">
+        <button
+          disabled={isDisabled}
+          onClick={handleWithdraw}
+          className="btn btn-primary btn-sm d-flex ml-auto"
+        >
           Withdraw
         </button>
       </td>

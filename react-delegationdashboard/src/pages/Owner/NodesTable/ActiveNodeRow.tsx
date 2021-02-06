@@ -63,7 +63,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
             {...{
               target: '_blank',
             }}
-            className="side-action"
+            className="side-action ml-2"
           >
             <FontAwesomeIcon icon={faSearch} />
           </a>
@@ -92,7 +92,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
           <NavDropdown
             title={
               <span className="link">
-                <FontAwesomeIcon icon={faEllipsisV} className="side-action" />
+                <FontAwesomeIcon icon={faEllipsisV} className="side-action ml-2" />
               </span>
             }
             id="basic-nav-dropdown"

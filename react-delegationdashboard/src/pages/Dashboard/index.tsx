@@ -42,10 +42,13 @@ const Dashboard = () => {
               <></>
             )}
             <Delegator />
-          </div>
-          <div className="mb-4">
-            <span className="opacity-6 mr-1">Contract address:</span>
-            <span>{delegationContract}</span>
+
+            <div className="card">
+              <div className="card-body">
+                <span className="mr-1">Contract address:</span>
+                <span>{delegationContract}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
