@@ -1,3 +1,22 @@
+.card {
+  .card-header {
+    &:first-child {
+      border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
+    }
+  }
+}
+
+.table {
+  th,
+  td {
+    vertical-align: middle;
+  }
+}
+
+.table-overflow {
+  overflow: inherit;
+}
+
 /* Loader, Transaction Success/Fail
 -------------------------------------------------- */
 .page-state {

@@ -48,7 +48,7 @@ const UndelegatedValueRow = ({
         <button
           disabled={isDisabled}
           onClick={() => handleWithdraw()}
-          className="btn btn-primary btn-sm ml-auto"
+          className="btn btn-primary btn-sm d-flex ml-auto"
         >
           Withdraw
         </button>
