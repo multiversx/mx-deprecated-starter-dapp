@@ -14,12 +14,14 @@ export function reducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
     case 'login': {
       const { address } = action;
-      setItem('logged_in', true);
+      let loggedIn = address || address !== '' ? true : false;
+      setItem('logged_in', loggedIn);
       setItem('address', address);
+      debugger;
       return {
         ...state,
         address,
-        loggedIn: true,
+        loggedIn: loggedIn,
       };
     }
 
