@@ -16,18 +16,18 @@ const MyActions = () => {
   React.useEffect(() => {
     getClaimableRewards(dapp, address, delegationContract)
       .then(result => {
-        if (result.returnData[0]?.asNumber !== 0) {
+        if (result.returnData.length > 0 && result.returnData[0]?.asNumber !== 0) {
           setDisplayRewards(true);
         }
       })
       .catch(e => console.error('getClaimableRewards error', e));
     getUserActiveStake(dapp, address, delegationContract)
       .then(result => {
-        if (result.returnData[0]?.asNumber !== 0) {
+        if (result.returnData.length > 0 && result.returnData[0]?.asNumber !== 0) {
           setDisplayUndelegate(true);
         }
       })
-      .catch(e => console.error('getClaimableRewards error', e));
+      .catch(e => console.error('getUserActiveStake error', e));
   }, []);
 
   const handleClaimRewards = () => {
@@ -52,7 +52,11 @@ const MyActions = () => {
           <DelegateAction />
           {displayUndelegate ? <UndelegateAction /> : <></>}
           {displayRewards ? (
-            <ViewStatAction actionTitle="Claim Rewards" handleContinue={handleClaimRewards} />
+            <ViewStatAction
+              actionTitle="Claim Rewards"
+              handleContinue={handleClaimRewards}
+              color="primary"
+            />
           ) : (
             <></>
           )}
@@ -60,6 +64,7 @@ const MyActions = () => {
             <ViewStatAction
               actionTitle="Redelegate Rewards"
               handleContinue={handleRedelegateRewards}
+              color="primary"
             />
           ) : (
             <></>

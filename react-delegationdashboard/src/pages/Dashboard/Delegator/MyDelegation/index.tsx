@@ -46,8 +46,20 @@ const MyDelegation = () => {
           <h6 className="m-0">My delegation</h6>
         </div>
         <div className="card-body d-flex flex-wrap p-3">
-          <StatCard title="Claimable rewards" value={claimableRewards} valueUnit={erdLabel} />
-          <StatCard title="Active stake" value={userActiveStake} valueUnit={erdLabel} />
+          <StatCard
+            title="Claimable rewards"
+            value={claimableRewards}
+            valueUnit={erdLabel}
+            color=""
+            svg=""
+          />
+          <StatCard
+            title="Active stake"
+            value={userActiveStake}
+            valueUnit={erdLabel}
+            color=""
+            svg=""
+          />
         </div>
       </div>
     </div>

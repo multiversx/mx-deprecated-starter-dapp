@@ -45,6 +45,8 @@ export class StatCardType {
   title!: string;
   value!: string;
   valueUnit!: string;
+  svg!: string;
+  color!: string;
 }
 
 export class NodeType {

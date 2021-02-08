@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Denominate from '../../components/Denominate';
-import { useContext } from '../../context';
+import Denominate from '../../Denominate';
+import { useContext } from '../../../context';
 import { Address } from '@elrondnetwork/erdjs/out';
 
 const Header = () => {
-  const { address, dapp, delegationContract } = useContext();
+  const { address, dapp } = useContext();
   const [balance, setBalance] = useState('');
 
   useEffect(() => {
@@ -12,18 +12,15 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="card rounded border-0 bg-primary mb-spacer">
-      <div className="card-body text-center p-4">
-        <div className="text-white">
+    <div className="card-header border-0 bg-primary py-5">
+      <div className="text-white row">
+        <div className="col-12">
           <div className="mb-1">
             <span className="opacity-6 mr-1">Your address:</span>
-            <span>{address}</span>
+            <h4 className="text-white">{address}</h4>
           </div>
-          <div className="mb-4">
-            <span className="opacity-6 mr-1">Contract address:</span>
-            <span>{delegationContract}</span>
-          </div>
-          <div>
+          <div className="mb-1">
+            <span className="opacity-6 mr-1">Total stake:</span>
             <h3 className="text-white">
               <Denominate value={balance} />
             </h3>
