@@ -76,13 +76,13 @@ const Views = () => {
     getContractConfiguration();
   }, []);
   return (
-    <div className="card-spacer mt-n25">
+    <div className="mt-n5">
       <div className="row m-0">
         <StatCard
           title="Number of nodes"
           value={noNodes}
           valueUnit="nodes"
-          color="warning"
+          color="orange"
           svg="Equalizer.svg"
         />
         <StatCard
@@ -96,14 +96,14 @@ const Views = () => {
           title="Service Fee"
           value={contractOverview.serviceFee || ''}
           valueUnit="%"
-          color="danger"
+          color="pink"
           svg="./assets/images/Layers.svg"
         />
         <StatCard
           title="Max delegation cap"
           value={contractOverview.maxDelegationCap || ''}
           valueUnit={erdLabel}
-          color="success"
+          color="green"
           svg="Urgent-mail.svg"
         />
       </div>

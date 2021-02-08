@@ -53,9 +53,6 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
   return (
     <tr ref={ref}>
       <td>
-        <div className="ml-2">{index + 1}</div>
-      </td>
-      <td>
         <div className="d-flex align-items-center text-nowrap bls-trim trim-fs-sm">
           <Trim text={key.blsKey} />
           <a

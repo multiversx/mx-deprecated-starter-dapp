@@ -12,9 +12,11 @@ const Dashboard = () => {
   }
   return (
     <div className="dashboard container py-4">
-      <div className="card card- card-custom bg-gray-100 card-stretch full-width">
+      <div className="card border-0">
         <NetworkOverview />
-        <Delegator />
+        <div className="card-body">
+          <Delegator />
+        </div>
       </div>
     </div>
   );

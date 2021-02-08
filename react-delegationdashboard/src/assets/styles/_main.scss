@@ -1,7 +1,5 @@
 // Variables override
 @import './variables';
-@import './elements/mixins/svg-icon';
-@import './elements/mixins/label';
 
 // Bootstrap
 @import './../../../node_modules/bootstrap/scss/bootstrap.scss';
@@ -17,18 +15,3 @@
 
 // Elements
 @import './elements';
-
-// Elements
-@import './elements/card';
-@import './elements/label';
-@import './elements/buttons';
-@import './elements/table';
-
-@import './elements/utilities/borders';
-@import './elements/utilities/background';
-
-// Public
-@import './public';
-
-// Admin
-@import './admin';

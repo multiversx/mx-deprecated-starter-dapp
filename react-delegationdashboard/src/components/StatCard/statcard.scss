@@ -4,18 +4,6 @@
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: 0px;
-  &.blue {
-    background: $blue-stats-card-bg;
-  }
-  &.light-blue {
-    background: $light-blue-stats-card-bg;
-  }
-  &.green {
-    background: $green-stats-card-bg;
-  }
-  &.orange {
-    background: $orange-stats-card-bg;
-  }
   .h5 {
     color: $white;
   }

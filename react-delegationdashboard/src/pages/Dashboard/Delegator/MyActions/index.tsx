@@ -45,33 +45,24 @@ const MyActions = () => {
   };
 
   return (
-    <div className="stats w-100 mb-spacer">
-      <div className="d-flex flex-wrap justify-content-between align-items-center">
-        <h4 className="mb-2">Delegation Manager</h4>
-        <div className="d-flex flex-wrap">
-          <DelegateAction />
-          {displayUndelegate ? <UndelegateAction /> : <></>}
-          {displayRewards ? (
-            <ViewStatAction
-              actionTitle="Claim Rewards"
-              handleContinue={handleClaimRewards}
-              color="primary"
-            />
-          ) : (
-            <></>
-          )}
-          {displayRewards ? (
-            <ViewStatAction
-              actionTitle="Redelegate Rewards"
-              handleContinue={handleRedelegateRewards}
-              color="primary"
-            />
-          ) : (
-            <></>
-          )}
-        </div>
-      </div>
-    </div>
+    <>
+      <DelegateAction />
+      {displayUndelegate ? <UndelegateAction /> : <></>}
+      {displayRewards ? (
+        <ViewStatAction
+          actionTitle="Claim Rewards"
+          handleContinue={handleClaimRewards}
+          color="primary"
+        />
+      ) : null}
+      {displayRewards ? (
+        <ViewStatAction
+          actionTitle="Redelegate Rewards"
+          handleContinue={handleRedelegateRewards}
+          color="primary"
+        />
+      ) : null}
+    </>
   );
 };
 

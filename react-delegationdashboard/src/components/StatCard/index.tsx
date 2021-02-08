@@ -9,11 +9,11 @@ const StatCard = ({
   svg = '',
 }: StatCardType) => {
   return (
-    <div className={`col bg-light-${color} px-6 py-8 rounded-xl mr-7 mb-7`}>
+    <div className={`col bg-light-${color} text-${color} p-4 my-2 my-sm-0 mx-3 rounded `}>
       <span className={`svg-icon svg-icon-3x svg-icon-${color} d-block my-2`}>
         <SVG src={svg}></SVG>
       </span>
-      <div className={`text-${color} font-weight-bold font-size-h6`}>{title}</div>
+      <h6>{title}</h6>
       <div>
         {value} {valueUnit}
       </div>

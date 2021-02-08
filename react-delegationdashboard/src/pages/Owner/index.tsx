@@ -29,10 +29,12 @@ const Owner = () => {
 
   return (
     <div className="owner container py-4">
-      <div className="card card-custom bg-gray-100 card-stretch">
+      <div className="card border-0">
         <NetworkOverview />
-        <Actions />
-        <NodesTable />
+        <div className="card-body">
+          <Actions />
+          <NodesTable />
+        </div>
       </div>
     </div>
   );
