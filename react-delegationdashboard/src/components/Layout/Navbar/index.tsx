@@ -13,16 +13,16 @@ const Navbar = () => {
 
   return (
     <BsNavbar className="navbar bg-white border-bottom px-4 py-3">
-      <div className="container-fluid">
+      <div className="container-fluid d-flex flex-wrap align-items-center">
         <NavItem className="d-flex align-items-center">
           <Logo className="logo mr-2" />
           <span className="navbar-brand pl-2">Delegation Manager</span>
         </NavItem>
-        <Nav className="ml-auto d-flex frex-wrap align-items-center">
+        <Nav className="ml-lg-auto d-flex frex-wrap align-items-center">
           {address && (
-            <div className="mr-4">
+            <div className="mr-4 d-flex flex-wrap">
               <span className="text-muted mr-2">Wallet address:</span>
-              <span className="text-dark">{address}</span>
+              <span className="text-dark navbar-address">{address}</span>
             </div>
           )}
           {loggedIn && (

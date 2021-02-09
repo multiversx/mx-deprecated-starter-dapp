@@ -48,8 +48,8 @@ const MyDelegation = () => {
     <div className="stats w-100 mb-spacer">
       <div className="card">
         <div className="card-header border-bottom-0 d-flex flex-wrap align-items-center">
-          <h6 className="mt-2 mb-0">My Stake</h6>
-          <div className="d-flex flex-wrap align-items-center ml-auto">
+          <h6 className="mt-2 mr-2 mb-0">My Stake</h6>
+          <div className="d-flex flex-wrap align-items-center ml-sm-auto">
             <MyActions />
           </div>
         </div>
