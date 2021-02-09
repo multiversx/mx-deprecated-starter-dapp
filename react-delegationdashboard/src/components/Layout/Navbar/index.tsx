@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
 import { useContext, useDispatch } from '../../../context';
 
 const Navbar = () => {
-  const { loggedIn, dapp } = useContext();
+  const { loggedIn, dapp, address } = useContext();
   const dispatch = useDispatch();
 
   const logOut = () => {

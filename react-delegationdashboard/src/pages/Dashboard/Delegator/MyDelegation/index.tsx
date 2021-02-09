@@ -48,7 +48,7 @@ const MyDelegation = () => {
             <MyActions />
           </div>
         </div>
-        <div className="card-body d-flex flex-wrap p-3">
+        <div className="card-body d-flex flex-wrap">
           <div className="m-auto text-center py-3 py-sm-5">
             <div>
               <p className="m-0">Active Stake</p>

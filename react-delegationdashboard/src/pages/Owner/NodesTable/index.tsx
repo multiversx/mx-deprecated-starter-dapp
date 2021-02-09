@@ -68,15 +68,15 @@ const NodesTable = () => {
           <div className="card-header border-bottom-0">
             <h6 className="mb-0 mt-2">My Nodes</h6>
           </div>
-          <div className="card-body d-flex flex-wrap p-3">
+          <div className="card-body d-flex flex-wrap">
             {keys.length > 0 && keys.find(key => key.status.key !== 'notStaked') !== undefined ? (
               <div className="table-responsive table-overflow">
-                <table className="table mb-0">
-                  <thead className="py-2 text-semibold border-bottom">
+                <table className="table table-borderless mb-0">
+                  <thead className="py-2 text-uppercase font-weight-normal">
                     <tr>
-                      <th className="border-0">Public key</th>
-                      <th className="border-0">Status</th>
-                      <th className="border-0">Actions</th>
+                      <th>Public key</th>
+                      <th>Status</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -99,15 +99,15 @@ const NodesTable = () => {
           <div className="card-header border-bottom-0">
             <h6 className="mb-0 mt-2">Inactive Nodes</h6>
           </div>
-          <div className="card-body d-flex flex-wrap p-3">
+          <div className="card-body d-flex flex-wrap">
             {keys.length > 0 && keys.find(key => key.status.key === 'notStaked') !== undefined ? (
               <div className="table-responsive">
-                <table className="table">
-                  <thead className="py-2">
+                <table className="table table-borderless mb-0">
+                  <thead className="py-2 text-uppercase font-weight-normal">
                     <tr>
-                      <th className="border-0">Public key</th>
-                      <th className="border-0">Status</th>
-                      <th className="border-0">Actions</th>
+                      <th>Public key</th>
+                      <th>Status</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>

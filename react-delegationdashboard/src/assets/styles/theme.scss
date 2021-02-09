@@ -2,6 +2,8 @@
 $body: #000;
 $body-bg: #e7ebf7;
 
+$font-family-sans-serif: 'Poppins', sans-serif;
+
 $primary: #3699ff;
 $secondary: #f64e60;
 $muted: #cacbcc;
@@ -30,8 +32,6 @@ $theme-colors: (
   'light-primary': $light-primary,
 );
 
-$font-family-sans-serif: 'Poppins', sans-serif;
-
 $btn-padding-y: 0.5rem;
 $btn-padding-x: 1.2rem;
 $btn-font-size: 0.875rem;
@@ -39,8 +39,8 @@ $btn-line-height: 18px;
 $btn-border-radius: 6px;
 
 $card-bg: #fff;
+$card-border-color: #e5eaee;
 $card-cap-bg: $card-bg;
-$card-border-color: $muted;
 $card-border-radius: 0.65rem;
 
 $standard-box-shadow: $primary;

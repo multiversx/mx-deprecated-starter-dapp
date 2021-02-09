@@ -14,7 +14,7 @@ const AutomaticActivationModal = ({
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card card-small">
-        <div className="card-body text-center p-spacer">
+        <div className="card-body text-center">
           <p className="h3" data-testid="delegateTitle">
             {title}
           </p>
