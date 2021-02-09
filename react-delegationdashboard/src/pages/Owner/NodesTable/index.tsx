@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useContext } from '../../../context';
 import { NodeType } from '../../../helpers/types';
+import Actions from '../Actions';
 import ActiveNodeRow from './ActiveNodeRow';
 import InactiveNodeRow from './InactiveNodeRow';
 import {
@@ -65,10 +66,13 @@ const NodesTable = () => {
     <>
       <div className="stats w-100 mb-spacer">
         <div className="card">
-          <div className="card-header border-bottom-0">
-            <h6 className="mb-0 mt-3">My Nodes</h6>
+          <div className="card-header border-bottom-0 d-flex flex-wrap align-items-center">
+            <h6 className="mt-2 mr-2 mb-0">My Nodes</h6>
+            <div className="d-flex flex-wrap align-items-center ml-sm-auto">
+              <Actions />
+            </div>
           </div>
-          <div className="card-body d-flex flex-wrap pt-0">
+          <div className="card-body d-flex flex-wrap">
             {keys.length > 0 && keys.find(key => key.status.key !== 'notStaked') !== undefined ? (
               <div className="table-responsive table-overflow">
                 <table className="table table-borderless mb-0">

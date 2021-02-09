@@ -15,7 +15,7 @@ const SetAutomaticActivationAction = () => {
     <div>
       <button
         onClick={() => setShowAutomaticActivationModal(true)}
-        className="btn btn-outline-primary mb-2"
+        className="btn btn-primary mt-2"
       >
         Set Automatic Activation
       </button>

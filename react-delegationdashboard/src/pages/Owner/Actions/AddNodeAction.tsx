@@ -32,7 +32,7 @@ const AddNodeAction = () => {
   };
   return (
     <div>
-      <button onClick={() => setAddNodesModal(true)} className="btn btn-outline-primary mr-2 mb-2">
+      <button onClick={() => setAddNodesModal(true)} className="btn btn-purple mt-2 mr-3">
         Add nodes
       </button>
       <RequestVariablesModal

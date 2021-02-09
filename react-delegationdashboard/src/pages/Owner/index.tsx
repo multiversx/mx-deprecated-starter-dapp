@@ -32,7 +32,6 @@ const Owner = () => {
       <div className="card border-0">
         <NetworkOverview />
         <div className="card-body">
-          <Actions />
           <NodesTable />
         </div>
       </div>
