@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { contractViews } from 'contracts/ContractViews';
-import { Link } from 'react-router-dom';
 import Denominate from '../../Denominate';
-import { useContext, useDispatch } from '../../../context';
+import { useContext } from '../../../context';
 
 const Header = () => {
   const { address, dapp, delegationContract } = useContext();

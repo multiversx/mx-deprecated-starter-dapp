@@ -34,10 +34,10 @@ const AutomaticActivationModal = ({
               return (
                 <form onSubmit={handleSubmit} className="text-center">
                   <div className="form-group mb-spacer">
-                    <div className="input-group input-group-seamless">
+                    <div className="input-group">
                       <select
                         name="option"
-                        className="dropdown full-width"
+                        className="dropdown"
                         value={values.option}
                         onChange={handleChange}
                         onBlur={handleBlur}

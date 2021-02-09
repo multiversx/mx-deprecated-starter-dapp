@@ -53,7 +53,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
   return (
     <tr ref={ref}>
       <td>
-        <div className="d-flex align-items-center text-nowrap bls-trim trim-fs-sm">
+        <div className="d-flex align-items-center text-nowrap bls-trim">
           <Trim text={key.blsKey} />
           <a
             href={`${explorerAddress}nodes/${key.blsKey}`}

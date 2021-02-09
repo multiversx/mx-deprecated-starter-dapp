@@ -50,7 +50,7 @@ const RequestVariablesModal = ({
                   {variable.type === 'input' && (
                     <div className="form-group text-left">
                       <label htmlFor={variable.name}>{variable.name}</label>
-                      <div className="input-group input-group-seamless">
+                      <div className="input-group">
                         <input
                           type="text"
                           className="form-control"

@@ -66,7 +66,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                 <form onSubmit={handleSubmit} className="text-left">
                   <div className="form-group mb-spacer">
                     <label htmlFor="amount">Amount {erdLabel}</label>
-                    <div className="input-group input-group-seamless">
+                    <div className="input-group">
                       <input
                         type="text"
                         className="form-control"

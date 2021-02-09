@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { contractViews } from 'contracts/ContractViews';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 import { Navbar as BsNavbar, NavItem, Nav } from 'react-bootstrap';
 import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
 import { useContext, useDispatch } from '../../../context';
@@ -18,7 +16,7 @@ const Navbar = () => {
       <div className="container-fluid">
         <NavItem className="d-flex align-items-center">
           <Logo className="logo mr-2" />
-          <span className="dapp-name pl-2">Delegation Manager</span>
+          <span className="navbar-brand pl-2">Delegation Manager</span>
         </NavItem>
 
         <Nav className="ml-auto">

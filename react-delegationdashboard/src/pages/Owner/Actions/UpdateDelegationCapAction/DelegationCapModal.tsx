@@ -72,7 +72,7 @@ const DelegationCapModal = ({
               return (
                 <form onSubmit={handleSubmit} className="text-left">
                   <div className="form-group mb-spacer">
-                    <div className="input-group input-group-seamless">
+                    <div className="input-group">
                       <input
                         type="text"
                         className="form-control"

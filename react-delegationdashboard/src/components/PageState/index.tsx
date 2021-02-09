@@ -27,7 +27,7 @@ const PageState = ({
           </div>
         ) : (
           <div className="col-12 col-md-8 col-lg-5 mx-auto">
-            <div className="card shadow-sm rounded p-5 border-0">
+            <div className="card rounded p-5 border-0">
               <div className="card-body text-center d-flex flex-column justify-content-center">
                 <div className={`icon ${className ? className : ''}`}>{svgComponent}</div>
                 {title && <p className="h3 mt-3">{title}</p>}
