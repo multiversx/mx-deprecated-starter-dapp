@@ -3,29 +3,12 @@ $body: #000;
 $body-bg: #e7ebf7;
 $body-color: #212121;
 
-$font-family-sans-serif: 'Poppins', sans-serif;
-
 $primary: #3699ff;
 $secondary: #f64e60;
 $dark: #5d6473;
 $muted: #b5b5c3;
 $light: #f3f6f9;
 $success: #28a745;
-
-$statcard-title-size: 0.75rem;
-$statcard-value-size: 1.6rem;
-$statcard-subvalue-size: 0.6rem;
-
-$input-border-radius: 0.2rem;
-
-$table-color: $dark;
-$table-head-font-size: 0.75rem;
-$table-font-size: 0.875rem;
-
-$text-muted: $muted;
-
-$card-bg: #fff;
-$card-border-color: #e5eaee;
 
 $light-primary: #e1f0ff;
 $orange: #ffa800;
@@ -36,6 +19,49 @@ $purple: #8950fc;
 $light-purple: #eee5ff;
 $pink: #f64e60;
 $light-pink: #ffe2e6;
+
+$card-bg: #fff;
+$text-muted: $muted;
+$brand-color: $dark;
+$logo-height: 1.5rem;
+$bg-image: #6a9fc7 url(../../assets/images/background.jpg) bottom center no-repeat;
+$footer-color: #fff;
+
+// STATCARD
+$statcard-title-size: 0.75rem;
+$statcard-value-size: 1.6rem;
+$statcard-subvalue-size: 0.6rem;
+
+// BORDER
+$border-radius: 0.65rem;
+$border-color: lighten($muted, 10%);
+
+// INPUT
+$input-border-radius: 0.2rem;
+$input-color: $secondary;
+$input-bg: $card-bg;
+$input-disabled-bg: #e9ecef;
+$input-hover-border-color: darken($border-color, 15%);
+
+// TABLE
+$table-color: $dark;
+$table-head-font-size: 0.75rem;
+$table-font-size: 0.875rem;
+
+// CARD
+$card-border-color: #e5eaee;
+$card-cap-bg: $card-bg;
+$card-border-radius: 0.65rem;
+
+// BUTTONS
+$btn-padding-y: 0.5rem;
+$btn-padding-x: 1.2rem;
+$btn-font-size: 0.875rem;
+$btn-line-height: 18px;
+$btn-border-radius: 6px;
+
+$standard-box-shadow: $primary;
+$link-hover-color: darken($primary, 7%);
 
 $theme-colors: (
   'orange': $orange,
@@ -49,28 +75,4 @@ $theme-colors: (
   'light-primary': $light-primary,
 );
 
-$btn-padding-y: 0.5rem;
-$btn-padding-x: 1.2rem;
-$btn-font-size: 0.875rem;
-$btn-line-height: 18px;
-$btn-border-radius: 6px;
-
-$card-cap-bg: $card-bg;
-$card-border-radius: 0.65rem;
-
-$standard-box-shadow: $primary;
-$link-hover-color: darken($primary, 7%);
-
-$border-radius: 0.65rem;
-$border-color: lighten($muted, 10%);
-
-$input-color: $secondary;
-$input-bg: $card-bg;
-$input-disabled-bg: #e9ecef;
-$input-hover-border-color: darken($border-color, 15%);
-
-$dapp-color: $dark;
-$logo-height: 1.5rem;
-$bg-image: #6a9fc7 url(../../assets/images/background.jpg) bottom center no-repeat;
-$footer-color: #fff;
 @import './main';

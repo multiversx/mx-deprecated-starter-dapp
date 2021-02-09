@@ -11,7 +11,7 @@ const Dashboard = () => {
     return <Redirect to="/" />;
   }
   return (
-    <div className="dashboard container py-4">
+    <div className="dashboard container py-5">
       <div className="card border-0">
         <NetworkOverview />
         <div className="card-body">

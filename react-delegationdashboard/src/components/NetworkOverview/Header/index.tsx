@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { contractViews } from 'contracts/ContractViews';
 import { useContext } from '../../../context';
 
 const Header = () => {
+  const location = useLocation();
   const { address, dapp, delegationContract } = useContext();
   const { getContractConfig } = contractViews;
   const [isAdminFlag, setIsAdminFlag] = useState(false);
@@ -32,13 +33,16 @@ const Header = () => {
         </div>
       </div>
       <div className="ml-lg-auto">
-        {isAdminFlag ? (
+        {isAdminFlag && location.pathname !== '/owner' ? (
           <Link to="/owner" className="btn btn-light-primary text-primary">
             Admin
           </Link>
-        ) : (
-          <></>
-        )}
+        ) : null}
+        {location.pathname !== '/dashboard' ? (
+          <Link to="/dashboard" className="btn btn-light-primary text-primary">
+            Dashboard
+          </Link>
+        ) : null}
       </div>
     </div>
   );
