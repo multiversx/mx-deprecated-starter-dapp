@@ -11,7 +11,7 @@ const ViewStatAction = ({ actionTitle, color, handleContinue }: ViewStatActionTy
         onClick={() => {
           handleContinue();
         }}
-        className="btn btn-outline-primary mb-2 mr-2"
+        className={`btn btn-${color} mb-2 mr-2`}
       >
         {actionTitle}
       </button>

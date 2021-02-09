@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useContext } from 'context';
-import ViewStatAction from 'components/ViewStatAction';
 import { contractViews } from 'contracts/ContractViews';
-import { useDelegation } from 'helpers';
 import DelegateAction from './DelegateAction';
 import UndelegateAction from './UndelegateAction/Index';
+import ClaimRewardsAction from './ClaimRewardsAction';
 
 const MyActions = () => {
   const { dapp, delegationContract, address } = useContext();
-  const { delegation } = useDelegation();
   const [displayRewards, setDisplayRewards] = React.useState(false);
   const [displayUndelegate, setDisplayUndelegate] = React.useState(false);
   const { getClaimableRewards, getUserActiveStake } = contractViews;
@@ -16,7 +14,7 @@ const MyActions = () => {
   React.useEffect(() => {
     getClaimableRewards(dapp, address, delegationContract)
       .then(result => {
-        if (result.returnData.length > 0 && result.returnData[0]?.asNumber !== 0) {
+        if (result.returnData[0]?.asNumber !== 0) {
           setDisplayRewards(true);
         }
       })
@@ -30,38 +28,11 @@ const MyActions = () => {
       .catch(e => console.error('getUserActiveStake error', e));
   }, []);
 
-  const handleClaimRewards = () => {
-    delegation
-      .sendTransaction('0', 'claimRewards')
-      .then()
-      .catch(e => console.error('handleClaimRewards error', e));
-  };
-
-  const handleRedelegateRewards = () => {
-    delegation
-      .sendTransaction('0', 'reDelegateRewards')
-      .then()
-      .catch(e => console.error('handleRedelegateRewards error', e));
-  };
-
   return (
     <>
       <DelegateAction />
       {displayUndelegate ? <UndelegateAction /> : <></>}
-      {displayRewards ? (
-        <ViewStatAction
-          actionTitle="Claim Rewards"
-          handleContinue={handleClaimRewards}
-          color="primary"
-        />
-      ) : null}
-      {displayRewards ? (
-        <ViewStatAction
-          actionTitle="Redelegate Rewards"
-          handleContinue={handleRedelegateRewards}
-          color="primary"
-        />
-      ) : null}
+      {displayRewards ? <ClaimRewardsAction /> : null}
     </>
   );
 };

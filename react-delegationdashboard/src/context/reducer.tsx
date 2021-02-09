@@ -17,7 +17,6 @@ export function reducer(state: StateType, action: ActionType): StateType {
       let loggedIn = address || address !== '' ? true : false;
       setItem('logged_in', loggedIn);
       setItem('address', address);
-      debugger;
       return {
         ...state,
         address,
