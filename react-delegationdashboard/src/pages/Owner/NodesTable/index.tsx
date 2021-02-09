@@ -66,9 +66,9 @@ const NodesTable = () => {
       <div className="stats w-100 mb-spacer">
         <div className="card">
           <div className="card-header border-bottom-0">
-            <h6 className="mb-0 mt-2">My Nodes</h6>
+            <h6 className="mb-0 mt-3">My Nodes</h6>
           </div>
-          <div className="card-body d-flex flex-wrap">
+          <div className="card-body d-flex flex-wrap pt-0">
             {keys.length > 0 && keys.find(key => key.status.key !== 'notStaked') !== undefined ? (
               <div className="table-responsive table-overflow">
                 <table className="table table-borderless mb-0">
@@ -99,7 +99,7 @@ const NodesTable = () => {
           <div className="card-header border-bottom-0">
             <h6 className="mb-0 mt-2">Inactive Nodes</h6>
           </div>
-          <div className="card-body d-flex flex-wrap">
+          <div className="card-body d-flex flex-wrap pt-0">
             {keys.length > 0 && keys.find(key => key.status.key === 'notStaked') !== undefined ? (
               <div className="table-responsive">
                 <table className="table table-borderless mb-0">

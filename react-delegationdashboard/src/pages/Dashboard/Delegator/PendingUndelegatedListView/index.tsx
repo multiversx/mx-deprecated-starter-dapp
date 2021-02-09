@@ -64,7 +64,7 @@ const UndelegatedListView = () => {
             <div className="card-header border-bottom-0">
               <h6 className="mb-0 mt-2">Pending Withdrawals</h6>
             </div>
-            <div className="card-body d-flex flex-wrap">
+            <div className="card-body d-flex flex-wrap pt-0">
               <div className="table-responsive">
                 <table className="table table-borderless mb-0">
                   <thead className="py-2 text-uppercase font-weight-normal">

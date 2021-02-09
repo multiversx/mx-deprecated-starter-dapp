@@ -31,7 +31,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
           <p className="h3" data-testid="delegateTitle">
             Delegate now
           </p>
-          <p className="lead mb-spacer">{`Select the amount of ${erdLabel} you want to delegate.`}</p>
+          <p className="lead">{`Select the amount of ${erdLabel} you want to delegate.`}</p>
 
           <Formik
             initialValues={{
@@ -64,7 +64,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
               };
               return (
                 <form onSubmit={handleSubmit} className="text-left">
-                  <div className="form-group mb-spacer">
+                  <div className="form-group mt-3 mb-0">
                     <label htmlFor="amount">Amount {erdLabel}</label>
                     <div className="input-group">
                       <input
@@ -97,10 +97,10 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                     </small>
                     <ErrorMessage name="amount" />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
+                  <div className="d-flex justify-content-center align-items-center flex-wrap">
                     <button
                       type="submit"
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-outline-primary mx-2 mt-3"
                       id="continueDelegate"
                       data-testid="continueDelegate"
                     >
@@ -108,7 +108,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                     </button>
                     <button
                       id="closeButton"
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-link mx-2 mt-3"
                       onClick={handleClose}
                     >
                       Close

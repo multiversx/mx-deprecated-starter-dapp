@@ -10,7 +10,7 @@ const ClaimRewardsAction = () => {
         onClick={() => {
           setShowClaimRewardsModal(true);
         }}
-        className="btn btn-orange mb-2 mr-2"
+        className="btn btn-light text-primary mt-2"
       >
         Claim Rewards
       </button>

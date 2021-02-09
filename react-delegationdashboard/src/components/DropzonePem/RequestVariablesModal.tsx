@@ -40,15 +40,15 @@ const RequestVariablesModal = ({
     <Modal show={show} className="modal-container" animation={false} centered>
       <div className="card card-small">
         <div className="card-body text-center">
-          <p className="h3" data-testid="delegateTitle">
+          <h3 className="mb-0" data-testid="delegateTitle">
             {name}
-          </p>
-          <div className="mt-4 lead">
+          </h3>
+          <div className="mt-3">
             {variables?.map(variable => {
               return (
                 <div key={variable.name}>
                   {variable.type === 'input' && (
-                    <div className="form-group text-left">
+                    <div className="form-group text-left mt-3 mb-0">
                       <label htmlFor={variable.name}>{variable.name}</label>
                       <div className="input-group">
                         <input
@@ -75,7 +75,7 @@ const RequestVariablesModal = ({
           </div>
           {!isPemUpload && (
             <>
-              <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
+              <div className="d-flex align-items-center flex-wrap mt-3">
                 <button
                   type="submit"
                   className="btn btn-oultine-primary mx-2"
@@ -86,7 +86,7 @@ const RequestVariablesModal = ({
                 >
                   Continue
                 </button>
-                <div className="btn btn-oultine-primary mx-2" onClick={handleClose}>
+                <div className="btn btn-link mx-2" onClick={handleClose}>
                   Close
                 </div>
               </div>

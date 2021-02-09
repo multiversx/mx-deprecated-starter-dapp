@@ -30,19 +30,19 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
           <p className="h3" data-testid="delegateTitle">
             {title}
           </p>
-          <p className="lead mb-spacer">{description}</p>
-          <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
+          <p className="lead">{description}</p>
+          <div className="d-flex justify-content-center align-items-center flex-wrap mt-3">
             <ViewStatAction
               actionTitle="Claim Rewards"
               handleContinue={handleClaimRewards}
-              color="orange"
+              color="primary"
             />
             <ViewStatAction
               actionTitle="Redelegate Rewards"
               handleContinue={handleRedelegateRewards}
               color="green"
             />
-            <button id="closeButton" className="btn btn-outline-primary mx-2" onClick={handleClose}>
+            <button id="closeButton" className="btn btn-link mt-3 mx-2" onClick={handleClose}>
               Close
             </button>
           </div>

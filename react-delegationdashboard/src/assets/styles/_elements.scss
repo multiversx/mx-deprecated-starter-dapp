@@ -15,11 +15,20 @@
   td {
     font-size: 0.875rem;
     vertical-align: middle;
+    &:first-of-type {
+      padding-left: 0;
+    }
+    &:last-of-type {
+      text-align: right;
+      padding-right: 0;
+    }
   }
   th {
+    font-size: $table-head-font-size;
     font-weight: 400;
   }
   td {
+    font-size: $table-font-size;
     border-top: $table-border-width solid $table-border-color;
     span {
       border-radius: 0.2rem;

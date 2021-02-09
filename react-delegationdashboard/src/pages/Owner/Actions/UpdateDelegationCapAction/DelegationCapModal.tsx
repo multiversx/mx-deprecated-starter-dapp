@@ -44,7 +44,7 @@ const DelegationCapModal = ({
           <p className="h3" data-testid="delegateTitle">
             {title}
           </p>
-          <p className="lead mb-spacer">{description}</p>
+          <p className="lead">{description}</p>
 
           <Formik
             initialValues={{
@@ -71,7 +71,7 @@ const DelegationCapModal = ({
 
               return (
                 <form onSubmit={handleSubmit} className="text-left">
-                  <div className="form-group mb-spacer">
+                  <div className="form-group mt-3 mb-0">
                     <div className="input-group">
                       <input
                         type="text"
@@ -88,10 +88,10 @@ const DelegationCapModal = ({
                     </div>
                     <ErrorMessage name="amount" />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
+                  <div className="d-flex justify-content-center align-items-center flex-wrap">
                     <button
                       type="submit"
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-outline-primary mx-2 mt-3"
                       id="continueDelegate"
                       data-testid="continueDelegate"
                     >
@@ -99,7 +99,7 @@ const DelegationCapModal = ({
                     </button>
                     <button
                       id="closeButton"
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-link mx-2 mt-3"
                       onClick={handleClose}
                     >
                       Close

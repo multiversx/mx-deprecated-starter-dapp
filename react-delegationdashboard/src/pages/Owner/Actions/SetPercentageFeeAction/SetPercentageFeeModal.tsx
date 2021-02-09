@@ -30,7 +30,7 @@ const SetPercentageFeeModal = ({
           <p className="h3" data-testid="baseActionModal">
             Change service fee
           </p>
-          <p className="lead mb-spacer">Add the percentage fee (for example: 12.30)</p>
+          <p className="lead">Add the percentage fee (for example: 12.30)</p>
 
           <Formik
             initialValues={{
@@ -46,7 +46,7 @@ const SetPercentageFeeModal = ({
 
               return (
                 <form onSubmit={handleSubmit} className="text-left">
-                  <div className="form-group mb-spacer">
+                  <div className="form-group mt-3 mb-0">
                     <div className="input-group">
                       <input
                         type="text"
@@ -63,10 +63,10 @@ const SetPercentageFeeModal = ({
                     </div>
                     <ErrorMessage name="amount" />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
+                  <div className="d-flex justify-content-center align-items-center flex-wrap">
                     <button
                       type="submit"
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-outline-primary mx-2 mt-3"
                       id="continueDelegate"
                       data-testid="continueUndelegate"
                     >
@@ -74,7 +74,7 @@ const SetPercentageFeeModal = ({
                     </button>
                     <button
                       id="closeButton"
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-link mx-2 mt-3"
                       onClick={handleClose}
                     >
                       Close
