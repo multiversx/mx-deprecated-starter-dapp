@@ -27,19 +27,19 @@ const UndelegatedValueRow = ({
   return (
     <tr>
       <td>
-        <div className="d-flex align-items-center text-nowrap bls-trim">{value.value}</div>
+        <div className="d-flex align-items-center text-nowrap trim">{value.value}</div>
       </td>
       <td>
-        <div className="d-flex align-items-center text-nowrap bls-trim">
+        <div className="d-flex align-items-center text-nowrap trim">
           {value.timeLeft ? (
-            <span className="bg-light-orange text-orange px-2 py-1">
+            <span className="bg-light-orange text-orange px-3 py-2">
               {moment
                 .utc(moment.duration(value.timeLeft, 'seconds').asMilliseconds())
                 .format('HH:mm:ss')}{' '}
               left
             </span>
           ) : (
-            <span className="bg-light-green text-green px-2 py-1">Completed</span>
+            <span className="bg-light-green text-green px-3 py-2">Completed</span>
           )}
         </div>
       </td>

@@ -58,7 +58,7 @@ const WalletLogin = () => {
   }, [dapp.provider, dapp.proxy, dispatch]);
 
   return (
-    <button onClick={handleOnClick} className="btn btn-outline-primary mx-sm-2">
+    <button onClick={handleOnClick} className="btn btn-primary mb-2 mx-3">
       Login with Wallet
     </button>
   );

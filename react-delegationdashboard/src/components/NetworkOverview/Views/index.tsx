@@ -6,20 +6,25 @@ import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
 import { ContractOverview } from 'helpers/types';
 import { QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import { Address } from '@elrondnetwork/erdjs/out';
 import { useState } from 'react';
-import { NetworkStake } from '@elrondnetwork/erdjs/out/networkStake';
+
+import SetPercentageFeeAction from './SetPercentageFeeAction';
+import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 
 const Views = () => {
-  const { dapp, erdLabel, delegationContract } = useContext();
+  const { address, dapp, erdLabel, delegationContract } = useContext();
   const { getTotalActiveStake, getNumNodes, getContractConfig } = contractViews;
-  const [] = useState('');
+  const [balance, setBalance] = useState('');
   const [totalActiveStake, setTotalActiveStake] = React.useState('0');
   const [noNodes, setNoNodes] = React.useState('0');
-  const [percentageForNodes, setPercentageForNodes] = React.useState('0');
-  const [percentageForStake, setPercentageForStake] = React.useState('0');
-  const [percentageForDelegationCap, setPercentageForDelegationCap] = React.useState('0');
+  const [isAdminFlag, setIsAdminFlag] = useState(false);
   const [contractOverview, setContractOverview] = useState(new ContractOverview());
-  const [, setNetworkStake] = useState(new NetworkStake());
+
+  const isAdmin = (ownerAddress: string) => {
+    let loginAddress = new Address(address).hex();
+    return loginAddress.localeCompare(ownerAddress) < 0 ? false : true;
+  };
 
   const getContractOverviewType = (value: QueryResponse) => {
     let delegationCap = denominate({
@@ -46,114 +51,98 @@ const Views = () => {
     );
   };
 
-  const getPercentage = (firstValue: number, secondValue: number) => {
-    return ((firstValue / secondValue) * 100).toFixed(2);
-  };
-
-  const getContractConfiguration = (totalStake: number) => {
+  const getContractConfiguration = () => {
     getContractConfig(dapp, delegationContract)
       .then(value => {
         let contractOverview = getContractOverviewType(value);
+        if (isAdmin(value.returnData[0].asHex)) {
+          setIsAdminFlag(true);
+        }
         setContractOverview(contractOverview);
-        setPercentageForDelegationCap(
-          getPercentage(totalStake, parseInt(contractOverview.maxDelegationCap.replace(/,/g, '')))
-        );
       })
       .catch(e => console.error('getContractConfig error ', e));
   };
 
-  const getNumberOfNodes = (networkNodes: number) => {
+  const getNumberOfNodes = () => {
     getNumNodes(dapp, delegationContract)
       .then(value => {
         setNoNodes(value.returnData[0].asNumber.toString() || '0');
-        setPercentageForNodes(getPercentage(value.returnData[0]?.asNumber, networkNodes));
       })
       .catch(e => {
         console.error('getNumberOfNodes error ', e);
       });
   };
 
-  const getTotalAndPercentageForStake = (networkStake: number) => {
+  const getTotalStake = () => {
     getTotalActiveStake(dapp, delegationContract)
       .then(value => {
         let input = value.returnData[0].asBigInt.toString();
-        let totalStake = denominate({
-          input,
-          denomination,
-          decimals,
-          showLastNonZeroDecimal: true,
-        });
-        setTotalActiveStake(totalStake || '0');
-
-        getContractConfiguration(parseInt(totalStake.toString().replace(/,/g, '')));
-        setPercentageForStake(getPercentage(parseInt(totalStake.replace(/,/g, '')), networkStake));
+        setTotalActiveStake(
+          denominate({ input, denomination, decimals, showLastNonZeroDecimal: true }) || '0'
+        );
       })
       .catch(e => console.error('getTotalStake error ', e));
   };
-
-  const getNetworkStake = () => {
-    dapp.apiProvider
-      .getNetworkStake()
-      .then(value => {
-        setNetworkStake(value);
-
-        let input = value.TotalStaked.toString().replace(/,/g, '');
-        let networkStake = denominate({
-          input,
-          denomination,
-          decimals,
-          showLastNonZeroDecimal: true,
-        });
-        getTotalAndPercentageForStake(parseInt(networkStake.toString().replace(/,/g, '')));
-        getNumberOfNodes(value.TotalValidators);
-      })
-      .catch(e => console.error('getTotalStake error ', e));
+  const getBalance = () => {
+    dapp.proxy.getAccount(new Address(address)).then(value => {
+      let balance = denominate({
+        decimals,
+        denomination,
+        input: value.balance.toString(),
+        showLastNonZeroDecimal: false,
+      });
+      setBalance(balance.toString());
+    });
   };
 
   React.useEffect(() => {
-    getNetworkStake();
+    getNumberOfNodes();
+    getTotalStake();
+    getContractConfiguration();
+    getBalance();
   }, []);
   return (
-    <div className="network-stats">
+    <div className="mt-n5">
       <div className="row m-0">
-        <div className="col-6 col-lg-3 mb-3 text-left">
+        <div className="col-6 col-lg-3">
           <StatCard
             title="Contract Stake"
-            value={totalActiveStake}
+            value={balance}
             valueUnit={erdLabel}
             color="orange"
             svg="contract.svg"
-            percentage={`${percentageForStake}% of total stake`}
           />
         </div>
-        <div className="col-6 col-lg-3 mb-3 text-left">
+        <div className="col-6 col-lg-3">
           <StatCard
             title="Number of Nodes"
             value={noNodes}
             valueUnit=""
             color="purple"
             svg="nodes.svg"
-            percentage={`${percentageForNodes}% of total nodes`}
           />
         </div>
-        <div className="col-6 col-lg-3 mb-3 text-left">
+        <div className="col-6 col-lg-3">
           <StatCard
             title="Service Fee"
             value={contractOverview.serviceFee || ''}
             valueUnit="%"
             color="pink"
             svg="service.svg"
-          />
+          >
+            {isAdminFlag && <SetPercentageFeeAction />}
+          </StatCard>
         </div>
-        <div className="col-6 col-lg-3 mb-3 text-left">
+        <div className="col-6 col-lg-3">
           <StatCard
             title="Delegation cap"
             value={contractOverview.maxDelegationCap || ''}
             valueUnit={erdLabel}
             color="green"
             svg="delegation.svg"
-            percentage={`${percentageForDelegationCap}% filled`}
-          />
+          >
+            {isAdminFlag && <UpdateDelegationCapAction />}
+          </StatCard>
         </div>
       </div>
     </div>

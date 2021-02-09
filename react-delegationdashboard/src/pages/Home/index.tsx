@@ -28,12 +28,13 @@ const Home = () => {
       ) : (
         <div className="m-auto login-container">
           <div className="card my-3 text-center">
-            <div className="card-body">
+            <div className="card-body mx-3 mx-lg-5">
               <Logo className="logo my-4" />
               <h4 className="mb-4">Delegation Manager</h4>
-              <p className="mb-4">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                Ipsum has been the industry's
+              <p className="mb-5">
+                Etiam tincidunt turpis vitae sapien iaculis accumsan. Nunc placerat lorem non ipsum
+                interdum, vel condimentum justo tristique. Praesent ut dapibus velit, eu vehicula
+                orci.
               </p>
               <div className="mb-4">
                 <LedgerLogin />

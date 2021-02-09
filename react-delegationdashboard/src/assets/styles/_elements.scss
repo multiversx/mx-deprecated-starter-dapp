@@ -1,6 +1,9 @@
 .opacity-6 {
   opacity: 0.6;
 }
+.opacity-5 {
+  opacity: 0.5;
+}
 
 .card {
   .card-header {
@@ -26,12 +29,27 @@
   th {
     font-size: $table-head-font-size;
     font-weight: 400;
+    padding-bottom: 0.875rem;
   }
   td {
     font-size: $table-font-size;
     border-top: $table-border-width solid $table-border-color;
+    border-bottom: $table-border-width solid $table-border-color;
     span {
-      border-radius: 0.2rem;
+      font-size: 0.6875rem;
+      border-radius: $btn-border-radius-sm;
+    }
+  }
+  .trim {
+    max-width: 10rem;
+    @include media-breakpoint-up(sm) {
+      max-width: 14rem;
+    }
+    @include media-breakpoint-up(md) {
+      max-width: 30rem;
+    }
+    @include media-breakpoint-up(xl) {
+      max-width: 42rem;
     }
   }
 }

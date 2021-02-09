@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useContext } from 'context';
 import { NodeType } from 'helpers/types';
-import Trim from '../../../components/Trim';
+
 import { nodeTransactions } from './helpers/stakeHooks';
 import { inactiveNodeActions } from './helpers/nodeTypes';
 
@@ -15,8 +15,8 @@ const InactiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: numb
   return (
     <tr>
       <td>
-        <div className="d-flex align-items-center text-nowrap bls-trim">
-          <Trim text={key.blsKey} />
+        <div className="d-flex align-items-center text-nowrap trim">
+          <span className="text-truncate">{key.blsKey}</span>
           <a
             href={`${explorerAddress}nodes/${key.blsKey}`}
             {...{ target: '_blank' }}

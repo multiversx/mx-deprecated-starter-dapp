@@ -1,10 +1,14 @@
 .home {
+  color: #464e5f;
   .login-container {
-    max-width: 30rem;
+    max-width: 33.625rem;
     .logo {
-      fill: $primary;
-      height: 3rem;
+      fill: $black;
+      height: 2.5rem;
       width: auto;
+    }
+    p {
+      font-size: 0.8125rem;
     }
   }
 }

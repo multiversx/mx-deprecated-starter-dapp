@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { contractViews } from 'contracts/ContractViews';
 import { useContext } from '../../../context';
-import denominate from 'components/Denominate/formatters';
 
 const Header = () => {
   const location = useLocation();
@@ -26,24 +25,24 @@ const Header = () => {
     return loginAddress.localeCompare(ownerAddress) < 0 ? false : true;
   };
   return (
-    <div className="card-header border-0 bg-primary py-5 text-white d-flex flex-wrap">
-      <div>
-        <div className="mb-3 mb-lg-5">
+    <div className="card-header border-0 bg-primary py-5 text-white">
+      <div className="row mb-4">
+        <div className="col-12 col-lg-10">
           <span className="opacity-6 mr-1">Contract Address</span>
-          <p className="text-white font-weight-normal">{address}</p>
+          <p className="text-white font-weight-normal text-truncate">{address}</p>
         </div>
-      </div>
-      <div className="ml-lg-auto">
-        {isAdminFlag && location.pathname !== '/owner' ? (
-          <Link to="/owner" className="btn btn-light-primary text-primary">
-            Admin
-          </Link>
-        ) : null}
-        {location.pathname !== '/dashboard' ? (
-          <Link to="/dashboard" className="btn btn-light-primary text-primary">
-            Dashboard
-          </Link>
-        ) : null}
+        <div className="col-12 col-lg-2 text-lg-right">
+          {isAdminFlag && location.pathname !== '/owner' ? (
+            <Link to="/owner" className="btn btn-light-primary text-primary">
+              Admin
+            </Link>
+          ) : null}
+          {location.pathname !== '/dashboard' ? (
+            <Link to="/dashboard" className="btn btn-light-primary text-primary">
+              Dashboard
+            </Link>
+          ) : null}
+        </div>
       </div>
     </div>
   );

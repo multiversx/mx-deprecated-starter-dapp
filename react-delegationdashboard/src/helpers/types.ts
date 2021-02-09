@@ -48,6 +48,7 @@ export class StatCardType {
   svg!: string;
   color!: string;
   percentage?: string;
+  children?: any;
 }
 
 export class NodeType {

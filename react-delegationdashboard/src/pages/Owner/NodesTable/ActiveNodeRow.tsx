@@ -6,7 +6,6 @@ import moment from 'moment';
 import React from 'react';
 import { Nav, NavDropdown } from 'react-bootstrap';
 import { useContext } from 'context';
-import Trim from 'components/Trim';
 import { nodeActions } from './helpers/nodeTypes';
 import { nodeTransactions } from './helpers/stakeHooks';
 import { NodeType } from 'helpers/types';
@@ -49,12 +48,12 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
   React.useEffect(fetchUnBondPeriod, [key.blsKey, key.status]);
 
   const statusColor =
-    key.status.key === 'staked' ? 'success' : key.status.key === 'jailed' ? 'danger' : 'warning';
+    key.status.key === 'staked' ? 'green' : key.status.key === 'jailed' ? 'pink' : 'orange';
   return (
     <tr ref={ref}>
       <td>
-        <div className="d-flex align-items-center text-nowrap bls-trim">
-          <Trim text={key.blsKey} />
+        <div className="d-flex align-items-center text-nowrap trim">
+          <span className="text-truncate">{key.blsKey}</span>
           <a
             href={`${explorerAddress}nodes/${key.blsKey}`}
             {...{
@@ -68,19 +67,13 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
       </td>
       <td>
         {key.status.key === 'queued' && key.queueIndex && key.queueSize ? (
-          <div className={`status-badge ${statusColor}`}>
-            <div className="d-flex align-items-center">
-              <span className={`led mr-1 bg-${statusColor}`} />
-              {key.status.value} ({key.queueIndex}/{key.queueSize})
-            </div>
-          </div>
+          <span className={`bg-light-${statusColor} text-${statusColor} px-3 py-2`}>
+            {key.status.value} ({key.queueIndex}/{key.queueSize})
+          </span>
         ) : (
-          <div className={`status-badge ${statusColor}`}>
-            <div className="d-flex align-items-center">
-              <span className={`led mr-1 bg-${statusColor}`} />
-              {key.status.value}
-            </div>
-          </div>
+          <span className={`bg-light-${statusColor} text-${statusColor} px-3 py-2`}>
+            {key.status.value}
+          </span>
         )}
       </td>
 
@@ -93,6 +86,7 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
               </span>
             }
             id="basic-nav-dropdown"
+            className="ml-auto"
           >
             {Object.keys(nodeActions).map(entry => {
               const action: ActionType = entry as any;
