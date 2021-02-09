@@ -4,9 +4,10 @@ import { StatCardType } from '../../helpers/types';
 const StatCard = ({
   title = '',
   value = '0',
-  valueUnit = 'eGLD',
+  valueUnit = '',
   color = '',
   svg = '',
+  percentage = '',
 }: StatCardType) => {
   return (
     <div className={`statcard bg-light-${color} text-${color} p-3 my-2 my-sm-0 rounded`}>
@@ -17,7 +18,7 @@ const StatCard = ({
       <p className="value">
         {value} {valueUnit}
       </p>
-      <p className="subvalue"></p>
+      <p className="subvalue">{percentage}</p>
     </div>
   );
 };

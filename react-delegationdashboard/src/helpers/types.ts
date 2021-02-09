@@ -13,7 +13,7 @@ export interface DelegationContractType {
 
 export class ContractOverview {
   serviceFee?: string;
-  maxDelegationCap?: string;
+  maxDelegationCap: string;
   initialOwnerFunds?: string;
   automaticActivation?: boolean;
   withDelegationCap?: boolean;
@@ -22,7 +22,7 @@ export class ContractOverview {
   unBondPeriod?: number;
   public constructor(
     serviceFee?: string,
-    maxDelegationCap?: string,
+    maxDelegationCap: string = '',
     initialOwnerFunds?: string,
     automaticActivation?: boolean,
     withDelegationCap?: boolean,
@@ -44,9 +44,10 @@ export class ContractOverview {
 export class StatCardType {
   title!: string;
   value!: string;
-  valueUnit!: string;
+  valueUnit?: string;
   svg!: string;
   color!: string;
+  percentage?: string;
 }
 
 export class NodeType {

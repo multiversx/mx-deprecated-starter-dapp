@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { contractViews } from 'contracts/ContractViews';
 import { useContext } from '../../../context';
+import denominate from 'components/Denominate/formatters';
 
 const Header = () => {
   const location = useLocation();

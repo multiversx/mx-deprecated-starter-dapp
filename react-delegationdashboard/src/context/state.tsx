@@ -1,4 +1,4 @@
-import { IDappProvider, ProxyProvider, WalletProvider } from '@elrondnetwork/erdjs';
+import { IDappProvider, ProxyProvider, ApiProvider, WalletProvider } from '@elrondnetwork/erdjs';
 import { denomination, decimals, networks, NetworkType } from '../config';
 import { getItem } from '../storage/session';
 
@@ -10,6 +10,7 @@ export const defaultNetwork: NetworkType = {
   theme: '',
   walletAddress: '',
   apiAddress: '',
+  gatewayAddress: '',
   explorerAddress: '',
   delegationContract: '',
   auctionContract: '',
@@ -19,6 +20,7 @@ export const defaultNetwork: NetworkType = {
 export interface DappState {
   provider: IDappProvider;
   proxy: ProxyProvider;
+  apiProvider: ApiProvider;
 }
 
 export interface StateType {
@@ -49,9 +51,15 @@ export const initialState = (optionalConfig?: NetworkType[]) => {
     dapp: {
       provider: new WalletProvider(sessionNetwork.walletAddress),
       proxy: new ProxyProvider(
+        sessionNetwork.gatewayAddress !== undefined
+          ? sessionNetwork?.gatewayAddress
+          : 'https://gateway.elrond.com/',
+        4000
+      ),
+      apiProvider: new ApiProvider(
         sessionNetwork.apiAddress !== undefined
           ? sessionNetwork?.apiAddress
-          : 'https://explorer.elrond.com/',
+          : 'https://api.elrond.com/',
         4000
       ),
     },

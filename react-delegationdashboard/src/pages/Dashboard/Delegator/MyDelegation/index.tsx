@@ -15,7 +15,7 @@ const MyDelegation = () => {
   const getAllData = () => {
     getClaimableRewards(dapp, address, delegationContract)
       .then(value => {
-        if (value.returnData[0]?.asNumber !== 0) {
+        if (value.returnData.length > 0 && value.returnData[0]?.asNumber !== 0) {
           setDisplayRewards(true);
         }
         setClaimableRewards(
