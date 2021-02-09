@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { object } from 'yup';
 import { ActionModalType } from 'helpers/types';
 
 const AutomaticActivationModal = ({
