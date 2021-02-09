@@ -79,32 +79,32 @@ const Views = () => {
     <div className="mt-n5">
       <div className="row m-0">
         <StatCard
-          title="Number of nodes"
-          value={noNodes}
-          valueUnit="nodes"
-          color="orange"
-          svg="Equalizer.svg"
-        />
-        <StatCard
           title="Total Stake"
           value={totalActiveStake}
           valueUnit={erdLabel}
-          color="primary"
-          svg="Add-user.svg"
+          color="orange"
+          svg="contract.svg"
+        />
+        <StatCard
+          title="Number of nodes"
+          value={noNodes}
+          valueUnit="nodes"
+          color="purple"
+          svg="nodes.svg"
         />
         <StatCard
           title="Service Fee"
           value={contractOverview.serviceFee || ''}
           valueUnit="%"
           color="pink"
-          svg="./assets/images/Layers.svg"
+          svg="service.svg"
         />
         <StatCard
           title="Max delegation cap"
           value={contractOverview.maxDelegationCap || ''}
           valueUnit={erdLabel}
           color="green"
-          svg="Urgent-mail.svg"
+          svg="delegation.svg"
         />
       </div>
     </div>

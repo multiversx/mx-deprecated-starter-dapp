@@ -1,0 +1,26 @@
+.statcard {
+  .title,
+  .value,
+  .subvalue {
+    margin-bottom: 0.2rem;
+  }
+  .title {
+    opacity: 0.5;
+    font-size: $statcard-title-size;
+    line-height: $statcard-title-size;
+  }
+  .value {
+    opacity: 0.7;
+    font-size: $statcard-value-size;
+    line-height: $statcard-value-size;
+  }
+  .subvalue {
+    opacity: 0.5;
+    font-size: $statcard-subvalue-size;
+    line-height: $statcard-subvalue-size;
+  }
+  .svg-icon svg {
+    height: 1.5rem;
+    width: auto;
+  }
+}

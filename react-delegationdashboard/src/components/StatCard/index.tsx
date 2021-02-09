@@ -9,14 +9,15 @@ const StatCard = ({
   svg = '',
 }: StatCardType) => {
   return (
-    <div className={`col bg-light-${color} text-${color} p-4 my-2 my-sm-0 mx-3 rounded `}>
-      <span className={`svg-icon svg-icon-3x svg-icon-${color} d-block my-2`}>
-        <SVG src={svg}></SVG>
-      </span>
-      <h6>{title}</h6>
-      <div>
-        {value} {valueUnit}
+    <div className={`statcard col bg-light-${color} text-${color} p-3 my-2 my-sm-0 mx-3 rounded `}>
+      <div className={`svg-icon fill-${color} mb-2`}>
+        <SVG src={process.env.PUBLIC_URL + '/' + svg} className={`text-${color}`}></SVG>
       </div>
+      <p className="title">{title}</p>
+      <p className="value">
+        {value} {valueUnit}
+      </p>
+      <p className="subvalue"></p>
     </div>
   );
 };
