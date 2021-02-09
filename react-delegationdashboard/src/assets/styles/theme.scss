@@ -1,14 +1,23 @@
 // override themeVariables below
 $body: #000;
 $body-bg: #e7ebf7;
+$body-color: #212121;
 
 $font-family-sans-serif: 'Poppins', sans-serif;
 
 $primary: #3699ff;
 $secondary: #f64e60;
-$muted: #cacbcc;
-$light: #f5f5f5;
+$dark: #5d6473;
+$muted: #b5b5c3;
+$light: #f3f6f9;
 $success: #28a745;
+
+$table-color: $dark;
+
+$text-muted: $muted;
+
+$card-bg: #fff;
+$card-border-color: #e5eaee;
 
 $light-primary: #e1f0ff;
 $orange: #ffa800;
@@ -38,8 +47,6 @@ $btn-font-size: 0.875rem;
 $btn-line-height: 18px;
 $btn-border-radius: 6px;
 
-$card-bg: #fff;
-$card-border-color: #e5eaee;
 $card-cap-bg: $card-bg;
 $card-border-radius: 0.65rem;
 
@@ -54,7 +61,7 @@ $input-bg: $card-bg;
 $input-disabled-bg: #e9ecef;
 $input-hover-border-color: darken($border-color, 15%);
 
-$dapp-color: #6c757d;
+$dapp-color: $dark;
 $logo-height: 1.5rem;
 $bg-image: #6a9fc7 url(../../assets/images/background.jpg) bottom center no-repeat;
 $footer-color: #fff;

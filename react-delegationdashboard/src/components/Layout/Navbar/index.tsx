@@ -18,8 +18,13 @@ const Navbar = () => {
           <Logo className="logo mr-2" />
           <span className="navbar-brand pl-2">Delegation Manager</span>
         </NavItem>
-
-        <Nav className="ml-auto">
+        <Nav className="ml-auto d-flex frex-wrap align-items-center">
+          {address && (
+            <div className="mr-4">
+              <span className="text-muted mr-2">Wallet address:</span>
+              <span className="text-dark">{address}</span>
+            </div>
+          )}
           {loggedIn && (
             <NavItem>
               <a href="/" onClick={logOut} className="btn btn-light text-primary">
