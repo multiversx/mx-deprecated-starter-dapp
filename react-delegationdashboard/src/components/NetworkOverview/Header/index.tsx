@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { contractViews } from 'contracts/ContractViews';
-import Denominate from '../../Denominate';
 import { useContext } from '../../../context';
 
 const Header = () => {
   const { address, dapp, delegationContract } = useContext();
-  const [balance, setBalance] = useState('');
   const { getContractConfig } = contractViews;
   const [isAdminFlag, setIsAdminFlag] = useState(false);
 
@@ -25,23 +23,12 @@ const Header = () => {
     let loginAddress = new Address(address).hex();
     return loginAddress.localeCompare(ownerAddress) < 0 ? false : true;
   };
-
-  useEffect(() => {
-    dapp.proxy.getAccount(new Address(address)).then(value => setBalance(value.balance.toString()));
-  }, []);
-
   return (
     <div className="card-header border-0 bg-primary py-5 text-white d-flex flex-wrap">
       <div>
-        <div className="mb-4">
+        <div className="mb-3 mb-lg-5">
           <span className="opacity-6 mr-1">Contract Address</span>
           <p className="text-white font-weight-normal">{address}</p>
-        </div>
-        <div className="mb-4">
-          <span className="opacity-6 mr-1">Contract Stake</span>
-          <h4 className="text-white font-weight-normal">
-            <Denominate value={balance} />
-          </h4>
         </div>
       </div>
       <div className="ml-lg-auto">

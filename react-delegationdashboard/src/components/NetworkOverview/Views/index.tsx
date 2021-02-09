@@ -6,11 +6,13 @@ import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
 import { ContractOverview } from 'helpers/types';
 import { QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import { Address } from '@elrondnetwork/erdjs/out';
 import { useState } from 'react';
 
 const Views = () => {
-  const { dapp, erdLabel, delegationContract } = useContext();
+  const { address, dapp, erdLabel, delegationContract } = useContext();
   const { getTotalActiveStake, getNumNodes, getContractConfig } = contractViews;
+  const [balance, setBalance] = useState('');
   const [totalActiveStake, setTotalActiveStake] = React.useState('0');
   const [noNodes, setNoNodes] = React.useState('0');
   const [contractOverview, setContractOverview] = useState(new ContractOverview());
@@ -69,43 +71,63 @@ const Views = () => {
       })
       .catch(e => console.error('getTotalStake error ', e));
   };
+  const getBalance = () => {
+    dapp.proxy.getAccount(new Address(address)).then(value => {
+      let balance = denominate({
+        decimals,
+        denomination,
+        input: value.balance.toString(),
+        showLastNonZeroDecimal: false,
+      });
+      setBalance(balance.toString());
+    });
+  };
 
   React.useEffect(() => {
     getNumberOfNodes();
     getTotalStake();
     getContractConfiguration();
+    getBalance();
   }, []);
   return (
-    <div className="mt-n5">
+    <div className="network-stats">
       <div className="row m-0">
-        <StatCard
-          title="Total Stake"
-          value={totalActiveStake}
-          valueUnit={erdLabel}
-          color="orange"
-          svg="contract.svg"
-        />
-        <StatCard
-          title="Number of nodes"
-          value={noNodes}
-          valueUnit="nodes"
-          color="purple"
-          svg="nodes.svg"
-        />
-        <StatCard
-          title="Service Fee"
-          value={contractOverview.serviceFee || ''}
-          valueUnit="%"
-          color="pink"
-          svg="service.svg"
-        />
-        <StatCard
-          title="Max delegation cap"
-          value={contractOverview.maxDelegationCap || ''}
-          valueUnit={erdLabel}
-          color="green"
-          svg="delegation.svg"
-        />
+        <div className="col-6 col-lg-3 mb-3 text-left">
+          <StatCard
+            title="Contract Stake"
+            value={balance}
+            valueUnit={erdLabel}
+            color="orange"
+            svg="contract.svg"
+          />
+        </div>
+        <div className="col-6 col-lg-3 mb-3 text-left">
+          <StatCard
+            title="Number of Nodes"
+            value={noNodes}
+            valueUnit=""
+            color="purple"
+            svg="nodes.svg"
+          />
+        </div>
+        <div className="col-6 col-lg-3 mb-3 text-left">
+          <StatCard
+            title="Service Fee"
+            value={contractOverview.serviceFee || ''}
+            valueUnit="%"
+            color="pink"
+            svg="service.svg"
+          />
+        </div>
+        <div className="col-6 col-lg-3 mb-3 text-left">
+          <StatCard
+            title="Delegation cap"
+            value={contractOverview.maxDelegationCap || ''}
+            valueUnit={erdLabel}
+            color="green"
+            svg="delegation.svg"
+          />
+        </div>
       </div>
     </div>
   );

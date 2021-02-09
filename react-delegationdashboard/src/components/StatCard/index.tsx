@@ -9,7 +9,7 @@ const StatCard = ({
   svg = '',
 }: StatCardType) => {
   return (
-    <div className={`statcard col bg-light-${color} text-${color} p-3 my-2 my-sm-0 mx-3 rounded `}>
+    <div className={`statcard bg-light-${color} text-${color} p-3 my-2 my-sm-0 rounded`}>
       <div className={`svg-icon fill-${color} mb-2`}>
         <SVG src={process.env.PUBLIC_URL + '/' + svg} className={`text-${color}`}></SVG>
       </div>
