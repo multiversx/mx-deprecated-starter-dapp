@@ -6,25 +6,19 @@ import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
 import { ContractOverview } from 'helpers/types';
 import { QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
-import { Address, NetworkStake } from '@elrondnetwork/erdjs/out';
+import { NetworkStake } from '@elrondnetwork/erdjs/out';
 import { useState } from 'react';
 
 import SetPercentageFeeAction from './SetPercentageFeeAction';
 import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 
 const Views = () => {
-  const { address, dapp, egldLabel, delegationContract } = useContext();
+  const { dapp, egldLabel, delegationContract } = useContext();
   const { getTotalActiveStake, getNumNodes, getContractConfig } = contractViews;
-  const [totalActiveStake, setTotalActiveStake] = React.useState('0');
-  const [noNodes, setNoNodes] = React.useState('0');
-  const [isAdminFlag, setIsAdminFlag] = useState(false);
+  const [totalActiveStake, setTotalActiveStake] = React.useState('...');
+  const [noNodes, setNoNodes] = React.useState('...');
   const [contractOverview, setContractOverview] = useState(new ContractOverview());
   const [networkStake, setNetworkStake] = useState(new NetworkStake());
-
-  const isAdmin = (ownerAddress: string) => {
-    let loginAddress = new Address(address).hex();
-    return loginAddress.localeCompare(ownerAddress) < 0 ? false : true;
-  };
 
   const getContractOverviewType = (value: QueryResponse) => {
     let delegationCap = denominate({
@@ -52,19 +46,18 @@ const Views = () => {
   };
 
   const getPercentage = (firstValue: string, secondValue: string) => {
-    return (
-      (parseInt(firstValue.replace(/,/g, '')) / parseInt(secondValue.replace(/,/g, ''))) *
-      100
-    ).toFixed(2);
+    let percentage =
+      (parseInt(firstValue.replace(/,/g, '')) / parseInt(secondValue.replace(/,/g, ''))) * 100;
+    if (percentage < 1) {
+      return '<1';
+    }
+    return percentage ? percentage.toFixed(2) : '...';
   };
 
   const getContractConfiguration = () => {
     getContractConfig(dapp, delegationContract)
       .then(value => {
         let contractOverview = getContractOverviewType(value);
-        if (isAdmin(value.returnData[0].asHex)) {
-          setIsAdminFlag(true);
-        }
         setContractOverview(contractOverview);
       })
       .catch(e => console.error('getContractConfig error ', e));
