@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBan, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
 import State from 'components/State';
