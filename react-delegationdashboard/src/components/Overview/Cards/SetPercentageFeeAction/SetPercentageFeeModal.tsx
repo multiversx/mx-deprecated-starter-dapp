@@ -6,7 +6,7 @@ import { object, string } from 'yup';
 const SetPercentageFeeSchema = object().shape({
   amount: string()
     .required('Required')
-    .test('number', 'String not allows, only numbers. For example (12.20)', value => {
+    .test('number', 'String not allowed, only numbers. For example (12.20)', value => {
       const regex = /^(\d+(?:[\.]\d{1,2})?)$/;
       return regex.test(value || '');
     }),
@@ -26,12 +26,14 @@ const SetPercentageFeeModal = ({
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">
-        <div className="card-body p-spacer text-center">
-          <p className="h3" data-testid="baseActionModal">
+        <div className="card-body text-center p-spacer">
+          <p className="h6 mb-spacer" data-testid="baseActionModal">
             Change service fee
           </p>
-          <p className="lead">Add the percentage fee (for example: 12.30)</p>
-
+          <p className="mb-spacer">
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+            mollit anim id est laborum.
+          </p>
           <Formik
             initialValues={{
               amount: '',
@@ -42,28 +44,32 @@ const SetPercentageFeeModal = ({
             validationSchema={SetPercentageFeeSchema}
           >
             {props => {
-              const { handleSubmit, values, handleBlur, handleChange } = props;
+              const { handleSubmit, values, handleBlur, handleChange, errors, touched } = props;
 
               return (
                 <form onSubmit={handleSubmit} className="text-left">
-                  <div className="form-group mt-spacer mb-0">
-                    <div className="input-group">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="amount"
-                        name="amount"
-                        data-testid="amount"
-                        required={true}
-                        value={values.amount}
-                        autoComplete="off"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                    </div>
-                    <ErrorMessage name="amount" />
+                  <div className="form-group mb-spacer mb-0">
+                    <label htmlFor="amount">Add the percentage fee</label>
+                    <input
+                      type="text"
+                      className={`form-control ${
+                        errors.amount && touched.amount ? 'is-invalid' : ''
+                      }`}
+                      id="amount"
+                      name="amount"
+                      data-testid="amount"
+                      required={true}
+                      value={values.amount}
+                      autoComplete="off"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {!(errors.amount && touched.amount) && (
+                      <small className="form-text text-secondary mt-0">For example: 12.30</small>
+                    )}
+                    <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
+                  <div className="d-flex justify-content-center align-items-center flex-wrap">
                     <button
                       type="submit"
                       className="btn btn-outline-primary mx-2"

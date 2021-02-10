@@ -39,8 +39,8 @@ const PlaygroundPemUpload = ({
         const { setFieldValue, handleSubmit, errors } = props;
 
         return (
-          <form onSubmit={handleSubmit} ref={ref} className="mt-3">
-            <div className="form-group mt-3 mb-0">
+          <form onSubmit={handleSubmit} ref={ref}>
+            <div className="form-group mb-0">
               <DropzonePem
                 setFieldValue={setFieldValue}
                 fieldName="pemFiles"
@@ -50,11 +50,11 @@ const PlaygroundPemUpload = ({
                 multiple={true}
               />
             </div>
-            <div className="d-flex align-items-center justify-content-center flex-wrap">
-              <button type="submit" className="btn btn-outline-primary mt-3">
+            <div className="d-flex align-items-center justify-content-center flex-wrap mt-spacer">
+              <button type="submit" className="btn btn-outline-primary">
                 Continue
               </button>
-              <div className="btn btn-link mt-3" onClick={handleClose}>
+              <div className="btn btn-link" onClick={handleClose}>
                 Close
               </div>
             </div>

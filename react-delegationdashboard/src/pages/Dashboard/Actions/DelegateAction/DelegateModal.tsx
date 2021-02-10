@@ -28,11 +28,10 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">
         <div className="card-body p-spacer text-center">
-          <p className="h3" data-testid="delegateTitle">
+          <p className="h6 mb-spacer" data-testid="delegateTitle">
             Delegate now
           </p>
-          <p className="lead">{`Select the amount of ${egldLabel} you want to delegate.`}</p>
-
+          <p className="mb-spacer">{`Select the amount of ${egldLabel} you want to delegate.`}</p>
           <Formik
             initialValues={{
               amount: '10',
@@ -47,14 +46,22 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
                   return bnAmount.comparedTo(10) >= 0;
                 })
-                .test('number', 'String not allows, only numbers. For example (12.20)', value => {
+                .test('number', 'String not ed, only numbers. For example (12.20)', value => {
                   const regex = /^(\d+(?:[\.]\d+)?)$/;
                   return regex.test(value || '');
                 }),
             })}
           >
             {props => {
-              const { handleSubmit, values, handleBlur, handleChange, setFieldValue } = props;
+              const {
+                handleSubmit,
+                values,
+                handleBlur,
+                handleChange,
+                setFieldValue,
+                errors,
+                touched,
+              } = props;
 
               const getEntireBalance = (e: React.MouseEvent) => {
                 e.preventDefault();
@@ -64,12 +71,14 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
               };
               return (
                 <form onSubmit={handleSubmit} className="text-left">
-                  <div className="form-group mt-spacer mb-0">
+                  <div className="form-group mb-spacer">
                     <label htmlFor="amount">Amount {egldLabel}</label>
                     <div className="input-group">
                       <input
                         type="text"
-                        className="form-control"
+                        className={`form-control ${
+                          errors.amount && touched.amount ? 'is-invalid' : ''
+                        }`}
                         id="amount"
                         name="amount"
                         data-testid="amount"
@@ -91,13 +100,15 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                           </a>
                         </span>
                       )}
+                      <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                     </div>
-                    <small className="form-text text-secondary mt-0">
-                      Available: <Denominate value={balance} />
-                    </small>
-                    <ErrorMessage name="amount" />
+                    {!(errors.amount && touched.amount) && (
+                      <small className="form-text text-secondary">
+                        Available: <Denominate value={balance} />
+                      </small>
+                    )}
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
+                  <div className="d-flex justify-content-center align-items-center flex-wrap">
                     <button
                       type="submit"
                       className="btn btn-outline-primary mx-2"

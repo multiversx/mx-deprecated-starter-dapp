@@ -27,11 +27,11 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">
         <div className="card-body p-spacer text-center">
-          <p className="h3" data-testid="delegateTitle">
+          <p className="h6 mb-spacer" data-testid="delegateTitle">
             {title}
           </p>
-          <p className="lead">{description}</p>
-          <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
+          <p className="mb-spacer">{description}</p>
+          <div className="d-flex justify-content-center align-items-center flex-wrap">
             <ViewStatAction
               actionTitle="Claim Rewards"
               handleContinue={handleClaimRewards}

@@ -28,13 +28,12 @@ const AutomaticActivationModal = ({
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">
         <div className="card-body p-spacer text-center">
-          <p className="h3" data-testid="delegateTitle">
+          <p className="h6 mb-spacer" data-testid="delegateTitle">
             {title}
           </p>
-          <p className="lead">{description}</p>
-          <p className="lead">Currently is {value === 'true' ? 'ON' : 'OFF'}</p>
-
-          <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
+          <p className="mb-spacer">{description}</p>
+          <p className="lead mb-spacer">Currently is {value === 'true' ? 'ON' : 'OFF'}</p>
+          <div className="d-flex justify-content-center align-items-center flex-wrap">
             <ViewStatAction
               actionTitle={`Turn ${value === 'true' ? 'OFF' : 'ON'}`}
               handleContinue={handleAutomaticActivation}
