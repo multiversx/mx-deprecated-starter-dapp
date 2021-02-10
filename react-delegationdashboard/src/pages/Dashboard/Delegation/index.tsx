@@ -60,9 +60,9 @@ const MyDelegation = () => {
 
   return (
     <div className="card mt-spacer">
-      <div className="card-body px-spacer">
+      <div className="card-body p-spacer">
         <div className="d-flex align-items-center justify-content-between">
-          <p className="h6">My Stake</p>
+          <p className="h6 mb-0">My Stake</p>
           {userActiveStake !== String(0) && (
             <div className="d-flex">
               <DelegateAction />

@@ -27,7 +27,7 @@ const DelegateAction = () => {
         onClick={() => {
           setShowDelegateModal(true);
         }}
-        className="btn btn-primary mt-2 mr-3"
+        className="btn btn-primary mr-3"
       >
         Delegate
       </button>
