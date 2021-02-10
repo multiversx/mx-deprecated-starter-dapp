@@ -74,8 +74,8 @@ const Nodes = ({ automaticActivationFlag }: { automaticActivationFlag: string })
             </div>
           </div>
           {keys.length > 0 ? (
-            <div className="table-overflow">
-              <table className="table table-borderless table-responsive mb-0">
+            <div className="table-responsive">
+              <table className="table table-borderless table-overflow mb-0">
                 <thead className="text-uppercase font-weight-normal">
                   <tr>
                     <th>Public key</th>
