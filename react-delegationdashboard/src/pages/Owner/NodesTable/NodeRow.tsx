@@ -10,16 +10,17 @@ import { nodeActions } from './helpers/nodeTypes';
 import { nodeTransactions } from './helpers/stakeHooks';
 import { NodeType } from 'helpers/types';
 
-type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake';
+type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake';
 
 const allowedActions: { [key: string]: ActionType[] } = {
   staked: ['unStake'],
   jailed: ['unJail'],
   unStaked: ['unBond', 'reStake'],
   queued: ['unStake'],
+  notStaked: ['stake'],
 };
 
-const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
+const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {
   const { explorerAddress, dapp, stakingContract, delegationContract } = useContext();
   const ref = React.useRef(null);
 
@@ -127,4 +128,4 @@ const ActiveNodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number
   );
 };
 
-export default ActiveNodeRow;
+export default NodeRow;
