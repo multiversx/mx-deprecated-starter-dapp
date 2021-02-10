@@ -14,7 +14,7 @@ export const networks: NetworkType[] = [
     walletAddress: 'https://wallet.elrond.com/dapp/init',
     apiAddress: 'https://api.elrond.com',
     gatewayAddress: 'https://gateway.elrond.com',
-    explorerAddress: 'http://internal-explorer.elrond.com',
+    explorerAddress: 'http://explorer.elrond.com',
     delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
     auctionContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
     stakingContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7',

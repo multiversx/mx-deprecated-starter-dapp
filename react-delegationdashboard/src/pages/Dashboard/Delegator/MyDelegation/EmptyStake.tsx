@@ -1,9 +1,4 @@
 import * as React from 'react';
-import { useContext } from 'context';
-import denominate from 'components/Denominate/formatters';
-import MyActions from '../MyActions';
-import { contractViews } from 'contracts/ContractViews';
-import ClaimRewardsAction from '../MyActions/ClaimRewardsAction';
 import DelegateAction from '../MyActions/DelegateAction';
 
 const EmptyStake = () => {

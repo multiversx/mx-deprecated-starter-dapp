@@ -26,7 +26,7 @@ export const networks: NetworkType[] = [
     theme: 'testnet',
     erdLabel: 'xEGLD',
     walletAddress: 'https://testnet-wallet.elrond.com/dapp/init',
-    apiAddress: 'https://testnet-api.elrond.com',
+    apiAddress: 'https://api.elrond.com',
     gatewayAddress: 'https://gateway.elrond.com',
     explorerAddress: 'http://explorer.elrond.com/',
     delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
