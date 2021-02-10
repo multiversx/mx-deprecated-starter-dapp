@@ -6,7 +6,7 @@ import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
 import { ContractOverview } from 'helpers/types';
 import { QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address, NetworkStake } from '@elrondnetwork/erdjs/out';
 import { useState } from 'react';
 
 import SetPercentageFeeAction from './SetPercentageFeeAction';
@@ -15,11 +15,14 @@ import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 const Views = () => {
   const { address, dapp, erdLabel, delegationContract } = useContext();
   const { getTotalActiveStake, getNumNodes, getContractConfig } = contractViews;
-  const [balance, setBalance] = useState('');
   const [totalActiveStake, setTotalActiveStake] = React.useState('0');
+  const [percentageForNodes, setPercentageForNodes] = React.useState('0');
+  const [percentageForStake, setPercentageForStake] = React.useState('0');
+  const [percentageForDelegationCap, setPercentageForDelegationCap] = React.useState('0');
   const [noNodes, setNoNodes] = React.useState('0');
   const [isAdminFlag, setIsAdminFlag] = useState(false);
   const [contractOverview, setContractOverview] = useState(new ContractOverview());
+  const [, setNetworkStake] = useState(new NetworkStake());
 
   const isAdmin = (ownerAddress: string) => {
     let loginAddress = new Address(address).hex();
@@ -51,7 +54,11 @@ const Views = () => {
     );
   };
 
-  const getContractConfiguration = () => {
+  const getPercentage = (firstValue: number, secondValue: number) => {
+    return ((firstValue / secondValue) * 100).toFixed(2);
+  };
+
+  const getContractConfiguration = (totalStake: number) => {
     getContractConfig(dapp, delegationContract)
       .then(value => {
         let contractOverview = getContractOverviewType(value);
@@ -59,58 +66,72 @@ const Views = () => {
           setIsAdminFlag(true);
         }
         setContractOverview(contractOverview);
+        setPercentageForDelegationCap(
+          getPercentage(totalStake, parseInt(contractOverview.maxDelegationCap.replace(/,/g, '')))
+        );
       })
       .catch(e => console.error('getContractConfig error ', e));
   };
 
-  const getNumberOfNodes = () => {
+  const getNumberOfNodes = (networkNodes: number) => {
     getNumNodes(dapp, delegationContract)
       .then(value => {
         setNoNodes(value.returnData[0].asNumber.toString() || '0');
+        setPercentageForNodes(getPercentage(value.returnData[0]?.asNumber, networkNodes));
       })
       .catch(e => {
         console.error('getNumberOfNodes error ', e);
       });
   };
 
-  const getTotalStake = () => {
+  const getTotalAndPercentageForStake = (networkStake: number) => {
     getTotalActiveStake(dapp, delegationContract)
       .then(value => {
         let input = value.returnData[0].asBigInt.toString();
-        setTotalActiveStake(
-          denominate({ input, denomination, decimals, showLastNonZeroDecimal: true }) || '0'
-        );
+        let totalStake = denominate({
+          input,
+          denomination,
+          decimals,
+          showLastNonZeroDecimal: true,
+        });
+        setTotalActiveStake(totalStake || '0');
+
+        getContractConfiguration(parseInt(totalStake.toString().replace(/,/g, '')));
+        setPercentageForStake(getPercentage(parseInt(totalStake.replace(/,/g, '')), networkStake));
       })
       .catch(e => console.error('getTotalStake error ', e));
   };
-  const getBalance = () => {
-    dapp.proxy.getAccount(new Address(address)).then(value => {
-      let balance = denominate({
-        decimals,
-        denomination,
-        input: value.balance.toString(),
-        showLastNonZeroDecimal: false,
-      });
-      setBalance(balance.toString());
-    });
+  const getNetworkStake = () => {
+    dapp.apiProvider
+      .getNetworkStake()
+      .then(value => {
+        setNetworkStake(value);
+        let input = value.TotalStaked.toString().replace(/,/g, '');
+        let networkStake = denominate({
+          input,
+          denomination,
+          decimals,
+          showLastNonZeroDecimal: true,
+        });
+        getTotalAndPercentageForStake(parseInt(networkStake.toString().replace(/,/g, '')));
+        getNumberOfNodes(value.TotalValidators);
+      })
+      .catch(e => console.error('getTotalStake error ', e));
   };
 
-  React.useEffect(() => {
-    getNumberOfNodes();
-    getTotalStake();
-    getContractConfiguration();
-    getBalance();
-  }, []);
+  React.useEffect(getNetworkStake, []);
+
   return (
     <div className="mt-n5">
       <div className="row m-0">
         <div className="col-6 col-lg-3">
           <StatCard
             title="Contract Stake"
-            value={balance}
+            value={totalActiveStake}
             valueUnit={erdLabel}
             color="orange"
             svg="contract.svg"
+            percentage={`${percentageForStake}% of total stake`}
           />
         </div>
         <div className="col-6 col-lg-3">
@@ -120,6 +141,7 @@ const Views = () => {
             valueUnit=""
             color="purple"
             svg="nodes.svg"
+            percentage={`${percentageForNodes}% of total nodes`}
           />
         </div>
         <div className="col-6 col-lg-3">
@@ -140,6 +162,7 @@ const Views = () => {
             valueUnit={erdLabel}
             color="green"
             svg="delegation.svg"
+            percentage={`${percentageForDelegationCap}% filled`}
           >
             {isAdminFlag && <UpdateDelegationCapAction />}
           </StatCard>
