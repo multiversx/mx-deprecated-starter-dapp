@@ -38,7 +38,7 @@ const AddNodeAction = () => {
           await BLS.initIfNecessary();
           setAddNodesModal(true);
         }}
-        className="btn btn-purple mt-2 mr-3"
+        className="btn btn-purple mr-3"
       >
         Add nodes
       </button>

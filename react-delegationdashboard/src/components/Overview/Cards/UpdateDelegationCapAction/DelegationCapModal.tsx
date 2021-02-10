@@ -39,13 +39,12 @@ const DelegationCapModal = ({
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
-      <div className="card card-small">
-        <div className="card-body text-center">
+      <div className="card">
+        <div className="card-body text-center m-spacer">
           <p className="h3" data-testid="delegateTitle">
             {title}
           </p>
           <p className="lead">{description}</p>
-
           <Formik
             initialValues={{
               amount: totalActiveStake,

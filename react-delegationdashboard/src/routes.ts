@@ -34,9 +34,7 @@ const routes: RouteType[] = [
 
 const wrappedRoutes = () => {
   return routes.map(route => {
-    const title = route.title
-      ? `${route.title} • Elrond Delegation Dashboard`
-      : 'Elrond Delegation Dashboard';
+    const title = route.title ? `${route.title} • Delegation Manager` : 'Delegation Manager';
     return {
       path: route.path,
       page: route.page,
