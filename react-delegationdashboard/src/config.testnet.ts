@@ -89,7 +89,7 @@ export const delegationContractData: DelegationContractType[] = [
   {
     name: 'addNodes',
     gasLimit: 12000000,
-    data: 'addNodes@',
+    data: 'addNodes',
   },
   {
     name: 'removeNodes',

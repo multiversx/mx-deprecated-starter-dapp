@@ -47,6 +47,7 @@ const PlaygroundPemUpload = ({
                 errors={errors}
                 pubKeyLength={192}
                 unique={true}
+                multiple={true}
               />
             </div>
             <div className="d-flex align-items-center justify-content-center flex-wrap">
