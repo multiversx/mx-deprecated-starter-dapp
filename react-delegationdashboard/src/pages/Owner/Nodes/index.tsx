@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useContext } from '../../../context';
-import { NodeType } from '../../../helpers/types';
-import Actions from '../Actions';
+import { useContext } from 'context';
+import { NodeType } from 'helpers/types';
 import NodeRow from './NodeRow';
 import {
   getAllNodesStatus,
@@ -9,8 +8,10 @@ import {
   getQueueSize,
   getQueueIndex,
 } from './helpers/keysFunctions';
+import SetAutomaticActivationAction from './SetAutomaticActivationAction';
+import AddNodeAction from './AddNodeAction';
 
-const NodesTable = () => {
+const Nodes = ({ automaticActivationFlag }: { automaticActivationFlag: string }) => {
   const { dapp, delegationContract, auctionContract, stakingContract } = useContext();
   const [keys, setKeys] = useState(new Array<NodeType>());
   const queued: any = [];
@@ -68,7 +69,8 @@ const NodesTable = () => {
           <div className="card-header border-bottom-0 d-flex flex-wrap align-items-center">
             <h6 className="mt-2 mr-2 mb-0">My Nodes</h6>
             <div className="d-flex flex-wrap align-items-center ml-sm-auto">
-              <Actions />
+              <AddNodeAction />
+              <SetAutomaticActivationAction automaticFlag={automaticActivationFlag} />
             </div>
           </div>
           <div className="card-body d-flex flex-wrap">
@@ -98,4 +100,4 @@ const NodesTable = () => {
     </>
   );
 };
-export default NodesTable;
+export default Nodes;

@@ -1,15 +1,8 @@
-import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
 import AutomaticActivationModal from './AutomaticActivationModal';
 
-const SetAutomaticActivationAction = () => {
-  const { delegation } = useDelegation();
+const SetAutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string }) => {
   const [showAutomaticActivationModal, setShowAutomaticActivationModal] = useState(false);
-
-  const handleAutomaticActivation = (value: string) => {
-    let activation = Buffer.from(value).toString('hex');
-    delegation.sendTransaction('0', 'setAutomaticActivation', activation).then();
-  };
 
   return (
     <div>
@@ -17,16 +10,16 @@ const SetAutomaticActivationAction = () => {
         onClick={() => setShowAutomaticActivationModal(true)}
         className="btn btn-primary mt-2"
       >
-        Set Automatic Activation
+        Automatic activation
       </button>
       <AutomaticActivationModal
         show={showAutomaticActivationModal}
         title="Automatic activation"
-        description="Set automatic activation 'yes' or 'no'"
+        description="Set automatic activation"
         handleClose={() => {
           setShowAutomaticActivationModal(false);
         }}
-        handleContinue={handleAutomaticActivation}
+        value={automaticFlag}
       />
     </div>
   );
