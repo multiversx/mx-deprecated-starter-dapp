@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import Views from './Views';
+import Views from './Cards';
 import Header from './Header';
 
-const NetworkOverview = () => {
+const Overview = () => {
   return (
     <>
       <Header />
@@ -11,4 +11,4 @@ const NetworkOverview = () => {
   );
 };
 
-export default NetworkOverview;
+export default Overview;

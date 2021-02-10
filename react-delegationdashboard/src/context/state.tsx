@@ -6,7 +6,7 @@ export const defaultNetwork: NetworkType = {
   default: false,
   id: 'not-configured',
   name: 'NOT CONFIGURED',
-  erdLabel: '',
+  egldLabel: '',
   theme: '',
   walletAddress: '',
   apiAddress: '',
@@ -29,7 +29,7 @@ export interface StateType {
   error: string;
   loggedIn: boolean;
   address: string;
-  erdLabel: string;
+  egldLabel: string;
   denomination: number;
   decimals: number;
   account: AccountType;
@@ -68,7 +68,7 @@ export const initialState = (optionalConfig?: NetworkType[]) => {
     loggedIn: !!getItem('logged_in'),
     address: getItem('address'),
     account: emptyAccount,
-    erdLabel: sessionNetwork?.erdLabel,
+    egldLabel: sessionNetwork?.egldLabel,
     explorerAddress: sessionNetwork.explorerAddress || 'https://explorer.elrond.com',
     delegationContract: sessionNetwork.delegationContract,
     auctionContract: sessionNetwork.auctionContract,

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBan } from '@fortawesome/free-solid-svg-icons';
+import { faBan, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
-import PageState from 'components/PageState';
+import State from 'components/State';
 import { useContext } from 'context';
 import LedgerLogin from './Login/Ledger';
 import WalletLogin from './Login/Wallet';
@@ -16,15 +16,16 @@ const Home = () => {
   return (
     <div ref={ref} className="home d-flex flex-fill align-items-center container">
       {error ? (
-        <PageState
-          svgComponent={<FontAwesomeIcon icon={faBan} className="text-secondary fa-3x" />}
-          title="Unavailable"
-          className="dapp-icon icon-medium"
+        <State
+          icon={faBan}
+          iconClass="text-primary"
+          title="Something went wrong"
+          description="If the problem persists please contact support."
         />
       ) : loggedIn ? (
         <Redirect to="/dashboard" />
       ) : loading ? (
-        <PageState svgComponent={<></>} spin />
+        <State icon={faCircleNotch} iconClass="fa-spin text-primary" />
       ) : (
         <div className="m-auto login-container">
           <div className="card my-3 text-center">

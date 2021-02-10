@@ -37,8 +37,8 @@ const LedgerLogin = () => {
       });
   };
   return (
-    <button onClick={handleOnClick} className="btn btn-primary mb-2 mx-3">
-      Connect Ledger
+    <button onClick={handleOnClick} className="btn btn-primary mx-4">
+      Ledger
     </button>
   );
 };

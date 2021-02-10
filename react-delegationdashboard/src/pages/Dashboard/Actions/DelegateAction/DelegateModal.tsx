@@ -1,77 +1,71 @@
-import React, { useEffect } from 'react';
-import { Modal } from 'react-bootstrap';
-import { useContext } from 'context';
+import React from 'react';
 import { ErrorMessage, Formik } from 'formik';
 import BigNumber from 'bignumber.js';
-import { object, number } from 'yup';
-import { contractViews } from 'contracts/ContractViews';
-import denominate from 'components/Denominate/formatters';
-import { ActionModalType } from 'helpers/types';
+import { object, string } from 'yup';
+import { Modal } from 'react-bootstrap';
+import { useContext } from 'context';
+import Denominate from 'components/Denominate';
+import { entireBalance } from 'helpers';
 
-const DelegationCapModal = ({
-  show,
-  title,
-  description,
-  handleClose,
-  handleContinue,
-}: ActionModalType) => {
-  const { erdLabel, denomination, decimals, dapp, delegationContract } = useContext();
-  const { getTotalActiveStake } = contractViews;
-  const [totalActiveStake, setTotalActiveStake] = React.useState('0');
-  const getTotalStake = () => {
-    getTotalActiveStake(dapp, delegationContract)
-      .then(value => {
-        let input = value.returnData[0].asBigInt.toString();
-        setTotalActiveStake(
-          denominate({
-            input,
-            denomination,
-            decimals,
-            showLastNonZeroDecimal: false,
-            addCommas: false,
-          })
-        );
-      })
-      .catch(e => console.error('getTotalStake error ', e));
-  };
+interface DelegateModalType {
+  show: boolean;
+  balance: string;
+  handleClose: () => void;
+  handleContinue: (value: string) => void;
+}
 
-  useEffect(getTotalStake, []);
+const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateModalType) => {
+  const { egldLabel, denomination, decimals } = useContext();
+  const available = entireBalance({
+    balance: balance,
+    gasPrice: '12000000',
+    gasLimit: '12000000',
+    denomination,
+    decimals,
+  });
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card card-small">
         <div className="card-body text-center">
           <p className="h3" data-testid="delegateTitle">
-            {title}
+            Delegate now
           </p>
-          <p className="lead">{description}</p>
+          <p className="lead">{`Select the amount of ${egldLabel} you want to delegate.`}</p>
 
           <Formik
             initialValues={{
-              amount: totalActiveStake,
+              amount: '10',
             }}
             onSubmit={values => {
               handleContinue(values.amount);
             }}
             validationSchema={object().shape({
-              amount: number()
+              amount: string()
                 .required('Required')
-                .test('minimum', `Minimum ${totalActiveStake} ${erdLabel}`, value => {
+                .test('minimum', `Minimum 10 ${egldLabel}`, value => {
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
-                  return bnAmount.comparedTo(totalActiveStake) >= 0;
+                  return bnAmount.comparedTo(10) >= 0;
                 })
                 .test('number', 'String not allows, only numbers. For example (12.20)', value => {
-                  const regex = /^(\d+(?:[\.]\d{1,2})?)$/;
-                  return regex.test(value?.toString() || '');
+                  const regex = /^(\d+(?:[\.]\d+)?)$/;
+                  return regex.test(value || '');
                 }),
             })}
           >
             {props => {
-              const { handleSubmit, values, handleBlur, handleChange } = props;
+              const { handleSubmit, values, handleBlur, handleChange, setFieldValue } = props;
 
+              const getEntireBalance = (e: React.MouseEvent) => {
+                e.preventDefault();
+                if (available !== undefined) {
+                  setFieldValue('amount', available);
+                }
+              };
               return (
                 <form onSubmit={handleSubmit} className="text-left">
                   <div className="form-group mt-3 mb-0">
+                    <label htmlFor="amount">Amount {egldLabel}</label>
                     <div className="input-group">
                       <input
                         type="text"
@@ -85,7 +79,22 @@ const DelegationCapModal = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
+                      {values.amount !== available && available !== '0' && (
+                        <span className="input-group-append">
+                          <a
+                            href="/#"
+                            className="input-group-text"
+                            onClick={getEntireBalance}
+                            data-testid="maxBtn"
+                          >
+                            Max
+                          </a>
+                        </span>
+                      )}
                     </div>
+                    <small className="form-text text-secondary mt-0">
+                      Available: <Denominate value={balance} />
+                    </small>
                     <ErrorMessage name="amount" />
                   </div>
                   <div className="d-flex justify-content-center align-items-center flex-wrap">
@@ -115,4 +124,4 @@ const DelegationCapModal = ({
   );
 };
 
-export default DelegationCapModal;
+export default DelegateModal;

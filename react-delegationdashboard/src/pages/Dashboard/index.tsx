@@ -1,8 +1,9 @@
 import React from 'react';
 import { useContext } from 'context';
-import Delegator from './Delegator';
+import Delegation from './Delegation';
+import PendingUndelegated from './PendingUndelegated';
 import { Redirect } from 'react-router-dom';
-import NetworkOverview from 'components/NetworkOverview';
+import Overview from 'components/Overview';
 
 const Dashboard = () => {
   const { loggedIn } = useContext();
@@ -11,11 +12,12 @@ const Dashboard = () => {
     return <Redirect to="/" />;
   }
   return (
-    <div className="dashboard container py-5">
+    <div className="dashboard w-100">
       <div className="card border-0">
-        <NetworkOverview />
-        <div className="card-body">
-          <Delegator />
+        <Overview />
+        <div className="card-body pt-0 px-spacer pb-spacer">
+          <Delegation />
+          <PendingUndelegated />
         </div>
       </div>
     </div>

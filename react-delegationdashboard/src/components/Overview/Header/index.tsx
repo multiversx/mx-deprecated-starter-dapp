@@ -5,7 +5,7 @@ import { contractViews } from 'contracts/ContractViews';
 import { useContext } from '../../../context';
 
 const Header = () => {
-  const location = useLocation();
+  const { pathname } = useLocation();
   const { address, dapp, delegationContract } = useContext();
   const { getContractConfig } = contractViews;
   const [isAdminFlag, setIsAdminFlag] = useState(false);
@@ -22,28 +22,25 @@ const Header = () => {
 
   const isAdmin = (ownerAddress: string) => {
     let loginAddress = new Address(address).hex();
-    return loginAddress.localeCompare(ownerAddress) < 0 ? false : true;
+    return loginAddress === ownerAddress;
   };
+
   return (
-    <div className="card-header border-0 bg-primary py-5 text-white">
-      <div className="row mb-4">
-        <div className="col-12 col-lg-10">
-          <span className="opacity-6 mr-1">Contract Address</span>
-          <p className="text-white font-weight-normal text-truncate">{address}</p>
-        </div>
-        <div className="col-12 col-lg-2 text-lg-right">
-          {isAdminFlag && location.pathname !== '/owner' ? (
-            <Link to="/owner" className="btn btn-light-primary text-primary">
-              Admin
-            </Link>
-          ) : null}
-          {location.pathname !== '/dashboard' ? (
-            <Link to="/dashboard" className="btn btn-light-primary text-primary">
-              Dashboard
-            </Link>
-          ) : null}
-        </div>
+    <div className="header card-header bg-primary text-white d-flex align-items-center justify-content-between px-spacer">
+      <div className="py-spacer">
+        <p className="opacity-6 mb-0">Contract Address</p>
+        <span className="text-truncate">{address}</span>
       </div>
+      {isAdminFlag && pathname !== '/owner' ? (
+        <Link to="/owner" className="btn btn-light-primary btn-sm text-primary">
+          Admin
+        </Link>
+      ) : null}
+      {pathname !== '/dashboard' ? (
+        <Link to="/dashboard" className="btn btn-light-primary btn-sm text-primary">
+          Dashboard
+        </Link>
+      ) : null}
     </div>
   );
 };

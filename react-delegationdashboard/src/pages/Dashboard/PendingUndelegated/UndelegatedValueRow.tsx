@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { UndelegatedValueType } from 'helpers/types';
 import moment from 'moment';
 import { useDelegation } from 'helpers';
+import { useContext } from 'context';
 
 const UndelegatedValueRow = ({
   undelegatedValue: value,
@@ -12,12 +13,15 @@ const UndelegatedValueRow = ({
 }) => {
   const { delegation } = useDelegation();
   const [isDisabled, setIsDisabled] = React.useState(true);
+  const { egldLabel } = useContext();
+
   const handleWithdraw = () => {
     delegation
       .sendTransaction('0', 'withdraw')
       .then()
       .catch(e => console.error('handleWithdraw error', e));
   };
+
   useEffect(() => {
     if (value.timeLeft === 0) {
       setIsDisabled(false);
@@ -27,7 +31,9 @@ const UndelegatedValueRow = ({
   return (
     <tr>
       <td>
-        <div className="d-flex align-items-center text-nowrap trim">{value.value}</div>
+        <div className="d-flex align-items-center text-nowrap trim">
+          {value.value} {egldLabel}
+        </div>
       </td>
       <td>
         <div className="d-flex align-items-center text-nowrap trim">

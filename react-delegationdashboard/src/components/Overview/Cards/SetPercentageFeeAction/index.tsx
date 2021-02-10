@@ -16,7 +16,7 @@ const SetPercentageFeeAction = () => {
     <div>
       <button
         onClick={() => setShowUpdateFeeModal(true)}
-        className="btn btn-white btn-sm text-pink opacity-5"
+        className="btn btn-white btn-sm text-red opacity-5 mr-n1"
       >
         Change
       </button>

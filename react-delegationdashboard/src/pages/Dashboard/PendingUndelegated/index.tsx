@@ -58,34 +58,30 @@ const UndelegatedListView = () => {
 
   return (
     <>
-      {userUnstakeValue.length > 0 ? (
-        <div className="stats w-100 mb-spacer">
-          <div className="card">
-            <div className="card-header border-bottom-0">
-              <h6 className="mb-0 mt-2">Pending Withdrawals</h6>
+      {userUnstakeValue.length > 0 && (
+        <div className="card mt-spacer">
+          <div className="card-body px-spacer">
+            <div className="d-flex align-items-center justify-content-between">
+              <p className="h6">Pending Withdrawals</p>
             </div>
-            <div className="card-body d-flex flex-wrap pt-0">
-              <div className="table-responsive">
-                <table className="table table-borderless mb-0">
-                  <thead className="py-2 text-uppercase font-weight-normal">
-                    <tr>
-                      <th>Undelegated Amount</th>
-                      <th>Wait Time</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {userUnstakeValue.map((undelegatedValue, i) => (
-                      <UndelegatedValueRow undelegatedValue={undelegatedValue} key={i} index={i} />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            <div className="table-responsive">
+              <table className="table table-borderless mb-0">
+                <thead className="text-uppercase font-weight-normal">
+                  <tr>
+                    <th>Undelegated Amount</th>
+                    <th>Wait Time</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {userUnstakeValue.map((undelegatedValue, i) => (
+                    <UndelegatedValueRow undelegatedValue={undelegatedValue} key={i} index={i} />
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
-      ) : (
-        <></>
       )}
     </>
   );

@@ -6,7 +6,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
   return (
     <div className={`layout d-flex flex-column min-vh-100 ${page}`}>
       {page !== 'home' && <Navbar />}
-      <main className="container flex-grow-1 d-flex">{children}</main>
+      <main className="container flex-grow-1 d-flex p-spacer">{children}</main>
       <Footer />
     </div>
   );

@@ -21,7 +21,7 @@ const UndelegateModal = ({
   handleClose,
   handleContinue,
 }: ActionModalType) => {
-  const { erdLabel } = useContext();
+  const { egldLabel } = useContext();
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
@@ -47,7 +47,7 @@ const UndelegateModal = ({
               return (
                 <form onSubmit={handleSubmit} className="text-left">
                   <div className="form-group mt-3 mb-0">
-                    <label htmlFor="amount">Amount {erdLabel}</label>
+                    <label htmlFor="amount">Amount {egldLabel}</label>
                     <div className="input-group">
                       <input
                         type="text"

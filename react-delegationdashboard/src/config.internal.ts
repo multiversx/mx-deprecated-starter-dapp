@@ -10,7 +10,7 @@ export const networks: NetworkType[] = [
     id: 'mainnet',
     name: 'Mainnet',
     theme: 'light',
-    erdLabel: 'EGLD',
+    egldLabel: 'EGLD',
     walletAddress: 'https://wallet.elrond.com/dapp/init',
     apiAddress: 'https://api.elrond.com',
     gatewayAddress: 'https://gateway.elrond.com',
@@ -24,7 +24,7 @@ export const networks: NetworkType[] = [
     id: 'testnet',
     name: 'Testnet',
     theme: 'testnet',
-    erdLabel: 'xEGLD',
+    egldLabel: 'xEGLD',
     walletAddress: 'http://internal-wallet.elrond.com/dapp/init',
     apiAddress: 'http://35.210.167.16:8080',
     gatewayAddress: 'https://internal-gateway.elrond.com',
@@ -40,7 +40,7 @@ const networkBaseSchema = object({
   id: string()
     .defined()
     .required(),
-  erdLabel: string()
+  egldLabel: string()
     .defined()
     .required(),
   name: string()

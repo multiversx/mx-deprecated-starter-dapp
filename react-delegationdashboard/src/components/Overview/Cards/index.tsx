@@ -13,7 +13,7 @@ import SetPercentageFeeAction from './SetPercentageFeeAction';
 import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 
 const Views = () => {
-  const { address, dapp, erdLabel, delegationContract } = useContext();
+  const { address, dapp, egldLabel, delegationContract } = useContext();
   const { getTotalActiveStake, getNumNodes, getContractConfig } = contractViews;
   const [totalActiveStake, setTotalActiveStake] = React.useState('0');
   const [percentageForNodes, setPercentageForNodes] = React.useState('0');
@@ -122,52 +122,42 @@ const Views = () => {
   React.useEffect(getNetworkStake, []);
 
   return (
-    <div className="mt-n5">
-      <div className="row m-0">
-        <div className="col-6 col-lg-3">
-          <StatCard
-            title="Contract Stake"
-            value={totalActiveStake}
-            valueUnit={erdLabel}
-            color="orange"
-            svg="contract.svg"
-            percentage={`${percentageForStake}% of total stake`}
-          />
-        </div>
-        <div className="col-6 col-lg-3">
-          <StatCard
-            title="Number of Nodes"
-            value={noNodes}
-            valueUnit=""
-            color="purple"
-            svg="nodes.svg"
-            percentage={`${percentageForNodes}% of total nodes`}
-          />
-        </div>
-        <div className="col-6 col-lg-3">
-          <StatCard
-            title="Service Fee"
-            value={contractOverview.serviceFee || ''}
-            valueUnit="%"
-            color="pink"
-            svg="service.svg"
-          >
-            {isAdminFlag && <SetPercentageFeeAction />}
-          </StatCard>
-        </div>
-        <div className="col-6 col-lg-3">
-          <StatCard
-            title="Delegation cap"
-            value={contractOverview.maxDelegationCap || ''}
-            valueUnit={erdLabel}
-            color="green"
-            svg="delegation.svg"
-            percentage={`${percentageForDelegationCap}% filled`}
-          >
-            {isAdminFlag && <UpdateDelegationCapAction />}
-          </StatCard>
-        </div>
-      </div>
+    <div className="cards d-flex">
+      <StatCard
+        title="Contract Stake"
+        value={totalActiveStake}
+        valueUnit={egldLabel}
+        color="orange"
+        svg="contract.svg"
+        percentage={`${percentageForStake}% of total stake`}
+      />
+      <StatCard
+        title="Number of Nodes"
+        value={noNodes}
+        valueUnit=""
+        color="purple"
+        svg="nodes.svg"
+        percentage={`${percentageForNodes}% of total nodes`}
+      />
+      <StatCard
+        title="Service Fee"
+        value={contractOverview.serviceFee || ''}
+        valueUnit="%"
+        color="red"
+        svg="service.svg"
+      >
+        {isAdminFlag && <SetPercentageFeeAction />}
+      </StatCard>
+      <StatCard
+        title="Delegation cap"
+        value={contractOverview.maxDelegationCap || ''}
+        valueUnit={egldLabel}
+        color="green"
+        svg="delegation.svg"
+        percentage={`${percentageForDelegationCap}% filled`}
+      >
+        {isAdminFlag && <UpdateDelegationCapAction />}
+      </StatCard>
     </div>
   );
 };

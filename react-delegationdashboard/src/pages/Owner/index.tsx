@@ -4,7 +4,7 @@ import { useContext } from 'context';
 import { contractViews } from 'contracts/ContractViews';
 import NodesTable from './NodesTable';
 import Actions from './Actions';
-import NetworkOverview from 'components/NetworkOverview';
+import Overview from 'components/Overview';
 
 const Owner = () => {
   const { dapp, address, delegationContract } = useContext();
@@ -28,10 +28,10 @@ const Owner = () => {
   }
 
   return (
-    <div className="owner container py-4">
+    <div className="owner w-100">
       <div className="card border-0">
-        <NetworkOverview />
-        <div className="card-body">
+        <Overview />
+        <div className="card-body pt-0 px-spacer pb-spacer">
           <NodesTable />
         </div>
       </div>
