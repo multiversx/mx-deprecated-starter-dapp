@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useContext } from '../../../context';
 import { NodeType } from '../../../helpers/types';
 import Actions from '../Actions';
-import ActiveNodeRow from './ActiveNodeRow';
-import InactiveNodeRow from './InactiveNodeRow';
+import NodeRow from './NodeRow';
 import {
   getAllNodesStatus,
   getBlsKeysStatus,
@@ -73,7 +72,7 @@ const NodesTable = () => {
             </div>
           </div>
           <div className="card-body d-flex flex-wrap">
-            {keys.length > 0 && keys.find(key => key.status.key !== 'notStaked') !== undefined ? (
+            {keys.length > 0 ? (
               <div className="table-responsive table-overflow">
                 <table className="table table-borderless mb-0">
                   <thead className="py-2 text-uppercase font-weight-normal">
@@ -84,42 +83,9 @@ const NodesTable = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {keys
-                      .filter(key => key.status.key !== 'notStaked')
-                      .map((blsKey, i) => (
-                        <ActiveNodeRow blsKey={blsKey} key={i} index={i} />
-                      ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <span>No keys found for this contract.</span>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="stats w-100 mb-spacer">
-        <div className="card">
-          <div className="card-header border-bottom-0">
-            <h6 className="mb-0 mt-2">Inactive Nodes</h6>
-          </div>
-          <div className="card-body d-flex flex-wrap pt-0">
-            {keys.length > 0 && keys.find(key => key.status.key === 'notStaked') !== undefined ? (
-              <div className="table-responsive">
-                <table className="table table-borderless mb-0">
-                  <thead className="py-2 text-uppercase font-weight-normal">
-                    <tr>
-                      <th>Public key</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {keys
-                      .filter(key => key.status.key === 'notStaked')
-                      .map((blsKey, i) => (
-                        <InactiveNodeRow blsKey={blsKey} key={i} index={i} />
-                      ))}
+                    {keys.map((blsKey, i) => (
+                      <NodeRow blsKey={blsKey} key={i} index={i} />
+                    ))}
                   </tbody>
                 </table>
               </div>

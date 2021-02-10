@@ -2,6 +2,7 @@ import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
 import { DropzoneFileType } from 'components/DropzonePem';
 import RequestVariablesModal from 'components/DropzonePem/RequestVariablesModal';
+import { BLS } from '@elrondnetwork/erdjs/out';
 
 const AddNodeAction = () => {
   const { delegation } = useDelegation();
@@ -14,7 +15,7 @@ const AddNodeAction = () => {
   const getPemPubKeysWithSignature = (pemFiles: DropzoneFileType[]) => {
     let keysData = '';
     pemFiles.forEach(({ pubKey, signature }) => {
-      keysData += `${pubKey}@${signature}`;
+      keysData += `@${pubKey}@${signature}`;
     });
     return keysData;
   };
@@ -32,7 +33,13 @@ const AddNodeAction = () => {
   };
   return (
     <div>
-      <button onClick={() => setAddNodesModal(true)} className="btn btn-purple mt-2 mr-3">
+      <button
+        onClick={async () => {
+          await BLS.initIfNecessary();
+          setAddNodesModal(true);
+        }}
+        className="btn btn-purple mt-2 mr-3"
+      >
         Add nodes
       </button>
       <RequestVariablesModal
