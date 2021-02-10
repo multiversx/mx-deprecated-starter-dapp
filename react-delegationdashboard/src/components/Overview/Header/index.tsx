@@ -27,7 +27,7 @@ const Header = () => {
 
   return (
     <div className="header card-header bg-primary text-white d-flex align-items-center justify-content-between px-spacer">
-      <div className="py-spacer">
+      <div className="py-spacer text-truncate">
         <p className="opacity-6 mb-0">Contract Address</p>
         <span className="text-truncate">{address}</span>
       </div>

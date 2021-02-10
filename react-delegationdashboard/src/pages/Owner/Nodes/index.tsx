@@ -66,7 +66,7 @@ const Nodes = ({ automaticActivationFlag }: { automaticActivationFlag: string })
     <>
       <div className="card mt-spacer">
         <div className="card-body p-spacer">
-          <div className="d-flex align-items-center justify-content-between mb-spacer">
+          <div className="d-flex flex-wrap align-items-center justify-content-between mb-spacer">
             <p className="h6 mb-0">My Nodes</p>
             <div className="d-flex">
               <AddNodeAction />
@@ -74,8 +74,8 @@ const Nodes = ({ automaticActivationFlag }: { automaticActivationFlag: string })
             </div>
           </div>
           {keys.length > 0 ? (
-            <div className="table-responsive table-overflow">
-              <table className="table table-borderless mb-0">
+            <div className="table-overflow">
+              <table className="table table-borderless table-responsive mb-0">
                 <thead className="text-uppercase font-weight-normal">
                   <tr>
                     <th>Public key</th>

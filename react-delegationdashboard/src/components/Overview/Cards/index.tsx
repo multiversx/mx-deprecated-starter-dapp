@@ -104,7 +104,7 @@ const Views = () => {
   }, []);
 
   return (
-    <div className="cards d-flex">
+    <div className="cards d-flex flex-wrap">
       <StatCard
         title="Contract Stake"
         value={totalActiveStake}
