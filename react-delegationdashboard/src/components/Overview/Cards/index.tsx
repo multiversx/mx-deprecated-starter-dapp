@@ -118,7 +118,15 @@ const Views = () => {
         valueUnit={egldLabel}
         color="orange"
         svg="contract.svg"
-        // percentage={`${percentageForStake}% of total stake`}
+        percentage={`${getPercentage(
+          totalActiveStake,
+          denominate({
+            input: networkStake.TotalStaked.toString(),
+            denomination,
+            decimals,
+            showLastNonZeroDecimal: true,
+          })
+        )}% of total stake`}
       />
       <StatCard
         title="Number of Nodes"
@@ -126,7 +134,10 @@ const Views = () => {
         valueUnit=""
         color="purple"
         svg="nodes.svg"
-        // percentage={`${percentageForNodes}% of total nodes`}
+        percentage={`${getPercentage(
+          noNodes,
+          networkStake.TotalValidators.toString()
+        )}% of total nodes`}
       />
       <StatCard
         title="Service Fee"
@@ -135,7 +146,7 @@ const Views = () => {
         color="red"
         svg="service.svg"
       >
-        {isAdminFlag && <SetPercentageFeeAction />}
+        {location.pathname === '/owner' && <SetPercentageFeeAction />}
       </StatCard>
       <StatCard
         title="Delegation cap"
@@ -143,9 +154,9 @@ const Views = () => {
         valueUnit={egldLabel}
         color="green"
         svg="delegation.svg"
-        // percentage={`${percentageForDelegationCap}% filled`}
+        percentage={`${getPercentage(totalActiveStake, contractOverview.maxDelegationCap)}% filled`}
       >
-        {isAdminFlag && <UpdateDelegationCapAction />}
+        {location.pathname === '/owner' && <UpdateDelegationCapAction />}
       </StatCard>
     </div>
   );
