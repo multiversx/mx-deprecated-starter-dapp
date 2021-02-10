@@ -41,7 +41,6 @@ const MyDelegation = () => {
         );
       })
       .catch(e => console.error('getUserActiveStake error', e));
-    console.log('dasa', userActiveStake.localeCompare('0'));
   };
 
   React.useEffect(getAllData, []);
