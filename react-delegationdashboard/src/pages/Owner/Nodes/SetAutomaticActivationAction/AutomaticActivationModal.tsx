@@ -26,21 +26,21 @@ const AutomaticActivationModal = ({
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
-      <div className="card card-small">
-        <div className="card-body text-center">
+      <div className="card">
+        <div className="card-body p-spacer text-center">
           <p className="h3" data-testid="delegateTitle">
             {title}
           </p>
           <p className="lead">{description}</p>
           <p className="lead">Currently is {value === 'true' ? 'ON' : 'OFF'}</p>
 
-          <div className="d-flex justify-content-center align-items-center flex-wrap">
+          <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
             <ViewStatAction
               actionTitle={`Turn ${value === 'true' ? 'OFF' : 'ON'}`}
               handleContinue={handleAutomaticActivation}
               color="primary"
             />
-            <button id="closeButton" className="btn btn-link mx-2 mt-3" onClick={handleClose}>
+            <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
               Close
             </button>
           </div>

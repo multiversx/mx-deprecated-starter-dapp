@@ -64,37 +64,35 @@ const Nodes = ({ automaticActivationFlag }: { automaticActivationFlag: string })
 
   return (
     <>
-      <div className="stats w-100 mb-spacer">
-        <div className="card">
-          <div className="card-header border-bottom-0 d-flex flex-wrap align-items-center">
-            <h6 className="mt-2 mr-2 mb-0">My Nodes</h6>
-            <div className="d-flex flex-wrap align-items-center ml-sm-auto">
+      <div className="card mt-spacer">
+        <div className="card-body p-spacer">
+          <div className="d-flex align-items-center justify-content-between mb-spacer">
+            <p className="h6 mb-0">My Nodes</p>
+            <div className="d-flex">
               <AddNodeAction />
               <SetAutomaticActivationAction automaticFlag={automaticActivationFlag} />
             </div>
           </div>
-          <div className="card-body d-flex flex-wrap">
-            {keys.length > 0 ? (
-              <div className="table-responsive table-overflow">
-                <table className="table table-borderless mb-0">
-                  <thead className="py-2 text-uppercase font-weight-normal">
-                    <tr>
-                      <th>Public key</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {keys.map((blsKey, i) => (
-                      <NodeRow blsKey={blsKey} key={i} index={i} />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <span>No keys found for this contract.</span>
-            )}
-          </div>
+          {keys.length > 0 ? (
+            <div className="table-responsive table-overflow">
+              <table className="table table-borderless mb-0">
+                <thead className="text-uppercase font-weight-normal">
+                  <tr>
+                    <th>Public key</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {keys.map((blsKey, i) => (
+                    <NodeRow blsKey={blsKey} key={i} index={i} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <span>No keys found for this contract.</span>
+          )}
         </div>
       </div>
     </>

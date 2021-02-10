@@ -38,12 +38,12 @@ const RequestVariablesModal = ({
 
   return (
     <Modal show={show} className="modal-container" animation={false} centered>
-      <div className="card card-small">
-        <div className="card-body text-center">
-          <h3 className="mb-0" data-testid="delegateTitle">
+      <div className="card">
+        <div className="card-body p-spacer text-center">
+          <p className="h3 mb-0" data-testid="delegateTitle">
             {name}
-          </h3>
-          <div className="mt-3">
+          </p>
+          <div className="mt-spacer">
             {variables?.map(variable => {
               return (
                 <div key={variable.name}>
@@ -75,7 +75,7 @@ const RequestVariablesModal = ({
           </div>
           {!isPemUpload && (
             <>
-              <div className="d-flex align-items-center flex-wrap mt-3">
+              <div className="d-flex align-items-center flex-wrap mt-spacer">
                 <button
                   type="submit"
                   className="btn btn-oultine-primary mx-2"

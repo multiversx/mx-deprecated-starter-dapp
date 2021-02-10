@@ -25,13 +25,13 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
   };
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
-      <div className="card card-small">
-        <div className="card-body text-center p-spacer">
+      <div className="card">
+        <div className="card-body p-spacer text-center">
           <p className="h3" data-testid="delegateTitle">
             {title}
           </p>
           <p className="lead">{description}</p>
-          <div className="d-flex justify-content-center align-items-center flex-wrap mt-3">
+          <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
             <ViewStatAction
               actionTitle="Claim Rewards"
               handleContinue={handleClaimRewards}
@@ -42,7 +42,7 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
               handleContinue={handleRedelegateRewards}
               color="green"
             />
-            <button id="closeButton" className="btn btn-link mt-3 mx-2" onClick={handleClose}>
+            <button id="closeButton" className="btn btn-link mt-spacer mx-2" onClick={handleClose}>
               Close
             </button>
           </div>

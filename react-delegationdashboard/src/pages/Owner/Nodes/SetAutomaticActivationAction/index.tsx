@@ -6,10 +6,7 @@ const SetAutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string
 
   return (
     <div>
-      <button
-        onClick={() => setShowAutomaticActivationModal(true)}
-        className="btn btn-primary mt-2"
-      >
+      <button onClick={() => setShowAutomaticActivationModal(true)} className="btn btn-primary">
         Automatic activation
       </button>
       <AutomaticActivationModal

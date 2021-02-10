@@ -25,8 +25,8 @@ const SetPercentageFeeModal = ({
 }: SetPercentageFeeModalType) => {
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
-      <div className="card card-small">
-        <div className="card-body text-center">
+      <div className="card">
+        <div className="card-body p-spacer text-center">
           <p className="h3" data-testid="baseActionModal">
             Change service fee
           </p>
@@ -46,7 +46,7 @@ const SetPercentageFeeModal = ({
 
               return (
                 <form onSubmit={handleSubmit} className="text-left">
-                  <div className="form-group mt-3 mb-0">
+                  <div className="form-group mt-spacer mb-0">
                     <div className="input-group">
                       <input
                         type="text"
@@ -63,20 +63,16 @@ const SetPercentageFeeModal = ({
                     </div>
                     <ErrorMessage name="amount" />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap">
+                  <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
                     <button
                       type="submit"
-                      className="btn btn-outline-primary mx-2 mt-3"
+                      className="btn btn-outline-primary mx-2"
                       id="continueDelegate"
                       data-testid="continueUndelegate"
                     >
                       Continue
                     </button>
-                    <button
-                      id="closeButton"
-                      className="btn btn-link mx-2 mt-3"
-                      onClick={handleClose}
-                    >
+                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
                       Close
                     </button>
                   </div>

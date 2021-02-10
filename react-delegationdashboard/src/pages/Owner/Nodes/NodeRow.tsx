@@ -49,7 +49,7 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
   React.useEffect(fetchUnBondPeriod, [key.blsKey, key.status]);
 
   const statusColor =
-    key.status.key === 'staked' ? 'green' : key.status.key === 'jailed' ? 'pink' : 'orange';
+    key.status.key === 'staked' ? 'green' : key.status.key === 'jailed' ? 'red' : 'orange';
   return (
     <tr ref={ref}>
       <td>
@@ -68,11 +68,11 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
       </td>
       <td>
         {key.status.key === 'queued' && key.queueIndex && key.queueSize ? (
-          <span className={`bg-light-${statusColor} text-${statusColor} px-3 py-2`}>
+          <span className={`badge badge-sm badge-light-${statusColor} text-${statusColor}`}>
             {key.status.value} ({key.queueIndex}/{key.queueSize})
           </span>
         ) : (
-          <span className={`bg-light-${statusColor} text-${statusColor} px-3 py-2`}>
+          <span className={`badge badge-sm badge-light-${statusColor} text-${statusColor}`}>
             {key.status.value}
           </span>
         )}
