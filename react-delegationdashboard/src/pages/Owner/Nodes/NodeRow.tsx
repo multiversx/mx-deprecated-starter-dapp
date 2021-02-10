@@ -1,10 +1,10 @@
 import { Address, Argument, ContractFunction } from '@elrondnetwork/erdjs/out';
 import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
-import { faEllipsisV, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import React from 'react';
-import { Nav, NavDropdown } from 'react-bootstrap';
+import { Nav, NavDropdown, Dropdown } from 'react-bootstrap';
 import { useContext } from 'context';
 import { nodeActions } from './helpers/nodeTypes';
 import { nodeTransactions } from './helpers/stakeHooks';
@@ -60,7 +60,7 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
             {...{
               target: '_blank',
             }}
-            className="side-action ml-2"
+            className="ml-2"
           >
             <FontAwesomeIcon icon={faSearch} />
           </a>
@@ -79,16 +79,14 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
       </td>
 
       <td>
-        <Nav className="hide-caret">
-          <NavDropdown
-            title={
-              <span className="link">
-                <FontAwesomeIcon icon={faEllipsisV} className="side-action ml-2" />
-              </span>
-            }
-            id="basic-nav-dropdown"
-            className="ml-auto"
+        <Dropdown className="ml-auto">
+          <Dropdown.Toggle
+            variant=""
+            className="btn btn-sm btn-light-primary text-primary action-dropdown"
           >
+            <FontAwesomeIcon icon={faCaretDown} className="fa-2x" />
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
             {Object.keys(nodeActions).map(entry => {
               const action: ActionType = entry as any;
               let actionAllowed = allowedActions[key.status.key].includes(action);
@@ -96,7 +94,7 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
                 actionAllowed = false;
               }
               return (
-                <a
+                <Dropdown.Item
                   className={`dropdown-item ${actionAllowed ? '' : 'disabled'}`}
                   key={action}
                   onClick={(e: React.MouseEvent) => {
@@ -118,11 +116,11 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
                       left)
                     </span>
                   )}
-                </a>
+                </Dropdown.Item>
               );
             })}
-          </NavDropdown>
-        </Nav>
+          </Dropdown.Menu>
+        </Dropdown>
       </td>
     </tr>
   );

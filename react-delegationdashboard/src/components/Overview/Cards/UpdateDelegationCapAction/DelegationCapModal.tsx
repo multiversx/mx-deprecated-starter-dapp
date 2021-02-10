@@ -40,7 +40,7 @@ const DelegationCapModal = ({
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">
-        <div className="card-body text-center m-spacer">
+        <div className="card-body text-center p-spacer">
           <p className="h3" data-testid="delegateTitle">
             {title}
           </p>
@@ -70,7 +70,7 @@ const DelegationCapModal = ({
 
               return (
                 <form onSubmit={handleSubmit} className="text-left">
-                  <div className="form-group mt-3 mb-0">
+                  <div className="form-group mt-spacer mb-0">
                     <div className="input-group">
                       <input
                         type="text"
@@ -87,20 +87,16 @@ const DelegationCapModal = ({
                     </div>
                     <ErrorMessage name="amount" />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap">
+                  <div className="d-flex justify-content-center align-items-center flex-wrap mt-spacer">
                     <button
                       type="submit"
-                      className="btn btn-outline-primary mx-2 mt-3"
+                      className="btn btn-outline-primary mx-2"
                       id="continueDelegate"
                       data-testid="continueDelegate"
                     >
                       Continue
                     </button>
-                    <button
-                      id="closeButton"
-                      className="btn btn-link mx-2 mt-3"
-                      onClick={handleClose}
-                    >
+                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
                       Close
                     </button>
                   </div>

@@ -36,10 +36,6 @@
     font-size: $table-font-size;
     border-top: $table-border-width solid $table-border-color;
     border-bottom: $table-border-width solid $table-border-color;
-    span {
-      font-size: 0.6875rem;
-      border-radius: $btn-border-radius-sm;
-    }
   }
   .trim {
     max-width: 10rem;
