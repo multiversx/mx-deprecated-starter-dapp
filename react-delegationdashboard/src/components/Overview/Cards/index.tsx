@@ -4,9 +4,9 @@ import { useContext } from 'context';
 import { contractViews } from 'contracts/ContractViews';
 import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
-import { ContractOverview } from 'helpers/types';
-import { QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
-import { NetworkStake } from '@elrondnetwork/erdjs/out';
+import { ContractOverview, NodeType } from 'helpers/types';
+import { Query, QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import { Address, Argument, ContractFunction, NetworkStake } from '@elrondnetwork/erdjs/out';
 import { useState } from 'react';
 
 import SetPercentageFeeAction from './SetPercentageFeeAction';
@@ -14,12 +14,13 @@ import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 import AutomaticActivationAction from './AutomaticActivationAction';
 
 const Views = () => {
-  const { dapp, egldLabel, delegationContract } = useContext();
-  const { getTotalActiveStake, getNumNodes, getContractConfig } = contractViews;
+  const { dapp, egldLabel, delegationContract, auctionContract, address } = useContext();
+  const { getTotalActiveStake, getContractConfig } = contractViews;
   const [totalActiveStake, setTotalActiveStake] = React.useState('...');
   const [noNodes, setNoNodes] = React.useState('...');
   const [contractOverview, setContractOverview] = useState(new ContractOverview());
   const [networkStake, setNetworkStake] = useState(new NetworkStake());
+  const [isAdminFlag, setIsAdminFlag] = useState(false);
 
   const getContractOverviewType = (value: QueryResponse) => {
     let delegationCap = denominate({
@@ -55,23 +56,39 @@ const Views = () => {
     return percentage ? percentage.toFixed(2) : '...';
   };
 
+  const isAdmin = (ownerAddress: string) => {
+    let loginAddress = new Address(address).hex();
+    return loginAddress === ownerAddress;
+  };
+
   const getContractConfiguration = () => {
     getContractConfig(dapp, delegationContract)
       .then(value => {
+        if (isAdmin(value.returnData[0].asHex)) {
+          setIsAdminFlag(true);
+        }
         let contractOverview = getContractOverviewType(value);
         setContractOverview(contractOverview);
       })
       .catch(e => console.error('getContractConfig error ', e));
   };
 
-  const getNumberOfNodes = () => {
-    getNumNodes(dapp, delegationContract)
-      .then(value => {
-        setNoNodes(value.returnData[0].asNumber.toString() || '0');
-      })
-      .catch(e => {
-        console.error('getNumberOfNodes error ', e);
-      });
+  const getNumberOfActiveNodes = () => {
+    const query = new Query({
+      address: new Address(auctionContract),
+      func: new ContractFunction('getBlsKeysStatus'),
+      args: [Argument.fromPubkey(new Address(delegationContract))],
+    });
+    return new Promise<Array<NodeType>>(resolve => {
+      dapp.proxy
+        .queryContract(query)
+        .then(value => {
+          setNoNodes((value.returnData.length / 2).toString());
+        })
+        .catch(e => {
+          console.error('GetBlsKeysStatus error', e);
+        });
+    });
   };
 
   const getTotalStake = () => {
@@ -86,7 +103,9 @@ const Views = () => {
         });
         setTotalActiveStake(totalStake || '0');
       })
-      .catch(e => console.error('getTotalStake error ', e));
+      .catch(e => {
+        console.error('getTotalStake error ', e);
+      });
   };
   const getNetworkStake = () => {
     dapp.apiProvider
@@ -94,13 +113,15 @@ const Views = () => {
       .then(value => {
         setNetworkStake(value);
       })
-      .catch(e => console.error('getTotalStake error ', e));
+      .catch(e => {
+        console.error('getTotalStake error ', e);
+      });
   };
 
   React.useEffect(() => {
     getNetworkStake();
     getTotalStake();
-    getNumberOfNodes();
+    getNumberOfActiveNodes();
     getContractConfiguration();
   }, []);
 
@@ -152,16 +173,16 @@ const Views = () => {
       >
         {location.pathname === '/owner' && <UpdateDelegationCapAction />}
       </StatCard>
-      <StatCard
-        title="Auto Activation"
-        value={contractOverview.automaticActivation ? 'ON' : 'OFF'}
-        color="primary"
-        svg="activation.svg"
-      >
-        {location.pathname === '/owner' && (
+      {isAdminFlag && location.pathname === '/owner' && (
+        <StatCard
+          title="Automatic activation"
+          value={contractOverview.automaticActivation ? 'ON' : 'OFF'}
+          color="primary"
+          svg="activation.svg"
+        >
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />
-        )}
-      </StatCard>
+        </StatCard>
+      )}
     </div>
   );
 };
