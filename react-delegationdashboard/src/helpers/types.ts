@@ -12,24 +12,27 @@ export interface DelegationContractType {
 }
 
 export class ContractOverview {
+  ownerAddress: string;
   serviceFee?: string;
-  maxDelegationCap?: string;
+  maxDelegationCap: string;
   initialOwnerFunds?: string;
-  automaticActivation?: boolean;
+  automaticActivation: string;
   withDelegationCap?: boolean;
   changeableServiceFee?: boolean;
   createdNounce?: boolean;
   unBondPeriod?: number;
   public constructor(
+    ownerAddress: string = '',
     serviceFee?: string,
-    maxDelegationCap?: string,
+    maxDelegationCap: string = '',
     initialOwnerFunds?: string,
-    automaticActivation?: boolean,
+    automaticActivation: string = 'false',
     withDelegationCap?: boolean,
     changeableServiceFee?: boolean,
     createdNounce?: boolean,
     unBondPeriod?: number
   ) {
+    this.ownerAddress = ownerAddress;
     this.serviceFee = serviceFee;
     this.maxDelegationCap = maxDelegationCap;
     this.initialOwnerFunds = initialOwnerFunds;
@@ -44,7 +47,11 @@ export class ContractOverview {
 export class StatCardType {
   title!: string;
   value!: string;
-  valueUnit!: string;
+  valueUnit?: string;
+  svg!: string;
+  color!: string;
+  percentage?: string;
+  children?: any;
 }
 
 export class NodeType {

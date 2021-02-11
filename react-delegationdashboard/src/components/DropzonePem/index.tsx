@@ -151,7 +151,9 @@ const DropzonePem = ({
     <>
       <div
         {...getRootProps({
-          className: `dropzone ${files.length > 0 ? 'p-0' : ''} ${isInvalid}`,
+          className: `dropzone border border-muted rounded ${
+            files.length > 0 ? 'p-0' : 'p-3'
+          } ${isInvalid}`,
         })}
       >
         <input {...inputProps} data-testid="inputPem" />
@@ -179,7 +181,7 @@ const DropzonePem = ({
                         {name}
                       </p>
                       <span
-                        className="lead pr-2"
+                        className="pr-2"
                         onClick={e => {
                           e.preventDefault();
                           e.stopPropagation();

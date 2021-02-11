@@ -1,233 +1,117 @@
-/* Bootstrap overrides
--------------------------------------------------- */
+$font-family-sans-serif: 'Poppins', sans-serif;
+$font-weight-normal: 300;
+$font-weight-bold: 500;
+$headings-font-weight: 400;
 
-$headings-font-weight: 300 !important;
-$primary: #1b46c2;
-$light: #fafafa;
+$body: #000;
+$body-bg: #e5e5e5;
+$body-color: #212121;
+
+$primary: #3699ff;
+$secondary: #464e5f;
+$dark: #5d6473;
+$muted: #b5b5c3;
+$light: #f3f6f9;
 $success: #28a745;
 
-/* Do not move the imports from here. 
-Override Bootstrap variables only above.
--------------------------------------------------- */
-@import './../../../node_modules/bootstrap/scss/bootstrap.scss';
+$white: #fff;
+$orange: #ffa800;
+$light-orange: #fff4de;
+$dark-orange: #634100;
+$green: #1bc5bd;
+$light-green: #c9f7f5;
+$dark-green: #74bbb7;
+$purple: #8950fc;
+$light-purple: #eee5ff;
+$dark-purple: #8a50fc;
+$red: #f64e60;
+$light-red: #ffe2e6;
+$dark-red: #f65464;
+$light-primary: #e1f0ff;
+$dark-primary: #1789ff;
 
-// Main Shards Dashboard
-@import './shards-dashboard/shards-dashboards';
+$card-bg: $white;
+$text-muted: $muted;
+$brand-color: $dark;
+$logo-height: 1.5rem;
+$bg-image: $body-bg;
+$footer-color: $secondary;
 
-// custom styles
-@import 'modules/modules';
+$lead-font-size: 1.15rem;
+$h6-font-size: 1.125rem;
 
-/* Base
--------------------------------------------------- */
-html {
-  min-height: 100%;
-  font-size: 14px;
-}
+// STATCARD
+$statcard-title-size: 0.75rem;
+$statcard-value-size: 1.5rem;
+$statcard-subvalue-size: 0.6rem;
 
-.wrapper {
-  min-height: 100vh;
-}
+// BORDER
+$border-radius: 0.65rem;
+$border-color: lighten($muted, 10%);
 
-.opacity-6 {
-  opacity: 0.6;
-}
+// INPUT
+$input-border-radius: 0.2rem;
+$input-color: $secondary;
+$input-bg: $card-bg;
+$input-disabled-bg: #e9ecef;
+$input-hover-border-color: darken($border-color, 15%);
+$label-margin-bottom: 0.25rem;
+$form-text-margin-top: 0.25rem;
 
-.dapp-icon {
-  padding: 5px;
-  border-radius: 50%;
-  background-color: $light;
-  width: 65px;
-  height: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
+// TABLE
+$table-color: $dark;
+$table-cell-padding: 1.5625rem;
+$table-font-size: 0.875rem;
+$table-head-font-size: $table-font-size;
+$table-border-color: #e5eaee;
 
-  &.icon-medium {
-    width: 80px;
-    height: 80px;
-  }
-}
+// CARD
+$card-border-color: #e5eaee;
+$card-cap-bg: $card-bg;
+$card-border-radius: 0.65rem;
 
-/* Navbar
--------------------------------------------------- */
-.elrond-logo {
-  width: 85px;
-  height: 25px;
-}
+// MODAL
+$modal-content-border-width: 0;
+$modal-content-border-radius: $border-radius;
 
-.dapp-name {
-  line-height: 1;
-  border-left: 1px solid $gray-400;
-}
+// BUTTONS
+$btn-padding-y: 0.5rem;
+$btn-padding-x: 1.3125rem;
+$btn-padding-y-sm: 0.3rem;
+$btn-padding-x-sm: 1.1rem;
+$btn-font-size: 0.875rem;
+$btn-font-size-sm: 0.6875rem;
+$btn-line-height: 1.125rem;
+$btn-line-height-sm: 1.0625rem;
+$btn-border-radius: 0.375rem;
+$btn-border-radius-sm: $btn-border-radius;
 
-/* Dashboard
--------------------------------------------------- */
-.action-btn {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: $white;
-  margin: 0 7px;
+// BADGES
+$badge-font-weight: 300;
+$badge-border-radius: 0.375rem;
+$badge-padding-y: 0.375rem;
+$badge-padding-x: 0.75rem;
+$badge-font-size: 0.6875rem;
 
-  button {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    background-color: $white;
+$standard-box-shadow: $primary;
+$link-hover-color: darken($primary, 7%);
 
-    &:hover {
-      opacity: 0.9;
-    }
-  }
-}
+$theme-colors: (
+  'orange': $orange,
+  'light-orange': $light-orange,
+  'dark-orange': $dark-orange,
+  'green': $green,
+  'light-green': $light-green,
+  'dark-green': $dark-green,
+  'purple': $purple,
+  'light-purple': $light-purple,
+  'dark-purple': $dark-purple,
+  'red': $red,
+  'light-red': $light-red,
+  'dark-red': $dark-red,
+  'light-primary': $light-primary,
+  'dark-primary': $dark-primary,
+  'white': $white,
+);
 
-.sp-action-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 7px;
-
-  button {
-    margin: 4px;
-
-    &:hover {
-      opacity: 0.9;
-    }
-  }
-}
-
-.node-action-btn {
-    justify-content: center;
-    align-items: center;
-    margin: 0 7px;
-}
-
-.transactions {
-  .transaction-icon {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-  }
-
-  &.table {
-    td {
-      white-space: nowrap;
-      vertical-align: middle;
-    }
-
-    tr:last-of-type {
-      td {
-        border-bottom: 1px solid #dee2e6;
-      }
-    }
-  }
-}
-
-/* Loader, Transaction Success/Fail
--------------------------------------------------- */
-.page-state {
-  .lds-ellipsis {
-    display: inline-block;
-    position: relative;
-    width: 64px;
-    height: 64px;
-  }
-  .lds-ellipsis div {
-    position: absolute;
-    top: 27px;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.1);
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  }
-  .bg-blue .lds-ellipsis div {
-    background: rgba(255, 255, 255, 0.4);
-  }
-  .lds-ellipsis div:nth-child(1) {
-    left: 6px;
-    animation: lds-ellipsis1 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(2) {
-    left: 6px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(3) {
-    left: 26px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-  .lds-ellipsis div:nth-child(4) {
-    left: 45px;
-    animation: lds-ellipsis3 0.6s infinite;
-  }
-  @keyframes lds-ellipsis1 {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  @keyframes lds-ellipsis3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-  @keyframes lds-ellipsis2 {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(19px, 0);
-    }
-  }
-}
-
-/* Footer
--------------------------------------------------- */
-footer {
-  div {
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
-    display: inline-block;
-    font-weight: 400;
-    line-height: 1.155rem;
-
-    a {
-      color: $black;
-
-      &:hover {
-        color: $black;
-      }
-
-      #heart {
-        height: 16px;
-        width: 16px;
-
-        path {
-          fill: #c00;
-        }
-      }
-    }
-  }
-}
-
-.login__container {
-  h1 {
-    margin-bottom: 80px;
-  }
-}
-.login-card__container {
-  margin-bottom: 40px;
-}
-
-.led {
-  height: 0.625rem;
-  width: 0.625rem;
-  border-radius: 50%;
-}
+@import './main';

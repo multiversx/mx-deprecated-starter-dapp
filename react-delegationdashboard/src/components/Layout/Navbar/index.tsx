@@ -1,10 +1,9 @@
 import React from 'react';
-import { Navbar as BsNavbar, NavItem, Nav } from 'react-bootstrap';
-import { ReactComponent as ElrondLogo } from '../../../assets/img/elrond.svg';
+import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
 import { useContext, useDispatch } from '../../../context';
 
 const Navbar = () => {
-  const { loggedIn, dapp } = useContext();
+  const { loggedIn, dapp, address } = useContext();
   const dispatch = useDispatch();
 
   const logOut = () => {
@@ -12,24 +11,23 @@ const Navbar = () => {
   };
 
   return (
-    <BsNavbar className="bg-white border-bottom px-4 py-3">
-      <div className="container-fluid">
-        <NavItem className="d-flex align-items-center">
-          <ElrondLogo className="elrond-logo mr-2" />
-          <span className="dapp-name text-muted pl-2">Dapp</span>
-        </NavItem>
-
-        <Nav className="ml-auto">
-          {loggedIn && (
-            <NavItem>
-              <a href="/" onClick={logOut}>
-                Close
-              </a>
-            </NavItem>
-          )}
-        </Nav>
+    <div className="navbar bg-white border-bottom px-4 py-3 flex-nowrap">
+      <div className="container-fluid flex-nowrap">
+        <div className="d-flex align-items-center mr-3">
+          <Logo className="logo mr-2 flex-shrink-0" />
+          <span className="h5 text-nowrap mb-0 p-0">Delegation Manager</span>
+        </div>
+        {loggedIn && (
+          <div className="d-flex align-items-center" style={{ minWidth: 0 }}>
+            <small className="d-none d-lg-inline text-muted mr-2">Wallet address: </small>
+            <small className="text-truncate">{address}</small>
+            <a href="/#" onClick={logOut} className="btn btn-light btn-sm text-primary ml-3">
+              Close
+            </a>
+          </div>
+        )}
       </div>
-    </BsNavbar>
+    </div>
   );
 };
 

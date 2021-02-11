@@ -1,20 +1,21 @@
 interface ViewStatActionType {
   actionTitle: string;
+  color: string;
   handleContinue: () => void;
 }
 
-const ViewStatAction = ({ actionTitle, handleContinue }: ViewStatActionType) => {
+const ViewStatAction = ({ actionTitle, color, handleContinue }: ViewStatActionType) => {
   return (
-    <>
+    <div>
       <button
         onClick={() => {
           handleContinue();
         }}
-        className="btn btn-primary mt-3"
+        className={`btn btn-${color} mx-2`}
       >
         {actionTitle}
       </button>
-    </>
+    </div>
   );
 };
 

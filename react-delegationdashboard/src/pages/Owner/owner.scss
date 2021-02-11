@@ -1,0 +1,12 @@
+.owner {
+  .action-dropdown {
+    padding: 0;
+    svg {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
+    &::after {
+      display: none;
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBan } from '@fortawesome/free-solid-svg-icons';
-import PageState from 'components/PageState';
+import { faBan, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { ReactComponent as Logo } from '../../assets/images/logo.svg';
+import State from 'components/State';
 import { useContext } from 'context';
 import LedgerLogin from './Login/Ledger';
 import WalletLogin from './Login/Wallet';
@@ -13,22 +13,38 @@ const Home = () => {
   const ref = React.useRef(null);
 
   return (
-    <div ref={ref} className="d-flex flex-fill align-items-center container">
+    <div ref={ref} className="home d-flex flex-fill align-items-center">
       {error ? (
-        <PageState
-          svgComponent={<FontAwesomeIcon icon={faBan} className="text-secondary fa-3x" />}
-          title="Unavailable"
-          className="dapp-icon icon-medium"
+        <State
+          icon={faBan}
+          iconClass="text-primary"
+          title="Something went wrong"
+          description="If the problem persists please contact support."
         />
       ) : loggedIn ? (
         <Redirect to="/dashboard" />
       ) : loading ? (
-        <PageState svgComponent={<></>} spin />
+        <State icon={faCircleNotch} iconClass="fa-spin text-primary" />
       ) : (
-        <div className="row w-100 d-flex flex-column login__container">
-          <h1 className="text-center">Welcome to our Delegation Dashboard App</h1>
-          <LedgerLogin />
-          <WalletLogin />
+        <div className="m-auto login-container">
+          <div className="card my-spacer text-center">
+            <div className="card-body p-spacer mx-lg-spacer">
+              <Logo className="logo mb-spacer" />
+              <h4 className="mb-spacer">Delegation Manager</h4>
+              <p className="lead mb-spacer">
+                Etiam tincidunt turpis vitae sapien iaculis accumsan.
+              </p>
+              <p className="mb-spacer">
+                Etiam tincidunt turpis vitae sapien iaculis accumsan. Nunc placerat lorem non ipsum
+                interdum, vel condimentum justo tristique. Praesent ut dapibus velit, eu vehicula
+                orci.
+              </p>
+              <div>
+                <LedgerLogin />
+                <WalletLogin />
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

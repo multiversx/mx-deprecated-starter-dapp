@@ -37,19 +37,9 @@ const LedgerLogin = () => {
       });
   };
   return (
-    <div className="col-12 col-md-8 col-lg-5 mx-auto login-card__container">
-      <div className="card shadow-sm rounded p-4 border-0">
-        <div className="card-body text-center">
-          <h2 className="mb-3">Ledger</h2>
-
-          <p className="mb-3">Secure Ledger login.</p>
-
-          <button onClick={handleOnClick} className="btn btn-primary mt-3">
-            Connect Ledger
-          </button>
-        </div>
-      </div>
-    </div>
+    <button onClick={handleOnClick} className="btn btn-primary px-sm-spacer mx-1 mx-sm-3">
+      Ledger
+    </button>
   );
 };
 

@@ -6,6 +6,7 @@ import Owner from 'pages/Owner';
 
 interface RouteType {
   path: string;
+  page: string;
   title: string;
   component: any;
 }
@@ -13,16 +14,19 @@ interface RouteType {
 const routes: RouteType[] = [
   {
     path: '/',
-    title: 'Home',
+    page: 'home',
+    title: '',
     component: Home,
   },
   {
     path: '/dashboard',
+    page: 'dashboard',
     title: 'Dashboard',
     component: Dashboard,
   },
   {
     path: '/owner',
+    page: 'owner',
     title: 'Owner',
     component: Owner,
   },
@@ -30,11 +34,10 @@ const routes: RouteType[] = [
 
 const wrappedRoutes = () => {
   return routes.map(route => {
-    const title = route.title
-      ? `${route.title} • Elrond Delegation Dashboard`
-      : 'Elrond Delegation Dashboard';
+    const title = route.title ? `${route.title} • Delegation Manager` : 'Delegation Manager';
     return {
       path: route.path,
+      page: route.page,
       component: (withPageTitle(title, route.component) as any) as React.ComponentClass<{}, any>,
     };
   });
