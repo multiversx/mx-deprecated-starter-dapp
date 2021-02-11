@@ -29,7 +29,7 @@ const Header = () => {
     <div className="header card-header bg-primary text-white d-flex align-items-center justify-content-between px-spacer">
       <div className="py-spacer text-truncate">
         <p className="opacity-6 mb-0">Contract Address</p>
-        <span className="text-truncate">{address}</span>
+        <span className="text-truncate">{delegationContract}</span>
       </div>
       {isAdminFlag && pathname !== '/owner' ? (
         <Link to="/owner" className="btn btn-light-primary btn-sm text-primary">
