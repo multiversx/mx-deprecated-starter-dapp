@@ -1,6 +1,12 @@
 
+<div style="text-align:center">
+  <img
+  src="https://raw.githubusercontent.com/ElrondNetwork/elrond-go/master/elrond_logo_01.svg"
+  alt="Elrond Network">
+</div>
+<br>
 
-<!-- PROJECT LOGO -->
+[![](https://img.shields.io/badge/made%20by-Elrond%20Network-blue.svg)](http://elrond.com/)
 <br />
 <p align="center">
 
