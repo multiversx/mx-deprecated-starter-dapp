@@ -6,10 +6,23 @@ const SetPercentageFeeAction = () => {
   const { delegation } = useDelegation();
   const [showUpdateFeeModal, setShowUpdateFeeModal] = useState(false);
 
+  const nominateValToHex = (value: string) => {
+    if (value.length % 2 !== 0) {
+      value = '0' + value;
+    }
+    return value;
+  };
+
   const handleUpdateFee = (value: string) => {
-    delegation
-      .sendTransaction('0', 'changeServiceFee', (parseFloat(value) * 100).toString())
-      .then();
+    let perc = parseFloat(value) * 100;
+    if (perc.toString().length)
+      delegation
+        .sendTransaction(
+          '0',
+          'changeServiceFee',
+          nominateValToHex((parseFloat(value) * 100).toString())
+        )
+        .then();
   };
 
   return (

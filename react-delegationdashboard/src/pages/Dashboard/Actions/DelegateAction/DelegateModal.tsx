@@ -45,11 +45,12 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
           <p className="h6 mb-spacer" data-testid="delegateTitle">
             Delegate now
           </p>
-          <p className="mb-spacer">{`Select the amount of ${egldLabel} you want to delegate.`}</p>
-          {isFullDelegationCapContract() && (
+          {isFullDelegationCapContract() ? (
             <p className="mb-spacer">
               The maximum delegation cap was reached you can not delegate more
             </p>
+          ) : (
+            <p className="mb-spacer">{`Select the amount of ${egldLabel} you want to delegate.`}</p>
           )}
           <Formik
             initialValues={{
@@ -90,53 +91,56 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
               };
               return (
                 <form onSubmit={handleSubmit} className="text-left">
-                  <div className="form-group mb-spacer">
-                    <label htmlFor="amount">Amount {egldLabel}</label>
-                    <div className="input-group">
-                      <input
-                        type="text"
-                        className={`form-control ${
-                          errors.amount && touched.amount ? 'is-invalid' : ''
-                        }`}
-                        id="amount"
-                        name="amount"
-                        data-testid="amount"
-                        required={true}
-                        value={values.amount}
-                        autoComplete="off"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      {values.amount !== available && available !== '0' && (
-                        <span className="input-group-append">
-                          <a
-                            href="/#"
-                            className="input-group-text"
-                            onClick={getEntireBalance}
-                            data-testid="maxBtn"
-                          >
-                            Max
-                          </a>
-                        </span>
+                  {!isFullDelegationCapContract() && (
+                    <div className="form-group mb-spacer">
+                      <label htmlFor="amount">Amount {egldLabel}</label>
+                      <div className="input-group">
+                        <input
+                          type="text"
+                          className={`form-control ${
+                            errors.amount && touched.amount ? 'is-invalid' : ''
+                          }`}
+                          id="amount"
+                          name="amount"
+                          data-testid="amount"
+                          required={true}
+                          value={values.amount}
+                          autoComplete="off"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        {values.amount !== available && available !== '0' && (
+                          <span className="input-group-append">
+                            <a
+                              href="/#"
+                              className="input-group-text"
+                              onClick={getEntireBalance}
+                              data-testid="maxBtn"
+                            >
+                              Max
+                            </a>
+                          </span>
+                        )}
+                        <ErrorMessage component="div" name="amount" className="invalid-feedback" />
+                      </div>
+                      {!(errors.amount && touched.amount) && (
+                        <small className="form-text text-secondary">
+                          Available: <Denominate value={balance} />
+                        </small>
                       )}
-                      <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                     </div>
-                    {!(errors.amount && touched.amount) && (
-                      <small className="form-text text-secondary">
-                        Available: <Denominate value={balance} />
-                      </small>
-                    )}
-                  </div>
+                  )}
                   <div className="d-flex justify-content-center align-items-center flex-wrap">
-                    <button
-                      disabled={isFullDelegationCapContract()}
-                      type="submit"
-                      className="btn btn-primary mx-2"
-                      id="continueDelegate"
-                      data-testid="continueDelegate"
-                    >
-                      Continue
-                    </button>
+                    {!isFullDelegationCapContract() && (
+                      <button
+                        type="submit"
+                        className="btn btn-primary mx-2"
+                        id="continueDelegate"
+                        data-testid="continueDelegate"
+                      >
+                        Continue
+                      </button>
+                    )}
                     <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
                       Close
                     </button>
