@@ -72,8 +72,8 @@ const Nodes = () => {
             </div>
           </div>
           {keys.length > 0 ? (
-            <div className="table-responsive">
-              <table className="table table-borderless table-overflow mb-0">
+            <div className="table-responsive table-overflow">
+              <table className="table table-borderless mb-0">
                 <thead className="text-uppercase font-weight-normal">
                   <tr>
                     <th>Public key</th>

@@ -1,3 +1,4 @@
+import { Redirect } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'context';
@@ -6,7 +7,7 @@ import Overview from 'components/Overview';
 import Nodes from './Nodes';
 
 const Owner = () => {
-  const { dapp, address, delegationContract } = useContext();
+  const { dapp, address, delegationContract, loggedIn } = useContext();
   const { getContractConfig } = contractViews;
   const [isOwner, setIsOwner] = useState(false);
 
@@ -23,7 +24,11 @@ const Owner = () => {
   useEffect(getContractConfiguration, []);
 
   if (!isOwner) {
-    <></>;
+    <Redirect to="/dashboard" />;
+  }
+
+  if (!loggedIn) {
+    return <Redirect to="/" />;
   }
 
   return (
