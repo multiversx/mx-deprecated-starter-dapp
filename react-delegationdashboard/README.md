@@ -1,8 +1,94 @@
-# Dapp boilerplate for Delegation
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
+
+
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+
+
+
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+ <h3 align="center">Dapp boilerplate for Delegation </h3>
+
+  <p align="center">
 The react implementation for Dashboard Delegation
+    <br />
+    <br />
+    <br />
+    ·
+    <a href="https://github.com/ElrondNetwork/starter-dapp/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/ElrondNetwork/starter-dapp/issues">Request Feature</a>
+  </p>
+</p>
 
-## Instalation and running
+
+
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+  </ol>
+</details>
+
+
+### Built With
+
+This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+* [React](https://reactjs.org/)
+* [Typescript](https://www.typescriptlang.org/)
+* [Bootstrap](https://getbootstrap.com)
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+Follow the next step to start using this dapp
+
+### Prerequisites
+
+This is an example of how to list things you need to use the software and how to install them.
+* npm
+* node version 12.13.0
+
+### Instalation and running
 
 ### Step 1. Update Configs
 
@@ -18,5 +104,44 @@ For testnet run => ```npm run build-testnet```
 
 For mainnet run => ```npm run build-mainnet```
 
-### Step 3. Run the application
+### Step 3. Run the application (in order to run the application on testnet env you don't have to build the solution, you can just run the following command)
 For development run => ```npm run start```
+
+
+<!-- ROADMAP -->
+## Roadmap
+
+See the [open issues](https://github.com/ElrondNetwork/starter-dapp/issues) for a list of proposed features (and known issues).
+
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+One can contribute by creating *pull requests*, or by opening *issues* for discovered bugs or desired features.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-url]: https://github.com/ElrondNetwork/starter-dapp/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-url]: https://github.com/ElrondNetwork/starter-dapp/network/members
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-url]: https://github.com/ElrondNetwork/starter-dapp/stargazers
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-url]: https://github.com/ElrondNetwork/starter-dapp/issues
+[product-screenshot]: 
+
+
+## Developers
+
+The [Elrond Team](https://elrond.com/team/).
+
+
