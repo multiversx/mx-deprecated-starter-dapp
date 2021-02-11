@@ -17,7 +17,7 @@ function App() {
                   key={route.path + i}
                   component={route.component}
                   exact={true}
-                ></Route>{' '}
+                ></Route>
               </Layout>
             </Route>
           ))}
