@@ -49,14 +49,13 @@
       max-width: 42rem;
     }
   }
+  .dropdown {
+    position: unset !important;
+  }
 }
 
 label {
   @include font-size(80%);
-}
-
-.table-overflow {
-  overflow: inherit;
 }
 
 .fa-spin {

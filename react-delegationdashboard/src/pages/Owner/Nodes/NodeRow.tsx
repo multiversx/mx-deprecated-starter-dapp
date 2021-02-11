@@ -62,7 +62,7 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
             }}
             className="ml-2"
           >
-            <FontAwesomeIcon icon={faSearch} />
+            <FontAwesomeIcon icon={faSearch} className="text-muted" />
           </a>
         </div>
       </td>
