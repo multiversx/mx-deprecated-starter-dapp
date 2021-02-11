@@ -8,7 +8,10 @@ export type ActionType =
   | { type: 'logout'; provider: StateType['dapp']['provider'] }
   | { type: 'loading'; loading: StateType['loading'] }
   | { type: 'setProvider'; provider: StateType['dapp']['provider'] }
-  | { type: 'setBalance'; balance: StateType['account']['balance'] };
+  | { type: 'setBalance'; balance: StateType['account']['balance'] }
+  | { type: 'setContractOverview'; contractOverview: StateType['contractOverview'] }
+  | { type: 'setNumberOfActiveNodes'; numberOfActiveNodes: StateType['numberOfActiveNodes'] }
+  | { type: 'setTotalActiveStake'; totalActiveStake: StateType['totalActiveStake'] };
 
 export function reducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -51,6 +54,30 @@ export function reducer(state: StateType, action: ActionType): StateType {
           ...state.account,
           balance: balance,
         },
+      };
+    }
+
+    case 'setContractOverview': {
+      const { contractOverview } = action;
+      return {
+        ...state,
+        contractOverview,
+      };
+    }
+
+    case 'setNumberOfActiveNodes': {
+      const { numberOfActiveNodes } = action;
+      return {
+        ...state,
+        numberOfActiveNodes,
+      };
+    }
+
+    case 'setTotalActiveStake': {
+      const { totalActiveStake } = action;
+      return {
+        ...state,
+        totalActiveStake,
       };
     }
 

@@ -6,6 +6,8 @@ import { Modal } from 'react-bootstrap';
 import { useContext } from 'context';
 import Denominate from 'components/Denominate';
 import { entireBalance } from 'helpers';
+import { denomination, decimals } from 'config';
+import denominate from 'components/Denominate/formatters';
 
 interface DelegateModalType {
   show: boolean;
@@ -15,7 +17,8 @@ interface DelegateModalType {
 }
 
 const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateModalType) => {
-  const { egldLabel, denomination, decimals } = useContext();
+  const { egldLabel, contractOverview, totalActiveStake } = useContext();
+
   const available = entireBalance({
     balance: balance,
     gasPrice: '12000000',
@@ -23,6 +26,17 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
     denomination,
     decimals,
   });
+
+  const isFullDelegationCapContract = () => {
+    return (
+      denominate({
+        input: totalActiveStake,
+        denomination,
+        decimals,
+        showLastNonZeroDecimal: false,
+      }) === contractOverview.maxDelegationCap
+    );
+  };
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
@@ -32,6 +46,11 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
             Delegate now
           </p>
           <p className="mb-spacer">{`Select the amount of ${egldLabel} you want to delegate.`}</p>
+          {isFullDelegationCapContract() && (
+            <p className="mb-spacer">
+              The maximum delegation cap was reached you can not delegate more
+            </p>
+          )}
           <Formik
             initialValues={{
               amount: '10',
@@ -110,6 +129,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                   </div>
                   <div className="d-flex justify-content-center align-items-center flex-wrap">
                     <button
+                      disabled={isFullDelegationCapContract()}
                       type="submit"
                       className="btn btn-primary mx-2"
                       id="continueDelegate"

@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { decimals, denomination } from 'config';
 import { useContext } from 'context';
-import { contractViews } from 'contracts/ContractViews';
 import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
-import { ContractOverview, NodeType } from 'helpers/types';
-import { Query, QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
-import { Address, Argument, ContractFunction, NetworkStake } from '@elrondnetwork/erdjs/out';
+import { Address, NetworkStake } from '@elrondnetwork/erdjs/out';
 import { useState } from 'react';
 
 import SetPercentageFeeAction from './SetPercentageFeeAction';
@@ -14,42 +11,19 @@ import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 import AutomaticActivationAction from './AutomaticActivationAction';
 
 const Views = () => {
-  const { dapp, egldLabel, delegationContract, auctionContract, address } = useContext();
-  const { getTotalActiveStake, getContractConfig } = contractViews;
-  const [totalActiveStake, setTotalActiveStake] = React.useState('...');
-  const [noNodes, setNoNodes] = React.useState('...');
-  const [contractOverview, setContractOverview] = useState(new ContractOverview());
+  const {
+    dapp,
+    egldLabel,
+    totalActiveStake,
+    numberOfActiveNodes,
+    address,
+    contractOverview,
+  } = useContext();
   const [networkStake, setNetworkStake] = useState(new NetworkStake());
-  const [isAdminFlag, setIsAdminFlag] = useState(false);
 
-  const getContractOverviewType = (value: QueryResponse) => {
-    let delegationCap = denominate({
-      decimals,
-      denomination,
-      input: value.returnData[2].asBigInt.toString(),
-      showLastNonZeroDecimal: false,
-    });
-    let initialOwnerFunds = denominate({
-      decimals,
-      denomination,
-      input: value.returnData[3].asBigInt.toString(),
-      showLastNonZeroDecimal: false,
-    });
-    return new ContractOverview(
-      (parseFloat(value.returnData[1].asHex) / 100).toString(),
-      delegationCap,
-      initialOwnerFunds,
-      value.returnData[4]?.asString,
-      value.returnData[5].asBool,
-      value.returnData[6].asBool,
-      value.returnData[7].asBool,
-      value.returnData[8]?.asNumber * 6
-    );
-  };
-
-  const getPercentage = (firstValue: string, secondValue: string) => {
+  const getPercentage = (amountOutOfTotal: string, total: string) => {
     let percentage =
-      (parseInt(firstValue.replace(/,/g, '')) / parseInt(secondValue.replace(/,/g, ''))) * 100;
+      (parseInt(amountOutOfTotal.replace(/,/g, '')) / parseInt(total.replace(/,/g, ''))) * 100;
     if (percentage < 1) {
       return '<1';
     }
@@ -61,52 +35,6 @@ const Views = () => {
     return loginAddress === ownerAddress;
   };
 
-  const getContractConfiguration = () => {
-    getContractConfig(dapp, delegationContract)
-      .then(value => {
-        if (isAdmin(value.returnData[0].asHex)) {
-          setIsAdminFlag(true);
-        }
-        let contractOverview = getContractOverviewType(value);
-        setContractOverview(contractOverview);
-      })
-      .catch(e => console.error('getContractConfig error ', e));
-  };
-
-  const getNumberOfActiveNodes = () => {
-    const query = new Query({
-      address: new Address(auctionContract),
-      func: new ContractFunction('getBlsKeysStatus'),
-      args: [Argument.fromPubkey(new Address(delegationContract))],
-    });
-    return new Promise<Array<NodeType>>(resolve => {
-      dapp.proxy
-        .queryContract(query)
-        .then(value => {
-          setNoNodes((value.returnData.length / 2).toString());
-        })
-        .catch(e => {
-          console.error('GetBlsKeysStatus error', e);
-        });
-    });
-  };
-
-  const getTotalStake = () => {
-    getTotalActiveStake(dapp, delegationContract)
-      .then(value => {
-        let input = value.returnData[0].asBigInt.toString();
-        let totalStake = denominate({
-          input,
-          denomination,
-          decimals,
-          showLastNonZeroDecimal: true,
-        });
-        setTotalActiveStake(totalStake || '0');
-      })
-      .catch(e => {
-        console.error('getTotalStake error ', e);
-      });
-  };
   const getNetworkStake = () => {
     dapp.apiProvider
       .getNetworkStake()
@@ -120,37 +48,44 @@ const Views = () => {
 
   React.useEffect(() => {
     getNetworkStake();
-    getTotalStake();
-    getNumberOfActiveNodes();
-    getContractConfiguration();
   }, []);
 
   return (
     <div className="cards d-flex flex-wrap mr-spacer">
       <StatCard
         title="Contract Stake"
-        value={totalActiveStake}
+        value={denominate({
+          input: totalActiveStake,
+          denomination,
+          decimals,
+          showLastNonZeroDecimal: false,
+        })}
         valueUnit={egldLabel}
         color="orange"
         svg="contract.svg"
         percentage={`${getPercentage(
-          totalActiveStake,
+          denominate({
+            input: totalActiveStake,
+            denomination,
+            decimals,
+            showLastNonZeroDecimal: false,
+          }),
           denominate({
             input: networkStake.TotalStaked.toString(),
             denomination,
             decimals,
-            showLastNonZeroDecimal: true,
+            showLastNonZeroDecimal: false,
           })
         )}% of total stake`}
       />
       <StatCard
         title="Number of Nodes"
-        value={noNodes}
+        value={numberOfActiveNodes}
         valueUnit=""
         color="purple"
         svg="nodes.svg"
         percentage={`${getPercentage(
-          noNodes,
+          numberOfActiveNodes,
           networkStake.TotalValidators.toString()
         )}% of total nodes`}
       />
@@ -169,11 +104,19 @@ const Views = () => {
         valueUnit={egldLabel}
         color="green"
         svg="delegation.svg"
-        percentage={`${getPercentage(totalActiveStake, contractOverview.maxDelegationCap)}% filled`}
+        percentage={`${getPercentage(
+          denominate({
+            input: totalActiveStake,
+            denomination,
+            decimals,
+            showLastNonZeroDecimal: false,
+          }),
+          contractOverview.maxDelegationCap
+        )}% filled`}
       >
         {location.pathname === '/owner' && <UpdateDelegationCapAction />}
       </StatCard>
-      {isAdminFlag && location.pathname === '/owner' && (
+      {isAdmin(contractOverview.ownerAddress) && location.pathname === '/owner' && (
         <StatCard
           title="Automatic activation"
           value={contractOverview.automaticActivation ? 'ON' : 'OFF'}

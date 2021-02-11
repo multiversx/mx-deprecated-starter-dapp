@@ -1,4 +1,5 @@
 import { IDappProvider, ProxyProvider, ApiProvider, WalletProvider } from '@elrondnetwork/erdjs';
+import { ContractOverview } from 'helpers/types';
 import { denomination, decimals, networks, NetworkType } from '../config';
 import { getItem } from '../storage/session';
 
@@ -37,10 +38,25 @@ export interface StateType {
   delegationContract?: string;
   auctionContract?: string;
   stakingContract?: string;
+  totalActiveStake: string;
+  numberOfActiveNodes: string;
+  contractOverview: ContractOverview;
 }
 export const emptyAccount: AccountType = {
   balance: '...',
   nonce: 0,
+};
+
+export const emptyContractOverview: ContractOverview = {
+  ownerAddress: '',
+  serviceFee: '',
+  maxDelegationCap: '',
+  initialOwnerFunds: '',
+  automaticActivation: 'false',
+  withDelegationCap: false,
+  changeableServiceFee: false,
+  createdNounce: false,
+  unBondPeriod: 0,
 };
 
 export const initialState = (optionalConfig?: NetworkType[]) => {
@@ -73,6 +89,9 @@ export const initialState = (optionalConfig?: NetworkType[]) => {
     delegationContract: sessionNetwork.delegationContract,
     auctionContract: sessionNetwork.auctionContract,
     stakingContract: sessionNetwork.stakingContract,
+    contractOverview: emptyContractOverview,
+    numberOfActiveNodes: '...',
+    totalActiveStake: '...',
   };
 };
 

@@ -7,17 +7,10 @@ import { contractViews } from 'contracts/ContractViews';
 import ClaimRewardsAction from '../Actions/ClaimRewardsAction';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import State from 'components/State';
+import { denomination, decimals } from 'config';
 
 const MyDelegation = () => {
-  const {
-    dapp,
-    address,
-    egldLabel,
-    delegationContract,
-    denomination,
-    decimals,
-    loading,
-  } = useContext();
+  const { dapp, address, egldLabel, delegationContract, loading } = useContext();
   const dispatch = useDispatch();
   const { getClaimableRewards, getUserActiveStake } = contractViews;
   const [userActiveStake, setUserActiveState] = React.useState('0');

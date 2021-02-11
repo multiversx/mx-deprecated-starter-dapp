@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useContext } from 'context';
 import { ErrorMessage, Formik } from 'formik';
 import BigNumber from 'bignumber.js';
 import { object, number } from 'yup';
-import { contractViews } from 'contracts/ContractViews';
 import denominate from 'components/Denominate/formatters';
 import { ActionModalType } from 'helpers/types';
+import { denomination, decimals } from 'config';
 
 const DelegationCapModal = ({
   show,
@@ -15,27 +15,7 @@ const DelegationCapModal = ({
   handleClose,
   handleContinue,
 }: ActionModalType) => {
-  const { egldLabel, denomination, decimals, dapp, delegationContract } = useContext();
-  const { getTotalActiveStake } = contractViews;
-  const [totalActiveStake, setTotalActiveStake] = React.useState('0');
-  const getTotalStake = () => {
-    getTotalActiveStake(dapp, delegationContract)
-      .then(value => {
-        let input = value.returnData[0].asBigInt.toString();
-        setTotalActiveStake(
-          denominate({
-            input,
-            denomination,
-            decimals,
-            showLastNonZeroDecimal: false,
-            addCommas: false,
-          })
-        );
-      })
-      .catch(e => console.error('getTotalStake error ', e));
-  };
-
-  useEffect(getTotalStake, []);
+  const { egldLabel, totalActiveStake } = useContext();
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
@@ -50,7 +30,13 @@ const DelegationCapModal = ({
           </p>
           <Formik
             initialValues={{
-              amount: totalActiveStake,
+              amount: denominate({
+                input: totalActiveStake,
+                denomination,
+                decimals,
+                showLastNonZeroDecimal: false,
+                addCommas: false,
+              }),
             }}
             onSubmit={values => {
               handleContinue(values.amount);
@@ -58,10 +44,30 @@ const DelegationCapModal = ({
             validationSchema={object().shape({
               amount: number()
                 .required('Required')
-                .test('minimum', `Minimum ${totalActiveStake} ${egldLabel}`, value => {
-                  const bnAmount = new BigNumber(value !== undefined ? value : '');
-                  return bnAmount.comparedTo(totalActiveStake) >= 0;
-                })
+                .test(
+                  'minimum',
+                  `Minimum ${denominate({
+                    input: totalActiveStake,
+                    denomination,
+                    decimals,
+                    showLastNonZeroDecimal: false,
+                    addCommas: false,
+                  })} ${egldLabel}`,
+                  value => {
+                    const bnAmount = new BigNumber(value !== undefined ? value : '');
+                    return (
+                      bnAmount.comparedTo(
+                        denominate({
+                          input: totalActiveStake,
+                          denomination,
+                          decimals,
+                          showLastNonZeroDecimal: false,
+                          addCommas: false,
+                        })
+                      ) >= 0
+                    );
+                  }
+                )
                 .test('number', 'String not allowed, only numbers.', value => {
                   const regex = /^(\d+(?:[\.]\d{1,2})?)$/;
                   return regex.test(value?.toString() || '');

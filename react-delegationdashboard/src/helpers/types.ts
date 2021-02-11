@@ -12,6 +12,7 @@ export interface DelegationContractType {
 }
 
 export class ContractOverview {
+  ownerAddress: string;
   serviceFee?: string;
   maxDelegationCap: string;
   initialOwnerFunds?: string;
@@ -21,6 +22,7 @@ export class ContractOverview {
   createdNounce?: boolean;
   unBondPeriod?: number;
   public constructor(
+    ownerAddress: string = '',
     serviceFee?: string,
     maxDelegationCap: string = '',
     initialOwnerFunds?: string,
@@ -30,6 +32,7 @@ export class ContractOverview {
     createdNounce?: boolean,
     unBondPeriod?: number
   ) {
+    this.ownerAddress = ownerAddress;
     this.serviceFee = serviceFee;
     this.maxDelegationCap = maxDelegationCap;
     this.initialOwnerFunds = initialOwnerFunds;

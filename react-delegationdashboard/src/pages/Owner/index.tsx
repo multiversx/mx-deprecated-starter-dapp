@@ -1,29 +1,18 @@
 import { Redirect } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useContext } from 'context';
-import { contractViews } from 'contracts/ContractViews';
 import Overview from 'components/Overview';
 import Nodes from './Nodes';
 
 const Owner = () => {
-  const { dapp, address, delegationContract, loggedIn } = useContext();
-  const { getContractConfig } = contractViews;
-  const [isOwner, setIsOwner] = useState(false);
-
-  const getContractConfiguration = () => {
-    getContractConfig(dapp, delegationContract)
-      .then(value => {
-        let ownerAddress = value.returnData[0].asHex;
-        let loginAddress = new Address(address).hex();
-        setIsOwner(loginAddress.localeCompare(ownerAddress) < 0 ? false : true);
-      })
-      .catch(e => console.error('getContractConfig error ', e));
+  const { address, contractOverview, loggedIn } = useContext();
+  const isAdmin = (ownerAddress: string) => {
+    let loginAddress = new Address(address).hex();
+    return loginAddress === ownerAddress;
   };
 
-  useEffect(getContractConfiguration, []);
-
-  if (!isOwner) {
+  if (!isAdmin(contractOverview.ownerAddress)) {
     <Redirect to="/dashboard" />;
   }
 
