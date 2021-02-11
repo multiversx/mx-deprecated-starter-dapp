@@ -105,7 +105,7 @@ const Views = () => {
   }, []);
 
   return (
-    <div className="cards d-flex flex-wrap">
+    <div className="cards d-flex flex-wrap mr-spacer">
       <StatCard
         title="Contract Stake"
         value={totalActiveStake}
@@ -143,7 +143,7 @@ const Views = () => {
         {location.pathname === '/owner' && <SetPercentageFeeAction />}
       </StatCard>
       <StatCard
-        title="Delegation cap"
+        title="Delegation Cap"
         value={contractOverview.maxDelegationCap || ''}
         valueUnit={egldLabel}
         color="green"
@@ -153,10 +153,10 @@ const Views = () => {
         {location.pathname === '/owner' && <UpdateDelegationCapAction />}
       </StatCard>
       <StatCard
-        title="Automatic activation"
+        title="Auto Activation"
         value={contractOverview.automaticActivation ? 'ON' : 'OFF'}
-        color="green"
-        svg="delegation.svg"
+        color="primary"
+        svg="activation.svg"
       >
         {location.pathname === '/owner' && (
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />

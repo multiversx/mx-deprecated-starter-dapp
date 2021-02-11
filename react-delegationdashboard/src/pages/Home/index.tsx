@@ -13,7 +13,7 @@ const Home = () => {
   const ref = React.useRef(null);
 
   return (
-    <div ref={ref} className="home d-flex flex-fill align-items-center container">
+    <div ref={ref} className="home d-flex flex-fill align-items-center">
       {error ? (
         <State
           icon={faBan}
@@ -27,16 +27,19 @@ const Home = () => {
         <State icon={faCircleNotch} iconClass="fa-spin text-primary" />
       ) : (
         <div className="m-auto login-container">
-          <div className="card my-3 text-center">
-            <div className="card-body mx-3 mx-lg-5">
-              <Logo className="logo my-4" />
-              <h4 className="mb-4">Delegation Manager</h4>
-              <p className="mb-5">
+          <div className="card my-spacer text-center">
+            <div className="card-body p-spacer mx-lg-spacer">
+              <Logo className="logo mb-spacer" />
+              <h4 className="mb-spacer">Delegation Manager</h4>
+              <p className="lead mb-spacer">
+                Etiam tincidunt turpis vitae sapien iaculis accumsan.
+              </p>
+              <p className="mb-spacer">
                 Etiam tincidunt turpis vitae sapien iaculis accumsan. Nunc placerat lorem non ipsum
                 interdum, vel condimentum justo tristique. Praesent ut dapibus velit, eu vehicula
                 orci.
               </p>
-              <div className="mb-4">
+              <div>
                 <LedgerLogin />
                 <WalletLogin />
               </div>

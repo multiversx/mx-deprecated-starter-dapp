@@ -66,7 +66,7 @@ const Nodes = () => {
       <div className="card mt-spacer">
         <div className="card-body p-spacer">
           <div className="d-flex flex-wrap align-items-center justify-content-between mb-spacer">
-            <p className="h6 mb-0">My Nodes</p>
+            <p className="h6 mb-3">My Nodes</p>
             <div className="d-flex">
               <AddNodeAction />
             </div>

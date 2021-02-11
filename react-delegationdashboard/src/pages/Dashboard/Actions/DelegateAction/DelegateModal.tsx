@@ -111,7 +111,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                   <div className="d-flex justify-content-center align-items-center flex-wrap">
                     <button
                       type="submit"
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-primary mx-2"
                       id="continueDelegate"
                       data-testid="continueDelegate"
                     >

@@ -51,7 +51,7 @@ const PlaygroundPemUpload = ({
               />
             </div>
             <div className="d-flex align-items-center justify-content-center flex-wrap mt-spacer">
-              <button type="submit" className="btn btn-outline-primary">
+              <button type="submit" className="btn btn-primary">
                 Continue
               </button>
               <div className="btn btn-link" onClick={handleClose}>

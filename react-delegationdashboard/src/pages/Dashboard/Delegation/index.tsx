@@ -77,9 +77,9 @@ const MyDelegation = () => {
         <div className="card mt-spacer">
           <div className="card-body p-spacer">
             <div className="d-flex flex-wrap align-items-center justify-content-between">
-              <p className="h6 mb-0">My Stake</p>
+              <p className="h6 mb-3">My Stake</p>
               {userActiveStake !== String(0) && (
-                <div className="d-flex">
+                <div className="d-flex flex-wrap">
                   <DelegateAction />
                   {displayUndelegate && <UndelegateAction />}
                 </div>

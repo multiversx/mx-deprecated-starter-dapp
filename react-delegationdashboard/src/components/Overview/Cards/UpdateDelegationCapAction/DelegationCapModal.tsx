@@ -62,7 +62,7 @@ const DelegationCapModal = ({
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
                   return bnAmount.comparedTo(totalActiveStake) >= 0;
                 })
-                .test('number', 'String not allowed, only numbers. For example (12.20)', value => {
+                .test('number', 'String not allowed, only numbers.', value => {
                   const regex = /^(\d+(?:[\.]\d{1,2})?)$/;
                   return regex.test(value?.toString() || '');
                 }),
@@ -93,7 +93,7 @@ const DelegationCapModal = ({
                   <div className="d-flex justify-content-center align-items-center flex-wrap">
                     <button
                       type="submit"
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-primary mx-2"
                       id="continueDelegate"
                       data-testid="continueDelegate"
                     >

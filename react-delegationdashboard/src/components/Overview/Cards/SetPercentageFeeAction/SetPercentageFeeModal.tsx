@@ -6,7 +6,7 @@ import { object, string } from 'yup';
 const SetPercentageFeeSchema = object().shape({
   amount: string()
     .required('Required')
-    .test('number', 'String not allowed, only numbers. For example (12.20)', value => {
+    .test('number', 'String not allowed, only numbers.', value => {
       const regex = /^(\d+(?:[\.]\d{1,2})?)$/;
       return regex.test(value || '');
     }),
@@ -65,14 +65,14 @@ const SetPercentageFeeModal = ({
                       onBlur={handleBlur}
                     />
                     {!(errors.amount && touched.amount) && (
-                      <small className="form-text text-secondary mt-0">For example: 12.30</small>
+                      <small className="form-text text-secondary">For example: 12.30</small>
                     )}
                     <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
                   <div className="d-flex justify-content-center align-items-center flex-wrap">
                     <button
                       type="submit"
-                      className="btn btn-outline-primary mx-2"
+                      className="btn btn-primary mx-2"
                       id="continueDelegate"
                       data-testid="continueUndelegate"
                     >

@@ -15,7 +15,6 @@ $light: #f3f6f9;
 $success: #28a745;
 
 $white: #fff;
-$light-primary: #e1f0ff;
 $orange: #ffa800;
 $light-orange: #fff4de;
 $dark-orange: #634100;
@@ -28,6 +27,8 @@ $dark-purple: #8a50fc;
 $red: #f64e60;
 $light-red: #ffe2e6;
 $dark-red: #f65464;
+$light-primary: #e1f0ff;
+$dark-primary: #1789ff;
 
 $card-bg: $white;
 $text-muted: $muted;
@@ -54,6 +55,8 @@ $input-color: $secondary;
 $input-bg: $card-bg;
 $input-disabled-bg: #e9ecef;
 $input-hover-border-color: darken($border-color, 15%);
+$label-margin-bottom: 0.25rem;
+$form-text-margin-top: 0.25rem;
 
 // TABLE
 $table-color: $dark;
@@ -66,6 +69,10 @@ $table-border-color: #e5eaee;
 $card-border-color: #e5eaee;
 $card-cap-bg: $card-bg;
 $card-border-radius: 0.65rem;
+
+// MODAL
+$modal-content-border-width: 0;
+$modal-content-border-radius: $border-radius;
 
 // BUTTONS
 $btn-padding-y: 0.5rem;
@@ -103,6 +110,7 @@ $theme-colors: (
   'light-red': $light-red,
   'dark-red': $dark-red,
   'light-primary': $light-primary,
+  'dark-primary': $dark-primary,
   'white': $white,
 );
 
