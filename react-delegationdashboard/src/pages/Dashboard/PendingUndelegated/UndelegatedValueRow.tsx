@@ -6,10 +6,8 @@ import { useContext } from 'context';
 
 const UndelegatedValueRow = ({
   undelegatedValue: value,
-  index,
 }: {
   undelegatedValue: UndelegatedValueType;
-  index: number;
 }) => {
   const { delegation } = useDelegation();
   const [isDisabled, setIsDisabled] = React.useState(true);

@@ -15,7 +15,7 @@ export class ContractOverview {
   serviceFee?: string;
   maxDelegationCap: string;
   initialOwnerFunds?: string;
-  automaticActivation?: boolean;
+  automaticActivation: string;
   withDelegationCap?: boolean;
   changeableServiceFee?: boolean;
   createdNounce?: boolean;
@@ -24,7 +24,7 @@ export class ContractOverview {
     serviceFee?: string,
     maxDelegationCap: string = '',
     initialOwnerFunds?: string,
-    automaticActivation?: boolean,
+    automaticActivation: string = 'false',
     withDelegationCap?: boolean,
     changeableServiceFee?: boolean,
     createdNounce?: boolean,

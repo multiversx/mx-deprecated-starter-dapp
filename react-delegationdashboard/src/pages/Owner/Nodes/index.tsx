@@ -8,10 +8,9 @@ import {
   getQueueSize,
   getQueueIndex,
 } from './helpers/keysFunctions';
-import SetAutomaticActivationAction from './SetAutomaticActivationAction';
 import AddNodeAction from './AddNodeAction';
 
-const Nodes = ({ automaticActivationFlag }: { automaticActivationFlag: string }) => {
+const Nodes = () => {
   const { dapp, delegationContract, auctionContract, stakingContract } = useContext();
   const [keys, setKeys] = useState(new Array<NodeType>());
   const queued: any = [];
@@ -70,7 +69,6 @@ const Nodes = ({ automaticActivationFlag }: { automaticActivationFlag: string })
             <p className="h6 mb-0">My Nodes</p>
             <div className="d-flex">
               <AddNodeAction />
-              <SetAutomaticActivationAction automaticFlag={automaticActivationFlag} />
             </div>
           </div>
           {keys.length > 0 ? (

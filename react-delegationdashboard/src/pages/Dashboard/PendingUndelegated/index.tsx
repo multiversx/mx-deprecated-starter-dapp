@@ -75,7 +75,7 @@ const UndelegatedListView = () => {
                 </thead>
                 <tbody>
                   {userUnstakeValue.map((undelegatedValue, i) => (
-                    <UndelegatedValueRow undelegatedValue={undelegatedValue} key={i} index={i} />
+                    <UndelegatedValueRow undelegatedValue={undelegatedValue} key={i} />
                   ))}
                 </tbody>
               </table>

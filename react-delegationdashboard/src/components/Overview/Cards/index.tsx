@@ -11,6 +11,7 @@ import { useState } from 'react';
 
 import SetPercentageFeeAction from './SetPercentageFeeAction';
 import UpdateDelegationCapAction from './UpdateDelegationCapAction';
+import AutomaticActivationAction from './AutomaticActivationAction';
 
 const Views = () => {
   const { dapp, egldLabel, delegationContract } = useContext();
@@ -37,7 +38,7 @@ const Views = () => {
       (parseFloat(value.returnData[1].asHex) / 100).toString(),
       delegationCap,
       initialOwnerFunds,
-      value.returnData[4]?.asBool,
+      value.returnData[4]?.asString,
       value.returnData[5].asBool,
       value.returnData[6].asBool,
       value.returnData[7].asBool,
@@ -150,6 +151,16 @@ const Views = () => {
         percentage={`${getPercentage(totalActiveStake, contractOverview.maxDelegationCap)}% filled`}
       >
         {location.pathname === '/owner' && <UpdateDelegationCapAction />}
+      </StatCard>
+      <StatCard
+        title="Automatic activation"
+        value={contractOverview.automaticActivation ? 'ON' : 'OFF'}
+        color="green"
+        svg="delegation.svg"
+      >
+        {location.pathname === '/owner' && (
+          <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />
+        )}
       </StatCard>
     </div>
   );

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import AutomaticActivationModal from './AutomaticActivationModal';
 
-const SetAutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string }) => {
+const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string }) => {
   const [showAutomaticActivationModal, setShowAutomaticActivationModal] = useState(false);
 
   return (
     <div>
-      <button onClick={() => setShowAutomaticActivationModal(true)} className="btn btn-primary">
-        Automatic activation
+      <button
+        onClick={() => setShowAutomaticActivationModal(true)}
+        className="btn btn-white btn-sm text-green opacity-5 mr-n1"
+      >
+        Change
       </button>
       <AutomaticActivationModal
         show={showAutomaticActivationModal}
@@ -22,4 +25,4 @@ const SetAutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string
   );
 };
 
-export default SetAutomaticActivationAction;
+export default AutomaticActivationAction;
