@@ -58,7 +58,13 @@ const MyDelegation = () => {
 
         dispatch({ type: 'loading', loading: false });
       })
-      .catch(e => console.error('getUserActiveStake error', e));
+      .catch(e => {
+        console.error('getUserActiveStake error', e);
+        dispatch({
+          type: 'loading',
+          loading: false,
+        });
+      });
   };
 
   React.useEffect(getAllData, []);
