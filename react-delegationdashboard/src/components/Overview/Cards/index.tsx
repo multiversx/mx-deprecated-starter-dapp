@@ -14,12 +14,13 @@ import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 import AutomaticActivationAction from './AutomaticActivationAction';
 
 const Views = () => {
-  const { dapp, egldLabel, delegationContract, auctionContract } = useContext();
+  const { dapp, egldLabel, delegationContract, auctionContract, address } = useContext();
   const { getTotalActiveStake, getContractConfig } = contractViews;
   const [totalActiveStake, setTotalActiveStake] = React.useState('...');
   const [noNodes, setNoNodes] = React.useState('...');
   const [contractOverview, setContractOverview] = useState(new ContractOverview());
   const [networkStake, setNetworkStake] = useState(new NetworkStake());
+  const [isAdminFlag, setIsAdminFlag] = useState(false);
 
   const getContractOverviewType = (value: QueryResponse) => {
     let delegationCap = denominate({
@@ -55,9 +56,17 @@ const Views = () => {
     return percentage ? percentage.toFixed(2) : '...';
   };
 
+  const isAdmin = (ownerAddress: string) => {
+    let loginAddress = new Address(address).hex();
+    return loginAddress === ownerAddress;
+  };
+
   const getContractConfiguration = () => {
     getContractConfig(dapp, delegationContract)
       .then(value => {
+        if (isAdmin(value.returnData[0].asHex)) {
+          setIsAdminFlag(true);
+        }
         let contractOverview = getContractOverviewType(value);
         setContractOverview(contractOverview);
       })
@@ -164,16 +173,16 @@ const Views = () => {
       >
         {location.pathname === '/owner' && <UpdateDelegationCapAction />}
       </StatCard>
-      <StatCard
-        title="Automatic activation"
-        value={contractOverview.automaticActivation ? 'ON' : 'OFF'}
-        color="green"
-        svg="delegation.svg"
-      >
-        {location.pathname === '/owner' && (
+      {isAdminFlag && location.pathname === '/owner' && (
+        <StatCard
+          title="Automatic activation"
+          value={contractOverview.automaticActivation ? 'ON' : 'OFF'}
+          color="green"
+          svg="delegation.svg"
+        >
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />
-        )}
-      </StatCard>
+        </StatCard>
+      )}
     </div>
   );
 };
