@@ -1,32 +1,8 @@
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[Contributors][contributors-url]
-[Forks][forks-url]
-[Stargazers][stars-url]
-[Issues][issues-url]
-
 
 
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-  </a>
 
  <h3 align="center">Dapp boilerplate for Delegation </h3>
 
@@ -122,12 +98,6 @@ One can contribute by creating *pull requests*, or by opening *issues* for disco
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-<!-- MARKDOWN LINKS & IMAGES -->
-[contributors-url]: https://github.com/ElrondNetwork/starter-dapp/graphs/contributors
-[forks-url]: https://github.com/ElrondNetwork/starter-dapp/network/members
-[stars-url]: https://github.com/ElrondNetwork/starter-dapp/stargazers\
-[issues-url]: https://github.com/ElrondNetwork/starter-dapp/issues
 
 
 ## Developers
