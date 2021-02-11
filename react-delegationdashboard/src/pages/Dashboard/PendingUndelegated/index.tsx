@@ -49,7 +49,7 @@ const UndelegatedListView = () => {
           index++;
         }
         let arrayWithdraw = groupUndelegateValuesForTimeLeftZero(undelegatedList);
-        setUserUnstakedValue(arrayWithdraw.reverse());
+        setUserUnstakedValue(arrayWithdraw.sort((a, b) => a.timeLeft - b.timeLeft));
       })
       .catch(e => console.error('getUserUnDelegatedList error', e));
   };
