@@ -26,7 +26,7 @@ const UpdateDelegationCapAction = () => {
     <div>
       <button
         onClick={() => setShowDelegationCapModal(true)}
-        className="btn btn-white btn-sm text-green opacity-5 mr-n1"
+        className="btn btn-outline-green btn-sm mr-n1"
       >
         Change
       </button>

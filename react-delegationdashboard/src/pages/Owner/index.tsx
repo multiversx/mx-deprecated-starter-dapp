@@ -22,7 +22,7 @@ const Owner = () => {
 
   return (
     <div className="owner w-100">
-      <div className="card border-0">
+      <div className="card card-bg border-0">
         <Overview />
         <div className="card-body pt-0 px-spacer pb-spacer">
           <Nodes />

@@ -43,7 +43,7 @@ const UndelegatedValueRow = ({
               left
             </span>
           ) : (
-            <span className="badge badge-sm badge-light-green text-green">Completed</span>
+            <span className="badge badge-sm badge-light-green text-green py-1">Completed</span>
           )}
         </div>
       </td>

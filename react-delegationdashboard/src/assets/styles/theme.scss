@@ -2,15 +2,16 @@ $font-family-sans-serif: 'Poppins', sans-serif;
 $font-weight-normal: 300;
 $font-weight-bold: 500;
 $headings-font-weight: 400;
+$headings-color: #000;
 
 $body: #000;
 $body-bg: #e5e5e5;
 $body-color: #212121;
 
-$primary: #3699ff;
+$primary: #2173f7;
 $secondary: #464e5f;
 $dark: #5d6473;
-$muted: #b5b5c3;
+$muted: #6c757d;
 $light: #f3f6f9;
 $success: #28a745;
 
@@ -34,7 +35,7 @@ $card-bg: $white;
 $text-muted: $muted;
 $brand-color: $dark;
 $logo-height: 1.5rem;
-$bg-image: $body-bg;
+$bg-image: #cad2dc;
 $footer-color: $secondary;
 
 $lead-font-size: 1.15rem;
@@ -46,8 +47,8 @@ $statcard-value-size: 1.5rem;
 $statcard-subvalue-size: 0.6rem;
 
 // BORDER
-$border-radius: 0.65rem;
-$border-color: lighten($muted, 10%);
+$border-radius: 0.5rem;
+$border-color: #e4e5e5;
 
 // INPUT
 $input-border-radius: 0.2rem;
@@ -61,7 +62,7 @@ $form-text-margin-top: 0.25rem;
 // TABLE
 $table-color: $dark;
 $table-cell-padding: 1.5625rem;
-$table-font-size: 0.875rem;
+$table-font-size: 1rem;
 $table-head-font-size: $table-font-size;
 $table-border-color: #e5eaee;
 

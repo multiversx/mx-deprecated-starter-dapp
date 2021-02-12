@@ -21,7 +21,7 @@ const Navbar = () => {
           <div className="d-flex align-items-center" style={{ minWidth: 0 }}>
             <small className="d-none d-lg-inline text-muted mr-2">Wallet address: </small>
             <small className="text-truncate">{address}</small>
-            <a href="/#" onClick={logOut} className="btn btn-light btn-sm text-primary ml-3">
+            <a href="/#" onClick={logOut} className="btn btn-outline-primary btn-sm ml-3">
               Close
             </a>
           </div>

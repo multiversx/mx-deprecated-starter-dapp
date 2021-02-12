@@ -13,7 +13,7 @@ const Dashboard = () => {
   }
   return (
     <div className="dashboard w-100">
-      <div className="card border-0">
+      <div className="card card-bg border-0">
         <Overview />
         <div className="card-body pt-0 px-spacer pb-spacer">
           <Delegation />

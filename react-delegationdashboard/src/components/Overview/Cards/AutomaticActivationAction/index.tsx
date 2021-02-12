@@ -8,7 +8,7 @@ const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string })
     <div>
       <button
         onClick={() => setShowAutomaticActivationModal(true)}
-        className="btn btn-white btn-sm text-primary opacity-5 mr-n1"
+        className="btn btn-outline-primary btn-sm mr-n1"
       >
         Change
       </button>

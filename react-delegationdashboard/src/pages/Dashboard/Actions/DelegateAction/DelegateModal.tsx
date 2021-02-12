@@ -42,7 +42,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">
         <div className="card-body p-spacer text-center">
-          <p className="h6 mb-spacer" data-testid="delegateTitle">
+          <p className="h5" data-testid="delegateTitle">
             Delegate now
           </p>
           {isFullDelegationCapContract() ? (

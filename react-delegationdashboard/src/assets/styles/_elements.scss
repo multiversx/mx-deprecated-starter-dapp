@@ -11,12 +11,15 @@
       border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
     }
   }
+
+  &.card-bg {
+    background: #e9ebee;
+  }
 }
 
 .table {
   th,
   td {
-    font-size: 0.875rem;
     vertical-align: middle;
     &:first-of-type {
       padding-left: 0;
@@ -27,7 +30,7 @@
     }
   }
   th {
-    font-size: $table-head-font-size;
+    font-size: 0.8rem;
     font-weight: 400;
     padding-top: 0;
     padding-bottom: 0.875rem;
@@ -60,4 +63,8 @@ label {
 
 .fa-spin {
   animation-duration: 0.5s;
+}
+
+.btn-outline-light {
+  color: #fff !important;
 }

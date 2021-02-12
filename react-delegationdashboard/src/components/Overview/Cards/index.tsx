@@ -118,7 +118,7 @@ const Views = () => {
       </StatCard>
       {isAdmin(contractOverview.ownerAddress) && location.pathname === '/owner' && (
         <StatCard
-          title="Automatic activation"
+          title="Auto-activate"
           value={contractOverview.automaticActivation === 'true' ? 'ON' : 'OFF'}
           color="primary"
           svg="activation.svg"

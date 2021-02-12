@@ -27,7 +27,7 @@ const UndelegateModal = ({
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">
         <div className="card-body p-spacer text-center">
-          <p className="h6 mb-spacer" data-testid="undelegateTitle">
+          <p className="h5" data-testid="undelegateTitle">
             {title}
           </p>
           <p className="mb-spacer">{description}</p>

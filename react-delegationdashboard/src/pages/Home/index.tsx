@@ -30,10 +30,8 @@ const Home = () => {
           <div className="card my-spacer text-center">
             <div className="card-body p-spacer mx-lg-spacer">
               <Logo className="logo mb-spacer" />
-              <h4 className="mb-spacer">Delegation Manager</h4>
-              <p className="lead mb-spacer">
-                Etiam tincidunt turpis vitae sapien iaculis accumsan.
-              </p>
+              <h4>Delegation Manager</h4>
+              <p className="lead mb-spacer">Etiam tincidunt turpis vitae sapien iaculis.</p>
               <p className="mb-spacer">
                 Etiam tincidunt turpis vitae sapien iaculis accumsan. Nunc placerat lorem non ipsum
                 interdum, vel condimentum justo tristique. Praesent ut dapibus velit, eu vehicula

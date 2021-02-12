@@ -40,7 +40,7 @@ const RequestVariablesModal = ({
     <Modal show={show} className="modal-container" animation={false} centered>
       <div className="card">
         <div className="card-body p-spacer text-center">
-          <p className="h6 mb-0" data-testid="delegateTitle">
+          <p className="h5" data-testid="delegateTitle">
             {name}
           </p>
           <div className="mt-spacer">

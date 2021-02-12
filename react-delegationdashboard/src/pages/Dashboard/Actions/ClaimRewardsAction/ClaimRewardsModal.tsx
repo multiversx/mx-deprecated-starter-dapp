@@ -27,7 +27,7 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">
         <div className="card-body p-spacer text-center">
-          <p className="h6 mb-spacer" data-testid="delegateTitle">
+          <p className="h5" data-testid="delegateTitle">
             {title}
           </p>
           <p className="mb-spacer">{description}</p>

@@ -61,8 +61,8 @@ const UndelegatedListView = () => {
       {userUnstakeValue.length > 0 && (
         <div className="card mt-spacer">
           <div className="card-body p-spacer">
-            <div className="d-flex flex-wrap align-items-center justify-content-between mb-spacer">
-              <p className="h6 mb-0">Pending Withdrawals</p>
+            <div className="d-flex flex-wrap align-items-center justify-content-between mb-spacer pb-2">
+              <p className="h6">Pending Withdrawals</p>
             </div>
             <div className="table-responsive">
               <table className="table table-borderless mb-0">

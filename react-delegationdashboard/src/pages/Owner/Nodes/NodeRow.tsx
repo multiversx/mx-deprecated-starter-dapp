@@ -68,11 +68,11 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
       </td>
       <td>
         {key.status.key === 'queued' && key.queueIndex && key.queueSize ? (
-          <span className={`badge badge-sm badge-light-${statusColor} text-${statusColor}`}>
+          <span className={`badge badge-sm py-1 badge-light-${statusColor} text-${statusColor}`}>
             {key.status.value} ({key.queueIndex}/{key.queueSize})
           </span>
         ) : (
-          <span className={`badge badge-sm badge-light-${statusColor} text-${statusColor}`}>
+          <span className={`badge badge-sm py-1 badge-light-${statusColor} text-${statusColor}`}>
             {key.status.value}
           </span>
         )}
@@ -82,7 +82,7 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
         <Dropdown className="ml-auto">
           <Dropdown.Toggle
             variant=""
-            className="btn btn-sm btn-light-primary text-primary action-dropdown"
+            className="btn btn-sm btn-outline-primary mr-2 action-dropdown"
           >
             <FontAwesomeIcon icon={faCaretDown} className="fa-2x" />
           </Dropdown.Toggle>
