@@ -13,18 +13,18 @@ const Header = () => {
   };
 
   return (
-    <div className="header card-header bg-primary text-white d-flex align-items-center justify-content-between px-spacer">
+    <div className="header card-header d-flex align-items-center border-0 justify-content-between px-spacer">
       <div className="py-spacer text-truncate">
         <p className="opacity-6 mb-0">Contract Address</p>
         <span className="text-truncate">{delegationContract}</span>
       </div>
       {isAdmin(contractOverview.ownerAddress) && pathname !== '/owner' ? (
-        <Link to="/owner" className="btn btn-light-primary btn-sm text-primary">
+        <Link to="/owner" className="btn btn-primary btn-sm">
           Admin
         </Link>
       ) : null}
       {pathname !== '/dashboard' ? (
-        <Link to="/dashboard" className="btn btn-light-primary btn-sm text-primary">
+        <Link to="/dashboard" className="btn btn-primary btn-sm">
           Dashboard
         </Link>
       ) : null}

@@ -30,15 +30,11 @@ const Home = () => {
           <div className="card my-spacer text-center">
             <div className="card-body p-spacer mx-lg-spacer">
               <Logo className="logo mb-spacer" />
-              <h4 className="mb-spacer">Delegation Manager</h4>
+              <h4 className="mb-spacer">Elrond Delegation Manager</h4>
               <p className="lead mb-spacer">
-                Etiam tincidunt turpis vitae sapien iaculis accumsan.
+                Delegate Elrond XeGold (XeGLD) and earn up to 25% APY!
               </p>
-              <p className="mb-spacer">
-                Etiam tincidunt turpis vitae sapien iaculis accumsan. Nunc placerat lorem non ipsum
-                interdum, vel condimentum justo tristique. Praesent ut dapibus velit, eu vehicula
-                orci.
-              </p>
+              <p className="mb-spacer">Please select your login method:</p>
               <div>
                 <LedgerLogin />
                 <WalletLogin />

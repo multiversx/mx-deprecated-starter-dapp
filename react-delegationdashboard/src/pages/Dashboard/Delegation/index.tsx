@@ -87,7 +87,7 @@ const MyDelegation = () => {
             ) : (
               <div className="m-auto text-center py-spacer">
                 <div>
-                  <p className="m-0 text-dark">Active Stake</p>
+                  <p className="m-0">Active Stake</p>
                   <p className="h4">
                     {userActiveStake}
                     {egldLabel}

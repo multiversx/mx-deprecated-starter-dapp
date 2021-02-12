@@ -65,7 +65,7 @@ const SetPercentageFeeModal = ({
                       onBlur={handleBlur}
                     />
                     {!(errors.amount && touched.amount) && (
-                      <small className="form-text text-secondary">For example: 12.30</small>
+                      <small className="form-text">For example: 12.30</small>
                     )}
                     <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
