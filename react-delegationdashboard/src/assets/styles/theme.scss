@@ -3,11 +3,11 @@ $font-weight-normal: 300;
 $font-weight-bold: 500;
 $headings-font-weight: 400;
 
-$body: #000;
+$body: #fff;
 $body-bg: #e5e5e5;
-$body-color: #212121;
+$body-color: #fff;
 
-$primary: #3699ff;
+$primary: rgba(0, 0, 0, 0.2);
 $secondary: #464e5f;
 $dark: #5d6473;
 $muted: #b5b5c3;
@@ -30,11 +30,11 @@ $dark-red: #f65464;
 $light-primary: #e1f0ff;
 $dark-primary: #1789ff;
 
-$card-bg: $white;
+$card-bg: rgba(0, 0, 0, 0.4);
 $text-muted: $muted;
 $brand-color: $dark;
 $logo-height: 1.5rem;
-$bg-image: $body-bg;
+$bg-image: linear-gradient(143deg, #4158d0 0%, #c850c0 86%);
 $footer-color: $secondary;
 
 $lead-font-size: 1.15rem;
@@ -59,14 +59,14 @@ $label-margin-bottom: 0.25rem;
 $form-text-margin-top: 0.25rem;
 
 // TABLE
-$table-color: $dark;
+$table-color: $white;
 $table-cell-padding: 1.5625rem;
 $table-font-size: 0.875rem;
 $table-head-font-size: $table-font-size;
-$table-border-color: #e5eaee;
+$table-border-color: $white;
 
 // CARD
-$card-border-color: #e5eaee;
+$card-border-color: rgba(0, 0, 0, 0.4);
 $card-cap-bg: $card-bg;
 $card-border-radius: 0.65rem;
 

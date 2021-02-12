@@ -19,12 +19,12 @@ const Header = () => {
         <span className="text-truncate">{delegationContract}</span>
       </div>
       {isAdmin(contractOverview.ownerAddress) && pathname !== '/owner' ? (
-        <Link to="/owner" className="btn btn-light-primary btn-sm text-primary">
+        <Link to="/owner" className="btn btn-primary btn-sm">
           Admin
         </Link>
       ) : null}
       {pathname !== '/dashboard' ? (
-        <Link to="/dashboard" className="btn btn-light-primary btn-sm text-primary">
+        <Link to="/dashboard" className="btn btn-primary btn-sm">
           Dashboard
         </Link>
       ) : null}

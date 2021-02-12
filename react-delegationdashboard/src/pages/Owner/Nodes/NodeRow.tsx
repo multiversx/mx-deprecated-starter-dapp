@@ -80,10 +80,7 @@ const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) =>
 
       <td>
         <Dropdown className="ml-auto">
-          <Dropdown.Toggle
-            variant=""
-            className="btn btn-sm btn-light-primary text-primary action-dropdown"
-          >
+          <Dropdown.Toggle variant="" className="btn btn-sm btn-primary action-dropdown">
             <FontAwesomeIcon icon={faCaretDown} className="fa-2x" />
           </Dropdown.Toggle>
           <Dropdown.Menu>
