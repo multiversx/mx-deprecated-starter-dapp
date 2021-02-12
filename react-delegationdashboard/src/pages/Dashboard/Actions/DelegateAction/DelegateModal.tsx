@@ -113,7 +113,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                           <span className="input-group-append">
                             <a
                               href="/#"
-                              className="input-group-text"
+                              className="input-group-text text-dark"
                               onClick={getEntireBalance}
                               data-testid="maxBtn"
                             >

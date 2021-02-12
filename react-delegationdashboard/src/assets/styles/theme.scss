@@ -9,26 +9,21 @@ $body-bg: #e5e5e5;
 $body-color: #fff;
 
 $primary: $white;
-$secondary: #464e5f;
+$secondary: #f3f6f9;
 $dark: #5d6473;
 $muted: #b5b5c3;
 $light: #f3f6f9;
 $success: #28a745;
 
 $orange: #ffa800;
-$light-orange: #fff4de;
-$dark-orange: #634100;
+$light-orange: #fff4de30;
 $green: #1bc5bd;
-$light-green: #c9f7f5;
-$dark-green: #74bbb7;
+$light-green: #c9f7f530;
 $purple: #8950fc;
-$light-purple: #eee5ff;
-$dark-purple: #8a50fc;
+$light-purple: #eee5ff30;
 $red: #f64e60;
-$light-red: #ffe2e6;
-$dark-red: #f65464;
-$light-primary: #e1f0ff;
-$dark-primary: #1789ff;
+$light-red: #ffe2e630;
+$light-primary: #e1f0ff30;
 
 $card-bg: rgba(0, 0, 0, 0.4);
 $text-muted: $muted;
@@ -101,18 +96,13 @@ $link-hover-color: darken($primary, 7%);
 $theme-colors: (
   'orange': $orange,
   'light-orange': $light-orange,
-  'dark-orange': $dark-orange,
   'green': $green,
   'light-green': $light-green,
-  'dark-green': $dark-green,
   'purple': $purple,
   'light-purple': $light-purple,
-  'dark-purple': $dark-purple,
   'red': $red,
   'light-red': $light-red,
-  'dark-red': $dark-red,
   'light-primary': $light-primary,
-  'dark-primary': $dark-primary,
   'white': $white,
 );
 
