@@ -1,7 +1,7 @@
 
 <div style="text-align:center">
   <img
-  src="https://raw.githubusercontent.com/ElrondNetwork/elrond-go/master/elrond_logo_01.svg"
+  src="https://raw.githubusercontent.com/ElrondNetwork/starter-dapp/master/react-delegationdashboard/preview.png"
   alt="Elrond Network">
 </div>
 <br>
