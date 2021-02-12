@@ -17,7 +17,7 @@ const State = ({
   <div className="state m-auto p-spacer text-center">
     {icon && <FontAwesomeIcon icon={icon} className={iconClass ? iconClass : ''} size="5x" />}
     {title && <p className="h4 mt-2 mb-1">{title}</p>}
-    {description && <div className="text-secondary mb-3">{description}</div>}
+    {description && <div className="mb-3">{description}</div>}
     {action && <>{action}</>}
   </div>
 );

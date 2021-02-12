@@ -120,7 +120,7 @@ const Views = () => {
         <StatCard
           title="Automatic activation"
           value={contractOverview.automaticActivation === 'true' ? 'ON' : 'OFF'}
-          color="primary"
+          color="purple"
           svg="activation.svg"
         >
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />

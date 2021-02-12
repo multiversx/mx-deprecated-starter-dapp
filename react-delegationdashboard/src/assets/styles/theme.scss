@@ -2,19 +2,19 @@ $font-family-sans-serif: 'Poppins', sans-serif;
 $font-weight-normal: 300;
 $font-weight-bold: 500;
 $headings-font-weight: 400;
+$white: #fff;
 
 $body: #fff;
 $body-bg: #e5e5e5;
 $body-color: #fff;
 
-$primary: rgba(0, 0, 0, 0.2);
+$primary: $white;
 $secondary: #464e5f;
 $dark: #5d6473;
 $muted: #b5b5c3;
 $light: #f3f6f9;
 $success: #28a745;
 
-$white: #fff;
 $orange: #ffa800;
 $light-orange: #fff4de;
 $dark-orange: #634100;
@@ -32,10 +32,10 @@ $dark-primary: #1789ff;
 
 $card-bg: rgba(0, 0, 0, 0.4);
 $text-muted: $muted;
-$brand-color: $dark;
+$brand-color: $white;
 $logo-height: 1.5rem;
-$bg-image: linear-gradient(143deg, #4158d0 0%, #c850c0 86%);
-$footer-color: $secondary;
+$bg-image: linear-gradient(143deg, #043a8c 0%, #4e4e4e 86%);
+$footer-color: $white;
 
 $lead-font-size: 1.15rem;
 $h6-font-size: 1.125rem;
@@ -63,7 +63,7 @@ $table-color: $white;
 $table-cell-padding: 1.5625rem;
 $table-font-size: 0.875rem;
 $table-head-font-size: $table-font-size;
-$table-border-color: $white;
+$table-border-color: rgba(255, 255, 255, 0.3);
 
 // CARD
 $card-border-color: rgba(0, 0, 0, 0.4);
@@ -71,8 +71,10 @@ $card-cap-bg: $card-bg;
 $card-border-radius: 0.65rem;
 
 // MODAL
-$modal-content-border-width: 0;
+$modal-content-bg: rgba(25, 24, 63, 0.98) none repeat scroll 0% 0%;
+$modal-content-border-width: 1;
 $modal-content-border-radius: $border-radius;
+$modal-content-box-shadow-xs: rgba(255, 255, 255, 0.2) 0px 0px 0px 0.5px inset;
 
 // BUTTONS
 $btn-padding-y: 0.5rem;
