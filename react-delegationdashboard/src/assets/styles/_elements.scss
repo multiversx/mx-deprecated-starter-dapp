@@ -78,6 +78,9 @@ body.modal-open .layout {
   }
   .dropdown {
     position: unset !important;
+    .dropdown-menu {
+      box-shadow: $dropdown-box-shadow;
+    }
   }
 }
 
