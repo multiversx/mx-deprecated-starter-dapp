@@ -2,10 +2,10 @@
 @import './variables';
 
 // Bootstrap
-@import './node_modules/bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
 // Reboot
-@import './node_modules/bootstrap/scss/reboot';
+@import '~bootstrap/scss/reboot';
 
 // Utilities
 @import './utilities';
