@@ -65,10 +65,6 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                 .test('minimum', `Minimum 10 ${egldLabel}`, value => {
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
                   return bnAmount.comparedTo(10) >= 0;
-                })
-                .test('number', 'String not ed, only numbers. For example (12.20)', value => {
-                  const regex = /^(\d+(?:[\.]\d+)?)$/;
-                  return regex.test(value || '');
                 }),
             })}
           >
@@ -96,7 +92,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                       <label htmlFor="amount">Amount {egldLabel}</label>
                       <div className="input-group">
                         <input
-                          type="text"
+                          type="number"
                           className={`form-control ${
                             errors.amount && touched.amount ? 'is-invalid' : ''
                           }`}

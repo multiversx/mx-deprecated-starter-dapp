@@ -82,6 +82,7 @@ export class UndelegatedValueType {
 }
 
 export interface ActionModalType {
+  balance?: string;
   show: boolean;
   title: string;
   description: string;

@@ -13,7 +13,8 @@ const MyDelegation = () => {
   const { dapp, address, egldLabel, delegationContract, loading } = useContext();
   const dispatch = useDispatch();
   const { getClaimableRewards, getUserActiveStake } = contractViews;
-  const [userActiveStake, setUserActiveState] = React.useState('0');
+  const [userActiveStake, setUserActiveStake] = React.useState('0');
+  const [userActiveNominatedStake, setUserActiveNominatedStake] = React.useState('0');
   const [claimableRewards, setClaimableRewards] = React.useState('0');
   const [displayRewards, setDisplayRewards] = React.useState(false);
   const [displayUndelegate, setDisplayUndelegate] = React.useState(false);
@@ -37,7 +38,7 @@ const MyDelegation = () => {
       .catch(e => console.error('getClaimableRewards error', e));
     getUserActiveStake(dapp, address, delegationContract)
       .then(value => {
-        setUserActiveState(
+        setUserActiveStake(
           denominate({
             denomination,
             decimals,
@@ -45,6 +46,7 @@ const MyDelegation = () => {
             showLastNonZeroDecimal: false,
           }) || ''
         );
+        setUserActiveNominatedStake(value.returnData[0]?.asBigInt.toString());
         if (value.returnData.length > 0 && value.returnData[0]?.asNumber !== 0) {
           setDisplayUndelegate(true);
         }
@@ -74,28 +76,28 @@ const MyDelegation = () => {
               {userActiveStake !== String(0) && (
                 <div className="d-flex flex-wrap">
                   <DelegateAction />
-                  {displayUndelegate && <UndelegateAction />}
+                  {displayUndelegate && <UndelegateAction balance={userActiveNominatedStake}/>}
                 </div>
               )}
             </div>
             {userActiveStake === String(0) ? (
               <State
                 title="No Stake Yet"
-                description="Aliquam semper aliquet dui sit amet laoreet. Pellentesque lacinia posuere ipsum. Donec tortor mauris, rhoncus vel finibus nec, consectetur vitae velit."
+                description="Welcome to our platform!"
                 action={<DelegateAction />}
               />
             ) : (
               <div className="m-auto text-center py-spacer">
                 <div>
-                  <p className="m-0">Active Stake</p>
+                  <p className="m-0">Active Delegation</p>
                   <p className="h4">
-                    {userActiveStake}
+                    {userActiveStake}{' '}
                     {egldLabel}
                   </p>
                 </div>
                 <div>
                   <p className="text-muted">
-                    {claimableRewards}
+                    {claimableRewards}{' '}
                     {egldLabel} Claimable rewards
                   </p>
                 </div>
