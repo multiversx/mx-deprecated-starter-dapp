@@ -12,12 +12,12 @@ const Owner = () => {
     return loginAddress === ownerAddress;
   };
 
-  if (!isAdmin(contractOverview.ownerAddress)) {
-    <Redirect to="/dashboard" />;
-  }
-
   if (!loggedIn) {
     return <Redirect to="/" />;
+  }
+
+  if (!isAdmin(contractOverview.ownerAddress)) {
+    <Redirect to="/dashboard" />;
   }
 
   return (
