@@ -33,6 +33,11 @@ const UndelegateModal = ({
       .test('minimum', `Minimum 10 ${egldLabel}`, (value) => {
         const bnAmount = new BigNumber(value !== undefined ? value : '');
         return bnAmount.comparedTo(10) >= 0;
+      })
+      .test('dustLeft', `You can not keep under 10 ${egldLabel}. Use the Max option.`, (value) => {
+        const bnAmount = new BigNumber(value !== undefined ? value : '');
+        const bnAvailable = new BigNumber(available);
+        return (bnAvailable.minus(bnAmount)).comparedTo(10) >= 0 || bnAvailable.comparedTo(bnAmount) == 0;
       }),
   });
   return (

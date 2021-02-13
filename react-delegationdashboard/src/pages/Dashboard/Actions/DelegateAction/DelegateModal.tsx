@@ -65,7 +65,12 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                 .test('minimum', `Minimum 10 ${egldLabel}`, value => {
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
                   return bnAmount.comparedTo(10) >= 0;
-                }),
+                })
+                .test('maximum', `Maximum ${available} ${egldLabel}`, value => {
+                  const bnAmount = new BigNumber(value !== undefined ? value : '');
+                  const bnAvailable = new BigNumber(available);
+                  return bnAmount.comparedTo(bnAvailable) <= 0;
+                })
             })}
           >
             {props => {
