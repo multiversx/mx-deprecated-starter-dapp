@@ -9,7 +9,7 @@ const Owner = () => {
   const { address, contractOverview, loggedIn } = useContext();
   const isAdmin = () => {
     let loginAddress = new Address(address).hex();
-    return String(loginAddress).localeCompare(contractOverview.ownerAddress) === 0;
+    return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
 
   if (!loggedIn) {

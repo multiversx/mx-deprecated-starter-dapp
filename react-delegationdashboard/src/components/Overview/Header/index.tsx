@@ -7,9 +7,9 @@ const Header = () => {
   const { pathname } = useLocation();
   const { address, delegationContract, contractOverview } = useContext();
 
-  const isAdmin = (ownerAddress: string) => {
+  const isAdmin = () => {
     let loginAddress = new Address(address).hex();
-    return loginAddress === ownerAddress;
+    return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
 
   return (
@@ -18,7 +18,7 @@ const Header = () => {
         <p className="opacity-6 mb-0">Contract Address</p>
         <span className="text-truncate">{delegationContract}</span>
       </div>
-      {isAdmin(contractOverview.ownerAddress) && pathname !== '/owner' ? (
+      {isAdmin() && pathname !== '/owner' ? (
         <Link to="/owner" className="btn btn-primary btn-sm">
           Admin
         </Link>
