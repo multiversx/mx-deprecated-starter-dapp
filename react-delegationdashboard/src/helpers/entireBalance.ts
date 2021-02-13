@@ -16,7 +16,7 @@ export default function entireBalance({
   denomination,
   decimals,
 }: EntireBalanceType) {
-  const bnBalance = new BigNumber(parseInt(balance));
+  const bnBalance = new BigNumber(balance);
   const bnGasPrice = new BigNumber(gasPrice);
   const bnGasLimit = new BigNumber(gasLimit);
   const entireBalance = bnBalance.minus(bnGasPrice.times(bnGasLimit));
