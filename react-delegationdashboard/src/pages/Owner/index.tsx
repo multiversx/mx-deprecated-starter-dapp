@@ -7,28 +7,30 @@ import Nodes from './Nodes';
 
 const Owner = () => {
   const { address, contractOverview, loggedIn } = useContext();
-  const isAdmin = (ownerAddress: string) => {
+  const isAdmin = () => {
     let loginAddress = new Address(address).hex();
-    return loginAddress === ownerAddress;
+    return String(loginAddress).localeCompare(contractOverview.ownerAddress) === 0;
   };
 
   if (!loggedIn) {
     return <Redirect to="/" />;
   }
 
-  if (!isAdmin(contractOverview.ownerAddress)) {
-    <Redirect to="/dashboard" />;
-  }
-
   return (
-    <div className="owner w-100">
-      <div className="card border-0">
-        <Overview />
-        <div className="card-body pt-0 px-spacer pb-spacer">
-          <Nodes />
+    <>
+      {isAdmin() ? (
+        <div className="owner w-100">
+          <div className="card border-0">
+            <Overview />
+            <div className="card-body pt-0 px-spacer pb-spacer">
+              <Nodes />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <Redirect to="/dashboard" />
+      )}
+    </>
   );
 };
 
