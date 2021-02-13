@@ -21,8 +21,8 @@ const UndelegateModal = ({
 
   const available = entireBalance({
     balance: balance as string,
-    gasPrice: '12000000',
-    gasLimit: '12000000',
+    gasPrice: '0',
+    gasLimit: '0',
     denomination,
     decimals,
   });
