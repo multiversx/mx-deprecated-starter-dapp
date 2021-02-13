@@ -48,7 +48,7 @@ const UndelegateModal = ({
               amount: '10',
             }}
             onSubmit={(values) => {
-              handleContinue(values.amount);
+              handleContinue(values.amount.toString());
             }}
             validationSchema={UndelegateSchema}
           >
