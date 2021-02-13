@@ -1,7 +1,7 @@
 
 <div style="text-align:center">
   <img
-  src="https://raw.githubusercontent.com/ElrondNetwork/elrond-go/master/elrond_logo_01.svg"
+  src="https://raw.githubusercontent.com/ElrondNetwork/starter-dapp/master/react-delegationdashboard/preview.png"
   alt="Elrond Network">
 </div>
 <br>
@@ -47,7 +47,6 @@ The react implementation for Dashboard Delegation
 
 ### Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [React](https://reactjs.org/)
 * [Typescript](https://www.typescriptlang.org/)
 * [Bootstrap](https://getbootstrap.com)
@@ -57,37 +56,45 @@ This section should list any major frameworks that you built your project using.
 <!-- GETTING STARTED -->
 ## Getting Started
 
+The dapp is a client side only poject and is built using the Create React App scripts.
+
 Follow the next step to start using this dapp
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+For *development* you will need to have the following:
+
 * node version 12.13.0
+* npm
 
 ### Instalation and running
 
 ### Step 1. Install modules
-Run ```npm install```
+From a terminal, navigate to the project folder and run ```npm install```
 
 ### Step 2. Update Configs
 
-In the application root folder there are 3 config files (config.internal, config.testnet, config.mainnet).
-Based on the environment used for running the configs will need to be updated
+In the application's src folder there are 3 config files (config.internal.ts, config.testnet.ts, config.mainnet.ts).
+
+Based on the environment used the configs will need to be updated:
 - delegationContract : should contain the address of the Delegation Smart Contract received after the creation of Delegation Smart Contract
 - also check the walletAddress, apiAddress and explorerAddress
 
-### Step 3. Build the solution
-For internal run => ```npm run build-internal``` (for intrnal build the package.json script for start will need to be updated and remove the Https restriction)
+### Step 3. Run locally
+
+To run the project locally run ```npm run start``` from the project folder. This will start the React app in development mode, using the configs found in the config.ts file.
+
+### Step 4. Build for production
+
+A build of the app is necessary to deploy to production.
+
+The dapp is configured with build scripts targeting either an internal (local) testnet, the public testnet or the public devnet.
+
+For internal run => ```npm run build-internal``` (for internal build the package.json script for start will need to be updated and remove the Https restriction)
 
 For testnet run => ```npm run build-testnet```
 
 For mainnet run => ```npm run build-mainnet```
-
-
-### Step 4. Run the application Run the application (in order to run the application on testnet env you don't have to build the solution, you can just run the following command)
-For development run => ```npm run start```
-
 
 <!-- ROADMAP -->
 ## Roadmap

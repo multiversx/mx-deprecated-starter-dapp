@@ -30,9 +30,9 @@ const Views = () => {
     return percentage ? percentage.toFixed(2) : '...';
   };
 
-  const isAdmin = (ownerAddress: string) => {
+  const isAdmin = () => {
     let loginAddress = new Address(address).hex();
-    return loginAddress === ownerAddress;
+    return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
 
   const getNetworkStake = () => {
@@ -116,7 +116,7 @@ const Views = () => {
       >
         {location.pathname === '/owner' && <UpdateDelegationCapAction />}
       </StatCard>
-      {isAdmin(contractOverview.ownerAddress) && location.pathname === '/owner' && (
+      {isAdmin() && location.pathname === '/owner' && (
         <StatCard
           title="Automatic activation"
           value={contractOverview.automaticActivation === 'true' ? 'ON' : 'OFF'}
