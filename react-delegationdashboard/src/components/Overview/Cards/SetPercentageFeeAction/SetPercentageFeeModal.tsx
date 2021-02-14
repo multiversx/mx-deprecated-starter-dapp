@@ -7,11 +7,11 @@ const SetPercentageFeeSchema = object().shape({
   amount: string()
     .required('Required')
     .test('minimum', 'Minimum fee percentage is 0.01', value => {
-      const feeAmount = parseInt(value !== undefined ? value : '');
+      const feeAmount = parseFloat(value !== undefined ? value : '');
       return feeAmount > 0;
     })
     .test('minimum', 'Maximum fee percentage is 100', value => {
-      const feeAmount = parseInt(value !== undefined ? value : '');
+      const feeAmount = parseFloat(value !== undefined ? value : '');
       return feeAmount <= 100;
     }),
 });
