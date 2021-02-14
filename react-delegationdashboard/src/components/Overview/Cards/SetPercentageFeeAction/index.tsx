@@ -7,7 +7,7 @@ const SetPercentageFeeAction = () => {
   const [showUpdateFeeModal, setShowUpdateFeeModal] = useState(false);
 
   const nominateVal = (value: string) => {
-    let perc = (parseFloat(value) * 100).toString();
+    let perc = (parseFloat(value) * 100).toString(16);
     if (perc.length % 2 !== 0) {
       perc = '0' + perc;
     }

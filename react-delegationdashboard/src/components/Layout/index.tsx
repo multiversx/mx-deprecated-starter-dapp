@@ -28,7 +28,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     });
     return new ContractOverview(
       value.returnData[0].asHex.toString(),
-      (parseFloat(value.returnData[1].asHex) / 100).toString(),
+      (value.returnData[1].asNumber / 100).toString(),
       delegationCap,
       initialOwnerFunds,
       value.returnData[4]?.asString,
