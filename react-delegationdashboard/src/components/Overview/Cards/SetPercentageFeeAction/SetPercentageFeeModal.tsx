@@ -6,9 +6,13 @@ import { object, string } from 'yup';
 const SetPercentageFeeSchema = object().shape({
   amount: string()
     .required('Required')
-    .test('number', 'String not allowed, only numbers.', value => {
-      const regex = /^(\d+(?:[\.]\d{1,2})?)$/;
-      return regex.test(value || '');
+    .test('minimum', 'Minimum fee percentage is 0.01', value => {
+      const feeAmount = parseFloat(value !== undefined ? value : '');
+      return feeAmount > 0;
+    })
+    .test('minimum', 'Maximum fee percentage is 100', value => {
+      const feeAmount = parseFloat(value !== undefined ? value : '');
+      return feeAmount <= 100;
     }),
 });
 
@@ -51,7 +55,7 @@ const SetPercentageFeeModal = ({
                   <div className="form-group mb-spacer mb-0">
                     <label htmlFor="amount">Add the percentage fee</label>
                     <input
-                      type="text"
+                      type="number"
                       className={`form-control ${
                         errors.amount && touched.amount ? 'is-invalid' : ''
                       }`}
