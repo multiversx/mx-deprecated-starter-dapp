@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
-import { useContext, useDispatch } from '../../../context';
+import { useContext } from '../../../context';
 
 const Header = () => {
   const { pathname } = useLocation();
