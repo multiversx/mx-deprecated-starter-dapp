@@ -5,6 +5,7 @@ import { useContext, useDispatch } from 'context';
 import { contractViews } from 'contracts/ContractViews';
 import { ContractOverview } from 'helpers/types';
 import React from 'react';
+import { calculateAPR } from './APRCalculation';
 import Footer from './Footer';
 import Navbar from './Navbar';
 
@@ -44,6 +45,9 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
       getContractConfig(dapp, delegationContract),
       getTotalActiveStake(dapp, delegationContract),
       getBlsKeys(dapp, delegationContract, auctionContract),
+      dapp.apiProvider.getNetworkStats(),
+      dapp.apiProvider.getNetworkStake(),
+      dapp.proxy.getNetworkConfig(),
     ])
       .then(
         ([
@@ -52,6 +56,9 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
             returnData: [activeStake],
           },
           { returnData: blsKeys },
+          networkStats,
+          networkStake,
+          networkConfig,
         ]) => {
           dispatch({
             type: 'setContractOverview',
@@ -64,6 +71,16 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           dispatch({
             type: 'setNumberOfActiveNodes',
             numberOfActiveNodes: (blsKeys.length / 2).toString(),
+          });
+          dispatch({
+            type: 'setAprPercentage',
+            aprPercentage: calculateAPR(
+              networkStats,
+              networkConfig,
+              networkStake,
+              blsKeys,
+              activeStake.asBigInt.toString()
+            ),
           });
         }
       )

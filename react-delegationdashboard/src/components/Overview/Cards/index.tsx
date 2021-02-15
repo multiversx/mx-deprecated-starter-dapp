@@ -9,7 +9,6 @@ import { useState } from 'react';
 import SetPercentageFeeAction from './SetPercentageFeeAction';
 import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 import AutomaticActivationAction from './AutomaticActivationAction';
-import AprCard from './APRCard';
 
 const Views = () => {
   const {
@@ -19,6 +18,7 @@ const Views = () => {
     numberOfActiveNodes,
     address,
     contractOverview,
+    aprPercentage,
   } = useContext();
   const [networkStake, setNetworkStake] = useState(new NetworkStake());
 
@@ -83,12 +83,20 @@ const Views = () => {
         title="Number of Nodes"
         value={numberOfActiveNodes}
         valueUnit=""
-        color="purple"
+        color="green"
         svg="nodes.svg"
         percentage={`${getPercentage(
           numberOfActiveNodes,
           networkStake.TotalValidators.toString()
         )}% of total nodes`}
+      />
+      <StatCard
+        title="Computed APR"
+        value={aprPercentage}
+        valueUnit=""
+        color="green"
+        svg="nodes.svg"
+        percentage="Anual percentage rate"
       />
       <StatCard
         title="Service Fee"
@@ -127,7 +135,6 @@ const Views = () => {
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />
         </StatCard>
       )}
-      <AprCard />
     </div>
   );
 };
