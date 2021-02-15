@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { decimals, denomination, genesisTokenSuply, yearSettings } from 'config';
+import { decimals, denomination } from 'config';
 import { useContext } from 'context';
 import denominate from 'components/Denominate/formatters';
 import StatCard from 'components/StatCard';
@@ -9,6 +9,7 @@ import { useState } from 'react';
 import SetPercentageFeeAction from './SetPercentageFeeAction';
 import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 import AutomaticActivationAction from './AutomaticActivationAction';
+import AprCard from './APRCard';
 
 const Views = () => {
   const {
@@ -45,50 +46,6 @@ const Views = () => {
         console.error('getTotalStake error ', e);
       });
   };
-
-  const getNetworkConfig = () => {
-    dapp.proxy
-      .getNetworkConfig()
-      .then(value => {
-        setNetworkConfig(value);
-        console.log('network config', value);
-      })
-      .catch(e => {
-        console.error('getTotalStake error ', e);
-      });
-  };
-
-  const calculateAPR = () => {};
-
-  const calculateRewardPerEpoch = () => {
-    dapp.apiProvider
-      .getNetworkStats()
-      .then(value => {
-        let inflationRate =
-          yearSettings.find(x => x.Year === Math.floor(value.Epoch / 365))?.MaximumInflation || 0;
-        let rewardsPerEpoch = Math.max((inflationRate * genesisTokenSuply) / 365, 0);
-        let topUpRewardsLimit = networkConfig.TopUpFactor * rewardsPerEpoch;
-        let topUpStake =
-          parseInt(
-            denominate({
-              input: networkStake.TotalStaked.toString(),
-              denomination,
-              decimals,
-              showLastNonZeroDecimal: true,
-            }).replace(/,/g, '')
-          ) -
-          networkStake.ActiveValidators * 2500;
-        let topUpReward =
-          ((2 * topUpRewardsLimit) / Math.PI) *
-          Math.atan(topUpStake / networkConfig.TopUpRewardsGradientPoint);
-        let baseReward = rewardsPerEpoch - topUpReward;
-      })
-      .catch(e => {
-        console.error('getTotalStake error ', e);
-      });
-  };
-
-  const calculateAPRToday = () => {};
 
   React.useEffect(() => {
     getNetworkStake();
@@ -170,6 +127,7 @@ const Views = () => {
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />
         </StatCard>
       )}
+      <AprCard />
     </div>
   );
 };

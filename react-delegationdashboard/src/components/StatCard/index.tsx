@@ -1,5 +1,5 @@
 import SVG from 'react-inlinesvg';
-import { StatCardType } from '../../helpers/types';
+import { StatCardType } from 'helpers/types';
 
 const StatCard = ({
   title = '',
