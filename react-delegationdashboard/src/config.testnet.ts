@@ -3,6 +3,20 @@ import { DelegationContractType } from './helpers/types';
 
 export const decimals: number = 2;
 export const denomination: number = 18;
+export const genesisTokenSuply: number = 20000000;
+export const yearSettings = [
+  { Year: 1, MaximumInflation: 0.1084513 },
+  { Year: 2, MaximumInflation: 0.09703538 },
+  { Year: 3, MaximumInflation: 0.08561945 },
+  { Year: 4, MaximumInflation: 0.07420352 },
+  { Year: 5, MaximumInflation: 0.0627876 },
+  { Year: 6, MaximumInflation: 0.05137167 },
+  { Year: 7, MaximumInflation: 0.03995574 },
+  { Year: 8, MaximumInflation: 0.02853982 },
+  { Year: 9, MaximumInflation: 0.01712389 },
+  { Year: 10, MaximumInflation: 0.00570796 },
+  { Year: 11, MaximumInflation: 0.0 },
+];
 
 export const networks: NetworkType[] = [
   {
