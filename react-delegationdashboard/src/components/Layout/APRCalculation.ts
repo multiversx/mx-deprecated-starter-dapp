@@ -27,16 +27,19 @@ const calculateAPR = ({
   blsKeys: ContractReturnData[];
   totalActiveStake: string;
 }) => {
+  debugger;
+  const feesInEpoch = 0;
+  const stakePerNode = 2500;
+  const protocolSustainabilityRewards = 0.1;
   const inflationRate =
     yearSettings.find(x => x.year === Math.floor(stats.epoch / 365) + 1)?.maximumInflation || 0;
-  const rewardsPerEpoch = Math.max((inflationRate * genesisTokenSuply) / 365, 0);
-  const protocolSustainabilityRewards = 0.1;
+  const rewardsPerEpoch = Math.max((inflationRate * genesisTokenSuply) / 365, feesInEpoch);
   const rewardsPerEpochWithoutProtocolSustainability =
     (1 - protocolSustainabilityRewards) * rewardsPerEpoch;
   const topUpRewardsLimit =
     networkConfig.topUpFactor * rewardsPerEpochWithoutProtocolSustainability;
 
-  const networkBaseStake = networkStake.activeValidators * 2500;
+  const networkBaseStake = networkStake.activeValidators * stakePerNode;
   const networkTotalStake = parseInt(denominateValue(networkStake.totalStaked.toString()));
   const networkTopUpStake = networkTotalStake - networkBaseStake;
   const topUpReward =
@@ -45,18 +48,19 @@ const calculateAPR = ({
       networkTopUpStake /
         parseInt(denominateValue(networkConfig.topUpRewardsGradientPoint.toString()))
     );
-  const baseReward = rewardsPerEpoch - topUpReward;
+  const baseReward = rewardsPerEpochWithoutProtocolSustainability - topUpReward;
 
   const allNodes = blsKeys.filter(key => key.asString === 'staked' || key.asString === 'jailed')
     .length;
   const allActiveNodes = blsKeys.filter(key => key.asString === 'staked').length;
-  const validatorBaseStake = allActiveNodes * 2500;
+  const validatorBaseStake = allActiveNodes * stakePerNode;
   const validatorTotalStake = parseInt(denominateValue(totalActiveStake));
-  const validatorTopUpStake = validatorTotalStake - allNodes * 2500;
+  const validatorTopUpStake = validatorTotalStake - allNodes * stakePerNode;
 
-  const topUpRaport = (validatorTopUpStake / networkTopUpStake) * topUpReward;
-  const baseRaport = (validatorBaseStake / networkBaseStake) * baseReward;
-  const anualPercentageRate = (365 * (topUpRaport + baseRaport)) / validatorTotalStake;
+  const validatorTopUpReward = (validatorTopUpStake / networkTopUpStake) * topUpReward;
+  const validatorBaseReward = (validatorBaseStake / networkBaseStake) * baseReward;
+  const anualPercentageRate =
+    (365 * (validatorTopUpReward + validatorBaseReward)) / validatorTotalStake;
   return (anualPercentageRate * 100).toFixed(2);
 };
 
