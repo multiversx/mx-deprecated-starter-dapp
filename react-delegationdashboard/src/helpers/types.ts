@@ -51,6 +51,7 @@ export class StatCardType {
   svg!: string;
   color!: string;
   percentage?: string;
+  tooltipText?: string;
   children?: any;
 }
 

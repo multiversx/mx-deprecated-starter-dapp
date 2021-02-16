@@ -94,9 +94,10 @@ const Views = () => {
         title="Computed APR"
         value={aprPercentage}
         valueUnit=""
-        color="green"
-        svg="nodes.svg"
+        color="orange"
+        svg="leaf-solid.svg"
         percentage="Anual percentage rate"
+        tooltipText="This is an aproximate APR calculation for this year based on the current epoch"
       />
       <StatCard
         title="Service Fee"
