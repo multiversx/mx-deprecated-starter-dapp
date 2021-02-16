@@ -18,6 +18,7 @@ const Views = () => {
     numberOfActiveNodes,
     address,
     contractOverview,
+    aprPercentage,
   } = useContext();
   const [networkStake, setNetworkStake] = useState(new NetworkStake());
 
@@ -88,6 +89,15 @@ const Views = () => {
           numberOfActiveNodes,
           networkStake.TotalValidators.toString()
         )}% of total nodes`}
+      />
+      <StatCard
+        title="Computed APR"
+        value={aprPercentage}
+        valueUnit=""
+        color="orange"
+        svg="leaf-solid.svg"
+        percentage="Anual percentage rate"
+        tooltipText="This is an aproximate APR calculation for this year based on the current epoch"
       />
       <StatCard
         title="Service Fee"
