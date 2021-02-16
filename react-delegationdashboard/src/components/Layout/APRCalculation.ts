@@ -41,7 +41,10 @@ const calculateAPR = ({
   const networkTopUpStake = networkTotalStake - networkBaseStake;
   const topUpReward =
     ((2 * topUpRewardsLimit) / Math.PI) *
-    Math.atan(networkTopUpStake / Number(networkConfig.topUpRewardsGradientPoint));
+    Math.atan(
+      networkTopUpStake /
+        parseInt(denominateValue(networkConfig.topUpRewardsGradientPoint.toString()))
+    );
   const baseReward = rewardsPerEpoch - topUpReward;
 
   const allNodes = blsKeys.filter(key => key.asString === 'staked' || key.asString === 'jailed')
