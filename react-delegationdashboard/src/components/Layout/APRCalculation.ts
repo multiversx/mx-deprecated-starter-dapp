@@ -27,7 +27,6 @@ const calculateAPR = ({
   blsKeys: ContractReturnData[];
   totalActiveStake: string;
 }) => {
-  debugger;
   const feesInEpoch = 0;
   const stakePerNode = 2500;
   const protocolSustainabilityRewards = 0.1;
