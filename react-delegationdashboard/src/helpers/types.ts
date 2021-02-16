@@ -55,6 +55,39 @@ export class StatCardType {
   children?: any;
 }
 
+export class NetworkConfig {
+  topUpFactor: number;
+  topUpRewardsGradientPoint: BigInt;
+  public constructor(topUpFactor: number, topUpRewardsGradientPoint: BigInt) {
+    this.topUpFactor = topUpFactor;
+    this.topUpRewardsGradientPoint = topUpRewardsGradientPoint;
+  }
+}
+export class Stats {
+  epoch: number;
+  public constructor(epoch: number) {
+    this.epoch = epoch;
+  }
+}
+
+export class NetworkStake {
+  totalValidators: number;
+  activeValidators: number;
+  queueSize: number;
+  totalStaked: BigInt;
+  public constructor(
+    totalValidators: number,
+    activeValidators: number,
+    queueSize: number,
+    totalStaked: BigInt
+  ) {
+    this.totalValidators = totalValidators;
+    this.activeValidators = activeValidators;
+    this.queueSize = queueSize;
+    this.totalStaked = totalStaked;
+  }
+}
+
 export class NodeType {
   blsKey!: string;
   status!: { [key: string]: string };

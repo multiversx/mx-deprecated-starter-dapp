@@ -3,7 +3,7 @@ import denominate from 'components/Denominate/formatters';
 import { denomination, decimals } from 'config';
 import { useContext, useDispatch } from 'context';
 import { contractViews } from 'contracts/ContractViews';
-import { ContractOverview } from 'helpers/types';
+import { ContractOverview, NetworkConfig, NetworkStake, Stats } from 'helpers/types';
 import React from 'react';
 import { calculateAPR } from './APRCalculation';
 import Footer from './Footer';
@@ -74,13 +74,21 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           });
           dispatch({
             type: 'setAprPercentage',
-            aprPercentage: calculateAPR(
-              networkStats,
-              networkConfig,
-              networkStake,
-              blsKeys,
-              activeStake.asBigInt.toString()
-            ),
+            aprPercentage: calculateAPR({
+              stats: new Stats(networkStats.Epoch),
+              networkConfig: new NetworkConfig(
+                networkConfig.TopUpFactor,
+                networkConfig.TopUpRewardsGradientPoint
+              ),
+              networkStake: new NetworkStake(
+                networkStake.TotalValidators,
+                networkStake.ActiveValidators,
+                networkStake.QueueSize,
+                networkStake.TotalStaked
+              ),
+              blsKeys: blsKeys,
+              totalActiveStake: activeStake.asBigInt.toString(),
+            }),
           });
         }
       )

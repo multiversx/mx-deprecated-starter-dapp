@@ -1,53 +1,59 @@
-import { NetworkConfig, NetworkStake } from '@elrondnetwork/erdjs/out';
 import { ContractReturnData } from '@elrondnetwork/erdjs/out/smartcontracts/query';
-import { Stats } from '@elrondnetwork/erdjs/out/stats';
 import denominate from 'components/Denominate/formatters';
 import { yearSettings, genesisTokenSuply, denomination, decimals } from 'config';
+import { NetworkConfig, NetworkStake, Stats } from 'helpers/types';
 
 const denominateValue = (value: string) => {
-  return denominate({
+  const denominatedValueString = denominate({
     input: value,
     denomination,
     decimals,
     showLastNonZeroDecimal: true,
-  }).replace(/,/g, '');
+  });
+  const valueWithoutComma = denominatedValueString.replace(/,/g, '');
+  return valueWithoutComma;
 };
 
-const calculateAPR = (
-  stats: Stats,
-  networkConfig: NetworkConfig,
-  networkStake: NetworkStake,
-  blsKeys: ContractReturnData[],
-  totalActiveStake: string
-) => {
-  let inflationRate =
-    yearSettings.find(x => x.Year === Math.floor(stats.Epoch / 365) + 1)?.MaximumInflation || 0;
-  let rewardsPerEpoch = Math.max((inflationRate * genesisTokenSuply) / 365, 0);
-  let protocolSustainabilityRewards = 0.1;
-  let rewordsPerEpochWithoutProtocolSustainability =
+const calculateAPR = ({
+  stats: stats,
+  networkConfig: networkConfig,
+  networkStake: networkStake,
+  blsKeys: blsKeys,
+  totalActiveStake: totalActiveStake,
+}: {
+  stats: Stats;
+  networkConfig: NetworkConfig;
+  networkStake: NetworkStake;
+  blsKeys: ContractReturnData[];
+  totalActiveStake: string;
+}) => {
+  const inflationRate =
+    yearSettings.find(x => x.year === Math.floor(stats.epoch / 365) + 1)?.maximumInflation || 0;
+  const rewardsPerEpoch = Math.max((inflationRate * genesisTokenSuply) / 365, 0);
+  const protocolSustainabilityRewards = 0.1;
+  const rewardsPerEpochWithoutProtocolSustainability =
     (1 - protocolSustainabilityRewards) * rewardsPerEpoch;
-  let topUpRewardsLimit = networkConfig.TopUpFactor * rewordsPerEpochWithoutProtocolSustainability;
+  const topUpRewardsLimit =
+    networkConfig.topUpFactor * rewardsPerEpochWithoutProtocolSustainability;
 
-  let networkBaseStake = networkStake.ActiveValidators * 2500;
-  let networkTotalStake = parseInt(denominateValue(networkStake.TotalStaked.toString()));
-  let networkTopUpStake = networkTotalStake - networkBaseStake;
-  let topUpReward =
+  const networkBaseStake = networkStake.activeValidators * 2500;
+  const networkTotalStake = parseInt(denominateValue(networkStake.totalStaked.toString()));
+  const networkTopUpStake = networkTotalStake - networkBaseStake;
+  const topUpReward =
     ((2 * topUpRewardsLimit) / Math.PI) *
-    Math.atan(networkTopUpStake / Number(networkConfig.TopUpRewardsGradientPoint));
-  let baseReward = rewardsPerEpoch - topUpReward;
+    Math.atan(networkTopUpStake / Number(networkConfig.topUpRewardsGradientPoint));
+  const baseReward = rewardsPerEpoch - topUpReward;
 
-  let allNodes = blsKeys.filter(key => key.asString === 'staked' || key.asString === 'jailed')
+  const allNodes = blsKeys.filter(key => key.asString === 'staked' || key.asString === 'jailed')
     .length;
-  let allActiveNodes = blsKeys.filter(key => key.asString === 'staked').length;
-  let validatorBaseStake = allActiveNodes * 2500;
-  let validatorTotalStake = parseInt(denominateValue(totalActiveStake));
-  let validatorTopUpStake = validatorTotalStake - allNodes * 2500;
+  const allActiveNodes = blsKeys.filter(key => key.asString === 'staked').length;
+  const validatorBaseStake = allActiveNodes * 2500;
+  const validatorTotalStake = parseInt(denominateValue(totalActiveStake));
+  const validatorTopUpStake = validatorTotalStake - allNodes * 2500;
 
-  let anualPercentageRate =
-    (365 *
-      ((validatorTopUpStake / networkTopUpStake) * topUpReward +
-        (validatorBaseStake / networkBaseStake) * baseReward)) /
-    validatorTotalStake;
+  const topUpRaport = (validatorTopUpStake / networkTopUpStake) * topUpReward;
+  const baseRaport = (validatorBaseStake / networkBaseStake) * baseReward;
+  const anualPercentageRate = (365 * (topUpRaport + baseRaport)) / validatorTotalStake;
   return (anualPercentageRate * 100).toFixed(2);
 };
 

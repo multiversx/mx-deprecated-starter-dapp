@@ -39,7 +39,7 @@ const StatCard = ({
               </Tooltip>
             )}
           >
-            <FontAwesomeIcon icon={faInfoCircle} size="sm" className="text-white ml-1" />
+            <FontAwesomeIcon icon={faInfoCircle} className="text-white ml-1" />
           </OverlayTrigger>
         )}
       </small>
