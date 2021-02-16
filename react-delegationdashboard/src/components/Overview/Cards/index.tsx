@@ -83,7 +83,7 @@ const Views = () => {
         title="Number of Nodes"
         value={numberOfActiveNodes}
         valueUnit=""
-        color="green"
+        color="purple"
         svg="nodes.svg"
         percentage={`${getPercentage(
           numberOfActiveNodes,
