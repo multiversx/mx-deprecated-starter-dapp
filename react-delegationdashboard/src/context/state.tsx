@@ -1,14 +1,12 @@
 import { IDappProvider, ProxyProvider, ApiProvider, WalletProvider } from '@elrondnetwork/erdjs';
 import { ContractOverview } from 'helpers/types';
-import { denomination, decimals, networks, NetworkType } from '../config';
+import { denomination, decimals, network, NetworkType } from '../config';
 import { getItem } from '../storage/session';
 
 export const defaultNetwork: NetworkType = {
-  default: false,
   id: 'not-configured',
   name: 'NOT CONFIGURED',
   egldLabel: '',
-  theme: '',
   walletAddress: '',
   apiAddress: '',
   gatewayAddress: '',
@@ -60,8 +58,8 @@ export const emptyContractOverview: ContractOverview = {
   unBondPeriod: 0,
 };
 
-export const initialState = (optionalConfig?: NetworkType[]) => {
-  const sessionNetwork = networks.filter(network => network.default).pop() || defaultNetwork;
+export const initialState = () => {
+  const sessionNetwork = network || defaultNetwork;
   return {
     denomination: denomination,
     decimals: decimals,
