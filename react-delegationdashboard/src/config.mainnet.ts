@@ -17,6 +17,10 @@ export const yearSettings = [
   { year: 10, maximumInflation: 0.00570796 },
   { year: 11, maximumInflation: 0.0 },
 ];
+export const auctionContract: string =
+  'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l';
+export const stakingContract: string =
+  'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7';
 
 export const networks: NetworkType[] = [
   {
@@ -28,8 +32,6 @@ export const networks: NetworkType[] = [
     gatewayAddress: 'https://gateway.elrond.com',
     explorerAddress: 'http://explorer.elrond.com/',
     delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
-    auctionContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
-    stakingContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7',
   },
 ];
 
@@ -44,8 +46,6 @@ const networkSchema = object({
     .defined()
     .required(),
   delegationContract: string(),
-  auctionContract: string(),
-  stakingContract: string(),
   walletAddress: string(),
   apiAddress: string(),
   gatewayAddress: string(),

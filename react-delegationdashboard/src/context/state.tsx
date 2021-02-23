@@ -12,8 +12,6 @@ export const defaultNetwork: NetworkType = {
   gatewayAddress: '',
   explorerAddress: '',
   delegationContract: '',
-  auctionContract: '',
-  stakingContract: '',
 };
 
 export interface DappState {
@@ -34,8 +32,6 @@ export interface StateType {
   account: AccountType;
   explorerAddress: string;
   delegationContract?: string;
-  auctionContract?: string;
-  stakingContract?: string;
   totalActiveStake: string;
   numberOfActiveNodes: string;
   aprPercentage: string;
@@ -86,8 +82,6 @@ export const initialState = () => {
     egldLabel: sessionNetwork?.egldLabel,
     explorerAddress: sessionNetwork.explorerAddress || 'https://explorer.elrond.com',
     delegationContract: sessionNetwork.delegationContract,
-    auctionContract: sessionNetwork.auctionContract,
-    stakingContract: sessionNetwork.stakingContract,
     contractOverview: emptyContractOverview,
     numberOfActiveNodes: '...',
     totalActiveStake: '...',
