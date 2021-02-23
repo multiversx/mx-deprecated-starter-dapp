@@ -96,7 +96,7 @@ const Views = () => {
         valueUnit=""
         color="orange"
         svg="leaf-solid.svg"
-        percentage="Anual percentage rate"
+        percentage="Annual percentage rate"
         tooltipText="This is an aproximate APR calculation for this year based on the current epoch"
       />
       <StatCard
@@ -108,24 +108,26 @@ const Views = () => {
       >
         {location.pathname === '/owner' && <SetPercentageFeeAction />}
       </StatCard>
-      <StatCard
-        title="Delegation Cap"
-        value={contractOverview.maxDelegationCap || ''}
-        valueUnit={egldLabel}
-        color="green"
-        svg="delegation.svg"
-        percentage={`${getPercentage(
-          denominate({
-            input: totalActiveStake,
-            denomination,
-            decimals,
-            showLastNonZeroDecimal: false,
-          }),
-          contractOverview.maxDelegationCap
-        )}% filled`}
-      >
-        {location.pathname === '/owner' && <UpdateDelegationCapAction />}
-      </StatCard>
+      {contractOverview.maxDelegationCap !== '0' && (
+        <StatCard
+          title="Delegation Cap"
+          value={contractOverview.maxDelegationCap || ''}
+          valueUnit={egldLabel}
+          color="green"
+          svg="delegation.svg"
+          percentage={`${getPercentage(
+            denominate({
+              input: totalActiveStake,
+              denomination,
+              decimals,
+              showLastNonZeroDecimal: false,
+            }),
+            contractOverview.maxDelegationCap
+          )}% filled`}
+        >
+          {location.pathname === '/owner' && <UpdateDelegationCapAction />}
+        </StatCard>
+      )}
       {isAdmin() && location.pathname === '/owner' && (
         <StatCard
           title="Automatic activation"

@@ -1,7 +1,8 @@
 import { Address, Argument, ContractFunction } from '@elrondnetwork/erdjs/out';
 import { ContractReturnData, Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
-import { DappState } from '../../../../context/state';
-import { NodeType } from '../../../../helpers/types';
+import { auctionContract, stakingContract } from 'config';
+import { DappState } from 'context/state';
+import { NodeType } from 'helpers/types';
 import { NodeStatus } from './nodeTypes';
 
 export const getAllNodesStatus = (dapp: DappState, delegationContract?: string) => {
@@ -22,12 +23,7 @@ export const getAllNodesStatus = (dapp: DappState, delegationContract?: string) 
   });
 };
 
-export const getBlsKeysStatus = (
-  dapp: DappState,
-  queued: any[],
-  delegationContract?: string,
-  auctionContract?: string
-) => {
+export const getBlsKeysStatus = (dapp: DappState, queued: any[], delegationContract?: string) => {
   const query = new Query({
     address: new Address(auctionContract),
     func: new ContractFunction('getBlsKeysStatus'),
@@ -45,7 +41,7 @@ export const getBlsKeysStatus = (
       .catch(e => console.error('GetBlsKeysStatus error', e));
   });
 };
-export const getQueueSize = (dapp: DappState, stakingContract?: string) => {
+export const getQueueSize = (dapp: DappState) => {
   const query = new Query({
     address: new Address(stakingContract),
     func: new ContractFunction('getQueueSize'),
@@ -60,12 +56,7 @@ export const getQueueSize = (dapp: DappState, stakingContract?: string) => {
   });
 };
 
-export const getQueueIndex = (
-  blsKey: any,
-  dapp: DappState,
-  stakingContract?: string,
-  auctionContract?: string
-) => {
+export const getQueueIndex = (blsKey: any, dapp: DappState) => {
   const query = new Query({
     address: new Address(stakingContract),
     func: new ContractFunction('getQueueIndex'),

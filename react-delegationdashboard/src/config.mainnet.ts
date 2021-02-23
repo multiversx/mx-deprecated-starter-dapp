@@ -17,40 +17,25 @@ export const yearSettings = [
   { year: 10, maximumInflation: 0.00570796 },
   { year: 11, maximumInflation: 0.0 },
 ];
+export const auctionContract: string =
+  'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l';
+export const stakingContract: string =
+  'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7';
 
 export const networks: NetworkType[] = [
   {
-    default: false,
     id: 'mainnet',
     name: 'Mainnet',
-    theme: 'light',
     egldLabel: 'EGLD',
     walletAddress: 'https://wallet.elrond.com/dapp/init',
     apiAddress: 'https://api.elrond.com',
     gatewayAddress: 'https://gateway.elrond.com',
     explorerAddress: 'http://explorer.elrond.com/',
     delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
-    auctionContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
-    stakingContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7',
-  },
-  {
-    default: true,
-    id: 'testnet',
-    name: 'Testnet',
-    theme: 'testnet',
-    egldLabel: 'xEGLD',
-    walletAddress: 'https://testnet-wallet.elrond.com/dapp/init',
-    apiAddress: 'https://api.elrond.com',
-    gatewayAddress: 'https://gateway.elrond.com',
-    explorerAddress: 'http://explorer.elrond.com/',
-    delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
-    auctionContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l',
-    stakingContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7',
   },
 ];
 
-const networkBaseSchema = object({
-  default: boolean(),
+const networkSchema = object({
   id: string()
     .defined()
     .required(),
@@ -60,21 +45,17 @@ const networkBaseSchema = object({
   name: string()
     .defined()
     .required(),
-  theme: string(),
   delegationContract: string(),
-  auctionContract: string(),
-  stakingContract: string(),
   walletAddress: string(),
   apiAddress: string(),
   gatewayAddress: string(),
   explorerAddress: string(),
 }).required();
 
-const schema = networkBaseSchema;
-export type NetworkType = InferType<typeof schema>;
+export type NetworkType = InferType<typeof networkSchema>;
 
 networks.forEach(network => {
-  schema.validate(network, { strict: true }).catch(({ errors }) => {
+  networkSchema.validate(network, { strict: true }).catch(({ errors }) => {
     console.error(`Config invalid format for ${network.id}`, errors);
   });
 });
