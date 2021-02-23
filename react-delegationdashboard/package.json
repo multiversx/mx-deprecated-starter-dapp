@@ -20,7 +20,6 @@
     "immer": "^8.0.1",
     "moment": "^2.29.1",
     "node-sass": "^4.0.0",
-    "packages": "0.0.8",
     "react": "^16.13.1",
     "react-bootstrap": "1.4.3",
     "react-dom": "^16.13.1",
