@@ -55,8 +55,10 @@ const calculateAPR = ({
   const validatorBaseStake = allActiveNodes * stakePerNode;
   const validatorTotalStake = parseInt(denominateValue(totalActiveStake));
   const validatorTopUpStake = validatorTotalStake - allNodes * stakePerNode;
-
-  const validatorTopUpReward = (validatorTopUpStake / networkTopUpStake) * topUpReward;
+  let validatorTopUpReward = validatorTopUpStake / networkTopUpStake;
+  if (topUpReward > 0) {
+    validatorTopUpReward *= topUpReward;
+  }
   const validatorBaseReward = (validatorBaseStake / networkBaseStake) * baseReward;
   const anualPercentageRate =
     (365 * (validatorTopUpReward + validatorBaseReward)) / validatorTotalStake;
