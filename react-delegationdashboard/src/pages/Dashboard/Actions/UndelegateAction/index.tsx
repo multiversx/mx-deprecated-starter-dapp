@@ -4,7 +4,11 @@ import { useContext } from 'context';
 import { nominateValToHex } from 'helpers/nominate';
 import UndelegateModal from './UndelegateModal';
 
-const UndelegateAction = () => {
+interface UndelegateModalType {
+  balance: string;
+}
+
+const UndelegateAction = ({balance}: UndelegateModalType) => {
   const { egldLabel } = useContext();
   const { delegation } = useDelegation();
   const [showModal, setShowModal] = useState(false);
@@ -19,6 +23,7 @@ const UndelegateAction = () => {
       </button>
       <UndelegateModal
         show={showModal}
+        balance={balance}
         title="Undelegate now"
         description={`Select the amount of ${egldLabel} you want to undelegate.`}
         handleClose={() => {

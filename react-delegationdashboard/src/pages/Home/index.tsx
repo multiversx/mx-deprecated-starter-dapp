@@ -8,7 +8,7 @@ import LedgerLogin from './Login/Ledger';
 import WalletLogin from './Login/Wallet';
 
 const Home = () => {
-  const { loading, error, loggedIn } = useContext();
+  const { loading, error, loggedIn, egldLabel } = useContext();
 
   const ref = React.useRef(null);
 
@@ -32,7 +32,7 @@ const Home = () => {
               <Logo className="logo mb-spacer" />
               <h4 className="mb-spacer">Elrond Delegation Manager</h4>
               <p className="lead mb-spacer">
-                Delegate Elrond XeGold (XeGLD) and earn up to 25% APY!
+                Delegate Elrond ({egldLabel}) and earn up to 25% APY!
               </p>
               <p className="mb-spacer">Please select your login method:</p>
               <div>

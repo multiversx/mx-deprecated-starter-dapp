@@ -4,18 +4,12 @@ import { StateInspector } from 'reinspect';
 import App from './App';
 import './assets/styles/theme.scss';
 
-let MountedApp = (
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+let MountedApp = <App />;
 
 if (process.env.NODE_ENV === 'development') {
   MountedApp = (
     <StateInspector name="App">
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <App />
     </StateInspector>
   );
 }

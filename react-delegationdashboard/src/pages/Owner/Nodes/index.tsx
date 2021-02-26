@@ -11,17 +11,15 @@ import {
 import AddNodeAction from './AddNodeAction';
 
 const Nodes = () => {
-  const { dapp, delegationContract, auctionContract, stakingContract } = useContext();
+  const { dapp, delegationContract } = useContext();
   const [keys, setKeys] = useState(new Array<NodeType>());
   const queued: any = [];
 
   const setQueuedKeys = async (queued: any, adaptedNodesStatus: NodeType[]) => {
     if (queued.length) {
       const results = await Promise.all([
-        getQueueSize(dapp, stakingContract),
-        ...queued.map((blsKey: any) =>
-          getQueueIndex(blsKey, dapp, stakingContract, auctionContract)
-        ),
+        getQueueSize(dapp),
+        ...queued.map((blsKey: any) => getQueueIndex(blsKey, dapp)),
       ]);
 
       let queueSize: any;
@@ -43,7 +41,7 @@ const Nodes = () => {
   const getDiplayNodes = () => {
     Promise.all([
       getAllNodesStatus(dapp, delegationContract),
-      getBlsKeysStatus(dapp, queued, delegationContract, auctionContract),
+      getBlsKeysStatus(dapp, queued, delegationContract),
     ])
       .then(async ([nodesStatus, blsKeys]) => {
         const adaptedNodesStatus = nodesStatus.map(item => {

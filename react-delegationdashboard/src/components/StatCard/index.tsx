@@ -1,5 +1,9 @@
 import SVG from 'react-inlinesvg';
-import { StatCardType } from '../../helpers/types';
+import { StatCardType } from 'helpers/types';
+import React from 'react';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const StatCard = ({
   title = '',
@@ -8,6 +12,7 @@ const StatCard = ({
   color = '',
   svg = '',
   percentage = '',
+  tooltipText = '',
   children = null,
 }: StatCardType) => {
   return (
@@ -22,7 +27,22 @@ const StatCard = ({
       <p className="h5 mb-0">
         {value} {valueUnit}
       </p>
-      <small className="opacity-5">{percentage}</small>
+      <small className="opacity-5">
+        {percentage}
+        {tooltipText !== '' && (
+          <OverlayTrigger
+            placement="top"
+            delay={{ show: 250, hide: 400 }}
+            overlay={props => (
+              <Tooltip id="button-tooltip" {...props}>
+                {tooltipText}
+              </Tooltip>
+            )}
+          >
+            <FontAwesomeIcon icon={faInfoCircle} className="text-white ml-1" />
+          </OverlayTrigger>
+        )}
+      </small>
     </div>
   );
 };

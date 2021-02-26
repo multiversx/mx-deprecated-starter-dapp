@@ -18,6 +18,7 @@ const Views = () => {
     numberOfActiveNodes,
     address,
     contractOverview,
+    aprPercentage,
   } = useContext();
   const [networkStake, setNetworkStake] = useState(new NetworkStake());
 
@@ -90,6 +91,15 @@ const Views = () => {
         )}% of total nodes`}
       />
       <StatCard
+        title="Computed APR"
+        value={aprPercentage}
+        valueUnit=""
+        color="orange"
+        svg="leaf-solid.svg"
+        percentage="Annual percentage rate"
+        tooltipText="This is an aproximate APR calculation for this year based on the current epoch"
+      />
+      <StatCard
         title="Service Fee"
         value={contractOverview.serviceFee || ''}
         valueUnit="%"
@@ -98,24 +108,26 @@ const Views = () => {
       >
         {location.pathname === '/owner' && <SetPercentageFeeAction />}
       </StatCard>
-      <StatCard
-        title="Delegation Cap"
-        value={contractOverview.maxDelegationCap || ''}
-        valueUnit={egldLabel}
-        color="green"
-        svg="delegation.svg"
-        percentage={`${getPercentage(
-          denominate({
-            input: totalActiveStake,
-            denomination,
-            decimals,
-            showLastNonZeroDecimal: false,
-          }),
-          contractOverview.maxDelegationCap
-        )}% filled`}
-      >
-        {location.pathname === '/owner' && <UpdateDelegationCapAction />}
-      </StatCard>
+      {contractOverview.maxDelegationCap !== '0' && (
+        <StatCard
+          title="Delegation Cap"
+          value={contractOverview.maxDelegationCap || ''}
+          valueUnit={egldLabel}
+          color="green"
+          svg="delegation.svg"
+          percentage={`${getPercentage(
+            denominate({
+              input: totalActiveStake,
+              denomination,
+              decimals,
+              showLastNonZeroDecimal: false,
+            }),
+            contractOverview.maxDelegationCap
+          )}% filled`}
+        >
+          {location.pathname === '/owner' && <UpdateDelegationCapAction />}
+        </StatCard>
+      )}
       {isAdmin() && location.pathname === '/owner' && (
         <StatCard
           title="Automatic activation"

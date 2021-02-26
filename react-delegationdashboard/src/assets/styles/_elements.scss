@@ -139,3 +139,9 @@ label {
     repeat scroll 0% 0%;
   box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 197, 189, 0.06);
 }
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1300px;
+  }
+}

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@elrondnetwork/erdjs": "^2.2.0",
+    "@elrondnetwork/erdjs": "^2.3.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.12",
@@ -20,7 +20,6 @@
     "immer": "^8.0.1",
     "moment": "^2.29.1",
     "node-sass": "^4.0.0",
-    "packages": "0.0.8",
     "react": "^16.13.1",
     "react-bootstrap": "1.4.3",
     "react-dom": "^16.13.1",
@@ -39,10 +38,8 @@
     "eject": "react-scripts eject",
     "build-mainnet": "npm run copy-mainnet-config & npm run build",
     "build-testnet": "npm run copy-testnet-config & npm run build",
-    "build-internal": "npm run copy-internal-config & npm run build",
     "copy-mainnet-config": "cp ./src/config.mainnet.ts ./src/config.ts",
-    "copy-testnet-config": "cp ./src/config.testnet.ts ./src/config.ts",
-    "copy-internal-config": "cp ./src/config.internal.ts ./src/config.ts"
+    "copy-testnet-config": "cp ./src/config.testnet.ts ./src/config.ts"
   },
   "eslintConfig": {
     "extends": "react-app"

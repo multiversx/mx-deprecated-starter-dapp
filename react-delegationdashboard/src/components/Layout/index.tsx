@@ -3,14 +3,15 @@ import denominate from 'components/Denominate/formatters';
 import { denomination, decimals } from 'config';
 import { useContext, useDispatch } from 'context';
 import { contractViews } from 'contracts/ContractViews';
-import { ContractOverview } from 'helpers/types';
+import { ContractOverview, NetworkConfig, NetworkStake, Stats } from 'helpers/types';
 import React from 'react';
+import { calculateAPR } from './APRCalculation';
 import Footer from './Footer';
 import Navbar from './Navbar';
 
 const Layout = ({ children, page }: { children: React.ReactNode; page: string }) => {
   const dispatch = useDispatch();
-  const { dapp, delegationContract, auctionContract } = useContext();
+  const { dapp, delegationContract } = useContext();
   const { getContractConfig, getTotalActiveStake, getBlsKeys } = contractViews;
 
   const getContractOverviewType = (value: QueryResponse) => {
@@ -28,7 +29,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     });
     return new ContractOverview(
       value.returnData[0].asHex.toString(),
-      (parseFloat(value.returnData[1].asHex) / 100).toString(),
+      (value.returnData[1].asNumber / 100).toString(),
       delegationCap,
       initialOwnerFunds,
       value.returnData[4]?.asString,
@@ -43,7 +44,10 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     Promise.all([
       getContractConfig(dapp, delegationContract),
       getTotalActiveStake(dapp, delegationContract),
-      getBlsKeys(dapp, delegationContract, auctionContract),
+      getBlsKeys(dapp, delegationContract),
+      dapp.apiProvider.getNetworkStats(),
+      dapp.apiProvider.getNetworkStake(),
+      dapp.proxy.getNetworkConfig(),
     ])
       .then(
         ([
@@ -52,6 +56,9 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
             returnData: [activeStake],
           },
           { returnData: blsKeys },
+          networkStats,
+          networkStake,
+          networkConfig,
         ]) => {
           dispatch({
             type: 'setContractOverview',
@@ -64,6 +71,24 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           dispatch({
             type: 'setNumberOfActiveNodes',
             numberOfActiveNodes: (blsKeys.length / 2).toString(),
+          });
+          dispatch({
+            type: 'setAprPercentage',
+            aprPercentage: calculateAPR({
+              stats: new Stats(networkStats.Epoch),
+              networkConfig: new NetworkConfig(
+                networkConfig.TopUpFactor,
+                networkConfig.TopUpRewardsGradientPoint
+              ),
+              networkStake: new NetworkStake(
+                networkStake.TotalValidators,
+                networkStake.ActiveValidators,
+                networkStake.QueueSize,
+                networkStake.TotalStaked
+              ),
+              blsKeys: blsKeys,
+              totalActiveStake: activeStake.asBigInt.toString(),
+            }),
           });
         }
       )

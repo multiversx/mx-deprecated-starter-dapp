@@ -58,7 +58,7 @@ The react implementation for Dashboard Delegation
 
 The dapp is a client side only poject and is built using the Create React App scripts.
 
-Follow the next step to start using this dapp
+Follow the next step to start using this dapp or follow the next tutorial on [Youtube](https://www.youtube.com/watch?v=BkjUmBsmQYM&feature=youtu.be&ab_channel=ElrondNetwork)
 
 ### Prerequisites
 

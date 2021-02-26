@@ -51,7 +51,41 @@ export class StatCardType {
   svg!: string;
   color!: string;
   percentage?: string;
+  tooltipText?: string;
   children?: any;
+}
+
+export class NetworkConfig {
+  topUpFactor: number;
+  topUpRewardsGradientPoint: BigInt;
+  public constructor(topUpFactor: number, topUpRewardsGradientPoint: BigInt) {
+    this.topUpFactor = topUpFactor;
+    this.topUpRewardsGradientPoint = topUpRewardsGradientPoint;
+  }
+}
+export class Stats {
+  epoch: number;
+  public constructor(epoch: number) {
+    this.epoch = epoch;
+  }
+}
+
+export class NetworkStake {
+  totalValidators: number;
+  activeValidators: number;
+  queueSize: number;
+  totalStaked: BigInt;
+  public constructor(
+    totalValidators: number,
+    activeValidators: number,
+    queueSize: number,
+    totalStaked: BigInt
+  ) {
+    this.totalValidators = totalValidators;
+    this.activeValidators = activeValidators;
+    this.queueSize = queueSize;
+    this.totalStaked = totalStaked;
+  }
 }
 
 export class NodeType {
@@ -82,6 +116,7 @@ export class UndelegatedValueType {
 }
 
 export interface ActionModalType {
+  balance?: string;
   show: boolean;
   title: string;
   description: string;
