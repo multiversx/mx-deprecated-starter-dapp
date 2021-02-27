@@ -5,7 +5,7 @@ import { useDelegation } from 'helpers';
 import { useContext } from 'context';
 
 const UndelegatedValueRow = ({
- undelegatedValue: value,
+  undelegatedValue: value,
 }: {
   undelegatedValue: UndelegatedValueType;
 }) => {
