@@ -5,13 +5,14 @@ import { useDelegation } from 'helpers';
 import { useContext } from 'context';
 
 const UndelegatedValueRow = ({
-  undelegatedValue: value,
+ undelegatedValue: value,
 }: {
   undelegatedValue: UndelegatedValueType;
 }) => {
   const { delegation } = useDelegation();
   const [isDisabled, setIsDisabled] = React.useState(true);
   const { egldLabel } = useContext();
+  const [counter, setCounter] = React.useState(value.timeLeft);
 
   const handleWithdraw = () => {
     delegation
@@ -19,6 +20,10 @@ const UndelegatedValueRow = ({
       .then()
       .catch(e => console.error('handleWithdraw error', e));
   };
+
+  useEffect(() => {
+    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+  }, [counter]);
 
   useEffect(() => {
     if (value.timeLeft === 0) {
@@ -38,7 +43,7 @@ const UndelegatedValueRow = ({
           {value.timeLeft ? (
             <span className="badge badge-sm badge-light-orange text-orange">
               {moment
-                .utc(moment.duration(value.timeLeft, 'seconds').asMilliseconds())
+                .utc(moment.duration(counter, 'seconds').asMilliseconds())
                 .format('HH:mm:ss')}{' '}
               left
             </span>
