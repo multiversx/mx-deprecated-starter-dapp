@@ -23,13 +23,8 @@ const UndelegatedValueRow = ({
 
   useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    counter === 0 && setIsDisabled(false);
   }, [counter]);
-
-  useEffect(() => {
-    if (value.timeLeft === 0) {
-      setIsDisabled(false);
-    }
-  }, [value.value, value.timeLeft]);
 
   return (
     <tr>
@@ -40,7 +35,7 @@ const UndelegatedValueRow = ({
       </td>
       <td>
         <div className="d-flex align-items-center text-nowrap trim">
-          {value.timeLeft ? (
+          {counter > 0 ? (
             <span className="badge badge-sm badge-light-orange text-orange">
               {moment
                 .utc(moment.duration(counter, 'seconds').asMilliseconds())
