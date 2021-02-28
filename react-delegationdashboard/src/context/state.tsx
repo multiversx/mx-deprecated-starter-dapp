@@ -51,6 +51,7 @@ export const emptyContractOverview: ContractOverview = {
   automaticActivation: 'false',
   withDelegationCap: false,
   changeableServiceFee: false,
+  reDelegationCap: 'false',
   createdNounce: false,
   unBondPeriod: 0,
 };
