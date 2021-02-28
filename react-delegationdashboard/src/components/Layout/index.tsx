@@ -35,8 +35,9 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
       value.returnData[4]?.asString,
       value.returnData[5].asBool,
       value.returnData[6].asBool,
-      value.returnData[7].asBool,
-      value.returnData[8]?.asNumber * 6
+      value.returnData[7]?.asString,
+      value.returnData[8].asBool,
+      value.returnData[9]?.asNumber * 6
     );
   };
 

@@ -72,6 +72,11 @@ export const delegationContractData: DelegationContractType[] = [
     data: 'setAutomaticActivation@',
   },
   {
+    name: 'setReDelegateCapActivation',
+    gasLimit: 6000000,
+    data: 'setCheckCapOnReDelegateRewards@',
+  },
+  {
     name: 'changeServiceFee',
     gasLimit: 6000000,
     data: 'changeServiceFee@',

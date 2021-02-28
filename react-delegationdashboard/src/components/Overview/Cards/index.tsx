@@ -9,6 +9,7 @@ import { useState } from 'react';
 import SetPercentageFeeAction from './SetPercentageFeeAction';
 import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 import AutomaticActivationAction from './AutomaticActivationAction';
+import ReDelegateCapActivationAction from './ReDelegateCapActivationAction';
 
 const Views = () => {
   const {
@@ -136,6 +137,18 @@ const Views = () => {
           svg="activation.svg"
         >
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />
+        </StatCard>
+      )}
+      {isAdmin() && location.pathname === '/owner' && (
+        <StatCard
+          title="ReDelegate Cap"
+          value={contractOverview.reDelegationCap === 'true' ? 'ON' : 'OFF'}
+          color="green"
+          svg="activation.svg"
+          percentage="Cap for rewards"
+          tooltipText="If your agency uses a max delegation cap and the ReDelegate Cap is OFF your delegators will be able to redelegate the reward to your agency. If the value is ON then the redelegate wil not be accepted."
+        >
+          <ReDelegateCapActivationAction automaticFlag={contractOverview.reDelegationCap} />
         </StatCard>
       )}
     </div>
