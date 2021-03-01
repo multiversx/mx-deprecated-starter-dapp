@@ -77,7 +77,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           });
           dispatch({
             type: 'setNumberOfActiveNodes',
-            numberOfActiveNodes: (blsKeys.length / 2).toString(),
+            numberOfActiveNodes: blsKeys.filter(key => key.asString === 'staked').length.toString(),
           });
           dispatch({
             type: 'setAprPercentage',
