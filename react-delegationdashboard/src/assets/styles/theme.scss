@@ -1,6 +1,7 @@
-$font-family-sans-serif: 'Poppins', sans-serif;
+$font-family-sans-serif: 'Gilroy', sans-serif;
 $font-weight-normal: 300;
-$font-weight-bold: 500;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
 $headings-font-weight: 400;
 $white: #fff;
 
@@ -117,3 +118,7 @@ $theme-colors: (
 );
 
 @import './main';
+
+@include webfont('gilroy', 'gilroy-medium', $font-weight-medium, normal, 'U+0000-007F');
+
+@include webfont('gilroy', 'gilroy-bold', $font-weight-bold, normal, 'U+0000-007F');
