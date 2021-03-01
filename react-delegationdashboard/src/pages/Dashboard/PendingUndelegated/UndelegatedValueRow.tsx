@@ -12,6 +12,7 @@ const UndelegatedValueRow = ({
   const { delegation } = useDelegation();
   const [isDisabled, setIsDisabled] = React.useState(true);
   const { egldLabel } = useContext();
+  const [counter, setCounter] = React.useState(value.timeLeft);
 
   const handleWithdraw = () => {
     delegation
@@ -21,10 +22,9 @@ const UndelegatedValueRow = ({
   };
 
   useEffect(() => {
-    if (value.timeLeft === 0) {
-      setIsDisabled(false);
-    }
-  }, [value.value, value.timeLeft]);
+    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+    counter === 0 && setIsDisabled(false);
+  }, [counter]);
 
   return (
     <tr>
@@ -35,10 +35,10 @@ const UndelegatedValueRow = ({
       </td>
       <td>
         <div className="d-flex align-items-center text-nowrap trim">
-          {value.timeLeft ? (
+          {counter > 0 ? (
             <span className="badge badge-sm badge-light-orange text-orange">
               {moment
-                .utc(moment.duration(value.timeLeft, 'seconds').asMilliseconds())
+                .utc(moment.duration(counter, 'seconds').asMilliseconds())
                 .format('HH:mm:ss')}{' '}
               left
             </span>
