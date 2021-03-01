@@ -19,6 +19,7 @@ export class ContractOverview {
   automaticActivation: string;
   withDelegationCap?: boolean;
   changeableServiceFee?: boolean;
+  reDelegationCap: string;
   createdNounce?: boolean;
   unBondPeriod?: number;
   public constructor(
@@ -29,6 +30,7 @@ export class ContractOverview {
     automaticActivation: string = 'false',
     withDelegationCap?: boolean,
     changeableServiceFee?: boolean,
+    reDelegationCap: string = 'false',
     createdNounce?: boolean,
     unBondPeriod?: number
   ) {
@@ -39,6 +41,7 @@ export class ContractOverview {
     this.automaticActivation = automaticActivation;
     this.withDelegationCap = withDelegationCap;
     this.changeableServiceFee = changeableServiceFee;
+    this.reDelegationCap = reDelegationCap;
     this.createdNounce = createdNounce;
     this.unBondPeriod = unBondPeriod;
   }
