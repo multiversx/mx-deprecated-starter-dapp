@@ -153,7 +153,7 @@ const Views = () => {
           color="green"
           svg="activation.svg"
           percentage="Cap for rewards"
-          tooltipText="If your agency uses a max delegation cap and the ReDelegate Cap is OFF your delegators will be able to redelegate the reward to your agency. If the value is ON then the redelegate wil not be accepted."
+          tooltipText="If your agency uses a max delegation cap and the ReDelegate Cap is OFF your delegators will be able to redelegate the reward to your agency. If the value is ON then the redelegate will not be accepted."
         >
           <ReDelegateCapActivationAction automaticFlag={contractOverview.reDelegationCap} />
         </StatCard>
