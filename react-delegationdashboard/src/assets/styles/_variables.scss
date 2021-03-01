@@ -9,3 +9,14 @@ $spacers: (
     $spacer-val,
   ),
 );
+
+@mixin webfont($family, $file, $weight: normal, $style: normal, $range: 'U+0000-007F') {
+  @font-face {
+    font-family: $family;
+    font-display: swap;
+    font-style: $style;
+    font-weight: $weight;
+    src: url(../fonts/#{$file}.woff2) format('woff2'), url(../fonts/#{$file}.woff) format('woff');
+    unicode-range: $range;
+  }
+}
