@@ -69,7 +69,7 @@ const Views = () => {
           showLastNonZeroDecimal: false,
         })}
         valueUnit={egldLabel}
-        color="orange"
+        color="violet"
         svg="contract.svg"
         percentage={`${getPercentage(
           denominate({
@@ -90,7 +90,7 @@ const Views = () => {
         title="Number of Nodes"
         value={numberOfActiveNodes}
         valueUnit=""
-        color="purple"
+        color="dark-green"
         svg="nodes.svg"
         percentage={`${getPercentage(
           numberOfActiveNodes,
@@ -101,8 +101,8 @@ const Views = () => {
         title="Computed APR"
         value={aprPercentage}
         valueUnit=""
-        color="orange"
-        svg="leaf-solid.svg"
+        color="pink"
+        svg="computed.svg"
         percentage="Annual percentage rate"
         tooltipText="This is an aproximate APR calculation for this year based on the current epoch"
       />
@@ -110,7 +110,7 @@ const Views = () => {
         title="Service Fee"
         value={contractOverview.serviceFee || ''}
         valueUnit="%"
-        color="red"
+        color="yellow"
         svg="service.svg"
       >
         {location.pathname === '/owner' && <SetPercentageFeeAction />}
@@ -120,7 +120,7 @@ const Views = () => {
           title="Delegation Cap"
           value={contractOverview.maxDelegationCap || ''}
           valueUnit={egldLabel}
-          color="green"
+          color="light-green"
           svg="delegation.svg"
           percentage={`${getPercentage(
             denominate({
