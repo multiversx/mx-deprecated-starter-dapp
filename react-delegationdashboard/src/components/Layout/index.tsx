@@ -12,7 +12,7 @@ import Navbar from './Navbar';
 const Layout = ({ children, page }: { children: React.ReactNode; page: string }) => {
   const dispatch = useDispatch();
   const { dapp, delegationContract } = useContext();
-  const { getContractConfig, getTotalActiveStake, getBlsKeys } = contractViews;
+  const { getContractConfig, getTotalActiveStake, getBlsKeys, getNumUsers } = contractViews;
 
   const getContractOverviewType = (value: QueryResponse) => {
     let delegationCap = denominate({
@@ -42,6 +42,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
 
   React.useEffect(() => {
     Promise.all([
+      getNumUsers(dapp, delegationContract),
       getContractConfig(dapp, delegationContract),
       getTotalActiveStake(dapp, delegationContract),
       getBlsKeys(dapp, delegationContract),
@@ -51,6 +52,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     ])
       .then(
         ([
+          numUsers,
           contractOverview,
           {
             returnData: [activeStake],
@@ -60,6 +62,10 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           networkStake,
           networkConfig,
         ]) => {
+          dispatch({
+            type: 'setNumUsers',
+            numUsers: numUsers.returnData[0].asNumber,
+          });
           dispatch({
             type: 'setContractOverview',
             contractOverview: getContractOverviewType(contractOverview),

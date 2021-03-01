@@ -11,6 +11,7 @@ export type ActionType =
   | { type: 'setBalance'; balance: StateType['account']['balance'] }
   | { type: 'setContractOverview'; contractOverview: StateType['contractOverview'] }
   | { type: 'setNumberOfActiveNodes'; numberOfActiveNodes: StateType['numberOfActiveNodes'] }
+  | { type: 'setNumUsers'; numUsers: StateType['numUsers'] }
   | { type: 'setTotalActiveStake'; totalActiveStake: StateType['totalActiveStake'] }
   | { type: 'setAprPercentage'; aprPercentage: StateType['aprPercentage'] };
 
@@ -71,6 +72,14 @@ export function reducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         numberOfActiveNodes,
+      };
+    }
+
+    case 'setNumUsers': {
+      const { numUsers } = action;
+      return {
+        ...state,
+        numUsers,
       };
     }
 
