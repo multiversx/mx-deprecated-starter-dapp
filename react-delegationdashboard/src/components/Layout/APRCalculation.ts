@@ -54,7 +54,8 @@ const calculateAPR = ({
   const allActiveNodes = blsKeys.filter(key => key.asString === 'staked').length;
   const validatorBaseStake = allActiveNodes * stakePerNode;
   const validatorTotalStake = parseInt(denominateValue(totalActiveStake));
-  const validatorTopUpReward = networkTopUpStake > 0 ? (validatorTotalStake / networkTopUpStake) * topUpReward : 0;
+  const validatorTopUpStake = validatorTotalStake - allNodes * stakePerNode;
+  const validatorTopUpReward = networkTopUpStake > 0 ? (validatorTopUpStake / networkTopUpStake) * topUpReward : 0;
   const validatorBaseReward = (validatorBaseStake / networkBaseStake) * baseReward;
   const anualPercentageRate =
     (365 * (validatorTopUpReward + validatorBaseReward)) / validatorTotalStake;
