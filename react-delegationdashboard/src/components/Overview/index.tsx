@@ -4,10 +4,10 @@ import Header from './Header';
 
 const Overview = () => {
   return (
-    <div className="d-row border-0 align-items-center justify-content-between px-spacer">
-        <Header />
-        <Views />
-    </div>
+    <>
+      <Header />
+      <Views />
+    </>
   );
 };
 
