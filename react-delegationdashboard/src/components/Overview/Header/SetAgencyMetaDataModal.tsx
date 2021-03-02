@@ -24,7 +24,7 @@ const SetAgencyMetaDataModal = () => {
         onClick={() => {
           setShowDelegateModal(true);
         }}
-        className="btn btn-primary btn-sm"
+        className="btn btn-primary btn-sm ml-3"
       >
         Identity
       </button>
