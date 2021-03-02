@@ -11,14 +11,14 @@ import { nodeTransactions } from './helpers/stakeHooks';
 import { NodeType } from 'helpers/types';
 import { stakingContract } from 'config';
 
-type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake';
+type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake' | 'remove';
 
 const allowedActions: { [key: string]: ActionType[] } = {
   staked: ['unStake'],
   jailed: ['unJail'],
   unStaked: ['unBond', 'reStake'],
   queued: ['unStake'],
-  notStaked: ['stake'],
+  notStaked: ['stake', 'remove'],
 };
 
 const NodeRow = ({ blsKey: key, index }: { blsKey: NodeType; index: number }) => {

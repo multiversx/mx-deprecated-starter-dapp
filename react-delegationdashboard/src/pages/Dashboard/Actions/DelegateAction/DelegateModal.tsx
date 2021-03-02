@@ -34,7 +34,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
         denomination,
         decimals,
         showLastNonZeroDecimal: false,
-      }) === contractOverview.maxDelegationCap
+      }) >= contractOverview.maxDelegationCap
     );
   };
 
@@ -70,7 +70,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
                   const bnAvailable = new BigNumber(available);
                   return bnAmount.comparedTo(bnAvailable) <= 0;
-                })
+                }),
             })}
           >
             {props => {
