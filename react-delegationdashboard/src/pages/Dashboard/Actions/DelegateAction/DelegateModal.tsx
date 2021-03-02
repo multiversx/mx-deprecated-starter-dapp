@@ -34,7 +34,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
         denomination,
         decimals,
         showLastNonZeroDecimal: false,
-      }) >= contractOverview.maxDelegationCap
+      }) >= contractOverview.maxDelegationCap && contractOverview.maxDelegationCap !== String(0)
     );
   };
 
