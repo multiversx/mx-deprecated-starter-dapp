@@ -2,6 +2,9 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import ViewStatAction from 'components/ViewStatAction';
 import { useDelegation } from 'helpers';
+import { useContext } from 'context';
+import denominate from 'components/Denominate/formatters';
+import { denomination, decimals } from 'config';
 export interface ClaimRewardsModalType {
   show: boolean;
   title: string;
@@ -10,11 +13,27 @@ export interface ClaimRewardsModalType {
 }
 const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewardsModalType) => {
   const { delegation } = useDelegation();
+  const { totalActiveStake, contractOverview } = useContext();
   const handleClaimRewards = () => {
     delegation
       .sendTransaction('0', 'claimRewards')
       .then()
       .catch(e => console.error('handleClaimRewards error', e));
+  };
+
+  const isRedelegateEnable = () => {
+    if (
+      denominate({
+        input: totalActiveStake,
+        denomination,
+        decimals,
+        showLastNonZeroDecimal: false,
+      }) >= contractOverview.maxDelegationCap &&
+      contractOverview.reDelegationCap !== 'true'
+    ) {
+      return false;
+    }
+    return true;
   };
 
   const handleRedelegateRewards = () => {
@@ -37,11 +56,13 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
               handleContinue={handleClaimRewards}
               color="primary"
             />
-            <ViewStatAction
-              actionTitle="Redelegate Rewards"
-              handleContinue={handleRedelegateRewards}
-              color="green"
-            />
+            {isRedelegateEnable() && (
+              <ViewStatAction
+                actionTitle="Redelegate Rewards"
+                handleContinue={handleRedelegateRewards}
+                color="green"
+              />
+            )}
             <button id="closeButton" className="btn btn-link mt-spacer mx-2" onClick={handleClose}>
               Close
             </button>
