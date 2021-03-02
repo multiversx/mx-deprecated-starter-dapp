@@ -16,12 +16,6 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
   const { getContractConfig, getTotalActiveStake, getBlsKeys, getNumUsers, getMetaData } = contractViews;
 
   const getContractOverviewType = (value: QueryResponse) => {
-    let delegationCap = denominate({
-      decimals,
-      denomination,
-      input: value.returnData[2].asBigInt.toString(),
-      showLastNonZeroDecimal: false,
-    });
     let initialOwnerFunds = denominate({
       decimals,
       denomination,
@@ -31,7 +25,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     return new ContractOverview(
       value.returnData[0].asHex.toString(),
       (value.returnData[1].asNumber / 100).toString(),
-      delegationCap,
+      value.returnData[2].asBigInt.toString(),
       initialOwnerFunds,
       value.returnData[4]?.asString,
       value.returnData[5].asBool,

@@ -55,12 +55,7 @@ const Views = () => {
 
   return (
     <div className="cards d-flex flex-wrap mr-spacer">
-      <StatCard
-        title="Number of Users"
-        value={numUsers.toString()}
-        color="orange"
-        svg="user.svg"
-      />
+      <StatCard title="Number of Users" value={numUsers.toString()} color="orange" svg="user.svg" />
       <StatCard
         title="Contract Stake"
         value={denominate({
@@ -119,7 +114,14 @@ const Views = () => {
       {isAdmin() && location.pathname === '/owner' ? (
         <StatCard
           title="Delegation Cap"
-          value={contractOverview.maxDelegationCap || ''}
+          value={
+            denominate({
+              decimals,
+              denomination,
+              input: contractOverview.maxDelegationCap,
+              showLastNonZeroDecimal: false,
+            }) || ''
+          }
           valueUnit={egldLabel}
           color="light-green"
           svg="delegation.svg"
@@ -130,17 +132,39 @@ const Views = () => {
               decimals,
               showLastNonZeroDecimal: false,
             }),
-            contractOverview.maxDelegationCap
+            denominate({
+              decimals,
+              denomination,
+              input: contractOverview.maxDelegationCap,
+              showLastNonZeroDecimal: false,
+            })
           )}% filled`}
         >
           <UpdateDelegationCapAction />
         </StatCard>
       ) : (
-        contractOverview.maxDelegationCap !== '0' &&
-        contractOverview.maxDelegationCap !== '' && (
+        denominate({
+          decimals,
+          denomination,
+          input: contractOverview.maxDelegationCap,
+          showLastNonZeroDecimal: false,
+        }) !== '0' &&
+        denominate({
+          decimals,
+          denomination,
+          input: contractOverview.maxDelegationCap,
+          showLastNonZeroDecimal: false,
+        }) !== '' && (
           <StatCard
             title="Delegation Cap"
-            value={contractOverview.maxDelegationCap || ''}
+            value={
+              denominate({
+                decimals,
+                denomination,
+                input: contractOverview.maxDelegationCap,
+                showLastNonZeroDecimal: false,
+              }) || ''
+            }
             valueUnit={egldLabel}
             color="green"
             svg="delegation.svg"
@@ -151,7 +175,12 @@ const Views = () => {
                 decimals,
                 showLastNonZeroDecimal: false,
               }),
-              contractOverview.maxDelegationCap
+              denominate({
+                decimals,
+                denomination,
+                input: contractOverview.maxDelegationCap,
+                showLastNonZeroDecimal: false,
+              })
             )}% filled`}
           ></StatCard>
         )

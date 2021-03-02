@@ -28,13 +28,11 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
   });
 
   const isFullDelegationCapContract = () => {
+    const bnTotalActiveStake = new BigNumber(totalActiveStake);
+    const bnMaxDelegationCap = new BigNumber(contractOverview.maxDelegationCap);
     return (
-      denominate({
-        input: totalActiveStake,
-        denomination,
-        decimals,
-        showLastNonZeroDecimal: false,
-      }) >= contractOverview.maxDelegationCap && contractOverview.maxDelegationCap !== String(0)
+      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) >= 0 &&
+      contractOverview.maxDelegationCap !== String(0)
     );
   };
 

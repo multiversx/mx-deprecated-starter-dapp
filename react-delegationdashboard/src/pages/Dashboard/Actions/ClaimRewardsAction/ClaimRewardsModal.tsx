@@ -3,8 +3,7 @@ import { Modal } from 'react-bootstrap';
 import ViewStatAction from 'components/ViewStatAction';
 import { useDelegation } from 'helpers';
 import { useContext } from 'context';
-import denominate from 'components/Denominate/formatters';
-import { denomination, decimals } from 'config';
+import BigNumber from 'bignumber.js';
 export interface ClaimRewardsModalType {
   show: boolean;
   title: string;
@@ -22,13 +21,10 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
   };
 
   const isRedelegateEnable = () => {
+    const bnTotalActiveStake = new BigNumber(totalActiveStake);
+    const bnMaxDelegationCap = new BigNumber(contractOverview.maxDelegationCap);
     if (
-      denominate({
-        input: totalActiveStake,
-        denomination,
-        decimals,
-        showLastNonZeroDecimal: false,
-      }) >= contractOverview.maxDelegationCap &&
+      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) >= 0 &&
       contractOverview.reDelegationCap !== 'true'
     ) {
       return false;
