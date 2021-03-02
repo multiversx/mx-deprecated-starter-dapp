@@ -20,7 +20,7 @@ const AutomaticActivationModal = ({
 }: AutomaticActivationModalType) => {
   const { delegation } = useDelegation();
   const handleAutomaticActivation = () => {
-    let activation = Buffer.from(value === 'true' ? 'false' : 'true').toString('hex');
+    let activation = Buffer.from(value).toString('hex');
     delegation.sendTransaction('0', 'setAutomaticActivation', activation).then();
   };
 
