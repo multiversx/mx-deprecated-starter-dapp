@@ -12,7 +12,7 @@ import Navbar from './Navbar';
 const Layout = ({ children, page }: { children: React.ReactNode; page: string }) => {
   const dispatch = useDispatch();
   const { dapp, delegationContract } = useContext();
-  const { getContractConfig, getTotalActiveStake, getBlsKeys } = contractViews;
+  const { getContractConfig, getTotalActiveStake, getBlsKeys, getNumUsers } = contractViews;
 
   const getContractOverviewType = (value: QueryResponse) => {
     let delegationCap = denominate({
@@ -35,13 +35,15 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
       value.returnData[4]?.asString,
       value.returnData[5].asBool,
       value.returnData[6].asBool,
-      value.returnData[7].asBool,
-      value.returnData[8]?.asNumber * 6
+      value.returnData[7]?.asString,
+      value.returnData[8].asBool,
+      value.returnData[9]?.asNumber * 6
     );
   };
 
   React.useEffect(() => {
     Promise.all([
+      getNumUsers(dapp, delegationContract),
       getContractConfig(dapp, delegationContract),
       getTotalActiveStake(dapp, delegationContract),
       getBlsKeys(dapp, delegationContract),
@@ -51,6 +53,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     ])
       .then(
         ([
+          numUsers,
           contractOverview,
           {
             returnData: [activeStake],
@@ -61,6 +64,10 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           networkConfig,
         ]) => {
           dispatch({
+            type: 'setNumUsers',
+            numUsers: numUsers.returnData[0].asNumber,
+          });
+          dispatch({
             type: 'setContractOverview',
             contractOverview: getContractOverviewType(contractOverview),
           });
@@ -70,7 +77,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           });
           dispatch({
             type: 'setNumberOfActiveNodes',
-            numberOfActiveNodes: (blsKeys.length / 2).toString(),
+            numberOfActiveNodes: blsKeys.filter(key => key.asString === 'staked').length.toString(),
           });
           dispatch({
             type: 'setAprPercentage',

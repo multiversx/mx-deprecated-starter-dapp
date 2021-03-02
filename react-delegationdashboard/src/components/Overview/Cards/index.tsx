@@ -9,6 +9,7 @@ import { useState } from 'react';
 import SetPercentageFeeAction from './SetPercentageFeeAction';
 import UpdateDelegationCapAction from './UpdateDelegationCapAction';
 import AutomaticActivationAction from './AutomaticActivationAction';
+import ReDelegateCapActivationAction from './ReDelegateCapActivationAction';
 
 const Views = () => {
   const {
@@ -19,6 +20,7 @@ const Views = () => {
     address,
     contractOverview,
     aprPercentage,
+    numUsers,
   } = useContext();
   const [networkStake, setNetworkStake] = useState(new NetworkStake());
 
@@ -53,6 +55,12 @@ const Views = () => {
 
   return (
     <div className="cards d-flex flex-wrap mr-spacer">
+      <StatCard
+        title="Number of Users"
+        value={numUsers.toString()}
+        color="orange"
+        svg="user.svg"
+      />
       <StatCard
         title="Contract Stake"
         value={denominate({
@@ -108,7 +116,7 @@ const Views = () => {
       >
         {location.pathname === '/owner' && <SetPercentageFeeAction />}
       </StatCard>
-      {contractOverview.maxDelegationCap !== '0' && (
+      {isAdmin() && location.pathname === '/owner' ? (
         <StatCard
           title="Delegation Cap"
           value={contractOverview.maxDelegationCap || ''}
@@ -125,9 +133,30 @@ const Views = () => {
             contractOverview.maxDelegationCap
           )}% filled`}
         >
-          {location.pathname === '/owner' && <UpdateDelegationCapAction />}
+          <UpdateDelegationCapAction />
         </StatCard>
+      ) : (
+        contractOverview.maxDelegationCap !== '0' &&
+        contractOverview.maxDelegationCap !== '' && (
+          <StatCard
+            title="Delegation Cap"
+            value={contractOverview.maxDelegationCap || ''}
+            valueUnit={egldLabel}
+            color="green"
+            svg="delegation.svg"
+            percentage={`${getPercentage(
+              denominate({
+                input: totalActiveStake,
+                denomination,
+                decimals,
+                showLastNonZeroDecimal: false,
+              }),
+              contractOverview.maxDelegationCap
+            )}% filled`}
+          ></StatCard>
+        )
       )}
+
       {isAdmin() && location.pathname === '/owner' && (
         <StatCard
           title="Automatic activation"
@@ -136,6 +165,18 @@ const Views = () => {
           svg="activation.svg"
         >
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />
+        </StatCard>
+      )}
+      {isAdmin() && location.pathname === '/owner' && (
+        <StatCard
+          title="ReDelegate Cap"
+          value={contractOverview.reDelegationCap === 'true' ? 'ON' : 'OFF'}
+          color="green"
+          svg="activation.svg"
+          percentage="Cap for rewards"
+          tooltipText="If your agency uses a max delegation cap and the ReDelegate Cap is OFF your delegators will be able to redelegate the reward to your agency. If the value is ON then the redelegate will not be accepted."
+        >
+          <ReDelegateCapActivationAction automaticFlag={contractOverview.reDelegationCap} />
         </StatCard>
       )}
     </div>

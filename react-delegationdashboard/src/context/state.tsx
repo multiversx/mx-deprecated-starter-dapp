@@ -34,6 +34,7 @@ export interface StateType {
   delegationContract?: string;
   totalActiveStake: string;
   numberOfActiveNodes: string;
+  numUsers: number;
   aprPercentage: string;
   contractOverview: ContractOverview;
 }
@@ -50,6 +51,7 @@ export const emptyContractOverview: ContractOverview = {
   automaticActivation: 'false',
   withDelegationCap: false,
   changeableServiceFee: false,
+  reDelegationCap: 'false',
   createdNounce: false,
   unBondPeriod: 0,
 };
@@ -84,6 +86,7 @@ export const initialState = () => {
     delegationContract: sessionNetwork.delegationContract,
     contractOverview: emptyContractOverview,
     numberOfActiveNodes: '...',
+    numUsers: 0,
     totalActiveStake: '...',
     aprPercentage: '...',
   };
