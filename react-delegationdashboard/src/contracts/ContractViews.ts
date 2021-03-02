@@ -56,6 +56,13 @@ export const contractViews = {
     });
     return dapp.proxy.queryContract(query);
   },
+  getMetaData: (dapp: DappState, delegationContract?: string) => {
+    const query = new Query({
+      address: new Address(delegationContract),
+      func: new ContractFunction('getMetaData'),
+    });
+    return dapp.proxy.queryContract(query);
+  },
   getBlsKeys: (dapp: DappState, delegationContract?: string) => {
     const query = new Query({
       address: new Address(auctionContract),

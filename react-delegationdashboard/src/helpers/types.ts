@@ -11,6 +11,17 @@ export interface DelegationContractType {
   data: string;
 }
 
+export class AgencyMetadata {
+  name: string;
+  website: string;
+  keybase: string;
+  public constructor(name: string = '', website: string = '', keybase: string = '') {
+    this.name = name;
+    this.website = website;
+    this.keybase = keybase;
+  }
+}
+
 export class ContractOverview {
   ownerAddress: string;
   serviceFee?: string;
