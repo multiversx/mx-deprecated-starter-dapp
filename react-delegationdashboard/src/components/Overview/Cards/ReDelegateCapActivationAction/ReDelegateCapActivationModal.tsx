@@ -20,7 +20,7 @@ const ReDelegateCapActivationModal = ({
 }: ReDelegateCapActivationModalType) => {
   const { delegation } = useDelegation();
   const handleReDelegationCapActivation = () => {
-    let activation = Buffer.from(value).toString('hex');
+    let activation = Buffer.from(value === 'true' ? 'false' : 'true').toString('hex');
     delegation.sendTransaction('0', 'setReDelegateCapActivation', activation).then();
   };
 

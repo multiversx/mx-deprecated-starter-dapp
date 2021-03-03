@@ -24,7 +24,7 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
     const bnTotalActiveStake = new BigNumber(totalActiveStake);
     const bnMaxDelegationCap = new BigNumber(contractOverview.maxDelegationCap);
     if (
-      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) >= 0 &&
+      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) === 1 &&
       contractOverview.reDelegationCap !== 'true'
     ) {
       return false;
@@ -59,10 +59,10 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
                 color="green"
               />
             )}
-            <button id="closeButton" className="btn btn-link mt-spacer mx-2" onClick={handleClose}>
-              Close
-            </button>
           </div>
+          <button id="closeButton" className="btn btn-link mt-spacer mx-2" onClick={handleClose}>
+            Close
+          </button>
         </div>
       </div>
     </Modal>

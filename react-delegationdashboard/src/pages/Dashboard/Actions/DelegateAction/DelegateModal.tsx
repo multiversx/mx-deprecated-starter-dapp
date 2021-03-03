@@ -31,7 +31,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
     const bnTotalActiveStake = new BigNumber(totalActiveStake);
     const bnMaxDelegationCap = new BigNumber(contractOverview.maxDelegationCap);
     return (
-      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) >= 0 &&
+      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) === 1 &&
       contractOverview.maxDelegationCap !== String(0)
     );
   };
