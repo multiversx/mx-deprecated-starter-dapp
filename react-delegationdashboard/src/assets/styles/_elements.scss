@@ -25,12 +25,12 @@ body.modal-open .layout {
   border: none !important;
   box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 70, 194, 0.1);
   &.btn-primary {
-    background: rgba(255, 255, 255, 0.2);
-    border: rgba(255, 255, 255, 0.3);
+    background: #DA3C13;
+    border: #DA3C13;
     color: $white;
     box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 70, 194, 0.1);
     &:hover {
-      background: rgba(0, 0, 0, 0.2);
+      background: #080957;
     }
     &:not(:disabled):not(.disabled):active,
     &:not(:disabled):not(.disabled).active {
