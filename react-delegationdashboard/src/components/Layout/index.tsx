@@ -43,7 +43,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
   };
 
   const getAgencyMetaDataType = (value: QueryResponse) => {
-    if(value.returnData.length === 0) {
+    if(value && value.returnData && value.returnData.length === 0) {
       return emptyAgencyMetaData;
     }
     return new AgencyMetadata(
