@@ -4,7 +4,7 @@ import { useDelegation } from 'helpers';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
 import { useContext } from 'context';
-import { AgencyMetadata } from 'helpers/types';
+import { AgencyMetadata } from 'helpers/contractDataDefinitions';
 
 const SetAgencyMetaDataModal = () => {
   const { delegation } = useDelegation();

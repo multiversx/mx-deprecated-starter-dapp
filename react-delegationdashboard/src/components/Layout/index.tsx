@@ -4,7 +4,13 @@ import { denomination, decimals } from 'config';
 import { useContext, useDispatch } from 'context';
 import { emptyAgencyMetaData } from 'context/state';
 import { contractViews } from 'contracts/ContractViews';
-import { ContractOverview, AgencyMetadata, NetworkConfig, NetworkStake, Stats } from 'helpers/types';
+import {
+  AgencyMetadata,
+  ContractOverview,
+  NetworkConfig,
+  NetworkStake,
+  Stats,
+} from 'helpers/contractDataDefinitions';
 import React from 'react';
 import { calculateAPR } from './APRCalculation';
 import Footer from './Footer';
@@ -13,7 +19,13 @@ import Navbar from './Navbar';
 const Layout = ({ children, page }: { children: React.ReactNode; page: string }) => {
   const dispatch = useDispatch();
   const { dapp, delegationContract } = useContext();
-  const { getContractConfig, getTotalActiveStake, getBlsKeys, getNumUsers, getMetaData } = contractViews;
+  const {
+    getContractConfig,
+    getTotalActiveStake,
+    getBlsKeys,
+    getNumUsers,
+    getMetaData,
+  } = contractViews;
 
   const getContractOverviewType = (value: QueryResponse) => {
     let initialOwnerFunds = denominate({
@@ -37,7 +49,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
   };
 
   const getAgencyMetaDataType = (value: QueryResponse) => {
-    if(value && value.returnData && value.returnData.length === 0) {
+    if (value && value.returnData && value.returnData.length === 0) {
       return emptyAgencyMetaData;
     }
     return new AgencyMetadata(

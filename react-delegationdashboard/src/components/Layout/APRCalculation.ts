@@ -1,7 +1,7 @@
 import { ContractReturnData } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import denominate from 'components/Denominate/formatters';
 import { yearSettings, genesisTokenSuply, denomination, decimals } from 'config';
-import { NetworkConfig, NetworkStake, Stats } from 'helpers/types';
+import { NetworkConfig, NetworkStake, Stats } from 'helpers/contractDataDefinitions';
 
 const denominateValue = (value: string) => {
   const denominatedValueString = denominate({
@@ -55,7 +55,8 @@ const calculateAPR = ({
   const validatorBaseStake = allActiveNodes * stakePerNode;
   const validatorTotalStake = parseInt(denominateValue(totalActiveStake));
   const validatorTopUpStake = validatorTotalStake - allNodes * stakePerNode;
-  const validatorTopUpReward = networkTopUpStake > 0 ? (validatorTopUpStake / networkTopUpStake) * topUpReward : 0;
+  const validatorTopUpReward =
+    networkTopUpStake > 0 ? (validatorTopUpStake / networkTopUpStake) * topUpReward : 0;
   const validatorBaseReward = (validatorBaseStake / networkBaseStake) * baseReward;
   const anualPercentageRate =
     (365 * (validatorTopUpReward + validatorBaseReward)) / validatorTotalStake;
