@@ -24,7 +24,7 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
     const bnTotalActiveStake = new BigNumber(totalActiveStake);
     const bnMaxDelegationCap = new BigNumber(contractOverview.maxDelegationCap);
     if (
-      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) === 1 &&
+      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) >= 0 &&
       contractOverview.reDelegationCap !== 'true'
     ) {
       return false;
