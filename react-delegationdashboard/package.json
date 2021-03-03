@@ -32,7 +32,7 @@
     "yup": "^0.32.8"
   },
   "scripts": {
-    "start": "npm run copy-testnet-config & react-scripts start",
+    "start": "HTTPS=true npm run copy-testnet-config & react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
