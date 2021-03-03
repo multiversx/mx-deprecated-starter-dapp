@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
-import { useContext } from '../../../context';
+import { useContext } from 'context';
 import SetAgencyMetaDataModal from './SetAgencyMetaDataModal';
 
 const Header = () => {
