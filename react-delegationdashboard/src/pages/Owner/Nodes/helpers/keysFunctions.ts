@@ -2,7 +2,7 @@ import { Address, Argument, ContractFunction } from '@elrondnetwork/erdjs/out';
 import { ContractReturnData, Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import { auctionContract, stakingContract } from 'config';
 import { DappState } from 'context/state';
-import { NodeType } from 'helpers/types';
+import { NodeType } from './nodeType';
 import { NodeStatus } from './nodeTypes';
 
 export const getAllNodesStatus = (dapp: DappState, delegationContract?: string) => {

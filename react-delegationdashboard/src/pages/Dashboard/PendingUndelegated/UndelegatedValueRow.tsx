@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { UndelegatedValueType } from 'helpers/types';
 import moment from 'moment';
 import { useDelegation } from 'helpers';
 import { useContext } from 'context';
+import { UndelegatedValueType } from './UndelegatedValueType';
 
 const UndelegatedValueRow = ({
   undelegatedValue: value,
@@ -37,9 +37,7 @@ const UndelegatedValueRow = ({
         <div className="d-flex align-items-center text-nowrap trim">
           {counter > 0 ? (
             <span className="badge badge-sm badge-light-orange text-orange">
-              {moment
-                .utc(moment.duration(counter, 'seconds').asMilliseconds())
-                .format('HH:mm:ss')}{' '}
+              {moment.utc(moment.duration(counter, 'seconds').asMilliseconds()).format('HH:mm:ss')}{' '}
               left
             </span>
           ) : (
