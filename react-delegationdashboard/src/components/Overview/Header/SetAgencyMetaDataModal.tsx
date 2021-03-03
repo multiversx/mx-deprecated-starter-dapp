@@ -52,11 +52,12 @@ const SetAgencyMetaDataModal = () => {
                 website: string()
                   .required('Required')
                   .test('URL', 'URL is not valid!', value => {
-                    try {
-                        new URL(value as string);
-                        return true;
-                    } catch (error) {
-                        return false;
+                    var expression = /^((?:http(?:s)?\:\/\/)?[a-zA-Z0-9_-]+(?:.[a-zA-Z0-9_-]+)*.[a-zA-Z]{2,4}(?:\/[a-zA-Z0-9_]+)*(?:\/[a-zA-Z0-9_]+.[a-zA-Z]{2,4}(?:\?[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)?)?(?:\&[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)*)$/;
+                    var regex = new RegExp(expression);
+                    if (value?.match(regex)) {
+                      return true;
+                    } else {
+                      return false;
                     }
                   }),
               })}
