@@ -28,13 +28,11 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
   });
 
   const isFullDelegationCapContract = () => {
+    const bnTotalActiveStake = new BigNumber(totalActiveStake);
+    const bnMaxDelegationCap = new BigNumber(contractOverview.maxDelegationCap);
     return (
-      denominate({
-        input: totalActiveStake,
-        denomination,
-        decimals,
-        showLastNonZeroDecimal: false,
-      }) === contractOverview.maxDelegationCap
+      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) >= 0 &&
+      contractOverview.maxDelegationCap !== String(0)
     );
   };
 
@@ -70,7 +68,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
                   const bnAvailable = new BigNumber(available);
                   return bnAmount.comparedTo(bnAvailable) <= 0;
-                })
+                }),
             })}
           >
             {props => {

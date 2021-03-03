@@ -4,7 +4,7 @@ import { useDelegation } from 'helpers';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
 import { useContext } from 'context';
-import { AgencyMetadata } from 'helpers/types';
+import { AgencyMetadata } from 'helpers/contractDataDefinitions';
 
 const SetAgencyMetaDataModal = () => {
   const { delegation } = useDelegation();
@@ -52,7 +52,7 @@ const SetAgencyMetaDataModal = () => {
                 website: string()
                   .required('Required')
                   .test('URL', 'URL is not valid!', value => {
-                    var expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+                    var expression = /^((?:http(?:s)?\:\/\/)?[a-zA-Z0-9_-]+(?:.[a-zA-Z0-9_-]+)*.[a-zA-Z]{2,4}(?:\/[a-zA-Z0-9_]+)*(?:\/[a-zA-Z0-9_]+.[a-zA-Z]{2,4}(?:\?[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)?)?(?:\&[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)*)$/;
                     var regex = new RegExp(expression);
                     if (value?.match(regex)) {
                       return true;

@@ -1,5 +1,5 @@
 import { IDappProvider, ProxyProvider, ApiProvider, WalletProvider } from '@elrondnetwork/erdjs';
-import { AgencyMetadata, ContractOverview } from 'helpers/types';
+import { AgencyMetadata, ContractOverview } from 'helpers/contractDataDefinitions';
 import { denomination, decimals, network, NetworkType } from '../config';
 import { getItem } from '../storage/session';
 

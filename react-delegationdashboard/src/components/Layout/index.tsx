@@ -4,7 +4,13 @@ import { denomination, decimals } from 'config';
 import { useContext, useDispatch } from 'context';
 import { emptyAgencyMetaData } from 'context/state';
 import { contractViews } from 'contracts/ContractViews';
-import { ContractOverview, AgencyMetadata, NetworkConfig, NetworkStake, Stats } from 'helpers/types';
+import {
+  AgencyMetadata,
+  ContractOverview,
+  NetworkConfig,
+  NetworkStake,
+  Stats,
+} from 'helpers/contractDataDefinitions';
 import React from 'react';
 import { calculateAPR } from './APRCalculation';
 import Footer from './Footer';
@@ -13,15 +19,15 @@ import Navbar from './Navbar';
 const Layout = ({ children, page }: { children: React.ReactNode; page: string }) => {
   const dispatch = useDispatch();
   const { dapp, delegationContract } = useContext();
-  const { getContractConfig, getTotalActiveStake, getBlsKeys, getNumUsers, getMetaData } = contractViews;
+  const {
+    getContractConfig,
+    getTotalActiveStake,
+    getBlsKeys,
+    getNumUsers,
+    getMetaData,
+  } = contractViews;
 
   const getContractOverviewType = (value: QueryResponse) => {
-    let delegationCap = denominate({
-      decimals,
-      denomination,
-      input: value.returnData[2].asBigInt.toString(),
-      showLastNonZeroDecimal: false,
-    });
     let initialOwnerFunds = denominate({
       decimals,
       denomination,
@@ -31,7 +37,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     return new ContractOverview(
       value.returnData[0].asHex.toString(),
       (value.returnData[1].asNumber / 100).toString(),
-      delegationCap,
+      value.returnData[2].asBigInt.toString(),
       initialOwnerFunds,
       value.returnData[4]?.asString,
       value.returnData[5].asBool,
@@ -43,7 +49,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
   };
 
   const getAgencyMetaDataType = (value: QueryResponse) => {
-    if(value.returnData.length === 0) {
+    if (value && value.returnData && value.returnData.length === 0) {
       return emptyAgencyMetaData;
     }
     return new AgencyMetadata(

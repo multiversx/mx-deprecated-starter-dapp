@@ -22,4 +22,8 @@ export const nodeTransactions = {
     const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
     return delegation.sendTransaction('0', 'stakeNodes', `${blsKey}`);
   },
+  remove: (blsKey: string, dapp: DappState, delegationContract?: string) => {
+    const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
+    return delegation.sendTransaction('0', 'removeNodes', `${blsKey}`);
+  },
 };

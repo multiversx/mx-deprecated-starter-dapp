@@ -1,10 +1,10 @@
 import { QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import * as React from 'react';
 import { useContext } from 'context';
-import { UndelegatedValueType } from 'helpers/types';
 import { contractViews } from 'contracts/ContractViews';
 import denominate from 'components/Denominate/formatters';
 import UndelegatedValueRow from './UndelegatedValueRow';
+import { UndelegatedValueType } from './UndelegatedValueType';
 
 const UndelegatedListView = () => {
   const { dapp, address, denomination, decimals, delegationContract } = useContext();
