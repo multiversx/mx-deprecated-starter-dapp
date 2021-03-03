@@ -4,6 +4,7 @@ export const nodeActions = {
   reStake: { label: 'ReStake', transaction: 'reSreStakeUnStakedNodestake' },
   unBond: { label: 'Unbond', transaction: 'unBond' },
   stake: { label: 'Stake', transaction: 'stake' },
+  remove: { label: 'Remove', transaction: 'remove' },
 };
 
 export const NodeStatus: { [key: string]: string } = {

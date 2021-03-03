@@ -2,6 +2,8 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import ViewStatAction from 'components/ViewStatAction';
 import { useDelegation } from 'helpers';
+import { useContext } from 'context';
+import BigNumber from 'bignumber.js';
 export interface ClaimRewardsModalType {
   show: boolean;
   title: string;
@@ -10,11 +12,24 @@ export interface ClaimRewardsModalType {
 }
 const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewardsModalType) => {
   const { delegation } = useDelegation();
+  const { totalActiveStake, contractOverview } = useContext();
   const handleClaimRewards = () => {
     delegation
       .sendTransaction('0', 'claimRewards')
       .then()
       .catch(e => console.error('handleClaimRewards error', e));
+  };
+
+  const isRedelegateEnable = () => {
+    const bnTotalActiveStake = new BigNumber(totalActiveStake);
+    const bnMaxDelegationCap = new BigNumber(contractOverview.maxDelegationCap);
+    if (
+      bnTotalActiveStake.comparedTo(bnMaxDelegationCap) >= 0 &&
+      contractOverview.reDelegationCap !== 'true'
+    ) {
+      return false;
+    }
+    return true;
   };
 
   const handleRedelegateRewards = () => {
@@ -37,15 +52,17 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
               handleContinue={handleClaimRewards}
               color="primary"
             />
-            <ViewStatAction
-              actionTitle="Redelegate Rewards"
-              handleContinue={handleRedelegateRewards}
-              color="green"
-            />
-            <button id="closeButton" className="btn btn-link mt-spacer mx-2" onClick={handleClose}>
-              Close
-            </button>
+            {isRedelegateEnable() && (
+              <ViewStatAction
+                actionTitle="Redelegate Rewards"
+                handleContinue={handleRedelegateRewards}
+                color="green"
+              />
+            )}
           </div>
+          <button id="closeButton" className="btn btn-link mt-spacer mx-2" onClick={handleClose}>
+            Close
+          </button>
         </div>
       </div>
     </Modal>

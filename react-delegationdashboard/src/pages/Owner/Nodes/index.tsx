@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'context';
-import { NodeType } from 'helpers/types';
 import NodeRow from './NodeRow';
 import {
   getAllNodesStatus,
@@ -9,6 +8,7 @@ import {
   getQueueIndex,
 } from './helpers/keysFunctions';
 import AddNodeAction from './AddNodeAction';
+import { NodeType } from './helpers/nodeType';
 
 const Nodes = () => {
   const { dapp, delegationContract } = useContext();

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { UndelegatedValueType } from 'helpers/types';
 import moment from 'moment';
 import { useDelegation } from 'helpers';
 import { useContext } from 'context';
+import { UndelegatedValueType } from './UndelegatedValueType';
 
 const UndelegatedValueRow = ({
   undelegatedValue: value,
@@ -26,6 +26,10 @@ const UndelegatedValueRow = ({
     counter === 0 && setIsDisabled(false);
   }, [counter]);
 
+  const getTimeLeft = () => {
+    const timeLeftInMiliseconds = moment.duration(counter, 'seconds').asMilliseconds();
+    return moment.utc(timeLeftInMiliseconds).format('HH:mm:ss');
+  };
   return (
     <tr>
       <td>
@@ -37,10 +41,7 @@ const UndelegatedValueRow = ({
         <div className="d-flex align-items-center text-nowrap trim">
           {counter > 0 ? (
             <span className="badge badge-sm badge-light-orange text-orange">
-              {moment
-                .utc(moment.duration(counter, 'seconds').asMilliseconds())
-                .format('HH:mm:ss')}{' '}
-              left
+              {getTimeLeft()} left
             </span>
           ) : (
             <span className="badge badge-sm badge-light-green text-green">Completed</span>
