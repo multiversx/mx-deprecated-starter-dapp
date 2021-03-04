@@ -8,6 +8,8 @@ import ClaimRewardsAction from '../Actions/ClaimRewardsAction';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import State from 'components/State';
 import { denomination, decimals } from 'config';
+import {useEffect, useState} from 'react';
+import {Address} from '@elrondnetwork/erdjs/out';
 
 const MyDelegation = () => {
   const { dapp, address, egldLabel, delegationContract, loading } = useContext();
@@ -18,6 +20,18 @@ const MyDelegation = () => {
   const [claimableRewards, setClaimableRewards] = React.useState('0');
   const [displayRewards, setDisplayRewards] = React.useState(false);
   const [displayUndelegate, setDisplayUndelegate] = React.useState(false);
+  const [balance, setBalance] = useState('0');
+
+  useEffect(() => {
+    dapp.proxy.getAccount(new Address(address)).then(value => setBalance(
+      denominate({
+        denomination,
+        decimals,
+        input: value.balance.toString(),
+        showLastNonZeroDecimal: false,
+      }) || '0'
+    ));
+  }, [address, dapp.proxy]);
 
   const getAllData = () => {
     dispatch({ type: 'loading', loading: true });
@@ -69,41 +83,50 @@ const MyDelegation = () => {
       {loading ? (
         <State icon={faCircleNotch} iconClass="fa-spin text-primary" />
       ) : (
-        <div className="card mt-spacer">
-          <div className="card-body p-spacer">
-            <div className="d-flex flex-wrap align-items-center justify-content-between">
-              <p className="h6 mb-3">My Stake</p>
-              {userActiveStake !== String(0) && (
-                <div className="d-flex flex-wrap">
-                  <DelegateAction />
-                  {displayUndelegate && <UndelegateAction balance={userActiveNominatedStake}/>}
+        <div>
+          <div className="card mt-spacer">
+            <div className="card-body p-spacer">
+              <div className="d-flex flex-wrap align-items-center justify-content-between">
+                <p className="h6 mb-0">My Wallet Balance: {balance} {egldLabel}</p>
+              </div>
+            </div>
+          </div>
+          <div className="card mt-spacer">
+            <div className="card-body p-spacer">
+              <div className="d-flex flex-wrap align-items-center justify-content-between">
+                <p className="h6 mb-3">My Stake</p>
+                {userActiveStake !== String(0) && (
+                  <div className="d-flex flex-wrap">
+                    <DelegateAction />
+                    {displayUndelegate && <UndelegateAction balance={userActiveNominatedStake}/>}
+                  </div>
+                )}
+              </div>
+              {userActiveStake === String(0) ? (
+                <State
+                  title="No Stake Yet"
+                  description="Welcome to our platform!"
+                  action={<DelegateAction />}
+                />
+              ) : (
+                <div className="m-auto text-center py-spacer">
+                  <div>
+                    <p className="m-0">Active Delegation</p>
+                    <p className="h4">
+                      {userActiveStake}{' '}
+                      {egldLabel}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-muted">
+                      {claimableRewards}{' '}
+                      {egldLabel} Claimable rewards
+                    </p>
+                  </div>
+                  {displayRewards ? <ClaimRewardsAction /> : null}
                 </div>
               )}
             </div>
-            {userActiveStake === String(0) ? (
-              <State
-                title="No Stake Yet"
-                description="Welcome to our platform!"
-                action={<DelegateAction />}
-              />
-            ) : (
-              <div className="m-auto text-center py-spacer">
-                <div>
-                  <p className="m-0">Active Delegation</p>
-                  <p className="h4">
-                    {userActiveStake}{' '}
-                    {egldLabel}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-muted">
-                    {claimableRewards}{' '}
-                    {egldLabel} Claimable rewards
-                  </p>
-                </div>
-                {displayRewards ? <ClaimRewardsAction /> : null}
-              </div>
-            )}
           </div>
         </div>
       )}
