@@ -23,7 +23,7 @@ const Nodes = () => {
       ]);
 
       let queueSize: any;
-      results.forEach(([result], index) => {
+      results.forEach((result, index) => {
         if (index === 0) {
           queueSize = result;
         } else {
