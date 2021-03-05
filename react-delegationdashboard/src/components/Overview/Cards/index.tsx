@@ -55,7 +55,6 @@ const Views = () => {
 
   return (
     <div className="cards d-flex flex-wrap mr-spacer">
-      <StatCard title="Number of Users" value={numUsers.toString()} color="orange" svg="user.svg" />
       <StatCard
         title="Contract Stake"
         value={denominate({
@@ -82,6 +81,7 @@ const Views = () => {
           })
         )}% of total stake`}
       />
+      <StatCard title="Number of Users" value={numUsers.toString()} color="orange" svg="user.svg" />
       <StatCard
         title="Number of Nodes"
         value={numberOfActiveNodes}
