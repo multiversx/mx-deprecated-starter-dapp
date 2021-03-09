@@ -22,18 +22,16 @@ export const auctionContract: string =
 export const stakingContract: string =
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7';
 
-export const networks: NetworkType[] = [
-  {
-    id: 'mainnet',
-    name: 'Mainnet',
-    egldLabel: 'EGLD',
-    walletAddress: 'https://wallet.elrond.com/dapp/init',
-    apiAddress: 'https://api.elrond.com',
-    gatewayAddress: 'https://gateway.elrond.com',
-    explorerAddress: 'http://explorer.elrond.com/',
-    delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
-  },
-];
+export const network: NetworkType = {
+  id: 'mainnet',
+  name: 'Mainnet',
+  egldLabel: 'EGLD',
+  walletAddress: 'https://wallet.elrond.com/dapp/init',
+  apiAddress: 'https://api.elrond.com',
+  gatewayAddress: 'https://gateway.elrond.com',
+  explorerAddress: 'https://explorer.elrond.com/',
+  delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhllllsajxzat',
+};
 
 const networkSchema = object({
   id: string()
@@ -54,10 +52,8 @@ const networkSchema = object({
 
 export type NetworkType = InferType<typeof networkSchema>;
 
-networks.forEach(network => {
-  networkSchema.validate(network, { strict: true }).catch(({ errors }) => {
-    console.error(`Config invalid format for ${network.id}`, errors);
-  });
+networkSchema.validate(network, { strict: true }).catch(({ errors }) => {
+  console.error(`Config invalid format for ${network.id}`, errors);
 });
 
 export const delegationContractData: DelegationContractType[] = [
