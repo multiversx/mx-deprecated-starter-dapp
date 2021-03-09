@@ -10,7 +10,6 @@ import {
   stakePerNode,
 } from 'config';
 import { NetworkConfig, NetworkStake, Stats } from 'helpers/contractDataDefinitions';
-import { isRegExp } from 'util';
 
 const denominateValue = (value: string) => {
   const denominatedValueString = denominate({
