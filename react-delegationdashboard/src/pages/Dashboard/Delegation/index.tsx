@@ -80,6 +80,7 @@ const MyDelegation = () => {
                 </div>
               )}
             </div>
+            <div className="m-auto text-center py-spacer">
             {userActiveStake === String(0) ? (
               <State
                 title="No Stake Yet"
@@ -87,7 +88,6 @@ const MyDelegation = () => {
                 action={<DelegateAction />}
               />
             ) : (
-              <div className="m-auto text-center py-spacer">
                 <div>
                   <p className="m-0">Active Delegation</p>
                   <p className="h4">
@@ -95,6 +95,7 @@ const MyDelegation = () => {
                     {egldLabel}
                   </p>
                 </div>
+              )}
                 <div>
                   <p className="text-muted">
                     {claimableRewards}{' '}
@@ -103,7 +104,6 @@ const MyDelegation = () => {
                 </div>
                 {displayRewards ? <ClaimRewardsAction /> : null}
               </div>
-            )}
           </div>
         </div>
       )}
