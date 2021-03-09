@@ -42,11 +42,11 @@ const calculateAPR = ({
     return '0.00';
   }
 
-  const daysInYear = 365;
+  const epochsInYear = 365;
   const inflationRate =
-    yearSettings.find(x => x.year === Math.floor(stats.epoch / daysInYear) + 1)?.maximumInflation ||
-    0;
-  const rewardsPerEpoch = Math.max((inflationRate * genesisTokenSuply) / daysInYear, feesInEpoch);
+    yearSettings.find(x => x.year === Math.floor(stats.epoch / epochsInYear) + 1)
+      ?.maximumInflation || 0;
+  const rewardsPerEpoch = Math.max((inflationRate * genesisTokenSuply) / epochsInYear, feesInEpoch);
   const rewardsPerEpochWithoutProtocolSustainability =
     (1 - protocolSustainabilityRewards) * rewardsPerEpoch;
   const topUpRewardsLimit =
@@ -74,7 +74,7 @@ const calculateAPR = ({
     networkTopUpStake > 0 ? (validatorTopUpStake / networkTopUpStake) * topUpReward : 0;
   const validatorBaseReward = (validatorBaseStake / networkBaseStake) * baseReward;
   const anualPercentageRate =
-    (daysInYear * (validatorTopUpReward + validatorBaseReward)) / validatorTotalStake;
+    (epochsInYear * (validatorTopUpReward + validatorBaseReward)) / validatorTotalStake;
   return (anualPercentageRate * 100).toFixed(2);
 };
 
