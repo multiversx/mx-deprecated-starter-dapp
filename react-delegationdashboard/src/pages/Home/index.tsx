@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { faBan, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { ReactComponent as Logo } from '../../assets/images/logo.svg';
+import { ReactComponent as Logo } from '../../assets/images/logo2.svg';
 import State from 'components/State';
 import { useContext } from 'context';
 import LedgerLogin from './Login/Ledger';
@@ -29,7 +29,7 @@ const Home = () => {
         <div className="m-auto login-container">
           <div className="card my-spacer text-center">
             <div className="card-body p-spacer mx-lg-spacer">
-              <Logo className="logo mb-spacer" />
+              <Logo className="logo2 logo mb-spacer" />
               <h4 className="mb-spacer">Elrond Delegation Manager</h4>
               <p className="lead mb-spacer">
                 Delegate Elrond ({egldLabel}) and earn up to 25% APY!

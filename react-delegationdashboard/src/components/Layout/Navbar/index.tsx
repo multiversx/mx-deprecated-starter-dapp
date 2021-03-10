@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
+import { ReactComponent as Logo } from '../../../assets/images/logo2.svg';
 import { useContext, useDispatch } from '../../../context';
 
 const Navbar = () => {
@@ -14,8 +14,8 @@ const Navbar = () => {
     <div className="navbar px-4 py-3 flex-nowrap">
       <div className="container-fluid flex-nowrap">
         <div className="d-flex align-items-center mr-3">
-          <Logo className="logo mr-2 flex-shrink-0" />
-          <span className="h5 text-nowrap mb-0 p-0">Delegation Manager</span>
+          <Logo className="logo2 logo mr-2 flex-shrink-0" />
+          <span className="h5 text-nowrap mb-0 p-0"></span>
         </div>
         {loggedIn && (
           <div className="d-flex align-items-center" style={{ minWidth: 0 }}>

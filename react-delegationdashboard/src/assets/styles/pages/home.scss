@@ -17,3 +17,23 @@
     }
   }
 }
+.login__btn {
+  display: inline-block;
+}
+
+.home__container {
+  flex-direction: column;
+}
+.login__container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.cards__login {
+  margin-top: 30px;
+  display: inline-block;
+}
+
+.logo2 {
+  height: 100px !important;
+}
