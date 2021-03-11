@@ -1,4 +1,6 @@
+import { Nonce } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
+
 export class ContractOverview {
   ownerAddress: string;
   serviceFee?: string;
@@ -89,5 +91,14 @@ export class AgencyMetadata {
     this.name = name;
     this.website = website;
     this.keybase = keybase;
+  }
+}
+
+export class AccountType {
+  balance: string;
+  nonce: Nonce;
+  public constructor(balance: string = '', nonce: Nonce) {
+    this.balance = balance;
+    this.nonce = nonce;
   }
 }
