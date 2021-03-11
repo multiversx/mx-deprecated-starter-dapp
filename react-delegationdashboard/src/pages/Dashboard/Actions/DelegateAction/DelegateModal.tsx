@@ -8,16 +8,34 @@ import Denominate from 'components/Denominate';
 import { entireBalance } from 'helpers';
 import { denomination, decimals } from 'config';
 import denominate from 'components/Denominate/formatters';
+import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
 
 interface DelegateModalType {
   show: boolean;
+  waitingForLedger: boolean;
+  submitPressed: boolean;
   balance: string;
+  ledgerError?: string;
   handleClose: () => void;
   handleContinue: (value: string) => void;
 }
 
-const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateModalType) => {
-  const { egldLabel, contractOverview, totalActiveStake, minDelegationAmount } = useContext();
+const DelegateModal = ({
+  show,
+  waitingForLedger,
+  submitPressed,
+  balance,
+  ledgerError,
+  handleClose,
+  handleContinue,
+}: DelegateModalType) => {
+  const {
+    egldLabel,
+    contractOverview,
+    totalActiveStake,
+    minDelegationAmount,
+    ledgerAccount,
+  } = useContext();
   const [displayDelegationCapMessage, setDisplayDelegationCapMessage] = useState(false);
   const [maxPressed, setMaxPressed] = React.useState(false);
 
@@ -198,21 +216,14 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                       )}
                     </div>
                   )}
-                  <div className="d-flex justify-content-center align-items-center flex-wrap">
-                    {!isFullDelegationCapContract() && (
-                      <button
-                        type="submit"
-                        className="btn btn-primary mx-2"
-                        id="continueDelegate"
-                        data-testid="continueDelegate"
-                      >
-                        Continue
-                      </button>
-                    )}
-                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
-                      Close
-                    </button>
-                  </div>
+                  <DelegationContractActionButtons
+                    ledgerError={ledgerError}
+                    action="Delegate"
+                    actionTitle="Continue"
+                    submitPressed={submitPressed}
+                    waitingForLedger={waitingForLedger}
+                    handleClose={handleClose}
+                  />
                 </form>
               );
             }}

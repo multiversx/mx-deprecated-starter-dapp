@@ -1,23 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { useState } from 'react';
 import { useContext } from 'context';
 import DelegateModal from './DelegateModal';
 import { useDelegation } from 'helpers';
+import { ledgerErrorCodes } from 'helpers/ledgerErrorCodes';
 
 const DelegateAction = () => {
-  const { dapp, address } = useContext();
+  const { account, ledgerAccount } = useContext();
   const { delegation } = useDelegation();
-  const [balance, setBalance] = useState('');
   const [showDelegateModal, setShowDelegateModal] = useState(false);
-  useEffect(() => {
-    dapp.proxy.getAccount(new Address(address)).then(value => setBalance(value.balance.toString()));
-  }, [address, dapp.proxy]);
+  const [ledgerDataError, setLedgerDataError] = useState('');
+  const [waitingForLedger, setWaitingForLedger] = useState(false);
+  const [submitPressed, setSubmitPressed] = useState(false);
 
   const handleDelegate = (value: string) => {
+    if (ledgerAccount) {
+      setWaitingForLedger(true);
+      setSubmitPressed(true);
+      setShowDelegateModal(true);
+    }
     delegation
       .sendTransaction(value, 'delegate')
-      .then()
+      .then(() => {
+        setWaitingForLedger(false);
+        setShowDelegateModal(false);
+      })
       .catch(e => {
+        if (e.statusCode in ledgerErrorCodes) {
+          setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
+        }
+        setWaitingForLedger(false);
+        setSubmitPressed(false);
         console.error('handleDelegate ', e);
       });
   };
@@ -33,7 +45,10 @@ const DelegateAction = () => {
       </button>
       <DelegateModal
         show={showDelegateModal}
-        balance={balance}
+        waitingForLedger={waitingForLedger}
+        submitPressed={submitPressed}
+        ledgerError={ledgerDataError}
+        balance={account.balance.toString()}
         handleClose={() => {
           setShowDelegateModal(false);
         }}

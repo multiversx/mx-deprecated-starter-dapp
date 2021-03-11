@@ -13,17 +13,25 @@ import {
 } from '@elrondnetwork/erdjs';
 import { setItem } from '../storage/session';
 import { delegationContractData } from '../config';
+import { AccountType } from 'helpers/contractDataDefinitions';
 
 export default class Delegation {
   contract: SmartContract;
   proxyProvider: ProxyProvider;
   signerProvider?: IDappProvider;
+  account?: AccountType;
 
-  constructor(provider: ProxyProvider, delegationContract?: string, signer?: IDappProvider) {
+  constructor(
+    provider: ProxyProvider,
+    delegationContract?: string,
+    signer?: IDappProvider,
+    account?: AccountType
+  ) {
     const address = new Address(delegationContract);
     this.contract = new SmartContract({ address });
     this.proxyProvider = provider;
     this.signerProvider = signer;
+    this.account = account;
   }
 
   async sendTransaction(
@@ -73,6 +81,7 @@ export default class Delegation {
         value: Balance.eGLD(value),
         gasLimit: new GasLimit(delegationContract.gasLimit),
         data: payload,
+        nonce: this.account?.nonce,
       });
 
       // @ts-ignore

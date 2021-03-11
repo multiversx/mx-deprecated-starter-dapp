@@ -7,15 +7,19 @@ import { object, number } from 'yup';
 import denominate from 'components/Denominate/formatters';
 import { ActionModalType } from 'helpers/types';
 import { denomination, decimals } from 'config';
+import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
 
 const DelegationCapModal = ({
   show,
   title,
+  waitingForLedger,
+  submitPressed,
+  ledgerError,
   description,
   handleClose,
   handleContinue,
 }: ActionModalType) => {
-  const { egldLabel, totalActiveStake } = useContext();
+  const { egldLabel, totalActiveStake, ledgerAccount } = useContext();
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
@@ -25,7 +29,8 @@ const DelegationCapModal = ({
             {title}
           </p>
           <p className="mb-spacer">
-            The delegation cap is the maximum amount of {egldLabel} your agency can stake from delegators.
+            The delegation cap is the maximum amount of {egldLabel} your agency can stake from
+            delegators.
           </p>
           <Formik
             initialValues={{
@@ -37,7 +42,7 @@ const DelegationCapModal = ({
                 addCommas: false,
               }),
             }}
-            onSubmit={(values) => {
+            onSubmit={values => {
               handleContinue(values.amount.toString());
             }}
             validationSchema={object().shape({
@@ -52,7 +57,7 @@ const DelegationCapModal = ({
                     showLastNonZeroDecimal: false,
                     addCommas: false,
                   })} ${egldLabel} or 0 ${egldLabel}`,
-                  (value) => {
+                  value => {
                     const bnAmount = new BigNumber(value !== undefined ? value : '');
                     const comparationResult = bnAmount.comparedTo(
                       denominate({
@@ -68,7 +73,7 @@ const DelegationCapModal = ({
                 ),
             })}
           >
-            {(props) => {
+            {props => {
               const { handleSubmit, values, handleBlur, handleChange, errors, touched } = props;
               return (
                 <form onSubmit={handleSubmit} className="text-left">
@@ -92,19 +97,14 @@ const DelegationCapModal = ({
                     />
                     <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap">
-                    <button
-                      type="submit"
-                      className="btn btn-primary mx-2"
-                      id="continueDelegate"
-                      data-testid="continueDelegate"
-                    >
-                      Continue
-                    </button>
-                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
-                      Close
-                    </button>
-                  </div>
+                  <DelegationContractActionButtons
+                    ledgerError={ledgerError}
+                    action="Undelegate"
+                    actionTitle="Continue"
+                    submitPressed={submitPressed}
+                    waitingForLedger={waitingForLedger}
+                    handleClose={handleClose}
+                  />
                 </form>
               );
             }}

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import ViewStatAction from 'components/ViewStatAction';
 import { useDelegation } from 'helpers';
 import { useContext } from 'context';
 import BigNumber from 'bignumber.js';
+import { ledgerErrorCodes } from 'helpers/ledgerErrorCodes';
 export interface ClaimRewardsModalType {
   show: boolean;
   title: string;
@@ -12,12 +13,28 @@ export interface ClaimRewardsModalType {
 }
 const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewardsModalType) => {
   const { delegation } = useDelegation();
-  const { totalActiveStake, contractOverview } = useContext();
+  const { totalActiveStake, contractOverview, ledgerAccount } = useContext();
+  const [ledgerError, setLedgerDataError] = useState('');
+  const [waitingForLedger, setWaitingForLedger] = useState(false);
+  const [submitPressed, setSubmitPressed] = useState(false);
   const handleClaimRewards = () => {
+    if (ledgerAccount) {
+      setWaitingForLedger(true);
+      setSubmitPressed(true);
+    }
     delegation
       .sendTransaction('0', 'claimRewards')
-      .then()
-      .catch(e => console.error('handleClaimRewards error', e));
+      .then(() => {
+        setWaitingForLedger(false);
+      })
+      .catch(e => {
+        if (e.statusCode in ledgerErrorCodes) {
+          setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
+        }
+        setWaitingForLedger(false);
+        setSubmitPressed(false);
+        console.error('handleClaimRewards ', e);
+      });
   };
 
   const isRedelegateEnable = () => {
@@ -33,30 +50,52 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
   };
 
   const handleRedelegateRewards = () => {
+    if (ledgerAccount) {
+      setWaitingForLedger(true);
+      setSubmitPressed(true);
+    }
     delegation
       .sendTransaction('0', 'reDelegateRewards')
-      .then()
-      .catch(e => console.error('handleRedelegateRewards error', e));
+      .then(() => {
+        setWaitingForLedger(false);
+      })
+      .catch(e => {
+        if (e.statusCode in ledgerErrorCodes) {
+          setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
+        }
+        setWaitingForLedger(false);
+        setSubmitPressed(false);
+        console.error('handleRedelegateRewards ', e);
+      });
   };
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">
         <div className="card-body p-spacer text-center">
-          <p className="h6 mb-spacer" data-testid="delegateTitle">
+          <p className="h6 mb-spacer" data-testid="claimRewardsTitle">
             {title}
           </p>
           <p className="mb-spacer">{description}</p>
+          {ledgerError && (
+            <p className="text-danger d-flex justify-content-center align-items-center">
+              {ledgerError}
+            </p>
+          )}
           <div className="d-flex justify-content-center align-items-center flex-wrap">
             <ViewStatAction
               actionTitle="Claim Rewards"
               handleContinue={handleClaimRewards}
+              waitingForLedger={waitingForLedger}
+              submitPressed={submitPressed}
               color="primary"
             />
             {isRedelegateEnable() && (
               <ViewStatAction
                 actionTitle="Redelegate Rewards"
                 handleContinue={handleRedelegateRewards}
-                color="green"
+                waitingForLedger={waitingForLedger}
+                submitPressed={submitPressed}
+                color="primary"
               />
             )}
           </div>

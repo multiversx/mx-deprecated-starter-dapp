@@ -1,9 +1,10 @@
+import Denominate from 'components/Denominate';
 import React from 'react';
-import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
-import { useContext, useDispatch } from '../../../context';
+import { ReactComponent as Logo } from 'assets/images/logo.svg';
+import { useContext, useDispatch } from 'context';
 
 const Navbar = () => {
-  const { loggedIn, dapp, address } = useContext();
+  const { loggedIn, dapp, address, account } = useContext();
   const dispatch = useDispatch();
 
   const logOut = () => {
@@ -19,6 +20,10 @@ const Navbar = () => {
         </div>
         {loggedIn && (
           <div className="d-flex align-items-center" style={{ minWidth: 0 }}>
+            <small className="d-none d-lg-inline text-muted mr-2">Balance: </small>
+            <small className="text-truncate mr-2">
+              <Denominate value={account.balance.toString()} />
+            </small>
             <small className="d-none d-lg-inline text-muted mr-2">Wallet address: </small>
             <small className="text-truncate">{address}</small>
             <a href="/#" onClick={logOut} className="btn btn-primary btn-sm ml-3">

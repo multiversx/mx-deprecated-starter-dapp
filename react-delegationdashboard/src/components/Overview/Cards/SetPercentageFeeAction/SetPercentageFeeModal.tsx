@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
+import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
 
 const SetPercentageFeeSchema = object().shape({
   amount: string()
@@ -18,12 +19,18 @@ const SetPercentageFeeSchema = object().shape({
 
 interface SetPercentageFeeModalType {
   show: boolean;
+  waitingForLedger: boolean;
+  submitPressed: boolean;
+  ledgerError?: string;
   handleClose: () => void;
   handleContinue: (value: string) => void;
 }
 
 const SetPercentageFeeModal = ({
   show,
+  waitingForLedger,
+  submitPressed,
+  ledgerError,
   handleClose,
   handleContinue,
 }: SetPercentageFeeModalType) => {
@@ -73,19 +80,14 @@ const SetPercentageFeeModal = ({
                     )}
                     <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap">
-                    <button
-                      type="submit"
-                      className="btn btn-primary mx-2"
-                      id="continueDelegate"
-                      data-testid="continueUndelegate"
-                    >
-                      Continue
-                    </button>
-                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
-                      Close
-                    </button>
-                  </div>
+                  <DelegationContractActionButtons
+                    ledgerError={ledgerError}
+                    action="setPercentageFe"
+                    actionTitle="Continue"
+                    submitPressed={submitPressed}
+                    waitingForLedger={waitingForLedger}
+                    handleClose={handleClose}
+                  />
                 </form>
               );
             }}

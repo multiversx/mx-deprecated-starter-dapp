@@ -1,16 +1,28 @@
 import { Redirect } from 'react-router-dom';
 import { Address } from '@elrondnetwork/erdjs/out';
-import React from 'react';
-import { useContext } from 'context';
+import { useEffect } from 'react';
+import { useContext, useDispatch } from 'context';
 import Overview from 'components/Overview';
 import Nodes from './Nodes';
+import { AccountType } from 'helpers/contractDataDefinitions';
 
 const Owner = () => {
-  const { address, contractOverview, loggedIn } = useContext();
+  const { address, contractOverview, loggedIn, dapp } = useContext();
+  const dispatch = useDispatch();
   const isAdmin = () => {
     let loginAddress = new Address(address).hex();
     return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
+
+  const fetchAccount = () => {
+    dapp.proxy.getAccount(new Address(address)).then(account => {
+      dispatch({
+        type: 'setAccount',
+        account: new AccountType(account.balance.toString(), account.nonce),
+      });
+    });
+  };
+  useEffect(fetchAccount, []);
 
   if (!loggedIn) {
     return <Redirect to="/" />;

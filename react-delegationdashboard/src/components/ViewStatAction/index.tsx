@@ -1,10 +1,21 @@
+import { useContext } from 'context';
+
 interface ViewStatActionType {
   actionTitle: string;
   color: string;
+  submitPressed: boolean;
+  waitingForLedger: boolean;
   handleContinue: () => void;
 }
 
-const ViewStatAction = ({ actionTitle, color, handleContinue }: ViewStatActionType) => {
+const ViewStatAction = ({
+  actionTitle,
+  color,
+  handleContinue,
+  submitPressed,
+  waitingForLedger,
+}: ViewStatActionType) => {
+  const { ledgerAccount } = useContext();
   return (
     <div>
       <button
@@ -12,8 +23,13 @@ const ViewStatAction = ({ actionTitle, color, handleContinue }: ViewStatActionTy
           handleContinue();
         }}
         className={`btn btn-${color} mx-2`}
+        disabled={submitPressed}
       >
-        {actionTitle}
+        {submitPressed ? (
+          <>{ledgerAccount && waitingForLedger ? 'Check your Ledger' : 'Sending...'}</>
+        ) : (
+          <>{ledgerAccount ? `${actionTitle} & Check your Ledger` : actionTitle}</>
+        )}
       </button>
     </div>
   );
