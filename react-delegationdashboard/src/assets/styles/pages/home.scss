@@ -1,8 +1,7 @@
 .home {
   color: #fff;
   .login-container {
-    font-size: 0.8125rem;
-    max-width: 33.625rem;
+    width: 100%;
 
     .btn {
       min-width: 6.875rem;
@@ -26,7 +25,6 @@
 }
 .login__container {
   text-align: center;
-  margin-top: 30px;
 }
 
 .cards__login {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as Logo } from '../../../assets/images/logo2.svg';
+import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
 import { useContext, useDispatch } from '../../../context';
 
 const Navbar = () => {

@@ -20,12 +20,6 @@ const routes: RouteType[] = [
     component: Landing,
   },
   {
-    path: '/login',
-    page: 'home',
-    title: 'Login',
-    component: Home,
-  },
-  {
     path: '/dashboard',
     page: 'dashboard',
     title: 'Dashboard',
