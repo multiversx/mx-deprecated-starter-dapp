@@ -32,14 +32,16 @@
     "yup": "^0.32.8"
   },
   "scripts": {
-    "start": "HTTPS=true npm run copy-testnet-config & react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-mainnet": "npm run copy-mainnet-config & npm run build",
     "build-testnet": "npm run copy-testnet-config & npm run build",
+    "build-devnet": "npm run copy-devnet-config & npm run build",
     "copy-mainnet-config": "cp ./src/config.mainnet.ts ./src/config.ts",
-    "copy-testnet-config": "cp ./src/config.testnet.ts ./src/config.ts"
+    "copy-testnet-config": "cp ./src/config.testnet.ts ./src/config.ts",
+    "copy-devnet-config": "cp ./src/config.devnet.ts ./src/config.ts"
   },
   "eslintConfig": {
     "extends": "react-app"
