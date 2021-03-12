@@ -191,3 +191,14 @@
     }
   }
 }
+
+.home {
+  .btn-primary:disabled {
+    background-color: $jumbo;
+    color: $white;
+  }
+
+  .btn:disabled {
+    opacity: 1;
+  }
+}
