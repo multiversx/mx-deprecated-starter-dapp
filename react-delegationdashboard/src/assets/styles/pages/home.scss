@@ -35,3 +35,92 @@
 .logo2 {
   height: 100px !important;
 }
+
+
+.slider {
+
+  padding: 0 25px;
+  margin: 0 auto;
+  width: 100%;
+
+  input {
+    
+    border-radius: 8px;
+    height: 8px;
+    width: 100%;
+    border-radius: 4px;
+    outline: none;
+    transition: all 450ms ease-in;
+    -webkit-appearance: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: url(../../images/icon-slider.svg)
+        rgb(16, 213, 194) center no-repeat;
+      box-shadow: 0px 10px 20px 0px rgba(16, 213, 194, 0.7);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+      &:hover {
+        background: url(../../images/icon-slider.svg)
+          rgb(27, 230, 209) center no-repeat;
+      }
+      &:active {
+        cursor: grabbing;
+        background: url(../../images/icon-slider.svg)
+          rgb(13, 190, 173) center no-repeat;
+      }
+    }
+  }
+  &::-ms-thumb {
+
+    //-webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: url(../../images/icon-slider.svg)
+      rgb(16, 213, 194) center no-repeat;
+    box-shadow: 0px 10px 20px 0px rgba(16, 213, 194, 0.7);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+    &:hover {
+      background: url(../../images/icon-slider.svg)
+        rgb(27, 230, 209) center no-repeat;
+    }
+    &:active {
+      cursor: grabbing;
+      background: url(../../images/icon-slider.svg)
+        rgb(13, 190, 173) center no-repeat;
+    }
+  }
+
+  &::-moz-range-thumb {
+    
+    //-webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: url(../../images/icon-slider.svg)
+      rgb(16, 213, 194) center no-repeat;
+    box-shadow: 0px 10px 20px 0px rgba(16, 213, 194, 0.7);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+    &:hover {
+      background: url(../../images/icon-slider.svg)
+        rgb(27, 230, 209) center no-repeat;
+    }
+    &:active {
+      cursor: grabbing;
+      background: url(../../images/icon-slider.svg)
+        rgb(13, 190, 173) center no-repeat;
+    }
+  }
+}

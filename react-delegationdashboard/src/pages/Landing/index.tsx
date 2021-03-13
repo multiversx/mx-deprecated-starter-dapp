@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useContext } from 'context';
 import Delegation from './Delegation';
 import { Link, useLocation } from 'react-router-dom';
@@ -10,10 +10,19 @@ import { ReactComponent as Logo } from '../../assets/images/logo2.svg';
 import State from 'components/State';
 import LedgerLogin from './Login/Ledger';
 import WalletLogin from './Login/Wallet';
-const Landing = () => {
 
+
+
+const Landing = () => {
+  
   const { loading, error, loggedIn, egldLabel } = useContext();
+  let [count , setCount] = useState(50);
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setCount(Number(event.currentTarget.value));
+  };
   const ref = React.useRef(null);
+  
 
   return (
     
@@ -53,6 +62,26 @@ const Landing = () => {
               )}
             </div>
           </div>
+
+          <div className="h5 d-flex justify-content-center">{count}</div>
+          <div className='slider'>
+            <input
+              style={{
+                background: 'linear-gradient(to right, #10d5c2 0%,#10d5c2 ' + 
+                (count/25) + '%,#eaeefb ' +
+                (count/25) + '%,#eaeefb 100%)'
+              }}
+              id="typeinp" 
+              type="range" 
+              min="10" max="2500" 
+              value={count} 
+              onChange={onChange}
+              step="1"
+              />
+
+          </div>
+          
+          
 
         </div>
       </div>
