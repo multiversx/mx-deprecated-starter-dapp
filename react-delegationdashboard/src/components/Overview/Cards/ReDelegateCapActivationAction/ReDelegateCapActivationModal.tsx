@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import ViewStatAction from 'components/ViewStatAction';
 import { useDelegation } from 'helpers';
-import { useContext } from 'context';
-import { ledgerErrorCodes } from 'helpers/ledgerErrorCodes';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 
 export interface ReDelegateCapActivationModalType {
   show: boolean;
@@ -20,34 +19,27 @@ const ReDelegateCapActivationModal = ({
   value,
   handleClose,
 }: ReDelegateCapActivationModalType) => {
-  const { delegation } = useDelegation();
-  const { ledgerAccount } = useContext();
   const [ledgerError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
+  const { sendTransaction } = useDelegation({
+    handleClose: handleClose,
+    setLedgerDataError,
+    setWaitingForLedger,
+    setSubmitPressed,
+  });
 
   const handleReDelegationCapActivation = () => {
-    if (ledgerAccount) {
-      setWaitingForLedger(true);
-      setSubmitPressed(true);
-    }
     let redelegateRewardsActivation = Buffer.from(value === 'true' ? 'false' : 'true').toString(
       'hex'
     );
-    delegation
-      .sendTransaction('0', 'setReDelegateCapActivation', redelegateRewardsActivation)
-      .then(() => {
-        setWaitingForLedger(false);
-        handleClose();
-      })
-      .catch(e => {
-        if (e.statusCode in ledgerErrorCodes) {
-          setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
-        }
-        setWaitingForLedger(false);
-        setSubmitPressed(false);
-        console.error('handleUpdateDelegationCap ', e);
-      });
+    let transactionArguments = new DelegationTransactionType(
+      '0',
+      'setReDelegateCapActivation',
+      redelegateRewardsActivation
+    );
+
+    sendTransaction(transactionArguments);
   };
 
   return (

@@ -102,3 +102,14 @@ export class AccountType {
     this.nonce = nonce;
   }
 }
+
+export class DelegationTransactionType {
+  value: string;
+  type: string;
+  args?: string;
+  public constructor(value: string = '', type: string, args: string = '') {
+    this.value = value;
+    this.type = type;
+    this.args = args;
+  }
+}

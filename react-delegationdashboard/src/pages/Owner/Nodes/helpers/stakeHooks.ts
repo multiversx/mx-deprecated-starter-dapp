@@ -1,29 +1,32 @@
-import { DappState } from 'context/state';
-import { Delegation } from 'contracts';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+export interface StakeActionType {
+  blsKey: string;
+  sendTransaction: (transactionArguments: DelegationTransactionType) => void;
+}
 
 export const nodeTransactions = {
-  unStake: (blsKey: string, dapp: DappState, delegationContract?: string) => {
-    const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
-    return delegation.sendTransaction('0', 'unStakeNodes', blsKey);
+  unStake: ({ blsKey, sendTransaction }: StakeActionType) => {
+    let transactionArgs = new DelegationTransactionType('0', 'unStakeNodes', blsKey);
+    return sendTransaction(transactionArgs);
   },
-  reStake: (blsKey: string, dapp: DappState, delegationContract?: string) => {
-    const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
-    return delegation.sendTransaction('0', 'reStakeUnStakedNodes', blsKey);
+  reStake: ({ blsKey, sendTransaction }: StakeActionType) => {
+    let transactionArguments = new DelegationTransactionType('0', 'reStakeUnStakedNodes', blsKey);
+    return sendTransaction(transactionArguments);
   },
-  unJail: (blsKey: string, dapp: DappState, delegationContract?: string) => {
-    const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
-    return delegation.sendTransaction('2.5', 'unJailNodes', blsKey);
+  unJail: ({ blsKey, sendTransaction }: StakeActionType) => {
+    let transactionArguments = new DelegationTransactionType('2.5', 'unJailNodes', blsKey);
+    return sendTransaction(transactionArguments);
   },
-  unBond: (blsKey: string, dapp: DappState, delegationContract?: string) => {
-    const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
-    return delegation.sendTransaction('0', 'unBondNodes', blsKey);
+  unBond: ({ blsKey, sendTransaction }: StakeActionType) => {
+    let transactionArguments = new DelegationTransactionType('0', 'unBondNodes', blsKey);
+    return sendTransaction(transactionArguments);
   },
-  stake: (blsKey: string, dapp: DappState, delegationContract?: string) => {
-    const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
-    return delegation.sendTransaction('0', 'stakeNodes', `${blsKey}`);
+  stake: ({ blsKey, sendTransaction }: StakeActionType) => {
+    let transactionArguments = new DelegationTransactionType('0', 'stakeNodes', `${blsKey}`);
+    return sendTransaction(transactionArguments);
   },
-  remove: (blsKey: string, dapp: DappState, delegationContract?: string) => {
-    const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider);
-    return delegation.sendTransaction('0', 'removeNodes', `${blsKey}`);
+  remove: ({ blsKey, sendTransaction }: StakeActionType) => {
+    let transactionArguments = new DelegationTransactionType('0', 'removeNodes', `${blsKey}`);
+    return sendTransaction(transactionArguments);
   },
 };

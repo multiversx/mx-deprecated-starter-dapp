@@ -68,8 +68,17 @@ const AddressTable = ({
           address: selectedAddress,
         },
       });
+
+      dispatch({
+        type: 'ledgerLogin',
+        ledgerLogin: {
+          index: selectedIndex,
+          loginType: 'ledger',
+        },
+      });
       dispatch({ type: 'loading', loading: true });
-      hwWalletP
+      const hwWalletProvider = new HWProvider(dapp.proxy, selectedIndex);
+      hwWalletProvider
         .init()
         .then((success: any) => {
           if (!success) {
@@ -78,14 +87,13 @@ const AddressTable = ({
             return;
           }
 
-          hwWalletP
+          hwWalletProvider
             .login()
             .then(address => {
-              dispatch({ type: 'setProvider', provider: hwWalletP });
+              dispatch({ type: 'setProvider', provider: hwWalletProvider });
               dispatch({ type: 'login', address });
 
               history.push('/dashboard');
-              // return <Redirect to="/dashboard" />;
             })
             .catch((err: any) => {
               dispatch({ type: 'loading', loading: false });

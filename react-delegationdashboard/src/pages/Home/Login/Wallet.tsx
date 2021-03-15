@@ -16,7 +16,7 @@ const WalletLogin = () => {
           // Wallet provider will redirect, we can set a session information so we know when we are getting back
           //  that we initiated a wallet provider login
           setItem('wallet_login', {}, 60); // Set a 60s session only
-          dapp.provider.login(0);
+          dapp.provider.login();
         } else {
           dispatch({ type: 'loading', loading: true });
           console.warn('Something went wrong trying to redirect to wallet login..');

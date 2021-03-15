@@ -1,40 +1,30 @@
 import BigNumber from 'bignumber.js';
 import { useDelegation } from 'helpers';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import nominate from 'helpers/nominate';
 import DelegationCapModal from './DelegationCapModal';
-import { ledgerErrorCodes } from 'helpers/ledgerErrorCodes';
-import { useContext } from 'context';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 
 const UpdateDelegationCapAction = () => {
-  const { delegation } = useDelegation();
-  const { ledgerAccount } = useContext();
   const [showDelegationCapModal, setShowDelegationCapModal] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
+  const { sendTransaction } = useDelegation({
+    handleClose: setShowDelegationCapModal,
+    setLedgerDataError,
+    setWaitingForLedger,
+    setSubmitPressed,
+  });
 
   const handleUpdateDelegationCap = (value: string) => {
-    if (ledgerAccount) {
-      setWaitingForLedger(true);
-      setSubmitPressed(true);
-      setShowDelegationCapModal(true);
-    }
-    const hexCap = nominateValToHex(value);
-    delegation
-      .sendTransaction('0', 'modifyTotalDelegationCap', hexCap)
-      .then(() => {
-        setWaitingForLedger(false);
-        setShowDelegationCapModal(false);
-      })
-      .catch(e => {
-        if (e.statusCode in ledgerErrorCodes) {
-          setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
-        }
-        setWaitingForLedger(false);
-        setSubmitPressed(false);
-        console.error('handleDelegate ', e);
-      });
+    let transactionArguments = new DelegationTransactionType(
+      '0',
+      'modifyTotalDelegationCap',
+      nominateValToHex(value)
+    );
+
+    sendTransaction(transactionArguments);
   };
 
   const nominateValToHex = (value: string) => {

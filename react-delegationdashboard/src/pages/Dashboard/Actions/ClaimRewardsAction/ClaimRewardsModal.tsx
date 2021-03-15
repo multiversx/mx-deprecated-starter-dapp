@@ -4,7 +4,7 @@ import ViewStatAction from 'components/ViewStatAction';
 import { useDelegation } from 'helpers';
 import { useContext } from 'context';
 import BigNumber from 'bignumber.js';
-import { ledgerErrorCodes } from 'helpers/ledgerErrorCodes';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 export interface ClaimRewardsModalType {
   show: boolean;
   title: string;
@@ -12,29 +12,21 @@ export interface ClaimRewardsModalType {
   handleClose: () => void;
 }
 const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewardsModalType) => {
-  const { delegation } = useDelegation();
-  const { totalActiveStake, contractOverview, ledgerAccount } = useContext();
+  const { totalActiveStake, contractOverview } = useContext();
   const [ledgerError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
-  const handleClaimRewards = () => {
-    if (ledgerAccount) {
-      setWaitingForLedger(true);
-      setSubmitPressed(true);
-    }
-    delegation
-      .sendTransaction('0', 'claimRewards')
-      .then(() => {
-        setWaitingForLedger(false);
-      })
-      .catch(e => {
-        if (e.statusCode in ledgerErrorCodes) {
-          setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
-        }
-        setWaitingForLedger(false);
-        setSubmitPressed(false);
-        console.error('handleClaimRewards ', e);
-      });
+
+  const { sendTransaction } = useDelegation({
+    handleClose: handleClose,
+    setLedgerDataError,
+    setWaitingForLedger,
+    setSubmitPressed,
+  });
+
+  const handleClaimRewards = (): void => {
+    let transactionArguments = new DelegationTransactionType('0', 'claimRewards');
+    sendTransaction(transactionArguments);
   };
 
   const isRedelegateEnable = () => {
@@ -50,24 +42,10 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
   };
 
   const handleRedelegateRewards = () => {
-    if (ledgerAccount) {
-      setWaitingForLedger(true);
-      setSubmitPressed(true);
-    }
-    delegation
-      .sendTransaction('0', 'reDelegateRewards')
-      .then(() => {
-        setWaitingForLedger(false);
-      })
-      .catch(e => {
-        if (e.statusCode in ledgerErrorCodes) {
-          setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
-        }
-        setWaitingForLedger(false);
-        setSubmitPressed(false);
-        console.error('handleRedelegateRewards ', e);
-      });
+    let transactionArguments = new DelegationTransactionType('0', 'reDelegateRewards');
+    sendTransaction(transactionArguments);
   };
+
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
       <div className="card">

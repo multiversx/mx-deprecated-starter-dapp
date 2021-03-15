@@ -4,18 +4,29 @@ import { useDelegation } from 'helpers';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
 import { useContext } from 'context';
-import { AgencyMetadata } from 'helpers/contractDataDefinitions';
+import { AgencyMetadata, DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
 
 const SetAgencyMetaDataModal = () => {
-  const { delegation } = useDelegation();
   const { agencyMetaData } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
+  const [ledgerDataError, setLedgerDataError] = useState('');
+  const [waitingForLedger, setWaitingForLedger] = useState(false);
+  const [submitPressed, setSubmitPressed] = useState(false);
+
+  const { sendTransaction } = useDelegation({
+    handleClose: setShowDelegateModal,
+    setLedgerDataError,
+    setWaitingForLedger,
+    setSubmitPressed,
+  });
   const handleReDelegationCapActivation = (values: AgencyMetadata) => {
     const hexName = Buffer.from(values.name).toString('hex');
     const hexWeb = Buffer.from(values.website).toString('hex');
     const hexKeyBase = Buffer.from(values.keybase).toString('hex');
     const data = hexName + '@' + hexWeb + '@' + hexKeyBase;
-    delegation.sendTransaction('0', 'setMetaData', data).then();
+    let transactionArguments = new DelegationTransactionType('0', 'setMetaData', data);
+    sendTransaction(transactionArguments);
   };
 
   return (
@@ -123,23 +134,16 @@ const SetAgencyMetaDataModal = () => {
                         <ErrorMessage component="div" name="keybase" className="invalid-feedback" />
                       </div>
                     </div>
-                    <div className="d-flex justify-content-center align-items-center flex-wrap">
-                      <button
-                        type="submit"
-                        className="btn btn-primary mx-2"
-                        id="saveMetaData"
-                        data-testid="saveMetaData"
-                      >
-                        Save
-                      </button>
-                      <button
-                        id="closeButton"
-                        className="btn btn-link mx-2"
-                        onClick={() => setShowDelegateModal(false)}
-                      >
-                        Close
-                      </button>
-                    </div>
+                    <DelegationContractActionButtons
+                      ledgerError={ledgerDataError}
+                      action="setPercentageFe"
+                      actionTitle="Continue"
+                      submitPressed={submitPressed}
+                      waitingForLedger={waitingForLedger}
+                      handleClose={() => {
+                        setShowDelegateModal(false);
+                      }}
+                    />
                   </form>
                 );
               }}

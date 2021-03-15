@@ -3,13 +3,14 @@ import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import { faCaretDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useContext } from 'context';
 import { nodeActions } from './helpers/nodeTypes';
 import { nodeTransactions } from './helpers/stakeHooks';
 import { stakingContract } from 'config';
 import { NodeType } from './helpers/nodeType';
+import { useDelegation } from 'helpers';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake' | 'remove';
 
@@ -23,6 +24,16 @@ const allowedActions: { [key: string]: ActionType[] } = {
 
 const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const { explorerAddress, dapp, delegationContract } = useContext();
+  const [ledgerError, setLedgerDataError] = useState('');
+  const [waitingForLedger, setWaitingForLedger] = useState(false);
+  const [submitPressed, setSubmitPressed] = useState(false);
+  const [showDelegateModal, setShowDelegateModal] = useState(false);
+  const { sendTransaction } = useDelegation({
+    handleClose: setShowDelegateModal,
+    setLedgerDataError,
+    setWaitingForLedger,
+    setSubmitPressed,
+  });
   const ref = React.useRef(null);
 
   const [remaining, setRemaining] = React.useState(0);
@@ -98,9 +109,7 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
                   onClick={(e: React.MouseEvent) => {
                     e.preventDefault();
                     if (actionAllowed) {
-                      nodeTransactions[action](key.blsKey, dapp, delegationContract)
-                        .then()
-                        .catch(e => console.error('error', e));
+                      nodeTransactions[action]({ blsKey: key.blsKey, sendTransaction });
                     }
                   }}
                 >

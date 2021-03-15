@@ -40,8 +40,7 @@ const Ledger = () => {
             });
         })
         .catch(error => {
-          debugger;
-          console.log('error ', error);
+          console.error('error ', error);
         });
     } else {
       setShowAddressTable(true);

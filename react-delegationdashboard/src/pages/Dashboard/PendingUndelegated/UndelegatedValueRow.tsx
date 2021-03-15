@@ -1,24 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useDelegation } from 'helpers';
 import { useContext } from 'context';
 import { UndelegatedValueType } from './UndelegatedValueType';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 
 const UndelegatedValueRow = ({
   undelegatedValue: value,
 }: {
   undelegatedValue: UndelegatedValueType;
 }) => {
-  const { delegation } = useDelegation();
   const [isDisabled, setIsDisabled] = React.useState(true);
   const { egldLabel } = useContext();
   const [counter, setCounter] = React.useState(value.timeLeft);
+  const [show, setshow] = useState(false);
+  const [ledgerDataError, setLedgerDataError] = useState('');
+  const [waitingForLedger, setWaitingForLedger] = useState(false);
+  const [submitPressed, setSubmitPressed] = useState(false);
+  const { sendTransaction } = useDelegation({
+    handleClose: setshow,
+    setLedgerDataError,
+    setWaitingForLedger,
+    setSubmitPressed,
+  });
 
   const handleWithdraw = () => {
-    delegation
-      .sendTransaction('0', 'withdraw')
-      .then()
-      .catch(e => console.error('handleWithdraw error', e));
+    let transactionArguments = new DelegationTransactionType('0', 'withdraw');
+    sendTransaction(transactionArguments);
   };
 
   useEffect(() => {

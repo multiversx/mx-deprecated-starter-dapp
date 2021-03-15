@@ -1,13 +1,17 @@
+import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
 import * as React from 'react';
 import { Modal } from 'react-bootstrap';
 import { DropzoneFileType } from '.';
-import PlaygroundPemUpload from './PemUpload';
+import PemUpload from './PemUpload';
 import { RequestType } from './Request';
 
 interface RequestVariablesModalType {
   name: string;
   show: boolean;
   variables: RequestType['variables'];
+  waitingForLedger: boolean;
+  submitPressed: boolean;
+  ledgerError?: string;
   data: RequestType['data'];
   handleClose: () => void;
   triggerDispatchEvent: (variablesData: string) => void;
@@ -22,15 +26,18 @@ const RequestVariablesModal = ({
   show,
   variables,
   data,
+  waitingForLedger,
+  submitPressed,
+  ledgerError,
   handleClose,
   triggerDispatchEvent,
 }: RequestVariablesModalType) => {
+  debugger;
   const [modalValues, setModalValues] = React.useState<ModalValuesType>({});
 
   const onSubmit = (pemFiles?: DropzoneFileType[]) => {
     if (typeof data !== 'string') {
       triggerDispatchEvent(`${data(pemFiles ? pemFiles : modalValues)}`);
-      handleClose();
     }
   };
 
@@ -67,7 +74,13 @@ const RequestVariablesModal = ({
                     </div>
                   )}
                   {variable.type === 'pemUpload' && (
-                    <PlaygroundPemUpload handleClose={handleClose} onSubmit={onSubmit} />
+                    <PemUpload
+                      handleClose={handleClose}
+                      onSubmit={onSubmit}
+                      waitingForLedger={waitingForLedger}
+                      submitPressed={submitPressed}
+                      ledgerError={ledgerError}
+                    />
                   )}
                 </div>
               );
@@ -76,16 +89,14 @@ const RequestVariablesModal = ({
           {!isPemUpload && (
             <>
               <div className="d-flex align-items-center flex-wrap mt-spacer">
-                <button
-                  type="submit"
-                  className="btn btn-oultine-primary mx-2"
-                  id="continueReq"
-                  onClick={() => {
-                    onSubmit();
-                  }}
-                >
-                  Continue
-                </button>
+                <DelegationContractActionButtons
+                  ledgerError={ledgerError}
+                  action="AddNodes"
+                  actionTitle="Add nodes"
+                  submitPressed={submitPressed}
+                  waitingForLedger={waitingForLedger}
+                  handleClose={handleClose}
+                />
                 <div className="btn btn-link mx-2" onClick={handleClose}>
                   Close
                 </div>

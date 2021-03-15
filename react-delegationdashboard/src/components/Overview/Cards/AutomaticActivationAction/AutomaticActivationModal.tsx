@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import ViewStatAction from 'components/ViewStatAction';
 import { useDelegation } from 'helpers';
-import { ledgerErrorCodes } from 'helpers/ledgerErrorCodes';
-import { useContext } from 'context';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 
 export interface AutomaticActivationModalType {
   show: boolean;
@@ -20,32 +19,24 @@ const AutomaticActivationModal = ({
   value,
   handleClose,
 }: AutomaticActivationModalType) => {
-  const { delegation } = useDelegation();
-  const { ledgerAccount } = useContext();
   const [ledgerError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
+  const { sendTransaction } = useDelegation({
+    handleClose: handleClose,
+    setLedgerDataError,
+    setWaitingForLedger,
+    setSubmitPressed,
+  });
 
   const handleAutomaticActivation = () => {
-    if (ledgerAccount) {
-      setWaitingForLedger(true);
-      setSubmitPressed(true);
-    }
     let activation = Buffer.from(value === 'true' ? 'false' : 'true').toString('hex');
-    delegation
-      .sendTransaction('0', 'setAutomaticActivation', activation)
-      .then(() => {
-        setWaitingForLedger(false);
-        handleClose();
-      })
-      .catch(e => {
-        if (e.statusCode in ledgerErrorCodes) {
-          setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
-        }
-        setWaitingForLedger(false);
-        setSubmitPressed(false);
-        console.error('handleUpdateDelegationCap ', e);
-      });
+    let transactionArguments = new DelegationTransactionType(
+      '0',
+      'setAutomaticActivation',
+      activation
+    );
+    sendTransaction(transactionArguments);
   };
 
   return (

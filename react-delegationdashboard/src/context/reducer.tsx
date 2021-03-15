@@ -5,6 +5,7 @@ export type DispatchType = (action: ActionType) => void;
 
 export type ActionType =
   | { type: 'login'; address: StateType['address'] }
+  | { type: 'ledgerLogin'; ledgerLogin: StateType['ledgerLogin'] }
   | { type: 'logout'; provider: StateType['dapp']['provider'] }
   | { type: 'loading'; loading: StateType['loading'] }
   | { type: 'setProvider'; provider: StateType['dapp']['provider'] }
@@ -30,6 +31,14 @@ export function reducer(state: StateType, action: ActionType): StateType {
         ...state,
         address,
         loggedIn: loggedIn,
+      };
+    }
+    case 'ledgerLogin': {
+      const { ledgerLogin } = action;
+      setItem('ledgerLogin', ledgerLogin);
+      return {
+        ...state,
+        ledgerLogin,
       };
     }
 

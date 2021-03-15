@@ -3,13 +3,24 @@ import React, { useState } from 'react';
 import { DropzoneFileType } from 'components/DropzonePem';
 import RequestVariablesModal from 'components/DropzonePem/RequestVariablesModal';
 import { BLS } from '@elrondnetwork/erdjs/out';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 
 const AddNodeAction = () => {
-  const { delegation } = useDelegation();
   const [showAddNodes, setAddNodesModal] = useState(false);
+  const [ledgerDataError, setLedgerDataError] = useState('');
+  const [waitingForLedger, setWaitingForLedger] = useState(false);
+  const [submitPressed, setSubmitPressed] = useState(false);
+  const { sendTransaction } = useDelegation({
+    handleClose: setAddNodesModal,
+    setLedgerDataError,
+    setWaitingForLedger,
+    setSubmitPressed,
+  });
 
   const handleAddNodes = (value: string) => {
-    delegation.sendTransaction('0', 'addNodes', value).then();
+    debugger;
+    let transactionArguments = new DelegationTransactionType('0', 'addNodes', value);
+    sendTransaction(transactionArguments);
   };
 
   const getPemPubKeysWithSignature = (pemFiles: DropzoneFileType[]) => {
@@ -45,6 +56,9 @@ const AddNodeAction = () => {
       <RequestVariablesModal
         name="Add nodes"
         show={showAddNodes}
+        waitingForLedger={waitingForLedger}
+        submitPressed={submitPressed}
+        ledgerError={ledgerDataError}
         handleClose={() => {
           setAddNodesModal(false);
         }}

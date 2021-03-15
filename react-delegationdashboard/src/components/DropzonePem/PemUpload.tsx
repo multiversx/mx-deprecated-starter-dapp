@@ -1,14 +1,21 @@
+import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { object, array, mixed } from 'yup';
 import DropzonePem, { DropzoneFileType } from './index';
 
-const PlaygroundPemUpload = ({
+const PemUpload = ({
   handleClose,
   onSubmit,
+  waitingForLedger,
+  submitPressed,
+  ledgerError,
 }: {
   handleClose: () => void;
   onSubmit: (pemFiles: DropzoneFileType[]) => void;
+  waitingForLedger: boolean;
+  submitPressed: boolean;
+  ledgerError?: string;
 }) => {
   const initialValues: { pemFiles: DropzoneFileType[] } = { pemFiles: [] };
   const ref = React.useRef(null);
@@ -51,12 +58,14 @@ const PlaygroundPemUpload = ({
               />
             </div>
             <div className="d-flex align-items-center justify-content-center flex-wrap mt-spacer">
-              <button type="submit" className="btn btn-primary">
-                Continue
-              </button>
-              <div className="btn btn-link" onClick={handleClose}>
-                Close
-              </div>
+              <DelegationContractActionButtons
+                ledgerError={ledgerError}
+                action="addNodes"
+                actionTitle="Add nodes"
+                submitPressed={submitPressed}
+                waitingForLedger={waitingForLedger}
+                handleClose={handleClose}
+              />
             </div>
           </form>
         );
@@ -65,4 +74,4 @@ const PlaygroundPemUpload = ({
   );
 };
 
-export default PlaygroundPemUpload;
+export default PemUpload;

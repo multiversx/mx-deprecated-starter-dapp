@@ -37,6 +37,10 @@ export interface StateType {
   loading: boolean;
   error: string;
   loggedIn: boolean;
+  ledgerLogin: {
+    index: number;
+    loginType: string;
+  };
   address: string;
   egldLabel: string;
   denomination: number;
@@ -112,6 +116,7 @@ export const initialState = () => {
     loading: false,
     error: '',
     loggedIn: !!getItem('logged_in'),
+    ledgerLogin: getItem('ledgerLogin'),
     address: getItem('address'),
     account: emptyAccount,
     egldLabel: sessionNetwork?.egldLabel,

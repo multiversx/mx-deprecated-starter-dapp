@@ -13,7 +13,7 @@ import {
 } from '@elrondnetwork/erdjs';
 import { setItem } from '../storage/session';
 import { delegationContractData } from '../config';
-import { AccountType } from 'helpers/contractDataDefinitions';
+import { AccountType, DelegationTransactionType } from 'helpers/contractDataDefinitions';
 
 export default class Delegation {
   contract: SmartContract;
@@ -34,11 +34,7 @@ export default class Delegation {
     this.account = account;
   }
 
-  async sendTransaction(
-    value: string,
-    transcationType: string,
-    args: string = ''
-  ): Promise<boolean> {
+  async sendTransaction(delegationTransactionType: DelegationTransactionType): Promise<boolean> {
     if (!this.signerProvider) {
       throw new Error(
         'You need a singer to send a transaction, use either WalletProvider or LedgerProvider'
@@ -49,9 +45,9 @@ export default class Delegation {
       case WalletProvider:
         // Can use something like this to handle callback redirect
         setItem('transaction_identifier', true, 120);
-        return this.sendTransactionBasedOnType(value, transcationType, args);
+        return this.sendTransactionBasedOnType(delegationTransactionType);
       case HWProvider:
-        return this.sendTransactionBasedOnType(value, transcationType, args);
+        return this.sendTransactionBasedOnType(delegationTransactionType);
       default:
         console.warn('invalid signerProvider');
     }
@@ -60,17 +56,17 @@ export default class Delegation {
   }
 
   private async sendTransactionBasedOnType(
-    value: string,
-    transcationType: string,
-    args: string = ''
+    delegationTransactionType: DelegationTransactionType
   ): Promise<boolean> {
-    let delegationContract = delegationContractData.find(d => d.name === transcationType);
+    let delegationContract = delegationContractData.find(
+      d => d.name === delegationTransactionType.type
+    );
     if (!delegationContract) {
       throw new Error('The contract for this action in not defined');
     } else {
       let funcName = delegationContract.data;
-      if (args !== '') {
-        funcName = `${delegationContract.data}${args}`;
+      if (delegationTransactionType.args !== '') {
+        funcName = `${delegationContract.data}${delegationTransactionType.args}`;
       }
       const func = new ContractFunction(funcName);
       let payload = TransactionPayload.contractCall()
@@ -78,7 +74,7 @@ export default class Delegation {
         .build();
       let transaction = new Transaction({
         receiver: this.contract.getAddress(),
-        value: Balance.eGLD(value),
+        value: Balance.eGLD(delegationTransactionType.value),
         gasLimit: new GasLimit(delegationContract.gasLimit),
         data: payload,
         nonce: this.account?.nonce,
