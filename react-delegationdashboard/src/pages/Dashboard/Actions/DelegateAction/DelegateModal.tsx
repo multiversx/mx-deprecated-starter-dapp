@@ -102,6 +102,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                           id="amount"
                           name="amount"
                           data-testid="amount"
+                          step={'any'}
                           required={true}
                           value={values.amount}
                           autoComplete="off"
