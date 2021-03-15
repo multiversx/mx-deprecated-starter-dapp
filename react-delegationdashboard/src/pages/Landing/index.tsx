@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, {useState, ChangeEvent, Component} from 'react';
 import { useContext } from 'context';
 import Delegation from './Delegation';
 import { Link, useLocation } from 'react-router-dom';
@@ -10,17 +10,20 @@ import { ReactComponent as Logo } from '../../assets/images/logo2.svg';
 import State from 'components/State';
 import LedgerLogin from './Login/Ledger';
 import WalletLogin from './Login/Wallet';
-
-
+import StatCard from 'components/StatCard';
+import Slider from 'react-rangeslider';
+import 'react-rangeslider/lib/index.css';
 
 const Landing = () => {
   
   const { loading, error, loggedIn, egldLabel } = useContext();
-  let [count , setCount] = useState(50);
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCount(Number(event.currentTarget.value));
+  let [count2 , setCount2] : any = useState(50);
+
+  const onChange2 = (value : any) => {
+    setCount2(value);
   };
+
   const ref = React.useRef(null);
   
 
@@ -63,21 +66,53 @@ const Landing = () => {
             </div>
           </div>
 
-          <div className="h5 d-flex justify-content-center">{count}</div>
+          <div className="h5 d-flex justify-content-center">{count2}</div>
+
           <div className='slider'>
-            <input
-              style={{
-                background: 'linear-gradient(to right, #10d5c2 0%,#10d5c2 ' + 
-                (count/25) + '%,#eaeefb ' +
-                (count/25) + '%,#eaeefb 100%)'
-              }}
-              id="typeinp" 
-              type="range" 
-              min="10" max="2500" 
-              value={count} 
-              onChange={onChange}
-              step="1"
-              />
+            <Slider
+              min={10}
+              max={2500}
+              value={count2}
+              //onChangeStart={this.handleChangeStart}
+              onChange={onChange2}
+              //onChangeComplete={this.handleChangeComplete}
+            />
+          </div>
+
+          <div className="cards__login d-flex flex-wrap mr-spacer">
+
+            <StatCard
+              title="Daily"
+              value={count2}
+              valueUnit="xEGLD"
+              color="lightgreen"
+              realMoney="$3"
+              
+            />
+            <StatCard
+              title="Weekly"
+              value={String(count2*7)}
+              valueUnit="xEGLD"
+              color="lightgreen"
+              realMoney="$3"
+              
+            />
+            <StatCard
+              title="Monthly"
+              value={String(count2*30)}
+              valueUnit="xEGLD"
+              color="lightgreen"
+              realMoney="$3"
+              
+            />
+            <StatCard
+              title="Yearly"
+              value={String(count2*365)}
+              valueUnit="xEGLD"
+              color="lightgreen"
+              realMoney="$3"
+              
+            />
 
           </div>
           

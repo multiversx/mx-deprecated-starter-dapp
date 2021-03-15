@@ -64,7 +64,7 @@ const Views = () => {
           showLastNonZeroDecimal: false,
         })}
         valueUnit={egldLabel}
-        color="orange"
+        color="lightgreen"
         svg="contract.svg"
         percentage={`${getPercentage(
           denominate({
@@ -81,12 +81,12 @@ const Views = () => {
           })
         )}% of total stake`}
       />
-      <StatCard title="Number of Users" value={numUsers.toString()} color="orange" svg="user.svg" />
+      <StatCard title="Number of Users" value={numUsers.toString()} color="lightgreen" svg="user.svg" />
       <StatCard
         title="Number of Nodes"
         value={numberOfActiveNodes}
         valueUnit=""
-        color="purple"
+        color="lightgreen"
         svg="nodes.svg"
         percentage={`${getPercentage(
           numberOfActiveNodes,
@@ -97,7 +97,7 @@ const Views = () => {
         title="Computed APR"
         value={aprPercentage}
         valueUnit=""
-        color="orange"
+        color="lightgreen"
         svg="leaf-solid.svg"
         percentage="Annual percentage rate"
         tooltipText="This is an aproximate APR calculation for this year based on the current epoch"
@@ -106,7 +106,7 @@ const Views = () => {
         title="Service Fee"
         value={contractOverview.serviceFee || ''}
         valueUnit="%"
-        color="red"
+        color="lightgreen"
         svg="service.svg"
       >
         {location.pathname === '/owner' && <SetPercentageFeeAction />}
@@ -123,7 +123,7 @@ const Views = () => {
             }) || ''
           }
           valueUnit={egldLabel}
-          color="green"
+          color="lightgreen"
           svg="delegation.svg"
           percentage={`${getPercentage(
             denominate({
@@ -166,7 +166,7 @@ const Views = () => {
               }) || ''
             }
             valueUnit={egldLabel}
-            color="green"
+            color="lightgreen"
             svg="delegation.svg"
             percentage={`${getPercentage(
               denominate({

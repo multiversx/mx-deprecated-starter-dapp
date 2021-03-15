@@ -19,6 +19,7 @@ export interface StatCardType {
   color?: string;
   percentage?: string;
   tooltipText?: string;
+  realMoney? : string;
   children?: any;
 }
 

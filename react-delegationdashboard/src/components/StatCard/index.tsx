@@ -12,21 +12,25 @@ const StatCard = ({
   color = '',
   svg = '',
   percentage = '',
+  realMoney='',
   tooltipText = '',
   children = null,
 }: StatCardType) => {
   return (
     <div className={`statcard card-bg-${color} text-white py-3 px-4 mb-spacer ml-spacer rounded`}>
-      <div className="d-flex align-items-center justify-content-between mt-1 mb-2">
+      {svg && 
+        <div className="d-flex align-items-center justify-content-between mt-1 mb-2">
         <div className="icon my-1 fill-white">
           <SVG src={process.env.PUBLIC_URL + '/' + svg} className="text-white"></SVG>
         </div>
         <div>{children}</div>
       </div>
+      }
       <span className="opacity-6">{title}</span>
       <p className="h5 mb-0">
         {value} {valueUnit}
       </p>
+      <span className="real__money">{realMoney}</span>
       <small className="opacity-5">
         {percentage}
         {tooltipText !== '' && (
