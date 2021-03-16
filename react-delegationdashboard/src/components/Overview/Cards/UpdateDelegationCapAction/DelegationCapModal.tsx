@@ -30,7 +30,7 @@ const DelegationCapModal = ({
           <Formik
             initialValues={{
               amount: denominate({
-                input: '0',
+                input: '-20',
                 denomination,
                 decimals,
                 showLastNonZeroDecimal: false,
@@ -46,7 +46,7 @@ const DelegationCapModal = ({
                 .test(
                   'minimum',
                   `Minimum ${denominate({
-                    input: '0',
+                    input: '-20',
                     denomination,
                     decimals,
                     showLastNonZeroDecimal: false,
@@ -56,7 +56,7 @@ const DelegationCapModal = ({
                     const bnAmount = new BigNumber(value !== undefined ? value : '');
                     const comparationResult = bnAmount.comparedTo(
                       denominate({
-                        input: '0',
+                        input: '-20',
                         denomination,
                         decimals,
                         showLastNonZeroDecimal: false,

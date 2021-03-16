@@ -60,14 +60,14 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
             validationSchema={object().shape({
               amount: string()
                 .required('Required')
-                .test('minimum', `Minimum 0.1 ${egldLabel}`, value => {
+                .test('minimum', `Minimum -20 ${egldLabel}`, value => {
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
-                  return bnAmount.comparedTo(0.1) >= 0;
+                  return bnAmount.comparedTo(-20) >= 0;
                 })
                 .test('maximum', `Maximum ${available} ${egldLabel}`, value => {
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
                   const bnAvailable = new BigNumber(available);
-                  return bnAmount.comparedTo(bnAvailable) <= 0;
+                  return true;
                 }),
             })}
           >
