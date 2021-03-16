@@ -17,7 +17,8 @@ const UndelegatedListView = () => {
   };
 
   const getTimeLeft = (value: QueryResponse, index: number, timeLeft: number) => {
-    let roundCurrentEpoch = networkConfig.roundsPerEpoch - networkConfig.roundsPassedInCurrentEpoch;
+    let roundsRemainingInEpoch =
+      networkConfig.roundsPerEpoch - networkConfig.roundsPassedInCurrentEpoch;
     let roundEpochComplete = 0;
     let epochsChangesRemaining = value.returnData[index + 1].asNumber;
     if (epochsChangesRemaining > 1) {
@@ -26,7 +27,7 @@ const UndelegatedListView = () => {
       roundEpochComplete = 0;
     }
 
-    let totalRounds = roundCurrentEpoch + roundEpochComplete;
+    let totalRounds = roundsRemainingInEpoch + roundEpochComplete;
     timeLeft = (totalRounds * networkConfig.roundDuration) / 1000;
     return timeLeft;
   };

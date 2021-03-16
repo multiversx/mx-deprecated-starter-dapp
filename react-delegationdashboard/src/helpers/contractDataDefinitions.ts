@@ -81,13 +81,6 @@ export class NetworkConfig {
   }
 }
 
-export class NetworkStatus {
-  roundsPassedInCurrentEpoch: number;
-  public constructor(roundsPassedInCurrentEpoch: number) {
-    this.roundsPassedInCurrentEpoch = roundsPassedInCurrentEpoch;
-  }
-}
-
 export class AgencyMetadata {
   name: string;
   website: string;
