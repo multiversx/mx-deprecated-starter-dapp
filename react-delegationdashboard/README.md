@@ -74,27 +74,26 @@ From a terminal, navigate to the project folder and run ```npm install```
 
 ### Step 2. Update Configs
 
-In the application's src folder there are 3 config files (config.internal.ts, config.testnet.ts, config.mainnet.ts).
+In the application's src folder there are 3 config files (config.devnet.ts, config.testnet.ts, config.mainnet.ts).
 
 Based on the environment used the configs will need to be updated:
 - delegationContract : should contain the address of the Delegation Smart Contract received after the creation of Delegation Smart Contract
 - also check the walletAddress, apiAddress and explorerAddress
 
-### Step 3. Run locally
+### Step 3. Build for testing and production use
+
+A build of the app is necessary to deploy for testing purposes or for production use.
+The dapp is configured with build scripts targeting either the public devnet, the public testnet or the public mainnet.
+
+For testing on the devnet run => ```npm run build-devnet```
+
+For testing on the testnet run => ```npm run build-testnet```
+
+For production use on the mainnet run => ```npm run build-mainnet```
+
+### Step 4. Run the dashboard
 
 To run the project locally run ```npm run start``` from the project folder. This will start the React app in development mode, using the configs found in the config.ts file.
-
-### Step 4. Build for production
-
-A build of the app is necessary to deploy to production.
-
-The dapp is configured with build scripts targeting either an internal (local) testnet, the public testnet or the public devnet.
-
-For internal run => ```npm run build-internal``` (for internal build the package.json script for start will need to be updated and remove the Https restriction)
-
-For testnet run => ```npm run build-testnet```
-
-For mainnet run => ```npm run build-mainnet```
 
 <!-- ROADMAP -->
 ## Roadmap
