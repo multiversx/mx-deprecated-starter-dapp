@@ -1,4 +1,4 @@
-import { Nonce } from '@elrondnetwork/erdjs/out';
+import { ChainID, Nonce } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
 
 export class ContractOverview {
@@ -68,18 +68,21 @@ export class NetworkConfig {
   roundsPerEpoch: number;
   roundsPassedInCurrentEpoch: number;
   topUpRewardsGradientPoint: BigNumber;
+  chainId: ChainID;
   public constructor(
     topUpFactor: number,
     roundDuration: number,
     roundsPerEpoch: number,
     roundsPassedInCurrentEpoch: number,
-    topUpRewardsGradientPoint: BigNumber
+    topUpRewardsGradientPoint: BigNumber,
+    chainId: ChainID
   ) {
     this.topUpFactor = topUpFactor;
     this.roundDuration = roundDuration;
     this.roundsPerEpoch = roundsPerEpoch;
     this.roundsPassedInCurrentEpoch = roundsPassedInCurrentEpoch;
     this.topUpRewardsGradientPoint = topUpRewardsGradientPoint;
+    this.chainId = chainId;
   }
 }
 
@@ -106,10 +109,17 @@ export class AccountType {
 export class DelegationTransactionType {
   value: string;
   type: string;
+  chainId?: ChainID;
   args?: string;
-  public constructor(value: string = '', type: string, args: string = '') {
+  public constructor(
+    value: string = '',
+    type: string,
+    args: string = '',
+    chainId: ChainID = new ChainID('T')
+  ) {
     this.value = value;
     this.type = type;
     this.args = args;
+    this.chainId = chainId;
   }
 }

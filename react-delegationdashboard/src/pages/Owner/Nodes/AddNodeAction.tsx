@@ -2,7 +2,7 @@ import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
 import { DropzoneFileType } from 'components/DropzonePem';
 import RequestVariablesModal from 'components/DropzonePem/RequestVariablesModal';
-import { BLS } from '@elrondnetwork/erdjs/out';
+import { BLS, TransactionHash } from '@elrondnetwork/erdjs/out';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 
 const AddNodeAction = () => {
@@ -10,8 +10,15 @@ const AddNodeAction = () => {
   const [ledgerDataError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
+  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
+  const [txHash, setTxHash] = useState(new TransactionHash(''));
+  const displayTransactionModal = (txHash: TransactionHash) => {
+    setTxHash(txHash);
+    setAddNodesModal(false);
+    setShowTransactionStatus(true);
+  };
   const { sendTransaction } = useDelegation({
-    handleClose: setAddNodesModal,
+    handleClose: displayTransactionModal,
     setLedgerDataError,
     setWaitingForLedger,
     setSubmitPressed,

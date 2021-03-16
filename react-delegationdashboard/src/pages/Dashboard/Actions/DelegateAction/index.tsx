@@ -3,6 +3,8 @@ import { useContext } from 'context';
 import DelegateModal from './DelegateModal';
 import { useDelegation } from 'helpers';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import LedgerTransactionStatus from 'components/LedgerTransactionStatus';
+import { TransactionHash } from '@elrondnetwork/erdjs/out';
 
 const DelegateAction = () => {
   const { account } = useContext();
@@ -10,8 +12,16 @@ const DelegateAction = () => {
   const [ledgerDataError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
+  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
+  const [txHash, setTxHash] = useState(new TransactionHash(''));
+  const displayTransactionModal = (txHash: TransactionHash) => {
+    console.log('tx ', 'delegate');
+    setTxHash(txHash);
+    setShowDelegateModal(false);
+    setShowTransactionStatus(true);
+  };
   const { sendTransaction } = useDelegation({
-    handleClose: setShowDelegateModal,
+    handleClose: displayTransactionModal,
     setLedgerDataError,
     setWaitingForLedger,
     setSubmitPressed,
@@ -42,6 +52,14 @@ const DelegateAction = () => {
           setShowDelegateModal(false);
         }}
         handleContinue={handleDelegate}
+      />
+      <LedgerTransactionStatus
+        id="delegate"
+        show={showTransactionStatus}
+        txHash={txHash}
+        handleClose={() => {
+          setShowTransactionStatus(false);
+        }}
       />
     </div>
   );

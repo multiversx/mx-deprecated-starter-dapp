@@ -4,14 +4,22 @@ import { useState } from 'react';
 import nominate from 'helpers/nominate';
 import DelegationCapModal from './DelegationCapModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import { TransactionHash } from '@elrondnetwork/erdjs/out';
 
 const UpdateDelegationCapAction = () => {
   const [showDelegationCapModal, setShowDelegationCapModal] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
+  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
+  const [txHash, setTxHash] = useState(new TransactionHash(''));
+  const displayTransactionModal = (txHash: TransactionHash) => {
+    setTxHash(txHash);
+    setShowDelegationCapModal(false);
+    setShowTransactionStatus(true);
+  };
   const { sendTransaction } = useDelegation({
-    handleClose: setShowDelegationCapModal,
+    handleClose: displayTransactionModal,
     setLedgerDataError,
     setWaitingForLedger,
     setSubmitPressed,

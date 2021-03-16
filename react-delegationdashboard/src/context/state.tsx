@@ -4,6 +4,7 @@ import {
   ApiProvider,
   WalletProvider,
   Nonce,
+  ChainID,
 } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import {
@@ -91,6 +92,12 @@ export const emptyContractOverview: ContractOverview = {
   reDelegationCap: 'false',
   createdNounce: false,
   unBondPeriod: 0,
+};
+
+export const emptyNetworkConfig: NetworkConfig = {
+  topUpFactor: 0,
+  topUpRewardsGradientPoint: new BigNumber(0),
+  chainId: new ChainID('0'),
 };
 
 export const initialState = () => {

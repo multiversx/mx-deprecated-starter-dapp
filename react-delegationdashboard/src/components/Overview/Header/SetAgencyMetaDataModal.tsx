@@ -6,6 +6,7 @@ import { object, string } from 'yup';
 import { useContext } from 'context';
 import { AgencyMetadata, DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
+import { TransactionHash } from '@elrondnetwork/erdjs/out';
 
 const SetAgencyMetaDataModal = () => {
   const { agencyMetaData } = useContext();
@@ -13,9 +14,15 @@ const SetAgencyMetaDataModal = () => {
   const [ledgerDataError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
-
+  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
+  const [txHash, setTxHash] = useState(new TransactionHash(''));
+  const displayTransactionModal = (txHash: TransactionHash) => {
+    setTxHash(txHash);
+    setShowDelegateModal(false);
+    setShowTransactionStatus(true);
+  };
   const { sendTransaction } = useDelegation({
-    handleClose: setShowDelegateModal,
+    handleClose: displayTransactionModal,
     setLedgerDataError,
     setWaitingForLedger,
     setSubmitPressed,

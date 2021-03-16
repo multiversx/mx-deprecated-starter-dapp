@@ -1,4 +1,4 @@
-import { Address, Argument, ContractFunction } from '@elrondnetwork/erdjs/out';
+import { Address, Argument, ContractFunction, TransactionHash } from '@elrondnetwork/erdjs/out';
 import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import { faCaretDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +11,7 @@ import { nodeTransactions } from './helpers/stakeHooks';
 import { stakingContract } from 'config';
 import { NodeType } from './helpers/nodeType';
 import { useDelegation } from 'helpers';
+import NodeActionModal from './NodeActionModal';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake' | 'remove';
 
@@ -23,13 +24,21 @@ const allowedActions: { [key: string]: ActionType[] } = {
 };
 
 const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
-  const { explorerAddress, dapp, delegationContract } = useContext();
+  const { explorerAddress, dapp, ledgerAccount } = useContext();
   const [ledgerError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const [showDelegateModal, setShowDelegateModal] = useState(false);
+  const [selectedAction, setSelectedAction] = useState('');
+  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
+  const [txHash, setTxHash] = useState(new TransactionHash(''));
+  const displayTransactionModal = (txHash: TransactionHash) => {
+    setTxHash(txHash);
+    setShowDelegateModal(false);
+    setShowTransactionStatus(true);
+  };
   const { sendTransaction } = useDelegation({
-    handleClose: setShowDelegateModal,
+    handleClose: displayTransactionModal,
     setLedgerDataError,
     setWaitingForLedger,
     setSubmitPressed,
@@ -109,7 +118,12 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
                   onClick={(e: React.MouseEvent) => {
                     e.preventDefault();
                     if (actionAllowed) {
-                      nodeTransactions[action]({ blsKey: key.blsKey, sendTransaction });
+                      if (!ledgerAccount) {
+                        nodeTransactions[action]({ blsKey: key.blsKey, sendTransaction });
+                      } else {
+                        setSelectedAction(action);
+                        setShowDelegateModal(false);
+                      }
                     }
                   }}
                 >
@@ -129,6 +143,19 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
           </Dropdown.Menu>
         </Dropdown>
       </td>
+      <NodeActionModal
+        show={showDelegateModal}
+        waitingForLedger={waitingForLedger}
+        submitPressed={submitPressed}
+        ledgerError={ledgerError}
+        handleClose={() => {
+          setShowDelegateModal(false);
+        }}
+        handleContinue={() => {
+          const action: ActionType = selectedAction as any;
+          nodeTransactions[action]({ blsKey: key.blsKey, sendTransaction });
+        }}
+      />
     </tr>
   );
 };

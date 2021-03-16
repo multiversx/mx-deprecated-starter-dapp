@@ -4,6 +4,7 @@ import { useDelegation } from 'helpers';
 import { useContext } from 'context';
 import { UndelegatedValueType } from './UndelegatedValueType';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import { TransactionHash } from '@elrondnetwork/erdjs/out';
 
 const UndelegatedValueRow = ({
   undelegatedValue: value,
@@ -13,12 +14,19 @@ const UndelegatedValueRow = ({
   const [isDisabled, setIsDisabled] = React.useState(true);
   const { egldLabel } = useContext();
   const [counter, setCounter] = React.useState(value.timeLeft);
-  const [show, setshow] = useState(false);
+  const [show, setShow] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
+  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
+  const [txHash, setTxHash] = useState(new TransactionHash(''));
+  const displayTransactionModal = (txHash: TransactionHash) => {
+    setTxHash(txHash);
+    setShow(false);
+    setShowTransactionStatus(true);
+  };
   const { sendTransaction } = useDelegation({
-    handleClose: setshow,
+    handleClose: displayTransactionModal,
     setLedgerDataError,
     setWaitingForLedger,
     setSubmitPressed,

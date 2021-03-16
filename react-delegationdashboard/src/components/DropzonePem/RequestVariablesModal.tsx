@@ -32,7 +32,6 @@ const RequestVariablesModal = ({
   handleClose,
   triggerDispatchEvent,
 }: RequestVariablesModalType) => {
-  debugger;
   const [modalValues, setModalValues] = React.useState<ModalValuesType>({});
 
   const onSubmit = (pemFiles?: DropzoneFileType[]) => {

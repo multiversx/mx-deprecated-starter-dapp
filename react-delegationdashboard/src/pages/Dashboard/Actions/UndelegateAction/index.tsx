@@ -4,6 +4,7 @@ import { useContext } from 'context';
 import { nominateValToHex } from 'helpers/nominate';
 import UndelegateModal from './UndelegateModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import { TransactionHash } from '@elrondnetwork/erdjs/out';
 
 interface UndelegateModalType {
   balance: string;
@@ -15,8 +16,16 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
   const [ledgerDataError, setLedgerDataError] = useState('');
   const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
+  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
+  const [txHash, setTxHash] = useState(new TransactionHash(''));
+  const displayTransactionModal = (txHash: TransactionHash) => {
+    console.log('tx ', 'undelegate');
+    setTxHash(txHash);
+    setShowModal(false);
+    setShowTransactionStatus(true);
+  };
   const { sendTransaction } = useDelegation({
-    handleClose: setShowModal,
+    handleClose: displayTransactionModal,
     setLedgerDataError,
     setWaitingForLedger,
     setSubmitPressed,

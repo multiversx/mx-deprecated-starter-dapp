@@ -34,7 +34,9 @@ export default class Delegation {
     this.account = account;
   }
 
-  async sendTransaction(delegationTransactionType: DelegationTransactionType): Promise<boolean> {
+  async sendTransaction(
+    delegationTransactionType: DelegationTransactionType
+  ): Promise<Transaction> {
     if (!this.signerProvider) {
       throw new Error(
         'You need a singer to send a transaction, use either WalletProvider or LedgerProvider'
@@ -52,12 +54,12 @@ export default class Delegation {
         console.warn('invalid signerProvider');
     }
 
-    return true;
+    return new Transaction();
   }
 
   private async sendTransactionBasedOnType(
     delegationTransactionType: DelegationTransactionType
-  ): Promise<boolean> {
+  ): Promise<Transaction> {
     let delegationContract = delegationContractData.find(
       d => d.name === delegationTransactionType.type
     );
@@ -73,6 +75,7 @@ export default class Delegation {
         .setFunction(func)
         .build();
       let transaction = new Transaction({
+        chainID: delegationTransactionType.chainId,
         receiver: this.contract.getAddress(),
         value: Balance.eGLD(delegationTransactionType.value),
         gasLimit: new GasLimit(delegationContract.gasLimit),
@@ -81,9 +84,8 @@ export default class Delegation {
       });
 
       // @ts-ignore
-      await this.signerProvider.sendTransaction(transaction);
 
-      return true;
+      return await this.signerProvider.sendTransaction(transaction);
     }
   }
 }
