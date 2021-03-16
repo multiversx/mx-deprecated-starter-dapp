@@ -80,17 +80,16 @@ Based on the environment used the configs will need to be updated:
 - delegationContract : should contain the address of the Delegation Smart Contract received after the creation of Delegation Smart Contract
 - also check the walletAddress, apiAddress and explorerAddress
 
-### Step 3. Build for production
+### Step 3. Build for testing and production use
 
-A build of the app is necessary to deploy to production.
-
+A build of the app is necessary to deploy for testing purposes or for production use.
 The dapp is configured with build scripts targeting either the public devnet, the public testnet or the public mainnet.
 
-For devnet run => ```npm run build-devnet```
+For testing on the devnet run => ```npm run build-devnet```
 
-For testnet run => ```npm run build-testnet```
+For testing on the testnet run => ```npm run build-testnet```
 
-For mainnet run => ```npm run build-mainnet```
+For production use on the mainnet run => ```npm run build-mainnet```
 
 ### Step 4. Run the dashboard
 
