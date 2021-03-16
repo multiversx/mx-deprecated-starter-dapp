@@ -52,7 +52,7 @@ const AddressRow = ({
           </label>
         </div>
       </td>
-      <td className="text-left">{index + 1}</td>
+      <td className="text-left">{index}</td>
     </tr>
   );
 };
