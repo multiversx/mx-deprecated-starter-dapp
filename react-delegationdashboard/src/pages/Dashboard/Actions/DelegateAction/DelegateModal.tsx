@@ -52,7 +52,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
           )}
           <Formik
             initialValues={{
-              amount: '10',
+              amount: '1',
             }}
             onSubmit={values => {
               handleContinue(values.amount);
@@ -60,9 +60,9 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
             validationSchema={object().shape({
               amount: string()
                 .required('Required')
-                .test('minimum', `Minimum 10 ${egldLabel}`, value => {
+                .test('minimum', `Minimum 1 ${egldLabel}`, value => {
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
-                  return bnAmount.comparedTo(10) >= 0;
+                  return bnAmount.comparedTo(1) >= 0;
                 })
                 .test('maximum', `Maximum ${available} ${egldLabel}`, value => {
                   const bnAmount = new BigNumber(value !== undefined ? value : '');
