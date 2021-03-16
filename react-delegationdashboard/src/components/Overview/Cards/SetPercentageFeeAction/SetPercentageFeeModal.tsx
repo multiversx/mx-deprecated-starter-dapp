@@ -6,13 +6,13 @@ import { object, string } from 'yup';
 const SetPercentageFeeSchema = object().shape({
   amount: string()
     .required('Required')
-    .test('minimum', 'Minimum fee percentage is 0.01', value => {
+    .test('minimum', 'Minimum fee percentage is -1', value => {
       const feeAmount = parseFloat(value !== undefined ? value : '');
-      return feeAmount > 0;
+      return feeAmount >= -1;
     })
-    .test('minimum', 'Maximum fee percentage is 100', value => {
+    .test('minimum', 'Maximum fee percentage is 1000', value => {
       const feeAmount = parseFloat(value !== undefined ? value : '');
-      return feeAmount <= 100;
+      return feeAmount <= 1000;
     }),
 });
 
