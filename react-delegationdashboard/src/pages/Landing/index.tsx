@@ -1,4 +1,4 @@
-import React, {useState, ChangeEvent, Component} from 'react';
+import React, {useState, useEffect, ChangeEvent, Component} from 'react';
 import { useContext } from 'context';
 import Delegation from './Delegation';
 import { Link, useLocation } from 'react-router-dom';
@@ -6,7 +6,7 @@ import PendingUndelegated from './PendingUndelegated';
 import { Redirect } from 'react-router-dom';
 import HomeCards from 'components/HomeCards';
 import { faBan, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { ReactComponent as Logo } from '../../assets/images/logo2.svg';
+import { ReactComponent as Logo } from '../../assets/images/logo_png_easy.svg';
 import State from 'components/State';
 import LedgerLogin from './Login/Ledger';
 import WalletLogin from './Login/Wallet';
@@ -19,13 +19,36 @@ const Landing = () => {
   const { loading, error, loggedIn, egldLabel } = useContext();
 
   let [count2 , setCount2] : any = useState(50);
+  let [egld , setEgld] : any = useState(1);
+  let [stakingFactor , setStakingFactor] : any = useState(0.00057);
 
   const onChange2 = (value : any) => {
     setCount2(value);
   };
 
+  const setDecimals = ( num : number) => {
+    return Math.round(num * 100) / 100;
+  };
+
   const ref = React.useRef(null);
-  
+
+  useEffect(() => {
+
+      const url = 'https://api.coinpaprika.com/v1/coins/egld-elrond/markets';
+      fetch(url)
+      .then(resp => resp.json())
+      .then(data => {
+        data.forEach(
+          ( el: { exchange_id: string; pair: string; quotes: { USD: { price: any; }; }; })  => {
+            if(el.exchange_id == 'binance' && el.pair == 'EGLD/USDT') {
+              console.log(el.exchange_id, el.pair);
+              console.log(el.quotes);
+              setEgld(el.quotes.USD.price);
+            }
+          }
+        );
+      });
+    }, []);
 
   return (
     
@@ -83,41 +106,38 @@ const Landing = () => {
 
             <StatCard
               title="Daily"
-              value={count2}
+              value={String(setDecimals(stakingFactor*count2))}
               valueUnit="xEGLD"
               color="lightgreen"
-              realMoney="$3"
+              realMoney={'$' + setDecimals(((egld)*stakingFactor*count2)) }
               
             />
             <StatCard
               title="Weekly"
-              value={String(count2*7)}
+              value={String(setDecimals(stakingFactor*count2*7))}
               valueUnit="xEGLD"
               color="lightgreen"
-              realMoney="$3"
+              realMoney={'$' + setDecimals(((egld)*stakingFactor*count2*7)) }
               
             />
             <StatCard
               title="Monthly"
-              value={String(count2*30)}
+              value={String(setDecimals(stakingFactor*count2*30))}
               valueUnit="xEGLD"
               color="lightgreen"
-              realMoney="$3"
+              realMoney={'$' + setDecimals(((egld)*stakingFactor*count2*30)) }
               
             />
             <StatCard
               title="Yearly"
-              value={String(count2*365)}
+              value={String(setDecimals(stakingFactor*count2*365))}
               valueUnit="xEGLD"
               color="lightgreen"
-              realMoney="$3"
+              realMoney={'$' + setDecimals(((egld)*stakingFactor*count2*365)) }
               
             />
 
           </div>
-          
-          
-
         </div>
       </div>
     </div>

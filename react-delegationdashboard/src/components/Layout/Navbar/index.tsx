@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReactComponent as Logo } from '../../../assets/images/logo.svg';
+import { ReactComponent as Logo } from '../../../assets/images/logo_png_easy.svg';
 import { useContext, useDispatch } from '../../../context';
 
 const Navbar = () => {
@@ -19,9 +19,9 @@ const Navbar = () => {
         </div>
         {loggedIn && (
           <div className="d-flex align-items-center" style={{ minWidth: 0 }}>
-            <small className="d-none d-lg-inline text-muted mr-2">Wallet address: </small>
-            <small className="text-truncate">{address}</small>
-            <a href="/#" onClick={logOut} className="btn btn-primary btn-sm ml-3">
+            <small className="d-none d-lg-inline outside__grey mr-2">Wallet address: </small>
+            <small className="text-truncate outside__dark">{address}</small>
+            <a href="/#" onClick={logOut} className="outside_btn btn btn-primary btn-sm ml-3">
               Close
             </a>
           </div>

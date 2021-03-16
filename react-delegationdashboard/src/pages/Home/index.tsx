@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { faBan, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { ReactComponent as Logo } from '../../assets/images/logo2.svg';
+import { ReactComponent as Logo } from '../../assets/images/logo_png_easy.svg';
 import State from 'components/State';
 import { useContext } from 'context';
 import LedgerLogin from './Login/Ledger';

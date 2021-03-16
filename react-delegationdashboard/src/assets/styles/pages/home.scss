@@ -34,6 +34,9 @@
 
 .logo2 {
   height: 100px !important;
+  g {
+    fill: #fff;
+  }
 }
 .slider {
   width: 100%;
@@ -77,14 +80,30 @@ div.rangeslider {
 }
 
 .rangeslider-horizontal {
-  height: 3px;
+  height: 1px;
+  background: #888;
   .rangeslider__fill {
     background-color: rgb(16, 213, 194);
   }
 }
 
 .dashboard {
-    background: #9fd4cf;
-    border-radius: 0.65rem;
+  background: linear-gradient( 143deg , #464546a8 0%, #3d3f42 100%);
+    border-radius: 0;
     height: 100%;
+    .card {
+      border-radius: 0;
+    }
+}
+
+.outside__grey {
+  color: #5d6473;
+}
+
+.outside__dark {
+  color: #000;
+}
+
+.outside_btn {
+  background: #323234 !important;
 }

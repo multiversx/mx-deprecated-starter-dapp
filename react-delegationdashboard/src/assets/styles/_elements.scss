@@ -27,8 +27,9 @@ body.modal-open .layout {
   &.btn-primary {
     background: rgba(255, 255, 255, 0.2);
     border: rgba(255, 255, 255, 0.3);
+    border-radius: 0;
     color: $white;
-    box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 70, 194, 0.1);
+    box-shadow: 0 0.6rem 0.6rem 0 #10d5c214;
     &:hover {
       background: rgba(0, 0, 0, 0.2);
     }
@@ -140,8 +141,9 @@ label {
   box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 197, 189, 0.06);
 }
 .card-bg-lightgreen {
-  background-color: #10d5c2;
-  box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 197, 189, 0.06);
+  background-color: #141515;
+  box-shadow: 0 0.6rem 0.6rem 0 #10d5c214;
+  border-radius: 0 !important;
 }
 
 @media (min-width: 1200px) {
