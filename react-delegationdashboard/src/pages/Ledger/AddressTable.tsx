@@ -151,6 +151,7 @@ const AddressTable = ({
                     className="btn btn-link px-2"
                     onClick={goToPrev}
                     data-testid="prevBtn"
+                    disabled={startIndex === 0}
                   >
                     <FontAwesomeIcon size="sm" icon={faChevronLeft} /> Prev
                   </button>
