@@ -7,7 +7,6 @@ import { useContext } from 'context';
 import Denominate from 'components/Denominate';
 import { entireBalance } from 'helpers';
 import { denomination, decimals } from 'config';
-import denominate from 'components/Denominate/formatters';
 
 interface DelegateModalType {
   show: boolean;
