@@ -79,6 +79,7 @@ export const emptyNetworkConfig: NetworkConfig = {
   roundsPassedInCurrentEpoch: -1,
   topUpFactor: -1,
   topUpRewardsGradientPoint: new BigNumber('-1'),
+  chainId: new ChainID('-1'),
 };
 
 export const emptyContractOverview: ContractOverview = {
@@ -92,12 +93,6 @@ export const emptyContractOverview: ContractOverview = {
   reDelegationCap: 'false',
   createdNounce: false,
   unBondPeriod: 0,
-};
-
-export const emptyNetworkConfig: NetworkConfig = {
-  topUpFactor: 0,
-  topUpRewardsGradientPoint: new BigNumber(0),
-  chainId: new ChainID('0'),
 };
 
 export const initialState = () => {

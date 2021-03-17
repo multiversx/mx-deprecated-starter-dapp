@@ -119,7 +119,8 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
               networkConfig.RoundDuration,
               networkConfig.RoundsPerEpoch,
               networkStatus.RoundsPassedInCurrentEpoch,
-              new BigNumber(networkConfig.TopUpRewardsGradientPoint)
+              new BigNumber(networkConfig.TopUpRewardsGradientPoint),
+              networkConfig.ChainID
             ),
           });
           dispatch({
@@ -131,7 +132,8 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
                 networkConfig.RoundDuration,
                 networkConfig.RoundsPerEpoch,
                 networkStatus.RoundsPassedInCurrentEpoch,
-                new BigNumber(networkConfig.TopUpRewardsGradientPoint)
+                new BigNumber(networkConfig.TopUpRewardsGradientPoint),
+                networkConfig.ChainID
               ),
               networkStake: new NetworkStake(
                 networkStake.TotalValidators,
