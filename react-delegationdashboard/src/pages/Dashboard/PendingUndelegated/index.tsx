@@ -42,7 +42,7 @@ const UndelegatedListView = () => {
       timeLeft = getTimeLeft(value, index, timeLeft);
     }
     const element = new UndelegatedValueType(
-      denomintateValue(value.returnData[index].asBigInt.toFixed()).toString(),
+      denomintateValue(value.returnData[index].asBigInt.toFixed()),
       timeLeft
     );
     undelegatedList.push(element);
@@ -53,7 +53,7 @@ const UndelegatedListView = () => {
     let arrayWithdraw = undelegatedList.filter(x => x.timeLeft !== 0);
     const withdrawValue = undelegatedList
       .filter(x => x.timeLeft === 0)
-      .reduce((a, b) => a + (parseInt(b.value) || 0), 0);
+      .reduce((a, b) => a + (parseInt(b.value.replace(/,/g, '')) || 0), 0);
     if (withdrawValue !== 0) {
       arrayWithdraw.push(new UndelegatedValueType(withdrawValue.toString(), 0));
     }

@@ -19,7 +19,7 @@ body.modal-open .layout {
 }
 
 .btn {
-  &:hover {
+  &:hover:enabled {
     background: rgba(0, 0, 0, 0.4);
   }
   border: none !important;
@@ -29,7 +29,7 @@ body.modal-open .layout {
     border: rgba(255, 255, 255, 0.3);
     color: $white;
     box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 70, 194, 0.1);
-    &:hover {
+    &:hover:enabled {
       background: rgba(0, 0, 0, 0.2);
     }
     &:not(:disabled):not(.disabled):active,
