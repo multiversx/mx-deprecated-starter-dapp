@@ -42,7 +42,10 @@ const calculateAPR = ({
     return '0.00';
   }
 
-  const epochsInYear = 365;
+  const epochDurationInHours =
+    ((networkConfig.roundDuration / 1000) * networkConfig.roundsPerEpoch) / 3600;
+  const epochsInDay = 24 / epochDurationInHours;
+  const epochsInYear = 365 * epochsInDay;
   const inflationRate =
     yearSettings.find(x => x.year === Math.floor(stats.epoch / epochsInYear) + 1)
       ?.maximumInflation || 0;
