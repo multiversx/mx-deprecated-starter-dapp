@@ -208,13 +208,15 @@ const DelegateModal = ({
                       )}
                     </div>
                   )}
-                  <DelegationContractActionButtons
-                    ledgerError={ledgerError}
-                    action="Delegate"
-                    actionTitle="Continue"
-                    submitPressed={submitPressed}
-                    handleClose={handleClose}
-                  />
+                  {!isFullDelegationCapContract() && (
+                    <DelegationContractActionButtons
+                      ledgerError={ledgerError}
+                      action="Delegate"
+                      actionTitle="Continue"
+                      submitPressed={submitPressed}
+                      handleClose={handleClose}
+                    />
+                  )}
                 </form>
               );
             }}
