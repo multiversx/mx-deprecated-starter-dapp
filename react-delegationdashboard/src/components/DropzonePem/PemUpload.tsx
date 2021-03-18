@@ -7,13 +7,11 @@ import DropzonePem, { DropzoneFileType } from './index';
 const PemUpload = ({
   handleClose,
   onSubmit,
-  waitingForLedger,
   submitPressed,
   ledgerError,
 }: {
   handleClose: () => void;
   onSubmit: (pemFiles: DropzoneFileType[]) => void;
-  waitingForLedger: boolean;
   submitPressed: boolean;
   ledgerError?: string;
 }) => {
@@ -63,7 +61,6 @@ const PemUpload = ({
                 action="addNodes"
                 actionTitle="Add nodes"
                 submitPressed={submitPressed}
-                waitingForLedger={waitingForLedger}
                 handleClose={handleClose}
               />
             </div>

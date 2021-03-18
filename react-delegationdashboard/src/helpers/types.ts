@@ -25,7 +25,6 @@ export interface StatCardType {
 export interface ActionModalType {
   balance?: string;
   show: boolean;
-  waitingForLedger: boolean;
   submitPressed: boolean;
   ledgerError?: string;
   title: string;

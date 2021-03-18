@@ -20,12 +20,10 @@ const AutomaticActivationModal = ({
   handleClose,
 }: AutomaticActivationModalType) => {
   const [ledgerError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const { sendTransaction } = useDelegation({
     handleClose: handleClose,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
 
@@ -57,7 +55,6 @@ const AutomaticActivationModal = ({
             <ViewStatAction
               actionTitle={`Turn ${value === 'true' ? 'OFF' : 'ON'}`}
               handleContinue={handleAutomaticActivation}
-              waitingForLedger={waitingForLedger}
               submitPressed={submitPressed}
               color="primary"
             />

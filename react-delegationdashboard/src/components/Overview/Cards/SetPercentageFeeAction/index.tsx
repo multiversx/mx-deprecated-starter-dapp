@@ -7,7 +7,6 @@ import SetPercentageFeeModal from './SetPercentageFeeModal';
 const SetPercentageFeeAction = () => {
   const [showUpdateFeeModal, setShowUpdateFeeModal] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
@@ -19,7 +18,6 @@ const SetPercentageFeeAction = () => {
   const { sendTransaction } = useDelegation({
     handleClose: displayTransactionModal,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
 
@@ -49,7 +47,6 @@ const SetPercentageFeeAction = () => {
       </button>
       <SetPercentageFeeModal
         show={showUpdateFeeModal}
-        waitingForLedger={waitingForLedger}
         submitPressed={submitPressed}
         ledgerError={ledgerDataError}
         handleClose={() => {

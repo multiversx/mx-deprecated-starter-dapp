@@ -8,7 +8,6 @@ import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 const AddNodeAction = () => {
   const [showAddNodes, setAddNodesModal] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
@@ -20,7 +19,6 @@ const AddNodeAction = () => {
   const { sendTransaction } = useDelegation({
     handleClose: displayTransactionModal,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
 
@@ -63,7 +61,6 @@ const AddNodeAction = () => {
       <RequestVariablesModal
         name="Add nodes"
         show={showAddNodes}
-        waitingForLedger={waitingForLedger}
         submitPressed={submitPressed}
         ledgerError={ledgerDataError}
         handleClose={() => {

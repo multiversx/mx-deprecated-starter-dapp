@@ -16,7 +16,6 @@ const UndelegatedValueRow = ({
   const [counter, setCounter] = React.useState(value.timeLeft);
   const [show, setShow] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
@@ -28,7 +27,6 @@ const UndelegatedValueRow = ({
   const { sendTransaction } = useDelegation({
     handleClose: displayTransactionModal,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
 

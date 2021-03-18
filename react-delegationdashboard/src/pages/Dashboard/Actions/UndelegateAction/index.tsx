@@ -14,7 +14,6 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
   const { egldLabel } = useContext();
   const [showModal, setShowModal] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
@@ -27,7 +26,6 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
   const { sendTransaction } = useDelegation({
     handleClose: displayTransactionModal,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
 
@@ -47,7 +45,6 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
       <UndelegateModal
         show={showModal}
         balance={balance}
-        waitingForLedger={waitingForLedger}
         submitPressed={submitPressed}
         ledgerError={ledgerDataError}
         title="Undelegate now"

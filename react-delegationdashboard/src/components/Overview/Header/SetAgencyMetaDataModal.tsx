@@ -12,7 +12,6 @@ const SetAgencyMetaDataModal = () => {
   const { agencyMetaData } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
@@ -24,7 +23,6 @@ const SetAgencyMetaDataModal = () => {
   const { sendTransaction } = useDelegation({
     handleClose: displayTransactionModal,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
   const handleReDelegationCapActivation = (values: AgencyMetadata) => {
@@ -146,7 +144,6 @@ const SetAgencyMetaDataModal = () => {
                       action="setPercentageFe"
                       actionTitle="Continue"
                       submitPressed={submitPressed}
-                      waitingForLedger={waitingForLedger}
                       handleClose={() => {
                         setShowDelegateModal(false);
                       }}

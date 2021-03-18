@@ -4,7 +4,6 @@ interface ViewStatActionType {
   actionTitle: string;
   color: string;
   submitPressed: boolean;
-  waitingForLedger: boolean;
   handleContinue: () => void;
 }
 
@@ -13,7 +12,6 @@ const ViewStatAction = ({
   color,
   handleContinue,
   submitPressed,
-  waitingForLedger,
 }: ViewStatActionType) => {
   const { ledgerAccount } = useContext();
   return (
@@ -26,7 +24,7 @@ const ViewStatAction = ({
         disabled={submitPressed}
       >
         {submitPressed ? (
-          <>{ledgerAccount && waitingForLedger ? 'Check your Ledger' : 'Sending...'}</>
+          <>{ledgerAccount && 'Check your Ledger'}</>
         ) : (
           <>{ledgerAccount ? `${actionTitle} & Check your Ledger` : actionTitle}</>
         )}

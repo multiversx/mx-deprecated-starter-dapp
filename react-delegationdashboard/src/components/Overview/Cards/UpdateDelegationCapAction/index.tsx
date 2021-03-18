@@ -9,7 +9,6 @@ import { TransactionHash } from '@elrondnetwork/erdjs/out';
 const UpdateDelegationCapAction = () => {
   const [showDelegationCapModal, setShowDelegationCapModal] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
@@ -21,7 +20,6 @@ const UpdateDelegationCapAction = () => {
   const { sendTransaction } = useDelegation({
     handleClose: displayTransactionModal,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
 
@@ -54,7 +52,6 @@ const UpdateDelegationCapAction = () => {
       </button>
       <DelegationCapModal
         show={showDelegationCapModal}
-        waitingForLedger={waitingForLedger}
         submitPressed={submitPressed}
         ledgerError={ledgerDataError}
         title="Delegation cap"

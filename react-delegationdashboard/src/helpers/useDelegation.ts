@@ -5,13 +5,11 @@ import { DelegationTransactionType } from './contractDataDefinitions';
 import { ledgerErrorCodes } from './ledgerErrorCodes';
 export interface UseDelegationType {
   handleClose: (txHash: TransactionHash) => void;
-  setWaitingForLedger: (flag: boolean) => void;
   setSubmitPressed: (flag: boolean) => void;
   setLedgerDataError: (flag: string) => void;
 }
 export default function useDelegation({
   handleClose,
-  setWaitingForLedger,
   setSubmitPressed,
   setLedgerDataError,
 }: UseDelegationType) {
@@ -21,20 +19,17 @@ export default function useDelegation({
   const sendTransaction = (transactionArguments: DelegationTransactionType) => {
     transactionArguments.chainId = networkConfig.chainId;
     if (ledgerAccount) {
-      setWaitingForLedger(true);
       setSubmitPressed(true);
     }
     delegation
       .sendTransaction(transactionArguments)
       .then(transaction => {
-        setWaitingForLedger(false);
         handleClose(transaction.hash);
       })
       .catch(e => {
         if (e.statusCode in ledgerErrorCodes) {
           setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
         }
-        setWaitingForLedger(false);
         setSubmitPressed(false);
         console.error(`${transactionArguments.type}`, e);
       });

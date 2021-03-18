@@ -12,7 +12,6 @@ import DelegationContractActionButtons from 'components/DelegationContractAction
 
 interface DelegateModalType {
   show: boolean;
-  waitingForLedger: boolean;
   submitPressed: boolean;
   balance: string;
   ledgerError?: string;
@@ -22,20 +21,13 @@ interface DelegateModalType {
 
 const DelegateModal = ({
   show,
-  waitingForLedger,
   submitPressed,
   balance,
   ledgerError,
   handleClose,
   handleContinue,
 }: DelegateModalType) => {
-  const {
-    egldLabel,
-    contractOverview,
-    totalActiveStake,
-    minDelegationAmount,
-    ledgerAccount,
-  } = useContext();
+  const { egldLabel, contractOverview, totalActiveStake, minDelegationAmount } = useContext();
   const [displayDelegationCapMessage, setDisplayDelegationCapMessage] = useState(false);
   const [maxPressed, setMaxPressed] = React.useState(false);
 
@@ -221,7 +213,6 @@ const DelegateModal = ({
                     action="Delegate"
                     actionTitle="Continue"
                     submitPressed={submitPressed}
-                    waitingForLedger={waitingForLedger}
                     handleClose={handleClose}
                   />
                 </form>

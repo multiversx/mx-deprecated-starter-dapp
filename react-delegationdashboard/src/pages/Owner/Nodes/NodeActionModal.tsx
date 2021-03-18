@@ -5,7 +5,6 @@ import DelegationContractActionButtons from 'components/DelegationContractAction
 
 interface DelegateModalType {
   show: boolean;
-  waitingForLedger: boolean;
   submitPressed: boolean;
   ledgerError?: string;
   blsKey?: string;
@@ -15,7 +14,6 @@ interface DelegateModalType {
 
 const NodeActionModal = ({
   show,
-  waitingForLedger,
   submitPressed,
   ledgerError,
   blsKey,
@@ -70,7 +68,6 @@ const NodeActionModal = ({
                     action="nodeAction"
                     actionTitle="Continue"
                     submitPressed={submitPressed}
-                    waitingForLedger={waitingForLedger}
                     handleClose={handleClose}
                   />
                 </form>

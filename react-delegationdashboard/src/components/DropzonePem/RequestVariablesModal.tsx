@@ -9,7 +9,6 @@ interface RequestVariablesModalType {
   name: string;
   show: boolean;
   variables: RequestType['variables'];
-  waitingForLedger: boolean;
   submitPressed: boolean;
   ledgerError?: string;
   data: RequestType['data'];
@@ -26,7 +25,6 @@ const RequestVariablesModal = ({
   show,
   variables,
   data,
-  waitingForLedger,
   submitPressed,
   ledgerError,
   handleClose,
@@ -76,7 +74,6 @@ const RequestVariablesModal = ({
                     <PemUpload
                       handleClose={handleClose}
                       onSubmit={onSubmit}
-                      waitingForLedger={waitingForLedger}
                       submitPressed={submitPressed}
                       ledgerError={ledgerError}
                     />
@@ -93,7 +90,6 @@ const RequestVariablesModal = ({
                   action="AddNodes"
                   actionTitle="Add nodes"
                   submitPressed={submitPressed}
-                  waitingForLedger={waitingForLedger}
                   handleClose={handleClose}
                 />
                 <div className="btn btn-link mx-2" onClick={handleClose}>

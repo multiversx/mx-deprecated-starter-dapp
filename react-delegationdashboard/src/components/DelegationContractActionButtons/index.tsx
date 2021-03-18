@@ -5,7 +5,6 @@ interface DelegationContractActionButtonsType {
   action: string;
   actionTitle: string;
   submitPressed: boolean;
-  waitingForLedger: boolean;
   handleClose: () => void;
 }
 
@@ -14,7 +13,6 @@ const DelegationContractActionButtons = ({
   action,
   actionTitle,
   submitPressed,
-  waitingForLedger,
   handleClose,
 }: DelegationContractActionButtonsType) => {
   const { ledgerAccount } = useContext();

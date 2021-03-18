@@ -10,7 +10,6 @@ const DelegateAction = () => {
   const { account } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
   const [ledgerDataError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
@@ -23,7 +22,6 @@ const DelegateAction = () => {
   const { sendTransaction } = useDelegation({
     handleClose: displayTransactionModal,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
 
@@ -44,7 +42,6 @@ const DelegateAction = () => {
       </button>
       <DelegateModal
         show={showDelegateModal}
-        waitingForLedger={waitingForLedger}
         submitPressed={submitPressed}
         ledgerError={ledgerDataError}
         balance={account.balance.toString()}

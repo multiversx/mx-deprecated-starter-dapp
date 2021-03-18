@@ -19,7 +19,6 @@ const SetPercentageFeeSchema = object().shape({
 
 interface SetPercentageFeeModalType {
   show: boolean;
-  waitingForLedger: boolean;
   submitPressed: boolean;
   ledgerError?: string;
   handleClose: () => void;
@@ -28,7 +27,6 @@ interface SetPercentageFeeModalType {
 
 const SetPercentageFeeModal = ({
   show,
-  waitingForLedger,
   submitPressed,
   ledgerError,
   handleClose,
@@ -85,7 +83,6 @@ const SetPercentageFeeModal = ({
                     action="setPercentageFe"
                     actionTitle="Continue"
                     submitPressed={submitPressed}
-                    waitingForLedger={waitingForLedger}
                     handleClose={handleClose}
                   />
                 </form>

@@ -26,7 +26,6 @@ const allowedActions: { [key: string]: ActionType[] } = {
 const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const { explorerAddress, dapp, ledgerAccount } = useContext();
   const [ledgerError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const [showDelegateModal, setShowDelegateModal] = useState(false);
   const [selectedAction, setSelectedAction] = useState('');
@@ -40,7 +39,6 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const { sendTransaction } = useDelegation({
     handleClose: displayTransactionModal,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
   const ref = React.useRef(null);
@@ -145,7 +143,6 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
       </td>
       <NodeActionModal
         show={showDelegateModal}
-        waitingForLedger={waitingForLedger}
         submitPressed={submitPressed}
         ledgerError={ledgerError}
         handleClose={() => {

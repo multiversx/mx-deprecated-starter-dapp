@@ -20,12 +20,10 @@ const ReDelegateCapActivationModal = ({
   handleClose,
 }: ReDelegateCapActivationModalType) => {
   const [ledgerError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
   const { sendTransaction } = useDelegation({
     handleClose: handleClose,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
 
@@ -60,7 +58,6 @@ const ReDelegateCapActivationModal = ({
             <ViewStatAction
               actionTitle={`Turn ${value === 'true' ? 'OFF' : 'ON'}`}
               handleContinue={handleReDelegationCapActivation}
-              waitingForLedger={waitingForLedger}
               submitPressed={submitPressed}
               color="primary"
             />

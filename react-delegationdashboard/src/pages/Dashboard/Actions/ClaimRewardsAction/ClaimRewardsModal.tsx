@@ -14,13 +14,11 @@ export interface ClaimRewardsModalType {
 const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewardsModalType) => {
   const { totalActiveStake, contractOverview } = useContext();
   const [ledgerError, setLedgerDataError] = useState('');
-  const [waitingForLedger, setWaitingForLedger] = useState(false);
   const [submitPressed, setSubmitPressed] = useState(false);
 
   const { sendTransaction } = useDelegation({
     handleClose: handleClose,
     setLedgerDataError,
-    setWaitingForLedger,
     setSubmitPressed,
   });
 
@@ -63,7 +61,6 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
             <ViewStatAction
               actionTitle="Claim Rewards"
               handleContinue={handleClaimRewards}
-              waitingForLedger={waitingForLedger}
               submitPressed={submitPressed}
               color="primary"
             />
@@ -71,7 +68,6 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
               <ViewStatAction
                 actionTitle="Redelegate Rewards"
                 handleContinue={handleRedelegateRewards}
-                waitingForLedger={waitingForLedger}
                 submitPressed={submitPressed}
                 color="primary"
               />

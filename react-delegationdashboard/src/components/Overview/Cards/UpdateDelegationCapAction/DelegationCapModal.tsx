@@ -12,7 +12,6 @@ import DelegationContractActionButtons from 'components/DelegationContractAction
 const DelegationCapModal = ({
   show,
   title,
-  waitingForLedger,
   submitPressed,
   ledgerError,
   description,
@@ -102,7 +101,6 @@ const DelegationCapModal = ({
                     action="Undelegate"
                     actionTitle="Continue"
                     submitPressed={submitPressed}
-                    waitingForLedger={waitingForLedger}
                     handleClose={handleClose}
                   />
                 </form>
