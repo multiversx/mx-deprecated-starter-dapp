@@ -13,17 +13,15 @@ export interface ClaimRewardsModalType {
   handleClose: () => void;
 }
 const LedgerTransactionStatus = ({ show, handleClose, txHash, id }: ClaimRewardsModalType) => {
-  console.log('txhash ', txHash);
-  const [lastTxHash, setLastTxHash] = useState(txHash);
   const [lastTxStatus, setLastTxStatus] = useState('');
   const [spin, setSpin] = useState(false);
   const [txDStatus, setTxStatus] = useState({ icon: faHourglass, status: '', title: '' });
   const { dapp } = useContext();
 
-  const getStatus = (current: string) => lastTxStatus.toLowerCase() === current.toLowerCase();
+  const getStatus = (current: string) => lastTxStatus === current.toLowerCase();
 
   const getTransactionStatus = (txHash2: TransactionHash) => {
-    if (txHash2.hash !== '') {
+    if (!txHash.isEmpty()) {
       dapp.proxy
         .getTransactionStatus(txHash2)
         .then(status => {
@@ -38,26 +36,25 @@ const LedgerTransactionStatus = ({ show, handleClose, txHash, id }: ClaimRewards
             default:
               setTxStatus({ icon: faTimes, status: 'Failed', title: 'Request failed' });
           }
-          setLastTxStatus(status?.status?.toLocaleLowerCase);
+          setLastTxStatus(status.status.valueOf().toLowerCase());
         })
         .catch(e => console.log('error ', e));
     }
   };
 
   const fetch = () => {
-    console.log('txhash before ', txHash);
-
-    const interval = setInterval(() => {
-      setSpin(currentSpin => !currentSpin);
-      console.log('txhash after ', txHash);
-      getTransactionStatus(txHash);
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
+    if (!txHash.isEmpty()) {
+      const interval = setInterval(() => {
+        setSpin(currentSpin => !currentSpin);
+        console.log('txhash after ', txHash);
+        getTransactionStatus(txHash);
+      }, 5000);
+      return () => {
+        clearInterval(interval);
+      };
+    }
   };
-  useEffect(() => fetch(), []);
+  useEffect(fetch, [txHash, lastTxStatus]);
 
   return (
     <Modal
@@ -76,7 +73,7 @@ const LedgerTransactionStatus = ({ show, handleClose, txHash, id }: ClaimRewards
           <div className="mb-spacer">
             <FontAwesomeIcon
               icon={txDStatus.icon}
-              className={`text-white ml-1 ${spin ? 'fa-spin' : ''}`}
+              className={`text-white ml-1 ${getStatus(txStatus.pending) && spin ? 'fa-spin' : ''}`}
             />
             <StatusTxDetails lastTxHash={txHash.hash} />
           </div>
@@ -85,7 +82,7 @@ const LedgerTransactionStatus = ({ show, handleClose, txHash, id }: ClaimRewards
             id="closeButton"
             className="btn btn-link mt-spacer mx-2"
             onClick={handleClose}
-            disabled={!getStatus(txStatus.success)}
+            disabled={getStatus(txStatus.pending)}
           >
             Close
           </button>

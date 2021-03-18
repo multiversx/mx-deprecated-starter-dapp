@@ -34,7 +34,7 @@ const DelegationContractActionButtons = ({
           disabled={submitPressed}
         >
           {submitPressed ? (
-            <>{ledgerAccount && waitingForLedger ? 'Check your Ledger' : 'Sending...'}</>
+            <>{ledgerAccount && 'Check your Ledger'}</>
           ) : (
             <>{ledgerAccount ? `${actionTitle} & Check your Ledger` : actionTitle}</>
           )}
