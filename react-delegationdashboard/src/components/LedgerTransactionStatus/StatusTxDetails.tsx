@@ -2,22 +2,23 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'context';
 import * as React from 'react';
-const StatusTxDetails = ({ lastTxHash }: { lastTxHash: string }) => {
+
+const StatusTxDetails = ({ txHash }: { txHash: string }) => {
   const { explorerAddress } = useContext();
   return (
     <>
-      <div className="text-secondary">Transaction hash:</div>{' '}
-      <span data-testid="lastTxHash" className="text-break-all">
-        {lastTxHash}
+      <div className="mb-spacer">Transaction hash:</div>{' '}
+      <span data-testid="txHash" className="text-break-all">
+        {txHash}
       </span>
       <a
-        href={`${explorerAddress}transactions/${lastTxHash}`}
+        href={`${explorerAddress}transactions/${txHash}`}
         {...{
           target: '_blank',
         }}
-        className="side-action"
+        className="ml-2"
       >
-        <FontAwesomeIcon icon={faSearch} />
+        <FontAwesomeIcon icon={faSearch} className="text-muted" />
       </a>
     </>
   );

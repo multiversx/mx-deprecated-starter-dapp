@@ -1,7 +1,8 @@
 import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import TransactionStatusModal from 'components/LedgerTransactionStatus';
 import { useDelegation } from 'helpers';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import SetPercentageFeeModal from './SetPercentageFeeModal';
 
 const SetPercentageFeeAction = () => {
@@ -54,6 +55,7 @@ const SetPercentageFeeAction = () => {
         }}
         handleContinue={handleUpdateFee}
       />
+      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
     </div>
   );
 };

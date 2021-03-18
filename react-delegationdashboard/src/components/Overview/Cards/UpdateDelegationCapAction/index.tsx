@@ -1,10 +1,11 @@
 import BigNumber from 'bignumber.js';
 import { useDelegation } from 'helpers';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import nominate from 'helpers/nominate';
 import DelegationCapModal from './DelegationCapModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import TransactionStatusModal from 'components/LedgerTransactionStatus';
 
 const UpdateDelegationCapAction = () => {
   const [showDelegationCapModal, setShowDelegationCapModal] = useState(false);
@@ -61,6 +62,7 @@ const UpdateDelegationCapAction = () => {
         }}
         handleContinue={handleUpdateDelegationCap}
       />
+      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
     </div>
   );
 };

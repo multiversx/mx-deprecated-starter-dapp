@@ -4,6 +4,7 @@ import { DropzoneFileType } from 'components/DropzonePem';
 import RequestVariablesModal from 'components/DropzonePem/RequestVariablesModal';
 import { BLS, TransactionHash } from '@elrondnetwork/erdjs/out';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import TransactionStatusModal from 'components/LedgerTransactionStatus';
 
 const AddNodeAction = () => {
   const [showAddNodes, setAddNodesModal] = useState(false);
@@ -23,7 +24,6 @@ const AddNodeAction = () => {
   });
 
   const handleAddNodes = (value: string) => {
-    debugger;
     let transactionArguments = new DelegationTransactionType('0', 'addNodes', value);
     sendTransaction(transactionArguments);
   };
@@ -70,6 +70,7 @@ const AddNodeAction = () => {
         variables={addNodesRequest.variables}
         data={addNodesRequest.data}
       />
+      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
     </div>
   );
 };
