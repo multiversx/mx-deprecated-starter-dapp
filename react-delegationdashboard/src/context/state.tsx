@@ -53,11 +53,11 @@ export const emptyAgencyMetaData: AgencyMetadata = {
 };
 
 export const emptyNetworkConfig: NetworkConfig = {
-  roundDuration: 0,
-  roundsPerEpoch: 0,
-  roundsPassedInCurrentEpoch: 0,
-  topUpFactor: 0,
-  topUpRewardsGradientPoint: new BigNumber('0'),
+  roundDuration: -1,
+  roundsPerEpoch: -1,
+  roundsPassedInCurrentEpoch: -1,
+  topUpFactor: -1,
+  topUpRewardsGradientPoint: new BigNumber('-1'),
 };
 
 export const emptyContractOverview: ContractOverview = {
