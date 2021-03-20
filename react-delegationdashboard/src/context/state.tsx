@@ -1,5 +1,6 @@
 import { IDappProvider, ProxyProvider, ApiProvider, WalletProvider } from '@elrondnetwork/erdjs';
-import { AgencyMetadata, ContractOverview } from 'helpers/contractDataDefinitions';
+import BigNumber from 'bignumber.js';
+import { AgencyMetadata, ContractOverview, NetworkConfig } from 'helpers/contractDataDefinitions';
 import { denomination, decimals, network, NetworkType } from '../config';
 import { getItem } from '../storage/session';
 
@@ -37,6 +38,7 @@ export interface StateType {
   numUsers: number;
   aprPercentage: string;
   contractOverview: ContractOverview;
+  networkConfig: NetworkConfig;
   agencyMetaData: AgencyMetadata;
 }
 export const emptyAccount: AccountType = {
@@ -48,6 +50,14 @@ export const emptyAgencyMetaData: AgencyMetadata = {
   name: '',
   website: '',
   keybase: '',
+};
+
+export const emptyNetworkConfig: NetworkConfig = {
+  roundDuration: -1,
+  roundsPerEpoch: -1,
+  roundsPassedInCurrentEpoch: -1,
+  topUpFactor: -1,
+  topUpRewardsGradientPoint: new BigNumber('-1'),
 };
 
 export const emptyContractOverview: ContractOverview = {
@@ -92,6 +102,7 @@ export const initialState = () => {
     explorerAddress: sessionNetwork.explorerAddress || 'https://explorer.elrond.com',
     delegationContract: sessionNetwork.delegationContract,
     contractOverview: emptyContractOverview,
+    networkConfig: emptyNetworkConfig,
     agencyMetaData: emptyAgencyMetaData,
     numberOfActiveNodes: '...',
     numUsers: 0,

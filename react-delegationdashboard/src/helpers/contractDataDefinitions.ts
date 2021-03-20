@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 export class ContractOverview {
   ownerAddress: string;
   serviceFee?: string;
@@ -38,12 +39,12 @@ export class NetworkStake {
   totalValidators: number;
   activeValidators: number;
   queueSize: number;
-  totalStaked: BigInt;
+  totalStaked: BigNumber;
   public constructor(
     totalValidators: number,
     activeValidators: number,
     queueSize: number,
-    totalStaked: BigInt
+    totalStaked: BigNumber
   ) {
     this.totalValidators = totalValidators;
     this.activeValidators = activeValidators;
@@ -61,9 +62,21 @@ export class Stats {
 
 export class NetworkConfig {
   topUpFactor: number;
-  topUpRewardsGradientPoint: BigInt;
-  public constructor(topUpFactor: number, topUpRewardsGradientPoint: BigInt) {
+  roundDuration: number;
+  roundsPerEpoch: number;
+  roundsPassedInCurrentEpoch: number;
+  topUpRewardsGradientPoint: BigNumber;
+  public constructor(
+    topUpFactor: number,
+    roundDuration: number,
+    roundsPerEpoch: number,
+    roundsPassedInCurrentEpoch: number,
+    topUpRewardsGradientPoint: BigNumber
+  ) {
     this.topUpFactor = topUpFactor;
+    this.roundDuration = roundDuration;
+    this.roundsPerEpoch = roundsPerEpoch;
+    this.roundsPassedInCurrentEpoch = roundsPassedInCurrentEpoch;
     this.topUpRewardsGradientPoint = topUpRewardsGradientPoint;
   }
 }

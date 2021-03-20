@@ -7,7 +7,7 @@ import UndelegatedValueRow from './UndelegatedValueRow';
 import { UndelegatedValueType } from './UndelegatedValueType';
 
 const UndelegatedListView = () => {
-  const { dapp, address, denomination, decimals, delegationContract } = useContext();
+  const { dapp, address, denomination, decimals, delegationContract, networkConfig } = useContext();
   const { getUserUnDelegatedList } = contractViews;
 
   const [userUnstakeValue, setUserUnstakedValue] = React.useState(Array<UndelegatedValueType>());
@@ -16,14 +16,34 @@ const UndelegatedListView = () => {
     return denominate({ denomination, decimals, input: value, showLastNonZeroDecimal: false });
   };
 
+  const getTimeLeft = (value: QueryResponse, index: number, timeLeft: number) => {
+    let roundsRemainingInEpoch =
+      networkConfig.roundsPerEpoch - networkConfig.roundsPassedInCurrentEpoch;
+    let roundEpochComplete = 0;
+    let epochsChangesRemaining = value.returnData[index + 1].asNumber;
+    if (epochsChangesRemaining > 1) {
+      roundEpochComplete = (epochsChangesRemaining - 1) * networkConfig.roundsPerEpoch;
+    } else {
+      roundEpochComplete = 0;
+    }
+
+    let totalRounds = roundsRemainingInEpoch + roundEpochComplete;
+    timeLeft = (totalRounds * networkConfig.roundDuration) / 1000;
+    return timeLeft;
+  };
+
   const mapUndelegetedValueType = (
     value: QueryResponse,
     index: number,
     undelegatedList: UndelegatedValueType[]
   ) => {
+    let timeLeft = 0;
+    if (value.returnData[index + 1].asString !== '') {
+      timeLeft = getTimeLeft(value, index, timeLeft);
+    }
     const element = new UndelegatedValueType(
-      denomintateValue(value.returnData[index].asBigInt.toString()).toString(),
-      value.returnData[index + 1].asNumber * 6
+      denomintateValue(value.returnData[index].asBigInt.toFixed()),
+      timeLeft
     );
     undelegatedList.push(element);
     return index;
@@ -33,7 +53,7 @@ const UndelegatedListView = () => {
     let arrayWithdraw = undelegatedList.filter(x => x.timeLeft !== 0);
     const withdrawValue = undelegatedList
       .filter(x => x.timeLeft === 0)
-      .reduce((a, b) => a + (parseInt(b.value) || 0), 0);
+      .reduce((a, b) => a + (parseInt(b.value.replace(/,/g, '')) || 0), 0);
     if (withdrawValue !== 0) {
       arrayWithdraw.push(new UndelegatedValueType(withdrawValue.toString(), 0));
     }
@@ -54,7 +74,7 @@ const UndelegatedListView = () => {
       .catch(e => console.error('getUserUnDelegatedList error', e));
   };
 
-  React.useEffect(getUserUnDelegated, []);
+  React.useEffect(getUserUnDelegated, [networkConfig]);
 
   return (
     <>
