@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@elrondnetwork/erdjs": "^2.3.0",
+    "@elrondnetwork/erdjs": "^3.1.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.12",
@@ -34,14 +34,16 @@
     "yup": "^0.32.8"
   },
   "scripts": {
-    "start": "HTTPS=true npm run copy-testnet-config & react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-mainnet": "npm run copy-mainnet-config & npm run build",
     "build-testnet": "npm run copy-testnet-config & npm run build",
+    "build-devnet": "npm run copy-devnet-config & npm run build",
     "copy-mainnet-config": "cp ./src/config.mainnet.ts ./src/config.ts",
-    "copy-testnet-config": "cp ./src/config.testnet.ts ./src/config.ts"
+    "copy-testnet-config": "cp ./src/config.testnet.ts ./src/config.ts",
+    "copy-devnet-config": "cp ./src/config.devnet.ts ./src/config.ts"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -27,6 +27,7 @@ const UndelegatedValueRow = ({
   }, [counter]);
 
   const getTimeLeft = () => {
+    if (counter === 0) setCounter(value.timeLeft);
     const timeLeftInMiliseconds = moment.duration(counter, 'seconds').asMilliseconds();
     return moment.utc(timeLeftInMiliseconds).format('HH:mm:ss');
   };
@@ -39,7 +40,7 @@ const UndelegatedValueRow = ({
       </td>
       <td>
         <div className="d-flex align-items-center text-nowrap trim">
-          {counter > 0 ? (
+          {value.timeLeft > 0 ? (
             <span className="badge badge-sm badge-light-orange text-orange">
               {getTimeLeft()} left
             </span>

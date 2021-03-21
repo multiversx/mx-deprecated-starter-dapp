@@ -10,6 +10,7 @@ export type ActionType =
   | { type: 'setProvider'; provider: StateType['dapp']['provider'] }
   | { type: 'setBalance'; balance: StateType['account']['balance'] }
   | { type: 'setContractOverview'; contractOverview: StateType['contractOverview'] }
+  | { type: 'setNetworkConfig'; networkConfig: StateType['networkConfig'] }
   | { type: 'setAgencyMetaData'; agencyMetaData: StateType['agencyMetaData'] }
   | { type: 'setNumberOfActiveNodes'; numberOfActiveNodes: StateType['numberOfActiveNodes'] }
   | { type: 'setNumUsers'; numUsers: StateType['numUsers'] }
@@ -65,6 +66,14 @@ export function reducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         contractOverview,
+      };
+    }
+
+    case 'setNetworkConfig': {
+      const { networkConfig } = action;
+      return {
+        ...state,
+        networkConfig,
       };
     }
 
