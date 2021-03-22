@@ -56,23 +56,23 @@ const calculateAPR = ({
     networkConfig.topUpFactor * rewardsPerEpochWithoutProtocolSustainability;
 
   const networkBaseStake = networkStake.activeValidators * stakePerNode;
-  const networkTotalStake = parseInt(denominateValue(networkStake.totalStaked.toString()));
+  const networkTotalStake = parseInt(denominateValue(networkStake.totalStaked.toFixed()));
   const networkTopUpStake =
     networkTotalStake -
     networkStake.totalValidators * stakePerNode -
     networkStake.queueSize * stakePerNode;
-
   const topUpReward =
     ((2 * topUpRewardsLimit) / Math.PI) *
     Math.atan(
       networkTopUpStake /
-        parseInt(denominateValue(networkConfig.topUpRewardsGradientPoint.toString()))
+        parseInt(denominateValue(networkConfig.topUpRewardsGradientPoint.toFixed()))
     );
   const baseReward = rewardsPerEpochWithoutProtocolSustainability - topUpReward;
 
   const validatorBaseStake = allActiveNodes * stakePerNode;
   const validatorTotalStake = parseInt(denominateValue(totalActiveStake));
-  const validatorTopUpStake = validatorTotalStake - allNodes * stakePerNode;
+  const validatorTopUpStake =
+    ((validatorTotalStake - allNodes * stakePerNode) / allNodes) * allActiveNodes;
   const validatorTopUpReward =
     networkTopUpStake > 0 ? (validatorTopUpStake / networkTopUpStake) * topUpReward : 0;
   const validatorBaseReward = (validatorBaseStake / networkBaseStake) * baseReward;
