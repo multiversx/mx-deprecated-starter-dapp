@@ -100,7 +100,7 @@ const Views = () => {
         color="orange"
         svg="leaf-solid.svg"
         percentage="Annual percentage rate"
-        tooltipText="This is an aproximate APR calculation for this year based on the current epoch"
+        tooltipText="This is an approximate APR calculation for this year based on the current epoch"
       />
       <StatCard
         title="Service Fee"
