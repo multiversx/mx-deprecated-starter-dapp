@@ -1,11 +1,9 @@
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
-import TransactionStatusModal from 'components/LedgerTransactionStatus';
 import ContinueAndCloseButtons from 'components/ContinueAndCloseButtons';
-import { useDelegation } from 'helpers';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
 export interface LedgerValidationTransactionType {
   show: boolean;
   title: string;
@@ -20,25 +18,13 @@ const LedgerValidationTransaction = ({
   argumentsTx,
   handleCloseModal,
 }: LedgerValidationTransactionType) => {
-  const [, setShowModal] = useState(show);
-  const [ledgerError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setShowModal(false);
-    handleCloseModal();
-    setShowTransactionStatus(true);
-  };
-  const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-  });
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(argumentsTx);
 
   const handleContinue = () => {
-    setSubmitPressed(true);
-    sendTransaction(argumentsTx);
+    handleCloseModal();
+    setTransactionArguments(argumentsTx);
+    setShowCheckYourLedgerModal(true);
   };
   const history = useHistory();
 
@@ -58,7 +44,7 @@ const LedgerValidationTransaction = ({
         <div className="card">
           <div className="card-body p-spacer text-center">
             <div className="h6 mb-spacer" data-testid="transactionTitle">
-              {title.charAt(0).toUpperCase() + title.slice(1)} Node
+              {title.charAt(0).toUpperCase() + title.slice(1)}
             </div>
 
             {argumentsTx.value && argumentsTx.value !== '0' && (
@@ -71,12 +57,6 @@ const LedgerValidationTransaction = ({
                 {argumentsTx.type}@{argumentsTx.args}
               </div>
             )}
-            {ledgerError && (
-              <p className="text-danger d-flex justify-content-center align-items-center">
-                {ledgerError}
-              </p>
-            )}
-
             <ContinueAndCloseButtons
               actionTitle={action}
               handleContinue={handleContinue}
@@ -86,8 +66,13 @@ const LedgerValidationTransaction = ({
           </div>
         </div>
       </Modal>
-
-      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
+      <CheckYourLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
+      />
     </>
   );
 };

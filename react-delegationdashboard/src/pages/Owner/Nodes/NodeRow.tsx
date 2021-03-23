@@ -12,7 +12,7 @@ import { stakingContract } from 'config';
 import { NodeType } from './helpers/nodeType';
 import LedgerValidationTransaction from 'components/LedgerAction';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import { useDelegation } from 'helpers';
+import { useDelegationWallet } from 'helpers/useDelegation';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake' | 'remove';
 
@@ -31,14 +31,17 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const [transactionArguments, setTransactionArguments] = useState(
     new DelegationTransactionType('', '')
   );
-  const { sendTransaction } = useDelegation({
-    handleClose: () => {},
-    setLedgerDataError: () => {},
-  });
+
+  const { sendTransactionWallet } = useDelegationWallet();
 
   const handleAction = (action: ActionType) => {
     setTransactionArguments(nodeTransactions[action]({ blsKey: key.blsKey }));
-    setShowDelegateModal(true);
+    if (ledgerAccount) {
+      setSelectedAction(action);
+      setShowDelegateModal(true);
+    } else {
+      sendTransactionWallet(transactionArguments);
+    }
   };
   const ref = React.useRef(null);
 
@@ -115,13 +118,7 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
                   onClick={(e: React.MouseEvent) => {
                     e.preventDefault();
                     if (actionAllowed) {
-                      if (!ledgerAccount) {
-                        sendTransaction(nodeTransactions[action]({ blsKey: key.blsKey }));
-                      } else {
-                        setSelectedAction(action);
-                        handleAction(action);
-                        setShowDelegateModal(true);
-                      }
+                      handleAction(action);
                     }
                   }}
                 >
@@ -145,7 +142,7 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
         show={showDelegateModal}
         argumentsTx={transactionArguments}
         action="Confirm"
-        title={selectedAction}
+        title={`${selectedAction} Node`}
         handleCloseModal={() => setShowDelegateModal(false)}
       />
     </tr>

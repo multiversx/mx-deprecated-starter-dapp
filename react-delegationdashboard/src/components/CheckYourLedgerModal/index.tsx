@@ -51,7 +51,13 @@ const CheckYourLedgerModal = ({
   }, [transactionArguments]);
   return (
     <>
-      <Modal show={show} className="modal-container" animation={false} centered>
+      <Modal
+        show={show}
+        onHide={handleCloseModal}
+        className="modal-container"
+        animation={false}
+        centered
+      >
         <div className="card">
           <div className="card-body p-spacer text-center">
             <div className="h6 mb-spacer" data-testid="transactionTitle">
