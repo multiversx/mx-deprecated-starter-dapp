@@ -1,5 +1,5 @@
 import { Modal } from 'react-bootstrap';
-import ViewStatAction from 'components/ViewStatAction';
+import ContinueAndCloseButtons from 'components/ContinueAndCloseButtons';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useState } from 'react';
 import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
@@ -45,17 +45,12 @@ const OwnerActionModal = ({
             </p>
             {description && <p className="mb-spacer">{description}</p>}
             {extraDescription && <p className="lead mb-spacer">{extraDescription}</p>}
-
-            <div className="d-flex justify-content-center align-items-center flex-wrap">
-              <ViewStatAction
-                actionTitle={actionTitle}
-                handleContinue={handleContinue}
-                color="primary"
-              />
-              <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
-                Close
-              </button>
-            </div>
+            <ContinueAndCloseButtons
+              actionTitle={actionTitle}
+              handleContinue={handleContinue}
+              handleClose={handleClose}
+              color="primary"
+            />
           </div>
         </div>
       </Modal>

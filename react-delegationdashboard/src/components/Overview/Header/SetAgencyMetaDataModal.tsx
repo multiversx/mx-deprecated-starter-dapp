@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import { useDelegation } from 'helpers';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
 import { useContext } from 'context';
 import { AgencyMetadata, DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
 import { useDelegationWallet } from 'helpers/useDelegation';
+import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
 
 const SetAgencyMetaDataModal = () => {
   const { agencyMetaData, ledgerAccount } = useContext();
@@ -138,7 +137,7 @@ const SetAgencyMetaDataModal = () => {
                         <ErrorMessage component="div" name="keybase" className="invalid-feedback" />
                       </div>
                     </div>
-                    <DelegationContractActionButtons
+                    <SubmitAndCloseButtonsForModal
                       action="setPercentageFe"
                       actionTitle="Continue"
                       handleClose={() => {
@@ -152,6 +151,13 @@ const SetAgencyMetaDataModal = () => {
           </div>
         </div>
       </Modal>
+      <CheckYourLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
+      />
     </>
   );
 };

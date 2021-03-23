@@ -1,4 +1,4 @@
-import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
+import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
 import * as React from 'react';
 import { Modal } from 'react-bootstrap';
 import { DropzoneFileType } from '.';
@@ -33,9 +33,6 @@ const RequestVariablesModal = ({
       triggerDispatchEvent(`${data(pemFiles ? pemFiles : modalValues)}`);
     }
   };
-
-  const isPemUpload = variables && variables.some(variable => variable.type === 'pemUpload');
-
   return (
     <Modal show={show} className="modal-container" animation={false} centered>
       <div className="card">
@@ -66,27 +63,11 @@ const RequestVariablesModal = ({
                       </div>
                     </div>
                   )}
-                  {variable.type === 'pemUpload' && (
-                    <PemUpload handleClose={handleClose} onSubmit={onSubmit} />
-                  )}
+                  <PemUpload handleClose={handleClose} onSubmit={onSubmit} />
                 </div>
               );
             })}
           </div>
-          {!isPemUpload && (
-            <>
-              <div className="d-flex align-items-center flex-wrap mt-spacer">
-                <DelegationContractActionButtons
-                  action="AddNodes"
-                  actionTitle="Add nodes"
-                  handleClose={handleClose}
-                />
-                <div className="btn btn-link mx-2" onClick={handleClose}>
-                  Close
-                </div>
-              </div>
-            </>
-          )}
         </div>
       </div>
     </Modal>

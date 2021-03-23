@@ -8,7 +8,6 @@ import Denominate from 'components/Denominate';
 import { entireBalance } from 'helpers';
 import { denomination, decimals } from 'config';
 import denominate from 'components/Denominate/formatters';
-import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
 
 interface DelegateModalType {
   show: boolean;

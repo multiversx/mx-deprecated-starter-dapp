@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import ViewStatAction from 'components/ViewStatAction';
 import { useContext } from 'context';
 import BigNumber from 'bignumber.js';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
@@ -70,17 +69,23 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
             </p>
             <p className="mb-spacer">{description}</p>
             <div className="d-flex justify-content-center align-items-center flex-wrap">
-              <ViewStatAction
-                actionTitle="Claim Rewards"
-                handleContinue={handleClaimRewards}
-                color="primary"
-              />
+              <button
+                className="btn btn-primary mx-2"
+                onClick={() => {
+                  handleClaimRewards();
+                }}
+              >
+                Claim Rewards
+              </button>
               {isRedelegateEnable() && (
-                <ViewStatAction
-                  actionTitle="Redelegate Rewards"
-                  handleContinue={handleRedelegateRewards}
-                  color="primary"
-                />
+                <button
+                  className="btn btn-primary mx-2"
+                  onClick={() => {
+                    handleRedelegateRewards();
+                  }}
+                >
+                  Redelegate Rewards
+                </button>
               )}
             </div>
             <button id="closeButton" className="btn btn-link mt-spacer mx-2" onClick={handleClose}>

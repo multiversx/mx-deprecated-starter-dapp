@@ -1,16 +1,14 @@
-import { useContext } from 'context';
-
-interface DelegationContractActionButtonsType {
+interface SubmitAndCloseButtonsType {
   action: string;
   actionTitle: string;
   handleClose: () => void;
 }
 
-const DelegationContractActionButtons = ({
+const SubmitAndCloseButtonsForModal = ({
   action,
   actionTitle,
   handleClose,
-}: DelegationContractActionButtonsType) => {
+}: SubmitAndCloseButtonsType) => {
   return (
     <>
       <div className="d-flex justify-content-center align-items-center flex-wrap">
@@ -30,4 +28,4 @@ const DelegationContractActionButtons = ({
   );
 };
 
-export default DelegationContractActionButtons;
+export default SubmitAndCloseButtonsForModal;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
-import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
+import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
 
 const SetPercentageFeeSchema = object().shape({
   amount: string()
@@ -74,7 +74,7 @@ const SetPercentageFeeModal = ({
                     )}
                     <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
-                  <DelegationContractActionButtons
+                  <SubmitAndCloseButtonsForModal
                     action="setPercentageFe"
                     actionTitle="Continue"
                     handleClose={handleClose}

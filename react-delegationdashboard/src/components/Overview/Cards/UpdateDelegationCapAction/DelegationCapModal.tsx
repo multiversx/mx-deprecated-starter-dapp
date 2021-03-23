@@ -7,7 +7,7 @@ import { object, number } from 'yup';
 import denominate from 'components/Denominate/formatters';
 import { ActionModalType } from 'helpers/types';
 import { denomination, decimals } from 'config';
-import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
+import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
 
 const DelegationCapModal = ({
   show,
@@ -94,7 +94,7 @@ const DelegationCapModal = ({
                     />
                     <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
-                  <DelegationContractActionButtons
+                  <SubmitAndCloseButtonsForModal
                     action="Undelegate"
                     actionTitle="Continue"
                     handleClose={handleClose}

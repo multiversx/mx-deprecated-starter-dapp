@@ -1,4 +1,4 @@
-import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
+import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { object, array, mixed } from 'yup';
@@ -52,7 +52,7 @@ const PemUpload = ({
               />
             </div>
             <div className="d-flex align-items-center justify-content-center flex-wrap mt-spacer">
-              <DelegationContractActionButtons
+              <SubmitAndCloseButtonsForModal
                 action="addNodes"
                 actionTitle="Add nodes"
                 handleClose={handleClose}

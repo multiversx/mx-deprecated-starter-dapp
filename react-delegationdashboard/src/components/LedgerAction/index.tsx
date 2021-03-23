@@ -1,6 +1,6 @@
 import { TransactionHash } from '@elrondnetwork/erdjs/out';
 import TransactionStatusModal from 'components/LedgerTransactionStatus';
-import ViewStatAction from 'components/ViewStatAction';
+import ContinueAndCloseButtons from 'components/ContinueAndCloseButtons';
 import { useDelegation } from 'helpers';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import React, { useState } from 'react';
@@ -76,16 +76,13 @@ const LedgerValidationTransaction = ({
                 {ledgerError}
               </p>
             )}
-            <div className="d-flex justify-content-center align-items-center flex-wrap">
-              <ViewStatAction
-                actionTitle={action}
-                handleContinue={handleContinue}
-                color="primary"
-              />
-              <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
-                Close
-              </button>
-            </div>
+
+            <ContinueAndCloseButtons
+              actionTitle={action}
+              handleContinue={handleContinue}
+              handleClose={handleClose}
+              color="primary"
+            />
           </div>
         </div>
       </Modal>
