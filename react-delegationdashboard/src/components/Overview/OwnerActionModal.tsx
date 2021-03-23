@@ -1,7 +1,8 @@
 import { Modal } from 'react-bootstrap';
 import ViewStatAction from 'components/ViewStatAction';
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
-import TransactionStatusModal from 'components/LedgerTransactionStatus';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import { useState } from 'react';
+import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
 
 export interface OwnerActionModalType {
   show: boolean;
@@ -10,10 +11,6 @@ export interface OwnerActionModalType {
   description: string;
   extraDescription?: string;
   value: string;
-  ledgerError: string;
-  txHash: TransactionHash;
-  showTransactionStatus: boolean;
-  submitPressed: boolean;
   handleClose: () => void;
   handleContinue: () => void;
 }
@@ -25,13 +22,13 @@ const OwnerActionModal = ({
   description,
   extraDescription,
   value,
-  ledgerError,
-  txHash,
-  showTransactionStatus,
-  submitPressed,
   handleClose,
   handleContinue,
 }: OwnerActionModalType) => {
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
   return (
     <>
       <Modal
@@ -49,16 +46,10 @@ const OwnerActionModal = ({
             {description && <p className="mb-spacer">{description}</p>}
             {extraDescription && <p className="lead mb-spacer">{extraDescription}</p>}
 
-            {ledgerError && (
-              <p className="text-danger d-flex justify-content-center align-items-center">
-                {ledgerError}
-              </p>
-            )}
             <div className="d-flex justify-content-center align-items-center flex-wrap">
               <ViewStatAction
                 actionTitle={actionTitle}
                 handleContinue={handleContinue}
-                submitPressed={submitPressed}
                 color="primary"
               />
               <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
@@ -68,7 +59,13 @@ const OwnerActionModal = ({
           </div>
         </div>
       </Modal>
-      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
+      <CheckYourLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
+      />
     </>
   );
 };

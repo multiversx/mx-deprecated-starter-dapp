@@ -9,8 +9,6 @@ interface RequestVariablesModalType {
   name: string;
   show: boolean;
   variables: RequestType['variables'];
-  submitPressed: boolean;
-  ledgerError?: string;
   data: RequestType['data'];
   handleClose: () => void;
   triggerDispatchEvent: (variablesData: string) => void;
@@ -25,8 +23,6 @@ const RequestVariablesModal = ({
   show,
   variables,
   data,
-  submitPressed,
-  ledgerError,
   handleClose,
   triggerDispatchEvent,
 }: RequestVariablesModalType) => {
@@ -71,12 +67,7 @@ const RequestVariablesModal = ({
                     </div>
                   )}
                   {variable.type === 'pemUpload' && (
-                    <PemUpload
-                      handleClose={handleClose}
-                      onSubmit={onSubmit}
-                      submitPressed={submitPressed}
-                      ledgerError={ledgerError}
-                    />
+                    <PemUpload handleClose={handleClose} onSubmit={onSubmit} />
                   )}
                 </div>
               );
@@ -86,10 +77,8 @@ const RequestVariablesModal = ({
             <>
               <div className="d-flex align-items-center flex-wrap mt-spacer">
                 <DelegationContractActionButtons
-                  ledgerError={ledgerError}
                   action="AddNodes"
                   actionTitle="Add nodes"
-                  submitPressed={submitPressed}
                   handleClose={handleClose}
                 />
                 <div className="btn btn-link mx-2" onClick={handleClose}>

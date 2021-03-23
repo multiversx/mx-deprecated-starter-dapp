@@ -28,11 +28,9 @@ const Ledger = () => {
           hwWalletP
             .login()
             .then(address => {
-              debugger;
               dispatch({ type: 'setProvider', provider: hwWalletP });
               dispatch({ type: 'login', address });
               history.push('/dashboard');
-              // return <Redirect to="/dashboard" />;
             })
             .catch((err: any) => {
               dispatch({ type: 'loading', loading: false });

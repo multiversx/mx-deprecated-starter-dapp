@@ -15,7 +15,7 @@ const Header = () => {
     return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
 
-  const isLedger = () => {
+  const fetchLedger = () => {
     if (getItem('ledgerLogin') && !ledgerAccount) {
       const ledgerLogin = getItem('ledgerLogin');
       dispatch({
@@ -27,7 +27,7 @@ const Header = () => {
       });
     }
   };
-  useEffect(isLedger, []);
+  useEffect(fetchLedger, []);
 
   return (
     <div className="header card-header d-flex align-items-center border-0 justify-content-between px-spacer">

@@ -10,8 +10,9 @@ import { nodeActions } from './helpers/nodeTypes';
 import { nodeTransactions } from './helpers/stakeHooks';
 import { stakingContract } from 'config';
 import { NodeType } from './helpers/nodeType';
+import LedgerValidationTransaction from 'components/LedgerAction';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegation } from 'helpers';
-import NodeActionModal from './NodeActionModal';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake' | 'remove';
 
@@ -25,22 +26,20 @@ const allowedActions: { [key: string]: ActionType[] } = {
 
 const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const { explorerAddress, dapp, ledgerAccount } = useContext();
-  const [ledgerError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
   const [showDelegateModal, setShowDelegateModal] = useState(false);
   const [selectedAction, setSelectedAction] = useState('');
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setShowDelegateModal(false);
-    setShowTransactionStatus(true);
-  };
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
   const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-    setSubmitPressed,
+    handleClose: () => {},
+    setLedgerDataError: () => {},
   });
+
+  const handleAction = (action: ActionType) => {
+    setTransactionArguments(nodeTransactions[action]({ blsKey: key.blsKey }));
+    setShowDelegateModal(true);
+  };
   const ref = React.useRef(null);
 
   const [remaining, setRemaining] = React.useState(0);
@@ -117,10 +116,11 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
                     e.preventDefault();
                     if (actionAllowed) {
                       if (!ledgerAccount) {
-                        nodeTransactions[action]({ blsKey: key.blsKey, sendTransaction });
+                        sendTransaction(nodeTransactions[action]({ blsKey: key.blsKey }));
                       } else {
                         setSelectedAction(action);
-                        setShowDelegateModal(false);
+                        handleAction(action);
+                        setShowDelegateModal(true);
                       }
                     }
                   }}
@@ -141,17 +141,12 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
           </Dropdown.Menu>
         </Dropdown>
       </td>
-      <NodeActionModal
+      <LedgerValidationTransaction
         show={showDelegateModal}
-        submitPressed={submitPressed}
-        ledgerError={ledgerError}
-        handleClose={() => {
-          setShowDelegateModal(false);
-        }}
-        handleContinue={() => {
-          const action: ActionType = selectedAction as any;
-          nodeTransactions[action]({ blsKey: key.blsKey, sendTransaction });
-        }}
+        argumentsTx={transactionArguments}
+        action="Confirm"
+        title={selectedAction}
+        handleCloseModal={() => setShowDelegateModal(false)}
       />
     </tr>
   );

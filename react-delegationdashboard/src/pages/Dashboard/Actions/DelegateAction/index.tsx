@@ -1,32 +1,28 @@
 import { useState } from 'react';
 import { useContext } from 'context';
 import DelegateModal from './DelegateModal';
-import { useDelegation } from 'helpers';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import TransactionStatusModal from 'components/LedgerTransactionStatus';
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import { useDelegationWallet } from 'helpers/useDelegation';
 
 const DelegateAction = () => {
-  const { account } = useContext();
+  const { account, ledgerAccount } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
-  const [ledgerDataError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setShowDelegateModal(false);
-    setShowTransactionStatus(true);
-  };
-  const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-    setSubmitPressed,
-  });
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
 
   const handleDelegate = (value: string) => {
     const transactionArguments = new DelegationTransactionType(value, 'delegate');
-    sendTransaction(transactionArguments);
+    setTransactionArguments(transactionArguments);
+    setShowDelegateModal(false);
+    if (ledgerAccount) {
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(transactionArguments);
+    }
   };
 
   return (
@@ -41,15 +37,19 @@ const DelegateAction = () => {
       </button>
       <DelegateModal
         show={showDelegateModal}
-        submitPressed={submitPressed}
-        ledgerError={ledgerDataError}
         balance={account.balance.toString()}
         handleClose={() => {
           setShowDelegateModal(false);
         }}
         handleContinue={handleDelegate}
       />
-      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
+      <CheckYourLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
+      />
     </div>
   );
 };

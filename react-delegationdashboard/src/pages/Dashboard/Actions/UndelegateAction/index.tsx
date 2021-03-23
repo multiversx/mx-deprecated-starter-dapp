@@ -6,28 +6,21 @@ import UndelegateModal from './UndelegateModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { TransactionHash } from '@elrondnetwork/erdjs/out';
 import TransactionStatusModal from 'components/LedgerTransactionStatus';
+import { useDelegationWallet } from 'helpers/useDelegation';
+import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
 
 interface UndelegateModalType {
   balance: string;
 }
 
 const UndelegateAction = ({ balance }: UndelegateModalType) => {
-  const { egldLabel } = useContext();
+  const { egldLabel, ledgerAccount } = useContext();
   const [showModal, setShowModal] = useState(false);
-  const [ledgerDataError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setShowModal(false);
-    setShowTransactionStatus(true);
-  };
-  const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-    setSubmitPressed,
-  });
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
 
   const handleUndelegate = (value: string) => {
     let transactionArguments = new DelegationTransactionType(
@@ -35,7 +28,13 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
       'unDelegate',
       nominateValToHex(value)
     );
-    sendTransaction(transactionArguments);
+    setTransactionArguments(transactionArguments);
+    setShowModal(false);
+    if (ledgerAccount) {
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(transactionArguments);
+    }
   };
   return (
     <div>
@@ -45,8 +44,6 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
       <UndelegateModal
         show={showModal}
         balance={balance}
-        submitPressed={submitPressed}
-        ledgerError={ledgerDataError}
         title="Undelegate now"
         description={`Select the amount of ${egldLabel} you want to undelegate.`}
         handleClose={() => {
@@ -54,7 +51,13 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
         }}
         handleContinue={handleUndelegate}
       />
-      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
+      <CheckYourLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
+      />
     </div>
   );
 };

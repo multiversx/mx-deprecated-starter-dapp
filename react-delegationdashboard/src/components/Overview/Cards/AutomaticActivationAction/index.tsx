@@ -1,25 +1,18 @@
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
 import OwnerActionModal from 'components/Overview/OwnerActionModal';
-import { useDelegation } from 'helpers';
+import { useContext } from 'context';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import { useDelegationWallet } from 'helpers/useDelegation';
 import React, { useState } from 'react';
 
 const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string }) => {
+  const { ledgerAccount } = useContext();
   const [showAutomaticActivationModal, setShowAutomaticActivationModal] = useState(false);
-  const [ledgerError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setShowAutomaticActivationModal(false);
-    setShowTransactionStatus(true);
-  };
-  const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-    setSubmitPressed,
-  });
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
 
   const handleAutomaticActivation = () => {
     let activation = Buffer.from(automaticFlag === 'true' ? 'false' : 'true').toString('hex');
@@ -28,7 +21,13 @@ const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string })
       'setAutomaticActivation',
       activation
     );
-    sendTransaction(transactionArguments);
+    setTransactionArguments(transactionArguments);
+    setShowCheckYourLedgerModal(false);
+    if (ledgerAccount) {
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(transactionArguments);
+    }
   };
   return (
     <div>
@@ -48,11 +47,14 @@ const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string })
           setShowAutomaticActivationModal(false);
         }}
         value={automaticFlag}
-        ledgerError={ledgerError}
-        showTransactionStatus={showTransactionStatus}
-        submitPressed={submitPressed}
-        txHash={txHash}
         handleContinue={handleAutomaticActivation}
+      />
+      <CheckYourLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
       />
     </div>
   );

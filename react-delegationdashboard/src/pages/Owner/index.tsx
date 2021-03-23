@@ -5,9 +5,10 @@ import { useContext, useDispatch } from 'context';
 import Overview from 'components/Overview';
 import Nodes from './Nodes';
 import { AccountType } from 'helpers/contractDataDefinitions';
+import { getItem } from 'storage/session';
 
 const Owner = () => {
-  const { address, contractOverview, loggedIn, dapp } = useContext();
+  const { address, contractOverview, loggedIn, dapp, ledgerAccount } = useContext();
   const dispatch = useDispatch();
   const isAdmin = () => {
     let loginAddress = new Address(address).hex();
@@ -21,6 +22,16 @@ const Owner = () => {
         account: new AccountType(account.balance.toString(), account.nonce),
       });
     });
+    if (getItem('ledgerLogin') && !ledgerAccount) {
+      const ledgerLogin = getItem('ledgerLogin');
+      dispatch({
+        type: 'setLedgerAccount',
+        ledgerAccount: {
+          index: ledgerLogin.index,
+          address: address,
+        },
+      });
+    }
   };
   useEffect(fetchAccount, []);
 

@@ -1,26 +1,19 @@
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
-import TransactionStatusModal from 'components/LedgerTransactionStatus';
-import { useDelegation } from 'helpers';
+import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import { useContext } from 'context';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import { useDelegationWallet } from 'helpers/useDelegation';
 import React, { useState } from 'react';
 import SetPercentageFeeModal from './SetPercentageFeeModal';
 
 const SetPercentageFeeAction = () => {
+  const { ledgerAccount } = useContext();
+
   const [showUpdateFeeModal, setShowUpdateFeeModal] = useState(false);
-  const [ledgerDataError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setShowUpdateFeeModal(false);
-    setShowTransactionStatus(true);
-  };
-  const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-    setSubmitPressed,
-  });
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
 
   const nominateVal = (value: string) => {
     let perc = (parseFloat(value) * 100).toString(16);
@@ -35,8 +28,13 @@ const SetPercentageFeeAction = () => {
       'changeServiceFee',
       nominateVal(value)
     );
-
-    sendTransaction(transactionArguments);
+    setTransactionArguments(transactionArguments);
+    setShowUpdateFeeModal(false);
+    if (ledgerAccount) {
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(transactionArguments);
+    }
   };
   return (
     <div>
@@ -48,14 +46,18 @@ const SetPercentageFeeAction = () => {
       </button>
       <SetPercentageFeeModal
         show={showUpdateFeeModal}
-        submitPressed={submitPressed}
-        ledgerError={ledgerDataError}
         handleClose={() => {
           setShowUpdateFeeModal(false);
         }}
         handleContinue={handleUpdateFee}
       />
-      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
+      <CheckYourLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
+      />
     </div>
   );
 };

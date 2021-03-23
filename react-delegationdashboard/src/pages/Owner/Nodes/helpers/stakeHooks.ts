@@ -1,32 +1,31 @@
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 export interface StakeActionType {
   blsKey: string;
-  sendTransaction: (transactionArguments: DelegationTransactionType) => void;
 }
 
 export const nodeTransactions = {
-  unStake: ({ blsKey, sendTransaction }: StakeActionType) => {
+  unStake: ({ blsKey }: StakeActionType) => {
     let transactionArgs = new DelegationTransactionType('0', 'unStakeNodes', blsKey);
-    return sendTransaction(transactionArgs);
+    return transactionArgs;
   },
-  reStake: ({ blsKey, sendTransaction }: StakeActionType) => {
+  reStake: ({ blsKey }: StakeActionType) => {
     let transactionArguments = new DelegationTransactionType('0', 'reStakeUnStakedNodes', blsKey);
-    return sendTransaction(transactionArguments);
+    return transactionArguments;
   },
-  unJail: ({ blsKey, sendTransaction }: StakeActionType) => {
+  unJail: ({ blsKey }: StakeActionType) => {
     let transactionArguments = new DelegationTransactionType('2.5', 'unJailNodes', blsKey);
-    return sendTransaction(transactionArguments);
+    return transactionArguments;
   },
-  unBond: ({ blsKey, sendTransaction }: StakeActionType) => {
+  unBond: ({ blsKey }: StakeActionType) => {
     let transactionArguments = new DelegationTransactionType('0', 'unBondNodes', blsKey);
-    return sendTransaction(transactionArguments);
+    return transactionArguments;
   },
-  stake: ({ blsKey, sendTransaction }: StakeActionType) => {
+  stake: ({ blsKey }: StakeActionType) => {
     let transactionArguments = new DelegationTransactionType('0', 'stakeNodes', `${blsKey}`);
-    return sendTransaction(transactionArguments);
+    return transactionArguments;
   },
-  remove: ({ blsKey, sendTransaction }: StakeActionType) => {
+  remove: ({ blsKey }: StakeActionType) => {
     let transactionArguments = new DelegationTransactionType('0', 'removeNodes', `${blsKey}`);
-    return sendTransaction(transactionArguments);
+    return transactionArguments;
   },
 };

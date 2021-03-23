@@ -12,13 +12,11 @@ import DelegationContractActionButtons from 'components/DelegationContractAction
 const DelegationCapModal = ({
   show,
   title,
-  submitPressed,
-  ledgerError,
   description,
   handleClose,
   handleContinue,
 }: ActionModalType) => {
-  const { egldLabel, totalActiveStake, ledgerAccount } = useContext();
+  const { egldLabel, totalActiveStake } = useContext();
 
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
@@ -97,10 +95,8 @@ const DelegationCapModal = ({
                     <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
                   <DelegationContractActionButtons
-                    ledgerError={ledgerError}
                     action="Undelegate"
                     actionTitle="Continue"
-                    submitPressed={submitPressed}
                     handleClose={handleClose}
                   />
                 </form>

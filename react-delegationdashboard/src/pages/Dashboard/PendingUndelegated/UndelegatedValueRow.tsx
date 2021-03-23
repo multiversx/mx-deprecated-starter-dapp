@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { useDelegation } from 'helpers';
 import { useContext } from 'context';
 import { UndelegatedValueType } from './UndelegatedValueType';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import LedgerValidationTransaction from 'components/LedgerAction';
 
 const UndelegatedValueRow = ({
   undelegatedValue: value,
@@ -14,25 +13,15 @@ const UndelegatedValueRow = ({
   const [isDisabled, setIsDisabled] = React.useState(true);
   const { egldLabel } = useContext();
   const [counter, setCounter] = React.useState(value.timeLeft);
-  const [show, setShow] = useState(false);
-  const [ledgerDataError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setShow(false);
-    setShowTransactionStatus(true);
-  };
-  const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-    setSubmitPressed,
-  });
+  const [show, setShow] = React.useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
 
   const handleWithdraw = () => {
     let transactionArguments = new DelegationTransactionType('0', 'withdraw');
-    sendTransaction(transactionArguments);
+    setTransactionArguments(transactionArguments);
+    setShow(true);
   };
 
   useEffect(() => {
@@ -46,33 +35,42 @@ const UndelegatedValueRow = ({
     return moment.utc(timeLeftInMiliseconds).format('HH:mm:ss');
   };
   return (
-    <tr>
-      <td>
-        <div className="d-flex align-items-center text-nowrap trim">
-          {value.value} {egldLabel}
-        </div>
-      </td>
-      <td>
-        <div className="d-flex align-items-center text-nowrap trim">
-          {value.timeLeft > 0 ? (
-            <span className="badge badge-sm badge-light-orange text-orange">
-              {getTimeLeft()} left
-            </span>
-          ) : (
-            <span className="badge badge-sm badge-light-green text-green">Completed</span>
-          )}
-        </div>
-      </td>
-      <td>
-        <button
-          disabled={isDisabled}
-          onClick={handleWithdraw}
-          className="btn btn-primary btn-sm d-flex ml-auto"
-        >
-          Withdraw
-        </button>
-      </td>
-    </tr>
+    <>
+      <tr>
+        <td>
+          <div className="d-flex align-items-center text-nowrap trim">
+            {value.value} {egldLabel}
+          </div>
+        </td>
+        <td>
+          <div className="d-flex align-items-center text-nowrap trim">
+            {value.timeLeft > 0 ? (
+              <span className="badge badge-sm badge-light-orange text-orange">
+                {getTimeLeft()} left
+              </span>
+            ) : (
+              <span className="badge badge-sm badge-light-green text-green">Completed</span>
+            )}
+          </div>
+        </td>
+        <td>
+          <button
+            disabled={isDisabled}
+            onClick={handleWithdraw}
+            className="btn btn-primary btn-sm d-flex ml-auto"
+          >
+            Withdraw
+          </button>
+        </td>
+      </tr>
+      <LedgerValidationTransaction
+        show={show}
+        argumentsTx={transactionArguments}
+        action="Withdraw"
+        title="Withdraw"
+        handleCloseModal={() => {}}
+      />
+    </>
   );
 };
 export default UndelegatedValueRow;

@@ -7,13 +7,9 @@ import DropzonePem, { DropzoneFileType } from './index';
 const PemUpload = ({
   handleClose,
   onSubmit,
-  submitPressed,
-  ledgerError,
 }: {
   handleClose: () => void;
   onSubmit: (pemFiles: DropzoneFileType[]) => void;
-  submitPressed: boolean;
-  ledgerError?: string;
 }) => {
   const initialValues: { pemFiles: DropzoneFileType[] } = { pemFiles: [] };
   const ref = React.useRef(null);
@@ -57,10 +53,8 @@ const PemUpload = ({
             </div>
             <div className="d-flex align-items-center justify-content-center flex-wrap mt-spacer">
               <DelegationContractActionButtons
-                ledgerError={ledgerError}
                 action="addNodes"
                 actionTitle="Add nodes"
-                submitPressed={submitPressed}
                 handleClose={handleClose}
               />
             </div>

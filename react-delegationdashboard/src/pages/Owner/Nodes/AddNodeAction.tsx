@@ -1,31 +1,30 @@
-import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
 import { DropzoneFileType } from 'components/DropzonePem';
 import RequestVariablesModal from 'components/DropzonePem/RequestVariablesModal';
-import { BLS, TransactionHash } from '@elrondnetwork/erdjs/out';
+import { BLS } from '@elrondnetwork/erdjs/out';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import TransactionStatusModal from 'components/LedgerTransactionStatus';
+import { useDelegationWallet } from 'helpers/useDelegation';
+import { useContext } from 'context';
+import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
 
 const AddNodeAction = () => {
+  const { ledgerAccount } = useContext();
   const [showAddNodes, setAddNodesModal] = useState(false);
-  const [ledgerDataError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setAddNodesModal(false);
-    setShowTransactionStatus(true);
-  };
-  const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-    setSubmitPressed,
-  });
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
 
   const handleAddNodes = (value: string) => {
     let transactionArguments = new DelegationTransactionType('0', 'addNodes', value);
-    sendTransaction(transactionArguments);
+    setTransactionArguments(transactionArguments);
+    setAddNodesModal(false);
+    if (ledgerAccount) {
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(transactionArguments);
+    }
   };
 
   const getPemPubKeysWithSignature = (pemFiles: DropzoneFileType[]) => {
@@ -61,8 +60,6 @@ const AddNodeAction = () => {
       <RequestVariablesModal
         name="Add nodes"
         show={showAddNodes}
-        submitPressed={submitPressed}
-        ledgerError={ledgerDataError}
         handleClose={() => {
           setAddNodesModal(false);
         }}
@@ -70,7 +67,13 @@ const AddNodeAction = () => {
         variables={addNodesRequest.variables}
         data={addNodesRequest.data}
       />
-      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
+      <CheckYourLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
+      />
     </div>
   );
 };

@@ -1,38 +1,20 @@
 import BigNumber from 'bignumber.js';
-import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
 import nominate from 'helpers/nominate';
 import DelegationCapModal from './DelegationCapModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
-import TransactionStatusModal from 'components/LedgerTransactionStatus';
+import { useContext } from 'context';
+import { useDelegationWallet } from 'helpers/useDelegation';
+import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
 
 const UpdateDelegationCapAction = () => {
+  const { ledgerAccount } = useContext();
   const [showDelegationCapModal, setShowDelegationCapModal] = useState(false);
-  const [ledgerDataError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setShowDelegationCapModal(false);
-    setShowTransactionStatus(true);
-  };
-  const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-    setSubmitPressed,
-  });
-
-  const handleUpdateDelegationCap = (value: string) => {
-    let transactionArguments = new DelegationTransactionType(
-      '0',
-      'modifyTotalDelegationCap',
-      nominateValToHex(value)
-    );
-
-    sendTransaction(transactionArguments);
-  };
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
 
   const nominateValToHex = (value: string) => {
     let val = value && value.length > 0 ? new BigNumber(nominate(value)).toString(16) : '0';
@@ -41,6 +23,22 @@ const UpdateDelegationCapAction = () => {
       val = '0' + val;
     }
     return val;
+  };
+
+  const handleUpdateDelegationCap = (value: string) => {
+    let transactionArguments = new DelegationTransactionType(
+      '0',
+      'modifyTotalDelegationCap',
+      nominateValToHex(value)
+    );
+
+    setTransactionArguments(transactionArguments);
+    setShowDelegationCapModal(false);
+    if (ledgerAccount) {
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(transactionArguments);
+    }
   };
 
   return (
@@ -53,8 +51,6 @@ const UpdateDelegationCapAction = () => {
       </button>
       <DelegationCapModal
         show={showDelegationCapModal}
-        submitPressed={submitPressed}
-        ledgerError={ledgerDataError}
         title="Delegation cap"
         description="Update Delegation Cap"
         handleClose={() => {
@@ -62,7 +58,13 @@ const UpdateDelegationCapAction = () => {
         }}
         handleContinue={handleUpdateDelegationCap}
       />
-      <TransactionStatusModal show={showTransactionStatus} txHash={txHash} />
+      <CheckYourLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
+      />
     </div>
   );
 };

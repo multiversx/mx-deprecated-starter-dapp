@@ -7,31 +7,30 @@ import { useContext } from 'context';
 import { AgencyMetadata, DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import DelegationContractActionButtons from 'components/DelegationContractActionButtons';
 import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import { useDelegationWallet } from 'helpers/useDelegation';
 
 const SetAgencyMetaDataModal = () => {
-  const { agencyMetaData } = useContext();
+  const { agencyMetaData, ledgerAccount } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
-  const [ledgerDataError, setLedgerDataError] = useState('');
-  const [submitPressed, setSubmitPressed] = useState(false);
-  const [showTransactionStatus, setShowTransactionStatus] = useState(false);
-  const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
-    setTxHash(txHash);
-    setShowDelegateModal(false);
-    setShowTransactionStatus(true);
-  };
-  const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
-    setLedgerDataError,
-    setSubmitPressed,
-  });
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
+
   const handleReDelegationCapActivation = (values: AgencyMetadata) => {
     const hexName = Buffer.from(values.name).toString('hex');
     const hexWeb = Buffer.from(values.website).toString('hex');
     const hexKeyBase = Buffer.from(values.keybase).toString('hex');
     const data = hexName + '@' + hexWeb + '@' + hexKeyBase;
     let transactionArguments = new DelegationTransactionType('0', 'setMetaData', data);
-    sendTransaction(transactionArguments);
+    setTransactionArguments(transactionArguments);
+    setShowDelegateModal(false);
+    if (ledgerAccount) {
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(transactionArguments);
+    }
   };
 
   return (
@@ -140,10 +139,8 @@ const SetAgencyMetaDataModal = () => {
                       </div>
                     </div>
                     <DelegationContractActionButtons
-                      ledgerError={ledgerDataError}
                       action="setPercentageFe"
                       actionTitle="Continue"
-                      submitPressed={submitPressed}
                       handleClose={() => {
                         setShowDelegateModal(false);
                       }}

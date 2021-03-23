@@ -8,9 +8,10 @@ import { Address } from '@elrondnetwork/erdjs/out';
 import { AccountType } from 'helpers/contractDataDefinitions';
 import State from 'components/State';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { getItem } from 'storage/session';
 
 const Dashboard = () => {
-  const { loggedIn, dapp, address, networkConfig } = useContext();
+  const { loggedIn, dapp, address, networkConfig, ledgerAccount } = useContext();
   const dispatch = useDispatch();
 
   if (!loggedIn) {
@@ -24,6 +25,16 @@ const Dashboard = () => {
         account: new AccountType(account.balance.toString(), account.nonce),
       });
     });
+    if (getItem('ledgerLogin') && !ledgerAccount) {
+      const ledgerLogin = getItem('ledgerLogin');
+      dispatch({
+        type: 'setLedgerAccount',
+        ledgerAccount: {
+          index: ledgerLogin.index,
+          address: address,
+        },
+      });
+    }
   };
   useEffect(fetchAccount, []);
 

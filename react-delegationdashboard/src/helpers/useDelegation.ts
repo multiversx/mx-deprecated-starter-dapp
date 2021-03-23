@@ -5,22 +5,14 @@ import { DelegationTransactionType } from './contractDataDefinitions';
 import { ledgerErrorCodes } from './ledgerErrorCodes';
 export interface UseDelegationType {
   handleClose: (txHash: TransactionHash) => void;
-  setSubmitPressed: (flag: boolean) => void;
   setLedgerDataError: (flag: string) => void;
 }
-export default function useDelegation({
-  handleClose,
-  setSubmitPressed,
-  setLedgerDataError,
-}: UseDelegationType) {
-  const { dapp, delegationContract, account, ledgerAccount, networkConfig } = useContext();
+export default function useDelegation({ handleClose, setLedgerDataError }: UseDelegationType) {
+  const { dapp, delegationContract, account, networkConfig } = useContext();
   const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider, account);
 
   const sendTransaction = (transactionArguments: DelegationTransactionType) => {
     transactionArguments.chainId = networkConfig.chainId;
-    if (ledgerAccount) {
-      setSubmitPressed(true);
-    }
     delegation
       .sendTransaction(transactionArguments)
       .then(transaction => {
@@ -30,10 +22,24 @@ export default function useDelegation({
         if (e.statusCode in ledgerErrorCodes) {
           setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
         }
-        setSubmitPressed(false);
         console.error(`${transactionArguments.type}`, e);
       });
   };
 
   return { sendTransaction };
+}
+
+export function useDelegationWallet() {
+  const { dapp, delegationContract, account, ledgerAccount, networkConfig } = useContext();
+  const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider, account);
+  const sendTransactionWallet = (transactionArguments: DelegationTransactionType) => {
+    delegation
+      .sendTransaction(transactionArguments)
+      .then()
+      .catch(e => {
+        console.error(`${transactionArguments.type}`, e);
+      });
+  };
+
+  return { sendTransactionWallet };
 }

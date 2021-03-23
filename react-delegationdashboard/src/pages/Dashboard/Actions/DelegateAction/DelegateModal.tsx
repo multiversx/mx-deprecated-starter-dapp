@@ -12,21 +12,12 @@ import DelegationContractActionButtons from 'components/DelegationContractAction
 
 interface DelegateModalType {
   show: boolean;
-  submitPressed: boolean;
   balance: string;
-  ledgerError?: string;
   handleClose: () => void;
   handleContinue: (value: string) => void;
 }
 
-const DelegateModal = ({
-  show,
-  submitPressed,
-  balance,
-  ledgerError,
-  handleClose,
-  handleContinue,
-}: DelegateModalType) => {
+const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateModalType) => {
   const { egldLabel, contractOverview, totalActiveStake, minDelegationAmount } = useContext();
   const [displayDelegationCapMessage, setDisplayDelegationCapMessage] = useState(false);
   const [maxPressed, setMaxPressed] = React.useState(false);
@@ -208,15 +199,21 @@ const DelegateModal = ({
                       )}
                     </div>
                   )}
-                  {!isFullDelegationCapContract() && (
-                    <DelegationContractActionButtons
-                      ledgerError={ledgerError}
-                      action="Delegate"
-                      actionTitle="Continue"
-                      submitPressed={submitPressed}
-                      handleClose={handleClose}
-                    />
-                  )}
+                  <div className="d-flex justify-content-center align-items-center flex-wrap">
+                    {!isFullDelegationCapContract() && (
+                      <button
+                        type="submit"
+                        className="btn btn-primary mx-2"
+                        id="continueDelegate"
+                        data-testid="continueDelegate"
+                      >
+                        Continue
+                      </button>
+                    )}
+                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
+                      Close
+                    </button>
+                  </div>
                 </form>
               );
             }}

@@ -19,16 +19,12 @@ const SetPercentageFeeSchema = object().shape({
 
 interface SetPercentageFeeModalType {
   show: boolean;
-  submitPressed: boolean;
-  ledgerError?: string;
   handleClose: () => void;
   handleContinue: (value: string) => void;
 }
 
 const SetPercentageFeeModal = ({
   show,
-  submitPressed,
-  ledgerError,
   handleClose,
   handleContinue,
 }: SetPercentageFeeModalType) => {
@@ -79,10 +75,8 @@ const SetPercentageFeeModal = ({
                     <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
                   <DelegationContractActionButtons
-                    ledgerError={ledgerError}
                     action="setPercentageFe"
                     actionTitle="Continue"
-                    submitPressed={submitPressed}
                     handleClose={handleClose}
                   />
                 </form>
