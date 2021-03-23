@@ -6,7 +6,7 @@ To install one of the examples, either use this repo and follow the readme instr
 
 | Project   |      Framework      |  URL | Contract Tutorial
 |----------|:-------------:|:-------------:|:-------------:|
-| react-crowdfunding |  React | [react-crowdfunding](https://github.com/ElrondNetwork/dapp-boilerplate.elrond.com/tree/master/react-crowdfunding) | [Crowdfunding Contract](https://docs.elrond.com/developers/dev-tutorials/the-crowdfund-smartcontract) 
+| react-crowdfunding |  React | [react-crowdfunding](https://github.com/ElrondNetwork/dapp-boilerplate.elrond.com/tree/master/react-crowdfunding) | [Crowdfunding Contract](https://docs.elrond.com/developers/tutorials/crowdfunding-p1/) 
 | react-delegationdashboard |  React | [react-delegationdashboard](https://github.com/ElrondNetwork/dapp-boilerplate.elrond.com/tree/master/react-delegationdashboard) | [Delegation Cheatsheet](https://docs.google.com/document/d/15wXAUIHBQmKefFSg5uY_MnKlgrjZ4zHhKCIOTWukfzE/edit)
 
 
