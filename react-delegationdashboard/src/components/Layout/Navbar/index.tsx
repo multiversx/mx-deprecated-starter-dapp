@@ -16,8 +16,8 @@ const Navbar = () => {
         <div className="d-flex align-items-center mr-3">
         <Logo className="logo2 logo mr-2 flex-shrink-0" />
           <div className="custom__logo" >
-          
-              <a className="logo__title" 
+
+              <a className="logo__title"
               href="https://www.easy2stake.com/">
               Easy 2 stake
               </a>
@@ -32,7 +32,7 @@ const Navbar = () => {
             <small className="d-none d-lg-inline outside__green mr-2">Wallet address: </small>
             <small className="text-truncate outside__light">{address}</small>
             <a href="/#" onClick={logOut} className="outside_btn btn btn-primary btn-sm ml-3">
-              Close
+              Logout
             </a>
           </div>
         )}
