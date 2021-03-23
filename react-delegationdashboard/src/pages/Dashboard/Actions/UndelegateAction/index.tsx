@@ -1,11 +1,8 @@
-import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
 import { useContext } from 'context';
 import { nominateValToHex } from 'helpers/nominate';
 import UndelegateModal from './UndelegateModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
-import TransactionStatusModal from 'components/LedgerTransactionStatus';
 import { useDelegationWallet } from 'helpers/useDelegation';
 import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
 
@@ -23,17 +20,13 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
   const { sendTransactionWallet } = useDelegationWallet();
 
   const handleUndelegate = (value: string) => {
-    let transactionArguments = new DelegationTransactionType(
-      '0',
-      'unDelegate',
-      nominateValToHex(value)
-    );
-    setTransactionArguments(transactionArguments);
-    setShowModal(false);
+    let txArguments = new DelegationTransactionType('0', 'unDelegate', nominateValToHex(value));
     if (ledgerAccount) {
+      setShowModal(false);
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
   return (

@@ -16,17 +16,13 @@ const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string })
 
   const handleAutomaticActivation = () => {
     let activation = Buffer.from(automaticFlag === 'true' ? 'false' : 'true').toString('hex');
-    let transactionArguments = new DelegationTransactionType(
-      '0',
-      'setAutomaticActivation',
-      activation
-    );
-    setTransactionArguments(transactionArguments);
-    setShowCheckYourLedgerModal(false);
+    let txArguments = new DelegationTransactionType('0', 'setAutomaticActivation', activation);
     if (ledgerAccount) {
+      setShowCheckYourLedgerModal(false);
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
   return (
@@ -46,7 +42,6 @@ const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string })
         handleClose={() => {
           setShowAutomaticActivationModal(false);
         }}
-        value={automaticFlag}
         handleContinue={handleAutomaticActivation}
       />
       <CheckYourLedgerModal

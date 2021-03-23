@@ -17,13 +17,13 @@ const AddNodeAction = () => {
   const { sendTransactionWallet } = useDelegationWallet();
 
   const handleAddNodes = (value: string) => {
-    let transactionArguments = new DelegationTransactionType('0', 'addNodes', value);
-    setTransactionArguments(transactionArguments);
-    setAddNodesModal(false);
+    let txArguments = new DelegationTransactionType('0', 'addNodes', value);
     if (ledgerAccount) {
+      setAddNodesModal(false);
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
 

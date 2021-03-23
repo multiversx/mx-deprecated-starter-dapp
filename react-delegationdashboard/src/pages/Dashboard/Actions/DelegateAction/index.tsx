@@ -15,13 +15,13 @@ const DelegateAction = () => {
   const { sendTransactionWallet } = useDelegationWallet();
 
   const handleDelegate = (value: string) => {
-    const transactionArguments = new DelegationTransactionType(value, 'delegate');
-    setTransactionArguments(transactionArguments);
-    setShowDelegateModal(false);
+    const txArguments = new DelegationTransactionType(value, 'delegate');
     if (ledgerAccount) {
+      setShowDelegateModal(false);
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
 

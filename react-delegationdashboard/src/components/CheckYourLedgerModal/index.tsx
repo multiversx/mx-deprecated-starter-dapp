@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import useInterval from 'helpers/useInterval';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHourglass } from '@fortawesome/free-solid-svg-icons';
-export interface ClaimRewardsModalType {
+export interface CheckYourLedgerModalType {
   show: boolean;
   transactionArguments: DelegationTransactionType;
   handleClose: () => void;
@@ -17,7 +17,7 @@ const CheckYourLedgerModal = ({
   show,
   transactionArguments,
   handleClose,
-}: ClaimRewardsModalType) => {
+}: CheckYourLedgerModalType) => {
   const [spin, setSpin] = useState(false);
   const [delay] = useState(1000);
   const [ledgerError, setLedgerDataError] = useState('');

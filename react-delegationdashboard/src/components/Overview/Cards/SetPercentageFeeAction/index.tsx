@@ -23,17 +23,13 @@ const SetPercentageFeeAction = () => {
     return perc;
   };
   const handleUpdateFee = (value: string) => {
-    let transactionArguments = new DelegationTransactionType(
-      '0',
-      'changeServiceFee',
-      nominateVal(value)
-    );
-    setTransactionArguments(transactionArguments);
-    setShowUpdateFeeModal(false);
+    let txArguments = new DelegationTransactionType('0', 'changeServiceFee', nominateVal(value));
     if (ledgerAccount) {
+      setShowUpdateFeeModal(false);
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
   return (

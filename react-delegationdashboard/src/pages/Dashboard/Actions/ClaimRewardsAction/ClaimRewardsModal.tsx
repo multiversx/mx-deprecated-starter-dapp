@@ -20,13 +20,13 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
   const { sendTransactionWallet } = useDelegationWallet();
 
   const handleClaimRewards = (): void => {
-    let transactionArguments = new DelegationTransactionType('0', 'claimRewards');
-    setTransactionArguments(transactionArguments);
-    handleClose();
+    let txArguments = new DelegationTransactionType('0', 'claimRewards');
     if (ledgerAccount) {
+      handleClose();
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
 
@@ -43,13 +43,13 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
   };
 
   const handleRedelegateRewards = () => {
-    let transactionArguments = new DelegationTransactionType('0', 'reDelegateRewards');
-    setTransactionArguments(transactionArguments);
-    handleClose();
+    let txArguments = new DelegationTransactionType('0', 'reDelegateRewards');
     if (ledgerAccount) {
+      handleClose();
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
 

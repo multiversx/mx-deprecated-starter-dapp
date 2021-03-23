@@ -19,18 +19,18 @@ const ReDelegateCapActivationAction = ({ automaticFlag }: { automaticFlag: strin
     let redelegateRewardsActivation = Buffer.from(
       automaticFlag === 'true' ? 'false' : 'true'
     ).toString('hex');
-    let transactionArguments = new DelegationTransactionType(
+    let txArguments = new DelegationTransactionType(
       '0',
       'setReDelegateCapActivation',
       redelegateRewardsActivation
     );
 
-    setTransactionArguments(transactionArguments);
-    setShowReDelegationCapActivationModal(false);
     if (ledgerAccount) {
+      setShowReDelegationCapActivationModal(false);
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
 
@@ -51,7 +51,6 @@ const ReDelegateCapActivationAction = ({ automaticFlag }: { automaticFlag: strin
         handleClose={() => {
           setShowReDelegationCapActivationModal(false);
         }}
-        value={automaticFlag}
         handleContinue={handleReDelegationCapActivation}
       />
       <CheckYourLedgerModal

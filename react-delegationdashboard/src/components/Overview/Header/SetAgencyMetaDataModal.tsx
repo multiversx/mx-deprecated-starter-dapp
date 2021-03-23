@@ -22,13 +22,13 @@ const SetAgencyMetaDataModal = () => {
     const hexWeb = Buffer.from(values.website).toString('hex');
     const hexKeyBase = Buffer.from(values.keybase).toString('hex');
     const data = hexName + '@' + hexWeb + '@' + hexKeyBase;
-    let transactionArguments = new DelegationTransactionType('0', 'setMetaData', data);
-    setTransactionArguments(transactionArguments);
-    setShowDelegateModal(false);
+    let txArguments = new DelegationTransactionType('0', 'setMetaData', data);
     if (ledgerAccount) {
+      setShowDelegateModal(false);
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
 

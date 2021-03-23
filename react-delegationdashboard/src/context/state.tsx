@@ -5,6 +5,7 @@ import {
   WalletProvider,
   Nonce,
   ChainID,
+  HWProvider,
 } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import {
@@ -101,7 +102,17 @@ export const initialState = () => {
     denomination: denomination,
     decimals: decimals,
     dapp: {
-      provider: new WalletProvider(sessionNetwork.walletAddress),
+      provider: getItem('ledgerLogin')
+        ? new HWProvider(
+            new ProxyProvider(
+              sessionNetwork.gatewayAddress !== undefined
+                ? sessionNetwork?.gatewayAddress
+                : 'https://gateway.elrond.com/',
+              4000
+            ),
+            getItem('ledgerLogin').index
+          )
+        : new WalletProvider(sessionNetwork.walletAddress),
       proxy: new ProxyProvider(
         sessionNetwork.gatewayAddress !== undefined
           ? sessionNetwork?.gatewayAddress

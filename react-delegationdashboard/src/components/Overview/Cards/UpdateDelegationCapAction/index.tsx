@@ -26,18 +26,17 @@ const UpdateDelegationCapAction = () => {
   };
 
   const handleUpdateDelegationCap = (value: string) => {
-    let transactionArguments = new DelegationTransactionType(
+    let txArguments = new DelegationTransactionType(
       '0',
       'modifyTotalDelegationCap',
       nominateValToHex(value)
     );
-
-    setTransactionArguments(transactionArguments);
-    setShowDelegationCapModal(false);
     if (ledgerAccount) {
+      setShowDelegationCapModal(false);
+      setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
 

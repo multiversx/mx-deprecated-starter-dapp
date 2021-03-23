@@ -35,12 +35,13 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const { sendTransactionWallet } = useDelegationWallet();
 
   const handleAction = (action: ActionType) => {
-    setTransactionArguments(nodeTransactions[action]({ blsKey: key.blsKey }));
+    const txArguments = nodeTransactions[action]({ blsKey: key.blsKey });
     if (ledgerAccount) {
       setSelectedAction(action);
+      setTransactionArguments(txArguments);
       setShowDelegateModal(true);
     } else {
-      sendTransactionWallet(transactionArguments);
+      sendTransactionWallet(txArguments);
     }
   };
   const ref = React.useRef(null);

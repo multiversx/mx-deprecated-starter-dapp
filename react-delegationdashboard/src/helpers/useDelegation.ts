@@ -30,7 +30,7 @@ export default function useDelegation({ handleClose, setLedgerDataError }: UseDe
 }
 
 export function useDelegationWallet() {
-  const { dapp, delegationContract, account, ledgerAccount, networkConfig } = useContext();
+  const { dapp, delegationContract, account } = useContext();
   const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider, account);
   const sendTransactionWallet = (transactionArguments: DelegationTransactionType) => {
     delegation
