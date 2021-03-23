@@ -26,7 +26,7 @@ const StatCard = ({
         <div>{children}</div>
       </div>
       }
-      <span className="opacity-6">{title}</span>
+      <span className="outside__green">{title}</span>
       <p className="h5 mb-0">
         {value} {valueUnit}
       </p>

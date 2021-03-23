@@ -33,7 +33,7 @@
 }
 
 .logo2 {
-  height: 100px !important;
+  height: 90px !important;
   g {
     fill: #fff;
   }
@@ -49,8 +49,8 @@ div.rangeslider {
     height: 30px;
     border-radius: 50%;
     background: url(../../images/icon-slider.svg)
-      rgb(16, 213, 194) center no-repeat;
-    box-shadow: 0px 10px 20px 0px rgba(16, 213, 194, 0.7);
+    #05d6af center no-repeat;
+    box-shadow: 0px 10px 20px 0px #05d6af24;
     cursor: pointer;
     position: relative;
     outline: none;
@@ -96,6 +96,10 @@ div.rangeslider {
     }
 }
 
+.outside__green {
+  color: #05d6af;
+}
+
 .outside__grey {
   color: #5d6473;
 }
@@ -103,6 +107,31 @@ div.rangeslider {
 .outside__dark {
   color: #000;
 }
+
+.outside__light {
+  color: #fff;
+}
+
+.custom__logo {
+  font-family: $font-family-sans-serif;
+  .logo__title {
+    color: #fff;
+    font-size: 35px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+    line-height: 1;
+    clear: both;
+    font-weight: 600;
+  }
+  .logo__desc {
+    color: #05d6af;
+    font-size: 16px;
+    letter-spacing: 3px;
+    margin-bottom: 0px;
+  }
+}
+
 
 .outside_btn {
   background: #323234 !important;
