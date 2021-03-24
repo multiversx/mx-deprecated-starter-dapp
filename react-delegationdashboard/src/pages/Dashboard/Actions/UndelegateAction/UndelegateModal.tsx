@@ -19,18 +19,10 @@ const UndelegateModal = ({
   handleContinue,
 }: ActionModalType) => {
   const { egldLabel, minDelegationAmount } = useContext();
-  const bnMinDust = new BigNumber(
-    denominate({
-      input: minDust,
-      denomination,
-      decimals,
-      showLastNonZeroDecimal: true,
-    })
-  );
-  const { entireBalance: available, entireBalanceMinusDust } = entireBalance({
+  const { entireBalance: available } = entireBalance({
     balance: balance as string,
-    gasPrice: '12000000',
-    gasLimit: '12000000',
+    gasPrice: '0',
+    gasLimit: '0',
     denomination,
     decimals,
   });
@@ -51,20 +43,13 @@ const UndelegateModal = ({
           return bnAmount.comparedTo(1) >= 0;
         }
       )
-      .test(
-        'dustLeft',
-        `You can not keep under ${denominate({
-          input: minDust,
-          denomination,
-          decimals,
-          showLastNonZeroDecimal: true,
-        })} ${egldLabel}. Use the Max option.`,
-        value => {
-          const bnAmount = new BigNumber(value !== undefined ? value : '');
-          const bnAvailable = new BigNumber(available);
-          return bnAvailable.minus(bnAmount).comparedTo(bnMinDust) >= 0;
-        }
-      ),
+      .test('dustLeft', `You can not keep under 1 ${egldLabel}. Use the Max option.`, value => {
+        const bnAmount = new BigNumber(value !== undefined ? value : '');
+        const bnAvailable = new BigNumber(available);
+        return (
+          bnAvailable.minus(bnAmount).comparedTo(1) >= 0 || bnAvailable.comparedTo(bnAmount) == 0
+        );
+      }),
   });
   return (
     <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
@@ -102,7 +87,7 @@ const UndelegateModal = ({
               const getEntireBalance = (e: React.MouseEvent) => {
                 e.preventDefault();
                 if (available !== undefined) {
-                  setFieldValue('amount', entireBalanceMinusDust);
+                  setFieldValue('amount', available);
                 }
               };
 
