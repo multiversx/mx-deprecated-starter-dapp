@@ -4,7 +4,7 @@ import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
 import { useContext } from 'context';
 import { AgencyMetadata, DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
+import ModalActionButton from 'components/ModalActionButton';
 import { useDelegationWallet } from 'helpers/useDelegation';
 import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 
@@ -137,7 +137,7 @@ const SetAgencyMetaDataModal = () => {
                         <ErrorMessage component="div" name="keybase" className="invalid-feedback" />
                       </div>
                     </div>
-                    <SubmitAndCloseButtonsForModal
+                    <ModalActionButton
                       action="setPercentageFe"
                       actionTitle="Continue"
                       handleClose={() => {

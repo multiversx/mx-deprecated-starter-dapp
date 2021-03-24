@@ -1,4 +1,4 @@
-import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
+import ModalActionButton from 'components/ModalActionButton';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { object, array, mixed } from 'yup';
@@ -52,7 +52,7 @@ const PemUpload = ({
               />
             </div>
             <div className="d-flex align-items-center justify-content-center flex-wrap mt-spacer">
-              <SubmitAndCloseButtonsForModal
+              <ModalActionButton
                 action="addNodes"
                 actionTitle="Add nodes"
                 handleClose={handleClose}

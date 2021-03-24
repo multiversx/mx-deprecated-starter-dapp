@@ -20,7 +20,7 @@ const ConfirmOnLedgerModal = ({
   const [ledgerError, setLedgerDataError] = useState('');
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
-  const displayTransactionModal = (txHash: TransactionHash) => {
+  const closeTransactionModal = (txHash: TransactionHash) => {
     setTxHash(txHash);
     handleClose();
     setShowTransactionStatus(true);
@@ -28,10 +28,11 @@ const ConfirmOnLedgerModal = ({
   const history = useHistory();
 
   const handleCloseModal = () => {
+    setShowTransactionStatus(false);
     history.push('');
   };
   const { sendTransaction } = useDelegation({
-    handleClose: displayTransactionModal,
+    handleClose: closeTransactionModal,
     setLedgerDataError,
   });
 

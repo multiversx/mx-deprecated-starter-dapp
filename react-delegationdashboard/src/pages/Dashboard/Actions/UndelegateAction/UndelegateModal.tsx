@@ -9,7 +9,7 @@ import { denomination, decimals, minDust } from 'config';
 import { object, string } from 'yup';
 import { ActionModalType } from 'helpers/types';
 import denominate from 'components/Denominate/formatters';
-import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
+import ModalActionButton from 'components/ModalActionButton';
 
 const UndelegateModal = ({
   show,
@@ -133,7 +133,7 @@ const UndelegateModal = ({
                       </small>
                     )}
                   </div>
-                  <SubmitAndCloseButtonsForModal
+                  <ModalActionButton
                     action="Undelegate"
                     actionTitle="Continue"
                     handleClose={handleClose}

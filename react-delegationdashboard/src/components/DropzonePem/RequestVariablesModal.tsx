@@ -1,4 +1,4 @@
-import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
+import ModalActionButton from 'components/ModalActionButton';
 import * as React from 'react';
 import { Modal } from 'react-bootstrap';
 import { DropzoneFileType } from '.';

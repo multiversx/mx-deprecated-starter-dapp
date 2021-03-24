@@ -5,7 +5,7 @@ interface SubmitAndCloseButtonsType {
   handleClose: () => void;
 }
 
-const SubmitAndCloseButtonsForModal = ({
+const ModalActionButton = ({
   action,
   actionTitle,
   isHandleActionDisabled,
@@ -31,4 +31,4 @@ const SubmitAndCloseButtonsForModal = ({
   );
 };
 
-export default SubmitAndCloseButtonsForModal;
+export default ModalActionButton;
