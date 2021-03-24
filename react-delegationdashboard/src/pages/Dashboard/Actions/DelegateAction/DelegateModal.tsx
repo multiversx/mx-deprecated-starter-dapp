@@ -8,6 +8,7 @@ import Denominate from 'components/Denominate';
 import { entireBalance } from 'helpers';
 import { denomination, decimals } from 'config';
 import denominate from 'components/Denominate/formatters';
+import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
 
 interface DelegateModalType {
   show: boolean;
@@ -199,19 +200,12 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                     </div>
                   )}
                   <div className="d-flex justify-content-center align-items-center flex-wrap">
-                    {!isFullDelegationCapContract() && (
-                      <button
-                        type="submit"
-                        className="btn btn-primary mx-2"
-                        id="continueDelegate"
-                        data-testid="continueDelegate"
-                      >
-                        Continue
-                      </button>
-                    )}
-                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
-                      Close
-                    </button>
+                    <SubmitAndCloseButtonsForModal
+                      action="delegate"
+                      actionTitle="Continue"
+                      isHandleActionDisabled={isFullDelegationCapContract()}
+                      handleClose={handleClose}
+                    />
                   </div>
                 </form>
               );

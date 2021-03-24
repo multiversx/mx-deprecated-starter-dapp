@@ -1,12 +1,14 @@
 interface SubmitAndCloseButtonsType {
   action: string;
   actionTitle: string;
+  isHandleActionDisabled?: boolean;
   handleClose: () => void;
 }
 
 const SubmitAndCloseButtonsForModal = ({
   action,
   actionTitle,
+  isHandleActionDisabled,
   handleClose,
 }: SubmitAndCloseButtonsType) => {
   return (
@@ -17,6 +19,7 @@ const SubmitAndCloseButtonsForModal = ({
           className="btn btn-primary mx-2"
           id={`continue${action}`}
           data-testid={`continue${action}`}
+          disabled={isHandleActionDisabled}
         >
           {actionTitle}
         </button>
