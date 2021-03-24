@@ -88,7 +88,7 @@ const Views = () => {
         )}% of total nodes`}
       />
       <StatCard
-        title="Computed APR"
+        title="Aproximate APR"
         value={aprPercentage}
         valueUnit=""
         color="lightgreen"
@@ -105,7 +105,7 @@ const Views = () => {
       >
         {location.pathname === '/owner' && <SetPercentageFeeAction />}
       </StatCard>
-      
+
     </div>
   );
 };

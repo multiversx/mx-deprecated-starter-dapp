@@ -94,7 +94,7 @@ const Views = () => {
         )}% of total nodes`}
       />
       <StatCard
-        title="Computed APR"
+        title="Aproximate APR"
         value={aprPercentage}
         valueUnit=""
         color="lightgreen"

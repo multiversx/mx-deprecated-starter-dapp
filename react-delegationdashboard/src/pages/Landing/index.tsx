@@ -15,7 +15,7 @@ import Slider from 'react-rangeslider';
 import 'react-rangeslider/lib/index.css';
 
 const Landing = () => {
-  
+
   const { loading, error, loggedIn, egldLabel } = useContext();
 
   let [count2 , setCount2] : any = useState(50);
@@ -51,7 +51,7 @@ const Landing = () => {
     }, []);
 
   return (
-    
+
     <div className="dashboard w-100">
       <div className="card border-0">
         <div className="home__container header card-header d-flex border-0 ">
@@ -75,7 +75,7 @@ const Landing = () => {
                   <div className="card my-spacer text-center">
                     <div className="card-body p-spacer mx-lg-spacer">
                       <p className="lead mb-spacer">
-                        Delegate Elrond ({egldLabel}) and earn up to 25% APY!
+                        Stake your Elrond ({egldLabel}) with us and we'll make sure that you get the rewards !
                       </p>
                       <p className="mb-spacer">Please select your login method:</p>
                       <div>
@@ -110,7 +110,7 @@ const Landing = () => {
               valueUnit="xEGLD"
               color="lightgreen"
               realMoney={'$' + setDecimals(((egld)*stakingFactor*count2)) }
-              
+
             />
             <StatCard
               title="Weekly"
@@ -118,7 +118,7 @@ const Landing = () => {
               valueUnit="xEGLD"
               color="lightgreen"
               realMoney={'$' + setDecimals(((egld)*stakingFactor*count2*7)) }
-              
+
             />
             <StatCard
               title="Monthly"
@@ -126,7 +126,7 @@ const Landing = () => {
               valueUnit="xEGLD"
               color="lightgreen"
               realMoney={'$' + setDecimals(((egld)*stakingFactor*count2*30)) }
-              
+
             />
             <StatCard
               title="Yearly"
@@ -134,7 +134,7 @@ const Landing = () => {
               valueUnit="xEGLD"
               color="lightgreen"
               realMoney={'$' + setDecimals(((egld)*stakingFactor*count2*365)) }
-              
+
             />
 
           </div>
