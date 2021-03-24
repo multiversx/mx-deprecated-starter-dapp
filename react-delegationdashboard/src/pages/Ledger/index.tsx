@@ -2,18 +2,20 @@ import React from 'react';
 import { useContext, useDispatch } from 'context';
 import AddressTable from './AddressTable';
 import ConfirmedAddress from './ConfirmedAddress';
-import LedgerConnect from './LedgerConnect';
 import { HWProvider } from '@elrondnetwork/erdjs/out';
 import { useHistory } from 'react-router-dom';
+import LedgerConnect from './LedgerConnect';
 
 const Ledger = () => {
   const { dapp } = useContext();
   const dispatch = useDispatch();
   const history = useHistory();
   const { ledgerAccount } = useContext();
+  const [error, setError] = React.useState('');
   const [showAddressTable, setShowAddressTable] = React.useState(false);
 
   const onClick = () => {
+    setError('');
     if (ledgerAccount !== undefined) {
       const hwWalletP = new HWProvider(dapp.proxy);
       hwWalletP
@@ -33,6 +35,7 @@ const Ledger = () => {
               history.push('/dashboard');
             })
             .catch((err: any) => {
+              setError('Check if Elrond app is open on Ledger');
               dispatch({ type: 'loading', loading: false });
               console.warn(err);
             });
@@ -44,15 +47,33 @@ const Ledger = () => {
       setShowAddressTable(true);
     }
   };
-
-  switch (true) {
-    case ledgerAccount !== undefined:
-      return <ConfirmedAddress />;
-    case showAddressTable:
-      return <AddressTable setShowAddressTable={setShowAddressTable} onClick={onClick} />;
-    default:
-      return <LedgerConnect onClick={onClick} />;
-  }
+  return (
+    <>
+      {(() => {
+        switch (true) {
+          case ledgerAccount !== undefined && !error:
+            return <ConfirmedAddress />;
+          case showAddressTable:
+            return (
+              <AddressTable
+                setShowAddressTable={setShowAddressTable}
+                onClick={onClick}
+                setError={setError}
+              />
+            );
+          case error !== '':
+            return <LedgerConnect onClick={onClick} error={error} />;
+          default:
+            // return (
+            //   <button onClick={onClick} className="btn btn-primary px-sm-spacer mx-1 mx-sm-3">
+            //     Ledger
+            //   </button>
+            // );
+            return <LedgerConnect onClick={onClick} error={error} />;
+        }
+      })()}
+    </>
+  );
 };
 
 export default Ledger;

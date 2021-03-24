@@ -66,7 +66,7 @@ const CheckYourLedgerModal = ({
             <div className="mb-spacer">
               <FontAwesomeIcon
                 icon={faHourglass}
-                className={`text-white ml-1 ${spin ? 'fa-spin' : ''}`}
+                className={`text-white ml-1 ${spin && ledgerError === '' ? 'fa-spin' : ''}`}
               />
             </div>
             <div className="mb-spacer" data-testid="claimRewardsTitle">

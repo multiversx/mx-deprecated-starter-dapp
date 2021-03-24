@@ -18,7 +18,7 @@ const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string })
     let activation = Buffer.from(automaticFlag === 'true' ? 'false' : 'true').toString('hex');
     let txArguments = new DelegationTransactionType('0', 'setAutomaticActivation', activation);
     if (ledgerAccount) {
-      setShowCheckYourLedgerModal(false);
+      setShowAutomaticActivationModal(false);
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {

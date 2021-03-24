@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import { useContext } from 'context';
 export interface LedgerValidationTransactionType {
   show: boolean;
   title: string;
@@ -18,6 +19,7 @@ const LedgerValidationTransaction = ({
   argumentsTx,
   handleCloseModal,
 }: LedgerValidationTransactionType) => {
+  const { egldLabel } = useContext();
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(argumentsTx);
 
@@ -49,7 +51,7 @@ const LedgerValidationTransaction = ({
 
             {argumentsTx.value && argumentsTx.value !== '0' && (
               <div className="mb-spacer" data-testid="transactionTitle">
-                {argumentsTx.value}
+                Amount: {argumentsTx.value} {egldLabel}
               </div>
             )}
             {argumentsTx.args !== '' && (

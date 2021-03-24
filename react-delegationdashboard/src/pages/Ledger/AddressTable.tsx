@@ -7,19 +7,22 @@ import AddressRow from './AddressRow';
 import LedgerConnect from './LedgerConnect';
 import { useHistory } from 'react-router-dom';
 import State from 'components/State';
+import { ledgerErrorCodes } from 'helpers/ledgerErrorCodes';
 
 const AddressTable = ({
   setShowAddressTable,
   onClick,
+  setError,
 }: {
   setShowAddressTable: React.Dispatch<React.SetStateAction<boolean>>;
   onClick: () => void;
+  setError: (error: string) => void;
 }) => {
   const { dapp, loading } = useContext();
   const dispatch = useDispatch();
   const [startIndex, setStartIndex] = React.useState(0);
   const [accounts, setAccounts] = React.useState<string[]>([]);
-  const [error, setError] = React.useState('');
+  const [error] = React.useState('');
   const [selectedAddress, setSelectedAddress] = React.useState('');
   const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>();
   const hwWalletP = new HWProvider(dapp.proxy);
@@ -68,20 +71,13 @@ const AddressTable = ({
           address: selectedAddress,
         },
       });
-
-      dispatch({
-        type: 'ledgerLogin',
-        ledgerLogin: {
-          index: selectedIndex,
-          loginType: 'ledger',
-        },
-      });
       dispatch({ type: 'loading', loading: true });
       const hwWalletProvider = new HWProvider(dapp.proxy, selectedIndex);
       hwWalletProvider
         .init()
         .then((success: any) => {
           if (!success) {
+            setError('could not initialise ledger app, make sure Elrond app is open');
             dispatch({ type: 'loading', loading: false });
             console.warn('could not initialise ledger app, make sure Elrond app is open');
             return;
@@ -93,14 +89,31 @@ const AddressTable = ({
               dispatch({ type: 'setProvider', provider: hwWalletProvider });
               dispatch({ type: 'login', address });
 
+              dispatch({
+                type: 'ledgerLogin',
+                ledgerLogin: {
+                  index: selectedIndex,
+                  loginType: 'ledger',
+                },
+              });
               history.push('/dashboard');
             })
             .catch((err: any) => {
+              if (err.statusCode in ledgerErrorCodes) {
+                setError((ledgerErrorCodes as any)[err.statusCode].message);
+                dispatch({
+                  type: 'setLedgerAccount',
+                  ledgerAccount: undefined,
+                });
+              }
               dispatch({ type: 'loading', loading: false });
               console.warn(err);
             });
         })
         .catch((err: any) => {
+          if (err.statusCode in ledgerErrorCodes) {
+            setError((ledgerErrorCodes as any)[err.statusCode].message);
+          }
           dispatch({ type: 'loading', loading: false });
           console.warn('could not initialise ledger app, make sure Elrond app is open', err);
         });
@@ -114,7 +127,7 @@ const AddressTable = ({
         <State icon={faCircleNotch} iconClass="fa-spin text-primary" title="Waiting for device" />
       );
     case error !== '':
-      return <LedgerConnect onClick={onClick} />;
+      return <LedgerConnect onClick={onClick} error={error} />;
 
     default:
       return (
@@ -163,13 +176,6 @@ const AddressTable = ({
                   >
                     Next <FontAwesomeIcon size="sm" icon={faChevronRight} />
                   </button>
-                </div>
-                <div className="mt-3">
-                  {error && (
-                    <p className="text-danger m-0 pb-3" data-testid="ledgerError">
-                      {error}
-                    </p>
-                  )}
                 </div>
                 <button
                   className="btn btn-primary px-spacer mt-4"
