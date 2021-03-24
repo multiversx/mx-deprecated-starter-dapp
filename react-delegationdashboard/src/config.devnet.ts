@@ -1,6 +1,7 @@
 import { object, string, boolean, InferType } from 'yup';
 import { DelegationContractType } from './helpers/types';
 
+export const minDust: string = '5000000000000000'; // 0.005 EGLD
 export const decimals: number = 2;
 export const denomination: number = 18;
 export const genesisTokenSuply: number = 20000000;

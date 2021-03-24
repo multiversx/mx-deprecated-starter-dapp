@@ -36,6 +36,7 @@ export interface StateType {
   totalActiveStake: string;
   numberOfActiveNodes: string;
   numUsers: number;
+  minDelegationAmount: number;
   aprPercentage: string;
   contractOverview: ContractOverview;
   networkConfig: NetworkConfig;
@@ -66,7 +67,7 @@ export const emptyContractOverview: ContractOverview = {
   maxDelegationCap: '',
   initialOwnerFunds: '',
   automaticActivation: 'false',
-  withDelegationCap: false,
+  withDelegationCap: 'false',
   changeableServiceFee: false,
   reDelegationCap: 'false',
   createdNounce: false,
@@ -106,6 +107,7 @@ export const initialState = () => {
     agencyMetaData: emptyAgencyMetaData,
     numberOfActiveNodes: '...',
     numUsers: 0,
+    minDelegationAmount: -1,
     totalActiveStake: '...',
     aprPercentage: '...',
   };

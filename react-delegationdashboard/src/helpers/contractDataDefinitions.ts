@@ -5,7 +5,7 @@ export class ContractOverview {
   maxDelegationCap: string;
   initialOwnerFunds?: string;
   automaticActivation: string;
-  withDelegationCap?: boolean;
+  withDelegationCap?: string;
   changeableServiceFee?: boolean;
   reDelegationCap: string;
   createdNounce?: boolean;
@@ -16,7 +16,7 @@ export class ContractOverview {
     maxDelegationCap: string = '',
     initialOwnerFunds?: string,
     automaticActivation: string = 'false',
-    withDelegationCap?: boolean,
+    withDelegationCap: string = 'false',
     changeableServiceFee?: boolean,
     reDelegationCap: string = 'false',
     createdNounce?: boolean,
