@@ -5,7 +5,7 @@ import DelegationCapModal from './DelegationCapModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useContext } from 'context';
 import { useDelegationWallet } from 'helpers/useDelegation';
-import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 
 const UpdateDelegationCapAction = () => {
   const { ledgerAccount } = useContext();
@@ -57,7 +57,7 @@ const UpdateDelegationCapAction = () => {
         }}
         handleContinue={handleUpdateDelegationCap}
       />
-      <CheckYourLedgerModal
+      <ConfirmOnLedgerModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

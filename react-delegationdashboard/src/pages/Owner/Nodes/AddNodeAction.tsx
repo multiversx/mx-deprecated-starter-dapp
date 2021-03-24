@@ -5,7 +5,7 @@ import { BLS } from '@elrondnetwork/erdjs/out';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
 import { useContext } from 'context';
-import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 
 const AddNodeAction = () => {
   const { ledgerAccount } = useContext();
@@ -67,7 +67,7 @@ const AddNodeAction = () => {
         variables={addNodesRequest.variables}
         data={addNodesRequest.data}
       />
-      <CheckYourLedgerModal
+      <ConfirmOnLedgerModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

@@ -1,4 +1,4 @@
-import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 import OwnerActionModal from 'components/Overview/OwnerActionModal';
 import { useContext } from 'context';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
@@ -53,7 +53,7 @@ const ReDelegateCapActivationAction = ({ automaticFlag }: { automaticFlag: strin
         }}
         handleContinue={handleReDelegationCapActivation}
       />
-      <CheckYourLedgerModal
+      <ConfirmOnLedgerModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

@@ -1,4 +1,4 @@
-import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 import { useContext } from 'context';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
@@ -47,7 +47,7 @@ const SetPercentageFeeAction = () => {
         }}
         handleContinue={handleUpdateFee}
       />
-      <CheckYourLedgerModal
+      <ConfirmOnLedgerModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

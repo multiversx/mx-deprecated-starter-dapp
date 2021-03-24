@@ -6,7 +6,7 @@ import { useContext } from 'context';
 import { AgencyMetadata, DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import SubmitAndCloseButtonsForModal from 'components/SubmitAndCloseButtonsForModal';
 import { useDelegationWallet } from 'helpers/useDelegation';
-import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 
 const SetAgencyMetaDataModal = () => {
   const { agencyMetaData, ledgerAccount } = useContext();
@@ -151,7 +151,7 @@ const SetAgencyMetaDataModal = () => {
           </div>
         </div>
       </Modal>
-      <CheckYourLedgerModal
+      <ConfirmOnLedgerModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

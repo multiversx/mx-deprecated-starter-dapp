@@ -5,21 +5,18 @@ import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { TransactionHash } from '@elrondnetwork/erdjs/out';
 import TransactionStatusModal from 'components/LedgerTransactionStatus';
 import { useHistory } from 'react-router-dom';
-import useInterval from 'helpers/useInterval';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHourglass } from '@fortawesome/free-solid-svg-icons';
-export interface CheckYourLedgerModalType {
+import { useContext } from 'context';
+export interface ConfirmOnLedgerModalType {
   show: boolean;
   transactionArguments: DelegationTransactionType;
   handleClose: () => void;
 }
-const CheckYourLedgerModal = ({
+const ConfirmOnLedgerModal = ({
   show,
   transactionArguments,
   handleClose,
-}: CheckYourLedgerModalType) => {
-  const [spin, setSpin] = useState(false);
-  const [delay] = useState(1000);
+}: ConfirmOnLedgerModalType) => {
+  const { egldLabel, delegationContract } = useContext();
   const [ledgerError, setLedgerDataError] = useState('');
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
@@ -29,12 +26,6 @@ const CheckYourLedgerModal = ({
     setShowTransactionStatus(true);
   };
   const history = useHistory();
-  useInterval(
-    () => {
-      setSpin(currentSpin => !currentSpin);
-    },
-    ledgerError === '' ? delay : null
-  );
 
   const handleCloseModal = () => {
     history.push('');
@@ -59,32 +50,38 @@ const CheckYourLedgerModal = ({
         centered
       >
         <div className="card">
-          <div className="card-body p-spacer text-center">
-            <div className="h6 mb-spacer" data-testid="transactionTitle">
-              Ledger Flow
+          <div className="card-body p-spacer ">
+            <div className="h6 mb-spacer text-center" data-testid="transactionTitle">
+              Confirm on ledger
             </div>
-            <div className="mb-spacer">
-              <FontAwesomeIcon
-                icon={faHourglass}
-                className={`text-white ml-1 ${spin && ledgerError === '' ? 'fa-spin' : ''}`}
-              />
+            <div className="form-group" data-testid="transactionTitle">
+              <span className="form-label">To: </span>
+              {delegationContract}
             </div>
-            <div className="mb-spacer" data-testid="claimRewardsTitle">
-              Check your Ledger
+            <div className="form-group" data-testid="transactionTitle">
+              <span className="form-label">Amount: </span>
+              {transactionArguments.value} {egldLabel}
+            </div>
+            <div className="form-group">
+              <span className="form-label">Data: </span>
+              {transactionArguments.type}
+              {`${transactionArguments.args !== '' ? '@' + transactionArguments.args : ''}`}
             </div>
             {ledgerError && (
               <p className="text-danger d-flex justify-content-center align-items-center">
                 {ledgerError}
               </p>
             )}
-            <button
-              id="closeButton"
-              className="btn btn-primary mx-2"
-              onClick={handleCloseModal}
-              disabled={ledgerError === ''}
-            >
-              Close
-            </button>
+            <div className="text-center">
+              <button
+                id="closeButton"
+                className="btn btn-primary mx-2 "
+                onClick={handleCloseModal}
+                disabled={ledgerError === ''}
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </Modal>
@@ -93,4 +90,4 @@ const CheckYourLedgerModal = ({
   );
 };
 
-export default CheckYourLedgerModal;
+export default ConfirmOnLedgerModal;

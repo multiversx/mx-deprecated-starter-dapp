@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useContext } from 'context';
 import DelegateModal from './DelegateModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 import { useDelegationWallet } from 'helpers/useDelegation';
 
 const DelegateAction = () => {
@@ -43,7 +43,7 @@ const DelegateAction = () => {
         }}
         handleContinue={handleDelegate}
       />
-      <CheckYourLedgerModal
+      <ConfirmOnLedgerModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

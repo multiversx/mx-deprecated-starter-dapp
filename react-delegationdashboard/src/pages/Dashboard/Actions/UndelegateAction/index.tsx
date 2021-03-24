@@ -4,7 +4,7 @@ import { nominateValToHex } from 'helpers/nominate';
 import UndelegateModal from './UndelegateModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
-import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 
 interface UndelegateModalType {
   balance: string;
@@ -44,7 +44,7 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
         }}
         handleContinue={handleUndelegate}
       />
-      <CheckYourLedgerModal
+      <ConfirmOnLedgerModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

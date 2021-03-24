@@ -10,9 +10,9 @@ import { nodeActions } from './helpers/nodeTypes';
 import { nodeTransactions } from './helpers/stakeHooks';
 import { stakingContract } from 'config';
 import { NodeType } from './helpers/nodeType';
-import LedgerValidationTransaction from 'components/LedgerAction';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake' | 'remove';
 
@@ -28,6 +28,7 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const { explorerAddress, dapp, ledgerAccount } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
   const [selectedAction, setSelectedAction] = useState('');
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
     new DelegationTransactionType('', '')
   );
@@ -37,9 +38,8 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const handleAction = (action: ActionType) => {
     const txArguments = nodeTransactions[action]({ blsKey: key.blsKey });
     if (ledgerAccount) {
-      setSelectedAction(action);
       setTransactionArguments(txArguments);
-      setShowDelegateModal(true);
+      setShowCheckYourLedgerModal(true);
     } else {
       sendTransactionWallet(txArguments);
     }
@@ -139,12 +139,12 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
           </Dropdown.Menu>
         </Dropdown>
       </td>
-      <LedgerValidationTransaction
-        show={showDelegateModal}
-        argumentsTx={transactionArguments}
-        action="Confirm"
-        title={`${selectedAction} Node`}
-        handleCloseModal={() => setShowDelegateModal(false)}
+      <ConfirmOnLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
       />
     </tr>
   );

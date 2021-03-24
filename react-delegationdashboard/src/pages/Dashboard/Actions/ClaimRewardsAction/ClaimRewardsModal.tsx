@@ -4,7 +4,7 @@ import { useContext } from 'context';
 import BigNumber from 'bignumber.js';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
-import CheckYourLedgerModal from 'components/CheckYourLedgerModal';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 export interface ClaimRewardsModalType {
   show: boolean;
   title: string;
@@ -94,7 +94,7 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
           </div>
         </div>
       </Modal>
-      <CheckYourLedgerModal
+      <ConfirmOnLedgerModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {
