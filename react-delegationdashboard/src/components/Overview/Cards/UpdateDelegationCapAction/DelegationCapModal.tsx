@@ -35,8 +35,6 @@ const DelegationCapModal = ({
                 input: totalActiveStake,
                 denomination,
                 decimals,
-                showLastNonZeroDecimal: false,
-                addCommas: false,
               }),
             }}
             onSubmit={values => {
@@ -51,8 +49,6 @@ const DelegationCapModal = ({
                     input: totalActiveStake,
                     denomination,
                     decimals,
-                    showLastNonZeroDecimal: false,
-                    addCommas: false,
                   })} ${egldLabel} or 0 ${egldLabel}`,
                   value => {
                     const bnAmount = new BigNumber(value !== undefined ? value : '');
@@ -61,8 +57,6 @@ const DelegationCapModal = ({
                         input: totalActiveStake,
                         denomination,
                         decimals,
-                        showLastNonZeroDecimal: false,
-                        addCommas: false,
                       })
                     );
                     return comparationResult >= 0 || bnAmount.comparedTo(0) == 0;

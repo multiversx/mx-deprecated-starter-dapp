@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import { ErrorMessage, Formik } from 'formik';
 import { entireBalance } from 'helpers';
 import Denominate from 'components/Denominate';
-import { denomination, decimals, minDust } from 'config';
+import { denomination, decimals } from 'config';
 import { object, string } from 'yup';
 import { ActionModalType } from 'helpers/types';
 import denominate from 'components/Denominate/formatters';
@@ -37,7 +37,6 @@ const UndelegateModal = ({
           input: minDelegationAmount.toFixed(),
           denomination,
           decimals,
-          showLastNonZeroDecimal: false,
         })} ${egldLabel}`,
         value => {
           const bnAmount = new BigNumber(value !== undefined ? value : '');
@@ -66,7 +65,6 @@ const UndelegateModal = ({
                 input: minDelegationAmount.toFixed(),
                 denomination,
                 decimals,
-                showLastNonZeroDecimal: false,
               }),
             }}
             onSubmit={values => {

@@ -34,7 +34,6 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
       decimals,
       denomination,
       input: value.returnData[3].asBigInt.toFixed(),
-      showLastNonZeroDecimal: false,
     });
     return new ContractOverview(
       value.returnData[0].asHex.toString(),

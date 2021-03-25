@@ -46,13 +46,11 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
         input: totalActiveStake,
         denomination,
         decimals,
-        showLastNonZeroDecimal: false,
       }).replace(/,/g, '');
       const maxDelegationCap = denominate({
         input: contractOverview.maxDelegationCap,
         denomination,
         decimals,
-        showLastNonZeroDecimal: false,
       }).replace(/,/g, '');
       const availableToDelegate = new BigNumber(maxDelegationCap).minus(new BigNumber(totalActive));
       if (bnAvailable.comparedTo(availableToDelegate) >= 0) {
@@ -95,7 +93,6 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                 input: minDelegationAmount.toFixed(),
                 denomination,
                 decimals,
-                showLastNonZeroDecimal: false,
               }),
             }}
             onSubmit={values => {
@@ -110,7 +107,6 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                     input: minDelegationAmount.toFixed(),
                     denomination,
                     decimals,
-                    showLastNonZeroDecimal: false,
                   })} ${egldLabel}`,
                   value => {
                     const bnAmount = new BigNumber(value !== undefined ? value : '');
