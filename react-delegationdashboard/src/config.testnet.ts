@@ -1,6 +1,7 @@
 import { object, string, boolean, InferType } from 'yup';
 import { DelegationContractType } from './helpers/types';
 
+export const minDust: string = '5000000000000000'; // 0.005 EGLD
 export const decimals: number = 2;
 export const denomination: number = 18;
 export const genesisTokenSuply: number = 20000000;
@@ -24,6 +25,8 @@ export const auctionContract: string =
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqplllst77y4l';
 export const stakingContract: string =
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7';
+export const delegationManagerContract: string =
+  'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllslmq6y6';
 
 export const network: NetworkType = {
   id: 'testnet',

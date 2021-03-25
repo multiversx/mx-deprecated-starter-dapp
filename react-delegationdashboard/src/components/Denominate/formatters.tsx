@@ -67,7 +67,7 @@ interface DenominateType {
   input: string;
   denomination: number;
   decimals: number;
-  showLastNonZeroDecimal: boolean;
+  showLastNonZeroDecimal?: boolean;
   addCommas?: boolean;
 }
 
