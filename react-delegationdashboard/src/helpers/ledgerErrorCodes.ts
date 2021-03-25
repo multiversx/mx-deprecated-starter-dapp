@@ -75,4 +75,12 @@ export const ledgerErrorCodes = {
     code: 'ERR_DATA_TOO_LONG',
     message: 'Data too long',
   },
+  0x6e0f: {
+    code: 'ERR_WRONG_TX_OPTIONS',
+    message: 'Invalid transaction options',
+  },
+  0x6e11: {
+    code: 'ERR_SIGN_TX_DEPRECATED',
+    message: 'Regular transaction signing is deprecated in this version. Use hash signing.',
+  },
 };

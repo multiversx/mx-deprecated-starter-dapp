@@ -30,7 +30,7 @@ const ConfirmOnLedgerModal = ({
 
   const handleCloseModal = () => {
     setShowTransactionStatus(false);
-    if (ledgerError === 'Your session has expired please go and login again') {
+    if (ledgerError === 'Your session has expired. Please login again') {
       dispatch({ type: 'logout', provider: dapp.provider });
     }
     history.push('');

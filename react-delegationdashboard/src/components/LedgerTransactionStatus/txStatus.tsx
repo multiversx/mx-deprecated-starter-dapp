@@ -3,7 +3,7 @@ const txStatus = {
   notExecuted: 'Not Executed',
   invalid: 'Invalid',
   success: 'Success',
-  fail: 'fail',
+  fail: 'Fail',
 };
 
 export default txStatus;

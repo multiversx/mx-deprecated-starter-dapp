@@ -16,6 +16,9 @@ import {
 } from 'helpers/contractDataDefinitions';
 import { denomination, decimals, network, NetworkType } from '../config';
 import { getItem } from '../storage/session';
+const defaultGatewayAddress = 'https://gateway.elrond.com';
+const defaultApiAddress = 'https://gateway.elrond.com';
+const defaultExplorerAddress = 'https://gateway.elrond.com';
 
 export const defaultNetwork: NetworkType = {
   id: 'not-configured',
@@ -107,7 +110,7 @@ export const initialState = () => {
             new ProxyProvider(
               sessionNetwork.gatewayAddress !== undefined
                 ? sessionNetwork?.gatewayAddress
-                : 'https://gateway.elrond.com/',
+                : defaultGatewayAddress,
               4000
             ),
             getItem('ledgerLogin').index
@@ -116,13 +119,11 @@ export const initialState = () => {
       proxy: new ProxyProvider(
         sessionNetwork.gatewayAddress !== undefined
           ? sessionNetwork?.gatewayAddress
-          : 'https://gateway.elrond.com/',
+          : defaultGatewayAddress,
         4000
       ),
       apiProvider: new ApiProvider(
-        sessionNetwork.apiAddress !== undefined
-          ? sessionNetwork?.apiAddress
-          : 'https://api.elrond.com/',
+        sessionNetwork.apiAddress !== undefined ? sessionNetwork?.apiAddress : defaultApiAddress,
         4000
       ),
     },
@@ -133,7 +134,7 @@ export const initialState = () => {
     address: getItem('address'),
     account: emptyAccount,
     egldLabel: sessionNetwork?.egldLabel,
-    explorerAddress: sessionNetwork.explorerAddress || 'https://explorer.elrond.com',
+    explorerAddress: sessionNetwork.explorerAddress || defaultExplorerAddress,
     delegationContract: sessionNetwork.delegationContract,
     contractOverview: emptyContractOverview,
     networkConfig: emptyNetworkConfig,

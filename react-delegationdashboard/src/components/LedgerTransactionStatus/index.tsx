@@ -45,9 +45,6 @@ const TransactionStatusModal = ({ show, txHash }: TransactionStatusModalType) =>
         .getTransaction(hash)
         .then(transaction => {
           switch (true) {
-            case getStatus(txStatus.pending):
-              setTxStatus({ icon: faHourglass, status: 'Pending', title: 'Procesing request' });
-              break;
             case getStatus(txStatus.success):
               setTxStatus({ icon: faCheck, status: 'Success', title: 'Success' });
               break;

@@ -23,7 +23,7 @@ export default function useDelegation({ handleClose, setLedgerDataError }: UseDe
           setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
         }
         if (e.message === 'HWApp not initialised, call init() first')
-          setLedgerDataError('Your session has expired please go and login again');
+          setLedgerDataError('Your session has expired. Please login again');
         console.error(`${transactionArguments.type}`, e);
       });
   };

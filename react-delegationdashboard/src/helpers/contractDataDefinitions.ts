@@ -1,4 +1,4 @@
-import { ChainID, Nonce } from '@elrondnetwork/erdjs/out';
+import { ChainID, Nonce } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 
 export class ContractOverview {

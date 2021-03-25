@@ -4,7 +4,6 @@ import { useContext, useDispatch } from 'context';
 import { HWProvider } from '@elrondnetwork/erdjs/out';
 import { faChevronLeft, faChevronRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import AddressRow from './AddressRow';
-import LedgerConnect from './LedgerConnect';
 import { useHistory } from 'react-router-dom';
 import State from 'components/State';
 import { ledgerErrorCodes } from 'helpers/ledgerErrorCodes';
