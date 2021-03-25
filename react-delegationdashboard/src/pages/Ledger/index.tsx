@@ -53,7 +53,7 @@ const Ledger = () => {
         switch (true) {
           case ledgerAccount !== undefined && !error:
             return <ConfirmedAddress />;
-          case showAddressTable:
+          case showAddressTable && !error:
             return (
               <AddressTable
                 setShowAddressTable={setShowAddressTable}
@@ -64,11 +64,6 @@ const Ledger = () => {
           case error !== '':
             return <LedgerConnect onClick={onClick} error={error} />;
           default:
-            // return (
-            //   <button onClick={onClick} className="btn btn-primary px-sm-spacer mx-1 mx-sm-3">
-            //     Ledger
-            //   </button>
-            // );
             return <LedgerConnect onClick={onClick} error={error} />;
         }
       })()}

@@ -32,6 +32,7 @@ export default function entireBalance({
           denomination,
           decimals,
           showLastNonZeroDecimal: true,
+          addCommas: false,
         })
       : '0';
 
@@ -42,6 +43,7 @@ export default function entireBalance({
           denomination,
           decimals,
           showLastNonZeroDecimal: true,
+          addCommas: false,
         })
       : entireBalance;
 

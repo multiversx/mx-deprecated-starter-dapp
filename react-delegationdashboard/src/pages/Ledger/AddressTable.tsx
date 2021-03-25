@@ -30,24 +30,34 @@ const AddressTable = ({
 
   const fetchAccounts = () => {
     dispatch({ type: 'loading', loading: true });
-    hwWalletP.init().then((success: any) => {
-      if (!success) {
+    hwWalletP
+      .init()
+      .then((success: any) => {
+        if (!success) {
+          dispatch({ type: 'loading', loading: false });
+          setError('could not initialise ledger app, make sure Elrond app is open');
+          console.warn('could not initialise ledger app, make sure Elrond app is open');
+          return;
+        }
+        hwWalletP
+          .getAccounts(startIndex, 5)
+          .then(accounts => {
+            setAccounts(accounts);
+            dispatch({ type: 'loading', loading: false });
+          })
+          .catch(err => {
+            setError('Check if Elrond app is open on Ledger');
+            console.error('error', err);
+            dispatch({ type: 'loading', loading: false });
+          });
+      })
+      .catch(err => {
+        if (err.statusCode in ledgerErrorCodes) {
+          setError((ledgerErrorCodes as any)[err.statusCode].message);
+        }
+        console.error('error', err);
         dispatch({ type: 'loading', loading: false });
-        console.warn('could not initialise ledger app, make sure Elrond app is open');
-        return;
-      }
-      hwWalletP
-        .getAccounts(startIndex, 5)
-        .then(accounts => {
-          setAccounts(accounts);
-          dispatch({ type: 'loading', loading: false });
-        })
-        .catch(e => {
-          dispatch({ type: 'loading', loading: false });
-          console.log('error', e);
-          setError('Check if Elrond app is open on Ledger');
-        });
-    });
+      });
   };
 
   React.useEffect(fetchAccounts, [startIndex]);
@@ -126,9 +136,6 @@ const AddressTable = ({
       return (
         <State icon={faCircleNotch} iconClass="fa-spin text-primary" title="Waiting for device" />
       );
-    case error !== '':
-      return <LedgerConnect onClick={onClick} error={error} />;
-
     default:
       return (
         <>
