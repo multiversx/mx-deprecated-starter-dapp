@@ -5,7 +5,7 @@ import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { TransactionHash } from '@elrondnetwork/erdjs/out';
 import TransactionStatusModal from 'components/LedgerTransactionStatus';
 import { useHistory } from 'react-router-dom';
-import { useContext } from 'context';
+import { useContext, useDispatch } from 'context';
 export interface ConfirmOnLedgerModalType {
   show: boolean;
   transactionArguments: DelegationTransactionType;
@@ -16,7 +16,8 @@ const ConfirmOnLedgerModal = ({
   transactionArguments,
   handleClose,
 }: ConfirmOnLedgerModalType) => {
-  const { egldLabel, delegationContract } = useContext();
+  const dispatch = useDispatch();
+  const { egldLabel, delegationContract, dapp } = useContext();
   const [ledgerError, setLedgerDataError] = useState('');
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
@@ -29,6 +30,9 @@ const ConfirmOnLedgerModal = ({
 
   const handleCloseModal = () => {
     setShowTransactionStatus(false);
+    if (ledgerError === 'Your session has expired please go and login again') {
+      dispatch({ type: 'logout', provider: dapp.provider });
+    }
     history.push('');
   };
   const { sendTransaction } = useDelegation({
