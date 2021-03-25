@@ -1,8 +1,24 @@
-import { IDappProvider, ProxyProvider, ApiProvider, WalletProvider } from '@elrondnetwork/erdjs';
+import {
+  IDappProvider,
+  ProxyProvider,
+  ApiProvider,
+  WalletProvider,
+  Nonce,
+  ChainID,
+  HWProvider,
+} from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
-import { AgencyMetadata, ContractOverview, NetworkConfig } from 'helpers/contractDataDefinitions';
+import {
+  AccountType,
+  AgencyMetadata,
+  ContractOverview,
+  NetworkConfig,
+} from 'helpers/contractDataDefinitions';
 import { denomination, decimals, network, NetworkType } from '../config';
 import { getItem } from '../storage/session';
+const defaultGatewayAddress = 'https://gateway.elrond.com';
+const defaultApiAddress = 'https://gateway.elrond.com';
+const defaultExplorerAddress = 'https://gateway.elrond.com';
 
 export const defaultNetwork: NetworkType = {
   id: 'not-configured',
@@ -26,6 +42,10 @@ export interface StateType {
   loading: boolean;
   error: string;
   loggedIn: boolean;
+  ledgerLogin: {
+    index: number;
+    loginType: string;
+  };
   address: string;
   egldLabel: string;
   denomination: number;
@@ -41,10 +61,14 @@ export interface StateType {
   contractOverview: ContractOverview;
   networkConfig: NetworkConfig;
   agencyMetaData: AgencyMetadata;
+  ledgerAccount?: {
+    index: number;
+    address: string;
+  };
 }
 export const emptyAccount: AccountType = {
   balance: '...',
-  nonce: 0,
+  nonce: new Nonce(0),
 };
 
 export const emptyAgencyMetaData: AgencyMetadata = {
@@ -59,6 +83,7 @@ export const emptyNetworkConfig: NetworkConfig = {
   roundsPassedInCurrentEpoch: -1,
   topUpFactor: -1,
   topUpRewardsGradientPoint: new BigNumber('-1'),
+  chainId: new ChainID('-1'),
 };
 
 export const emptyContractOverview: ContractOverview = {
@@ -80,27 +105,36 @@ export const initialState = () => {
     denomination: denomination,
     decimals: decimals,
     dapp: {
-      provider: new WalletProvider(sessionNetwork.walletAddress),
+      provider: getItem('ledgerLogin')
+        ? new HWProvider(
+            new ProxyProvider(
+              sessionNetwork.gatewayAddress !== undefined
+                ? sessionNetwork?.gatewayAddress
+                : defaultGatewayAddress,
+              4000
+            ),
+            getItem('ledgerLogin').index
+          )
+        : new WalletProvider(sessionNetwork.walletAddress),
       proxy: new ProxyProvider(
         sessionNetwork.gatewayAddress !== undefined
           ? sessionNetwork?.gatewayAddress
-          : 'https://gateway.elrond.com/',
+          : defaultGatewayAddress,
         4000
       ),
       apiProvider: new ApiProvider(
-        sessionNetwork.apiAddress !== undefined
-          ? sessionNetwork?.apiAddress
-          : 'https://api.elrond.com/',
+        sessionNetwork.apiAddress !== undefined ? sessionNetwork?.apiAddress : defaultApiAddress,
         4000
       ),
     },
     loading: false,
     error: '',
     loggedIn: !!getItem('logged_in'),
+    ledgerLogin: getItem('ledgerLogin'),
     address: getItem('address'),
     account: emptyAccount,
     egldLabel: sessionNetwork?.egldLabel,
-    explorerAddress: sessionNetwork.explorerAddress || 'https://explorer.elrond.com',
+    explorerAddress: sessionNetwork.explorerAddress || defaultExplorerAddress,
     delegationContract: sessionNetwork.delegationContract,
     contractOverview: emptyContractOverview,
     networkConfig: emptyNetworkConfig,
@@ -110,10 +144,12 @@ export const initialState = () => {
     minDelegationAmount: -1,
     totalActiveStake: '...',
     aprPercentage: '...',
+    ledgerAccount:
+      getItem('ledgerAccountIndex') && getItem('address')
+        ? {
+            index: getItem('ledgerAccountIndex'),
+            address: getItem('address'),
+          }
+        : undefined,
   };
 };
-
-export interface AccountType {
-  balance: string;
-  nonce: number;
-}

@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
+import ModalActionButton from 'components/ModalActionButton';
 
 const SetPercentageFeeSchema = object().shape({
   amount: string()
@@ -73,19 +74,11 @@ const SetPercentageFeeModal = ({
                     )}
                     <ErrorMessage component="div" name="amount" className="invalid-feedback" />
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap">
-                    <button
-                      type="submit"
-                      className="btn btn-primary mx-2"
-                      id="continueDelegate"
-                      data-testid="continueUndelegate"
-                    >
-                      Continue
-                    </button>
-                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
-                      Close
-                    </button>
-                  </div>
+                  <ModalActionButton
+                    action="setPercentageFe"
+                    actionTitle="Continue"
+                    handleClose={handleClose}
+                  />
                 </form>
               );
             }}

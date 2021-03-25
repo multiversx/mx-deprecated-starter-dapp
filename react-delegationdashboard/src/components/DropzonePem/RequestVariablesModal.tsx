@@ -1,7 +1,8 @@
+import ModalActionButton from 'components/ModalActionButton';
 import * as React from 'react';
 import { Modal } from 'react-bootstrap';
 import { DropzoneFileType } from '.';
-import PlaygroundPemUpload from './PemUpload';
+import PemUpload from './PemUpload';
 import { RequestType } from './Request';
 
 interface RequestVariablesModalType {
@@ -30,12 +31,8 @@ const RequestVariablesModal = ({
   const onSubmit = (pemFiles?: DropzoneFileType[]) => {
     if (typeof data !== 'string') {
       triggerDispatchEvent(`${data(pemFiles ? pemFiles : modalValues)}`);
-      handleClose();
     }
   };
-
-  const isPemUpload = variables && variables.some(variable => variable.type === 'pemUpload');
-
   return (
     <Modal show={show} className="modal-container" animation={false} centered>
       <div className="card">
@@ -66,32 +63,11 @@ const RequestVariablesModal = ({
                       </div>
                     </div>
                   )}
-                  {variable.type === 'pemUpload' && (
-                    <PlaygroundPemUpload handleClose={handleClose} onSubmit={onSubmit} />
-                  )}
+                  <PemUpload handleClose={handleClose} onSubmit={onSubmit} />
                 </div>
               );
             })}
           </div>
-          {!isPemUpload && (
-            <>
-              <div className="d-flex align-items-center flex-wrap mt-spacer">
-                <button
-                  type="submit"
-                  className="btn btn-oultine-primary mx-2"
-                  id="continueReq"
-                  onClick={() => {
-                    onSubmit();
-                  }}
-                >
-                  Continue
-                </button>
-                <div className="btn btn-link mx-2" onClick={handleClose}>
-                  Close
-                </div>
-              </div>
-            </>
-          )}
         </div>
       </div>
     </Modal>

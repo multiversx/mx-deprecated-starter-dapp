@@ -5,10 +5,11 @@ import BigNumber from 'bignumber.js';
 import { ErrorMessage, Formik } from 'formik';
 import { entireBalance } from 'helpers';
 import Denominate from 'components/Denominate';
-import { denomination, decimals, minDust } from 'config';
+import { denomination, decimals } from 'config';
 import { object, string } from 'yup';
 import { ActionModalType } from 'helpers/types';
 import denominate from 'components/Denominate/formatters';
+import ModalActionButton from 'components/ModalActionButton';
 
 const UndelegateModal = ({
   show,
@@ -36,7 +37,6 @@ const UndelegateModal = ({
           input: minDelegationAmount.toFixed(),
           denomination,
           decimals,
-          showLastNonZeroDecimal: false,
         })} ${egldLabel}`,
         value => {
           const bnAmount = new BigNumber(value !== undefined ? value : '');
@@ -65,7 +65,6 @@ const UndelegateModal = ({
                 input: minDelegationAmount.toFixed(),
                 denomination,
                 decimals,
-                showLastNonZeroDecimal: false,
               }),
             }}
             onSubmit={values => {
@@ -132,19 +131,11 @@ const UndelegateModal = ({
                       </small>
                     )}
                   </div>
-                  <div className="d-flex justify-content-center align-items-center flex-wrap">
-                    <button
-                      type="submit"
-                      className="btn btn-primary mx-2"
-                      id="continueDelegate"
-                      data-testid="continueUndelegate"
-                    >
-                      Continue
-                    </button>
-                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
-                      Close
-                    </button>
-                  </div>
+                  <ModalActionButton
+                    action="Undelegate"
+                    actionTitle="Continue"
+                    handleClose={handleClose}
+                  />
                 </form>
               );
             }}

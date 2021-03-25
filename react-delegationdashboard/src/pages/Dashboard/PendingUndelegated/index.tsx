@@ -3,17 +3,18 @@ import * as React from 'react';
 import { useContext } from 'context';
 import { contractViews } from 'contracts/ContractViews';
 import denominate from 'components/Denominate/formatters';
+import { denomination, decimals } from 'config';
 import UndelegatedValueRow from './UndelegatedValueRow';
 import { UndelegatedValueType } from './UndelegatedValueType';
 
 const UndelegatedListView = () => {
-  const { dapp, address, denomination, decimals, delegationContract, networkConfig } = useContext();
+  const { dapp, address, delegationContract, networkConfig } = useContext();
   const { getUserUnDelegatedList } = contractViews;
 
   const [userUnstakeValue, setUserUnstakedValue] = React.useState(Array<UndelegatedValueType>());
 
   const denomintateValue = (value: string): string => {
-    return denominate({ denomination, decimals, input: value, showLastNonZeroDecimal: false });
+    return denominate({ denomination, decimals, input: value });
   };
 
   const getTimeLeft = (value: QueryResponse, index: number, timeLeft: number) => {

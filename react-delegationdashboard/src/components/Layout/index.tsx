@@ -34,7 +34,6 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
       decimals,
       denomination,
       input: value.returnData[3].asBigInt.toFixed(),
-      showLastNonZeroDecimal: false,
     });
     return new ContractOverview(
       value.returnData[0].asHex.toString(),
@@ -119,7 +118,8 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
               networkConfig.RoundDuration,
               networkConfig.RoundsPerEpoch,
               networkStatus.RoundsPassedInCurrentEpoch,
-              new BigNumber(networkConfig.TopUpRewardsGradientPoint)
+              new BigNumber(networkConfig.TopUpRewardsGradientPoint),
+              networkConfig.ChainID
             ),
           });
           dispatch({
@@ -131,7 +131,8 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
                 networkConfig.RoundDuration,
                 networkConfig.RoundsPerEpoch,
                 networkStatus.RoundsPassedInCurrentEpoch,
-                new BigNumber(networkConfig.TopUpRewardsGradientPoint)
+                new BigNumber(networkConfig.TopUpRewardsGradientPoint),
+                networkConfig.ChainID
               ),
               networkStake: new NetworkStake(
                 networkStake.TotalValidators,
@@ -146,7 +147,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
         }
       )
       .catch(e => {
-        console.log('To do ', e);
+        console.error('To do ', e);
       });
   }, []);
 
