@@ -21,6 +21,9 @@ body.modal-open .layout {
 
 .btn {
   border: none !important;
+  &:hover {
+    opacity: 0.9;
+  }
   &.btn-primary {
     background: $primary;
     color: $white;
