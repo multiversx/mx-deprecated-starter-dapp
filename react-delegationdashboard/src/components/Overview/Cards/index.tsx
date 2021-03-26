@@ -38,6 +38,11 @@ const Views = () => {
     return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
 
+  const isOwner = () => {
+    let currentURL = location.pathname;
+    return currentURL.includes('owner') === true;
+  };
+
   const getNetworkStake = () => {
     dapp.apiProvider
       .getNetworkStake()
@@ -175,7 +180,7 @@ const Views = () => {
         )
       )}
 
-      {isAdmin() && location.pathname === '/owner' && (
+      {isAdmin() && isOwner() && (
         <StatCard
           title="Automatic activation"
           value={contractOverview.automaticActivation === 'true' ? 'ON' : 'OFF'}
@@ -185,7 +190,7 @@ const Views = () => {
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />
         </StatCard>
       )}
-      {isAdmin() && location.pathname === '/owner' && (
+      {isAdmin() && isOwner() && (
         <StatCard
           title="ReDelegate Cap"
           value={contractOverview.reDelegationCap === 'true' ? 'ON' : 'OFF'}

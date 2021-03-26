@@ -15,6 +15,11 @@ const Header = () => {
     return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
 
+  const isOwner = () => {
+    let currentURL = location.pathname;
+    return currentURL.includes('owner') === true;
+  };
+
   const fetchLedger = () => {
     if (getItem('ledgerLogin') && !ledgerAccount) {
       const ledgerLogin = getItem('ledgerLogin');
@@ -36,7 +41,7 @@ const Header = () => {
         <span className="text-truncate">{delegationContract}</span>
       </div>
       <div className="d-flex justify-content-center align-items-center justify-content-between">
-        {isAdmin() && pathname !== '/owner' ? (
+        {isAdmin() && !isOwner() ? (
           <Link to="/owner" className="btn btn-primary btn-sm">
             Admin
           </Link>
@@ -46,7 +51,7 @@ const Header = () => {
             Dashboard
           </Link>
         ) : null}
-        {isAdmin() && pathname == '/owner' ? <SetAgencyMetaDataModal /> : null}
+        {isAdmin() && isOwner() ? <SetAgencyMetaDataModal /> : null}
       </div>
     </div>
   );
