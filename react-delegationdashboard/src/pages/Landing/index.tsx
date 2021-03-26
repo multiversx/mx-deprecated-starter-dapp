@@ -89,7 +89,7 @@ const Landing = () => {
             </div>
           </div>
 
-          <div className="h5 d-flex justify-content-center">{count2}</div>
+          <div className="h5 d-flex justify-content-center">Estimate rewards calculator<br/> {count2}</div>
 
           <div className='slider'>
             <Slider
