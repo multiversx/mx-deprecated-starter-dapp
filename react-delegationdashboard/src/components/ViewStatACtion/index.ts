@@ -1,6 +1,3 @@
-Merge pull request #63 from ElrondNetwork/Fix-ledger-login
-2be9702
-Fix ledger flow
 interface ViewStatActionType {
   actionTitle: string;
   color: string;
