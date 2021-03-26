@@ -1,30 +1,15 @@
+import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
 import { DropzoneFileType } from 'components/DropzonePem';
 import RequestVariablesModal from 'components/DropzonePem/RequestVariablesModal';
 import { BLS } from '@elrondnetwork/erdjs/out';
-import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import { useDelegationWallet } from 'helpers/useDelegation';
-import { useContext } from 'context';
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 
 const AddNodeAction = () => {
-  const { ledgerAccount } = useContext();
+  const { delegation } = useDelegation();
   const [showAddNodes, setAddNodesModal] = useState(false);
-  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
-  const [transactionArguments, setTransactionArguments] = useState(
-    new DelegationTransactionType('', '')
-  );
-  const { sendTransactionWallet } = useDelegationWallet();
 
   const handleAddNodes = (value: string) => {
-    let txArguments = new DelegationTransactionType('0', 'addNodes', value);
-    if (ledgerAccount) {
-      setAddNodesModal(false);
-      setTransactionArguments(txArguments);
-      setShowCheckYourLedgerModal(true);
-    } else {
-      sendTransactionWallet(txArguments);
-    }
+    delegation.sendTransaction('0', 'addNodes', value).then();
   };
 
   const getPemPubKeysWithSignature = (pemFiles: DropzoneFileType[]) => {
@@ -66,13 +51,6 @@ const AddNodeAction = () => {
         triggerDispatchEvent={(variablesData: string) => handleAddNodes(variablesData)}
         variables={addNodesRequest.variables}
         data={addNodesRequest.data}
-      />
-      <ConfirmOnLedgerModal
-        show={showCheckYourLedgerModal}
-        transactionArguments={transactionArguments}
-        handleClose={() => {
-          setShowCheckYourLedgerModal(false);
-        }}
       />
     </div>
   );

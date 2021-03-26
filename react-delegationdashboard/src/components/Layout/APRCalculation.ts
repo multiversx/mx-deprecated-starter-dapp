@@ -16,6 +16,7 @@ const denominateValue = (value: string) => {
     input: value,
     denomination,
     decimals,
+    showLastNonZeroDecimal: true,
   });
   const valueWithoutComma = denominatedValueString.replace(/,/g, '');
   return valueWithoutComma;

@@ -8,7 +8,6 @@ import Denominate from 'components/Denominate';
 import { entireBalance } from 'helpers';
 import { denomination, decimals } from 'config';
 import denominate from 'components/Denominate/formatters';
-import ModalActionButton from 'components/ModalActionButton';
 
 interface DelegateModalType {
   show: boolean;
@@ -46,11 +45,13 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
         input: totalActiveStake,
         denomination,
         decimals,
+        showLastNonZeroDecimal: false,
       }).replace(/,/g, '');
       const maxDelegationCap = denominate({
         input: contractOverview.maxDelegationCap,
         denomination,
         decimals,
+        showLastNonZeroDecimal: false,
       }).replace(/,/g, '');
       const availableToDelegate = new BigNumber(maxDelegationCap).minus(new BigNumber(totalActive));
       if (bnAvailable.comparedTo(availableToDelegate) >= 0) {
@@ -93,6 +94,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                 input: minDelegationAmount.toFixed(),
                 denomination,
                 decimals,
+                showLastNonZeroDecimal: false,
               }),
             }}
             onSubmit={values => {
@@ -107,6 +109,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                     input: minDelegationAmount.toFixed(),
                     denomination,
                     decimals,
+                    showLastNonZeroDecimal: false,
                   })} ${egldLabel}`,
                   value => {
                     const bnAmount = new BigNumber(value !== undefined ? value : '');
@@ -196,12 +199,19 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
                     </div>
                   )}
                   <div className="d-flex justify-content-center align-items-center flex-wrap">
-                    <ModalActionButton
-                      action="delegate"
-                      actionTitle="Continue"
-                      isHandleActionDisabled={isFullDelegationCapContract()}
-                      handleClose={handleClose}
-                    />
+                    {!isFullDelegationCapContract() && (
+                      <button
+                        type="submit"
+                        className="btn btn-primary mx-2"
+                        id="continueDelegate"
+                        data-testid="continueDelegate"
+                      >
+                        Continue
+                      </button>
+                    )}
+                    <button id="closeButton" className="btn btn-link mx-2" onClick={handleClose}>
+                      Close
+                    </button>
                   </div>
                 </form>
               );

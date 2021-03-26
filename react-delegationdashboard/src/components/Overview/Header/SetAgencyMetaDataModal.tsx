@@ -1,35 +1,21 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import { useDelegation } from 'helpers';
 import { ErrorMessage, Formik } from 'formik';
 import { object, string } from 'yup';
 import { useContext } from 'context';
-import { AgencyMetadata, DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import ModalActionButton from 'components/ModalActionButton';
-import { useDelegationWallet } from 'helpers/useDelegation';
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import { AgencyMetadata } from 'helpers/contractDataDefinitions';
 
 const SetAgencyMetaDataModal = () => {
-  const { agencyMetaData, ledgerAccount } = useContext();
+  const { delegation } = useDelegation();
+  const { agencyMetaData } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
-  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
-  const [transactionArguments, setTransactionArguments] = useState(
-    new DelegationTransactionType('', '')
-  );
-  const { sendTransactionWallet } = useDelegationWallet();
-
   const handleReDelegationCapActivation = (values: AgencyMetadata) => {
     const hexName = Buffer.from(values.name).toString('hex');
     const hexWeb = Buffer.from(values.website).toString('hex');
     const hexKeyBase = Buffer.from(values.keybase).toString('hex');
     const data = hexName + '@' + hexWeb + '@' + hexKeyBase;
-    let txArguments = new DelegationTransactionType('0', 'setMetaData', data);
-    if (ledgerAccount) {
-      setShowDelegateModal(false);
-      setTransactionArguments(txArguments);
-      setShowCheckYourLedgerModal(true);
-    } else {
-      sendTransactionWallet(txArguments);
-    }
+    delegation.sendTransaction('0', 'setMetaData', data).then();
   };
 
   return (
@@ -137,13 +123,23 @@ const SetAgencyMetaDataModal = () => {
                         <ErrorMessage component="div" name="keybase" className="invalid-feedback" />
                       </div>
                     </div>
-                    <ModalActionButton
-                      action="setPercentageFe"
-                      actionTitle="Continue"
-                      handleClose={() => {
-                        setShowDelegateModal(false);
-                      }}
-                    />
+                    <div className="d-flex justify-content-center align-items-center flex-wrap">
+                      <button
+                        type="submit"
+                        className="btn btn-primary mx-2"
+                        id="saveMetaData"
+                        data-testid="saveMetaData"
+                      >
+                        Save
+                      </button>
+                      <button
+                        id="closeButton"
+                        className="btn btn-link mx-2"
+                        onClick={() => setShowDelegateModal(false)}
+                      >
+                        Close
+                      </button>
+                    </div>
                   </form>
                 );
               }}
@@ -151,13 +147,6 @@ const SetAgencyMetaDataModal = () => {
           </div>
         </div>
       </Modal>
-      <ConfirmOnLedgerModal
-        show={showCheckYourLedgerModal}
-        transactionArguments={transactionArguments}
-        handleClose={() => {
-          setShowCheckYourLedgerModal(false);
-        }}
-      />
     </>
   );
 };

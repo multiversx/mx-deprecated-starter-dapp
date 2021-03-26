@@ -2,7 +2,6 @@ import { Address } from '@elrondnetwork/erdjs/out';
 import React, { useEffect } from 'react';
 import { useContext, useDispatch } from 'context';
 import { getItem, removeItem, setItem } from 'storage/session';
-import { AccountType } from 'helpers/contractDataDefinitions';
 
 const WalletLogin = () => {
   const dispatch = useDispatch();
@@ -45,12 +44,11 @@ const WalletLogin = () => {
             dispatch({ type: 'login', address });
           })
           .then(value =>
-            dapp.proxy.getAccount(new Address(getItem('address'))).then(account =>
-              dispatch({
-                type: 'setAccount',
-                account: new AccountType(account.balance.toString(), account.nonce),
-              })
-            )
+            dapp.proxy
+              .getAccount(new Address(getItem('address')))
+              .then(account =>
+                dispatch({ type: 'setBalance', balance: account.balance.toString() })
+              )
           )
           .catch(err => {
             dispatch({ type: 'loading', loading: false });

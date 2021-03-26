@@ -61,6 +61,7 @@ const Views = () => {
           input: totalActiveStake,
           denomination,
           decimals,
+          showLastNonZeroDecimal: false,
         })}
         valueUnit={egldLabel}
         color="lightgreen"
@@ -70,11 +71,13 @@ const Views = () => {
             input: totalActiveStake,
             denomination,
             decimals,
+            showLastNonZeroDecimal: false,
           }),
           denominate({
             input: networkStake.TotalStaked.toFixed(),
             denomination,
             decimals,
+            showLastNonZeroDecimal: false,
           })
         )}% of total stake`}
       />
@@ -116,6 +119,7 @@ const Views = () => {
               decimals,
               denomination,
               input: contractOverview.maxDelegationCap,
+              showLastNonZeroDecimal: false,
             }) || ''
           }
           valueUnit={egldLabel}
@@ -126,11 +130,13 @@ const Views = () => {
               input: totalActiveStake,
               denomination,
               decimals,
+              showLastNonZeroDecimal: false,
             }),
             denominate({
               decimals,
               denomination,
               input: contractOverview.maxDelegationCap,
+              showLastNonZeroDecimal: false,
             })
           )}% filled`}
         >
@@ -141,11 +147,13 @@ const Views = () => {
           decimals,
           denomination,
           input: contractOverview.maxDelegationCap,
+          showLastNonZeroDecimal: false,
         }) !== '0' &&
         denominate({
           decimals,
           denomination,
           input: contractOverview.maxDelegationCap,
+          showLastNonZeroDecimal: false,
         }) !== '' && (
           <StatCard
             title="Delegation Cap"
@@ -154,6 +162,7 @@ const Views = () => {
                 decimals,
                 denomination,
                 input: contractOverview.maxDelegationCap,
+                showLastNonZeroDecimal: false,
               }) || ''
             }
             valueUnit={egldLabel}
@@ -164,11 +173,13 @@ const Views = () => {
                 input: totalActiveStake,
                 denomination,
                 decimals,
+                showLastNonZeroDecimal: false,
               }),
               denominate({
                 decimals,
                 denomination,
                 input: contractOverview.maxDelegationCap,
+                showLastNonZeroDecimal: false,
               })
             )}% filled`}
           ></StatCard>

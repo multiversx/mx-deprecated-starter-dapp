@@ -1,20 +1,17 @@
 import BigNumber from 'bignumber.js';
+import { useDelegation } from 'helpers';
 import React, { useState } from 'react';
 import nominate from 'helpers/nominate';
 import DelegationCapModal from './DelegationCapModal';
-import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import { useContext } from 'context';
-import { useDelegationWallet } from 'helpers/useDelegation';
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 
 const UpdateDelegationCapAction = () => {
-  const { ledgerAccount } = useContext();
+  const { delegation } = useDelegation();
   const [showDelegationCapModal, setShowDelegationCapModal] = useState(false);
-  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
-  const [transactionArguments, setTransactionArguments] = useState(
-    new DelegationTransactionType('', '')
-  );
-  const { sendTransactionWallet } = useDelegationWallet();
+
+  const handleUpdateDelegationCap = (value: string) => {
+    const hexCap = nominateValToHex(value);
+    delegation.sendTransaction('0', 'modifyTotalDelegationCap', hexCap).then();
+  };
 
   const nominateValToHex = (value: string) => {
     let val = value && value.length > 0 ? new BigNumber(nominate(value)).toString(16) : '0';
@@ -23,21 +20,6 @@ const UpdateDelegationCapAction = () => {
       val = '0' + val;
     }
     return val;
-  };
-
-  const handleUpdateDelegationCap = (value: string) => {
-    let txArguments = new DelegationTransactionType(
-      '0',
-      'modifyTotalDelegationCap',
-      nominateValToHex(value)
-    );
-    if (ledgerAccount) {
-      setShowDelegationCapModal(false);
-      setTransactionArguments(txArguments);
-      setShowCheckYourLedgerModal(true);
-    } else {
-      sendTransactionWallet(txArguments);
-    }
   };
 
   return (
@@ -56,13 +38,6 @@ const UpdateDelegationCapAction = () => {
           setShowDelegationCapModal(false);
         }}
         handleContinue={handleUpdateDelegationCap}
-      />
-      <ConfirmOnLedgerModal
-        show={showCheckYourLedgerModal}
-        transactionArguments={transactionArguments}
-        handleClose={() => {
-          setShowCheckYourLedgerModal(false);
-        }}
       />
     </div>
   );

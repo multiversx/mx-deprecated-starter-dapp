@@ -1,10 +1,9 @@
-import ModalActionButton from 'components/ModalActionButton';
 import { Formik } from 'formik';
 import * as React from 'react';
 import { object, array, mixed } from 'yup';
 import DropzonePem, { DropzoneFileType } from './index';
 
-const PemUpload = ({
+const PlaygroundPemUpload = ({
   handleClose,
   onSubmit,
 }: {
@@ -52,11 +51,12 @@ const PemUpload = ({
               />
             </div>
             <div className="d-flex align-items-center justify-content-center flex-wrap mt-spacer">
-              <ModalActionButton
-                action="addNodes"
-                actionTitle="Add nodes"
-                handleClose={handleClose}
-              />
+              <button type="submit" className="btn btn-primary">
+                Continue
+              </button>
+              <div className="btn btn-link" onClick={handleClose}>
+                Close
+              </div>
             </div>
           </form>
         );
@@ -65,4 +65,4 @@ const PemUpload = ({
   );
 };
 
-export default PemUpload;
+export default PlaygroundPemUpload;
