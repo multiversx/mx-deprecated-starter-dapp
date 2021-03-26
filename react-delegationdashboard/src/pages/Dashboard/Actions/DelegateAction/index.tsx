@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { useState } from 'react';
 import { useContext } from 'context';
 import DelegateModal from './DelegateModal';
-import { useDelegation } from 'helpers';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import { useDelegationWallet } from 'helpers/useDelegation';
 
 const DelegateAction = () => {
-  const { dapp, address } = useContext();
-  const { delegation } = useDelegation();
-  const [balance, setBalance] = useState('');
+  const { account, ledgerAccount } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
-  useEffect(() => {
-    dapp.proxy.getAccount(new Address(address)).then(value => setBalance(value.balance.toString()));
-  }, [address, dapp.proxy]);
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
 
   const handleDelegate = (value: string) => {
-    delegation
-      .sendTransaction(value, 'delegate')
-      .then()
-      .catch(e => {
-        console.error('handleDelegate ', e);
-      });
+    const txArguments = new DelegationTransactionType(value, 'delegate');
+    if (ledgerAccount) {
+      setShowDelegateModal(false);
+      setTransactionArguments(txArguments);
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(txArguments);
+    }
   };
+
   return (
     <div>
       <button
@@ -33,11 +37,18 @@ const DelegateAction = () => {
       </button>
       <DelegateModal
         show={showDelegateModal}
-        balance={balance}
+        balance={account.balance.toString()}
         handleClose={() => {
           setShowDelegateModal(false);
         }}
         handleContinue={handleDelegate}
+      />
+      <ConfirmOnLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
       />
     </div>
   );
