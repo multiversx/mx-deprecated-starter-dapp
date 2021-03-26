@@ -28,12 +28,12 @@ const Home = () => {
         <div className="m-auto login-container">
           <div className="card my-spacer text-center">
             <div className="card-body p-spacer mx-lg-spacer">
-              <Logo className="logo mb-spacer" />
-              <h4 className="mb-spacer">Elrond Delegation Manager</h4>
-              <p className="lead mb-spacer">
+              <p className="h5 mb-spacer text-nowrap mb-0 p-0 text-semibold"><Logo className="logo " /> STAKE DAO</p>
+              <h5>Elrond Delegation Manager</h5>
+              <p className="mb-spacer">
                 Delegate Elrond ({egldLabel}) and earn up to 25% APY!
               </p>
-              <p className="mb-spacer">Please select your login method:</p>
+              <p className="r">Please select your login method:</p>
               <div>
                 <a href="/ledger" className="btn btn-primary px-sm-spacer mx-1 mx-sm-3">
                   Ledger
