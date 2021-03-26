@@ -3,6 +3,7 @@ interface ViewStatActionType {
   color: string;
   handleContinue: () => void;
 }
+
 const ViewStatAction = ({ actionTitle, color, handleContinue }: ViewStatActionType) => {
   return (
     <div>
@@ -17,4 +18,5 @@ const ViewStatAction = ({ actionTitle, color, handleContinue }: ViewStatActionTy
     </div>
   );
 };
+
 export default ViewStatAction;
