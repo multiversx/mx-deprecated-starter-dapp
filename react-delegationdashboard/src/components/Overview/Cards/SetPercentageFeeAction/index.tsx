@@ -1,10 +1,19 @@
-import { useDelegation } from 'helpers';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import { useContext } from 'context';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import { useDelegationWallet } from 'helpers/useDelegation';
 import React, { useState } from 'react';
 import SetPercentageFeeModal from './SetPercentageFeeModal';
 
 const SetPercentageFeeAction = () => {
-  const { delegation } = useDelegation();
+  const { ledgerAccount } = useContext();
+
   const [showUpdateFeeModal, setShowUpdateFeeModal] = useState(false);
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
 
   const nominateVal = (value: string) => {
     let perc = (parseFloat(value) * 100).toString(16);
@@ -13,11 +22,16 @@ const SetPercentageFeeAction = () => {
     }
     return perc;
   };
-
   const handleUpdateFee = (value: string) => {
-    delegation.sendTransaction('0', 'changeServiceFee', nominateVal(value)).then();
+    let txArguments = new DelegationTransactionType('0', 'changeServiceFee', nominateVal(value));
+    if (ledgerAccount) {
+      setShowUpdateFeeModal(false);
+      setTransactionArguments(txArguments);
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(txArguments);
+    }
   };
-
   return (
     <div>
       <button
@@ -32,6 +46,13 @@ const SetPercentageFeeAction = () => {
           setShowUpdateFeeModal(false);
         }}
         handleContinue={handleUpdateFee}
+      />
+      <ConfirmOnLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
       />
     </div>
   );

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import ViewStatAction from 'components/ViewStatAction';
-import { useDelegation } from 'helpers';
 import { useContext } from 'context';
 import BigNumber from 'bignumber.js';
+import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
+import { useDelegationWallet } from 'helpers/useDelegation';
+import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
 export interface ClaimRewardsModalType {
   show: boolean;
   title: string;
@@ -11,13 +12,22 @@ export interface ClaimRewardsModalType {
   handleClose: () => void;
 }
 const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewardsModalType) => {
-  const { delegation } = useDelegation();
-  const { totalActiveStake, contractOverview } = useContext();
-  const handleClaimRewards = () => {
-    delegation
-      .sendTransaction('0', 'claimRewards')
-      .then()
-      .catch(e => console.error('handleClaimRewards error', e));
+  const { totalActiveStake, contractOverview, ledgerAccount } = useContext();
+  const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
+  const [transactionArguments, setTransactionArguments] = useState(
+    new DelegationTransactionType('', '')
+  );
+  const { sendTransactionWallet } = useDelegationWallet();
+
+  const handleClaimRewards = (): void => {
+    let txArguments = new DelegationTransactionType('0', 'claimRewards');
+    if (ledgerAccount) {
+      handleClose();
+      setTransactionArguments(txArguments);
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(txArguments);
+    }
   };
 
   const isRedelegateEnable = () => {
@@ -33,39 +43,65 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
   };
 
   const handleRedelegateRewards = () => {
-    delegation
-      .sendTransaction('0', 'reDelegateRewards')
-      .then()
-      .catch(e => console.error('handleRedelegateRewards error', e));
+    let txArguments = new DelegationTransactionType('0', 'reDelegateRewards');
+    if (ledgerAccount) {
+      handleClose();
+      setTransactionArguments(txArguments);
+      setShowCheckYourLedgerModal(true);
+    } else {
+      sendTransactionWallet(txArguments);
+    }
   };
+
   return (
-    <Modal show={show} onHide={handleClose} className="modal-container" animation={false} centered>
-      <div className="card">
-        <div className="card-body p-spacer text-center">
-          <p className="h6 mb-spacer" data-testid="delegateTitle">
-            {title}
-          </p>
-          <p className="mb-spacer">{description}</p>
-          <div className="d-flex justify-content-center align-items-center flex-wrap">
-            <ViewStatAction
-              actionTitle="Claim Rewards"
-              handleContinue={handleClaimRewards}
-              color="primary"
-            />
-            {isRedelegateEnable() && (
-              <ViewStatAction
-                actionTitle="Redelegate Rewards"
-                handleContinue={handleRedelegateRewards}
-                color="green"
-              />
-            )}
+    <>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        className="modal-container"
+        animation={false}
+        centered
+      >
+        <div className="card">
+          <div className="card-body p-spacer text-center">
+            <p className="h6 mb-spacer" data-testid="claimRewardsTitle">
+              {title}
+            </p>
+            <p className="mb-spacer">{description}</p>
+            <div className="d-flex justify-content-center align-items-center flex-wrap">
+              <button
+                className="btn btn-primary mx-2"
+                onClick={() => {
+                  handleClaimRewards();
+                }}
+              >
+                Claim Rewards
+              </button>
+              {isRedelegateEnable() && (
+                <button
+                  className="btn btn-primary mx-2"
+                  onClick={() => {
+                    handleRedelegateRewards();
+                  }}
+                >
+                  Redelegate Rewards
+                </button>
+              )}
+            </div>
+            <button id="closeButton" className="btn btn-link mt-spacer mx-2" onClick={handleClose}>
+              Close
+            </button>
           </div>
-          <button id="closeButton" className="btn btn-link mt-spacer mx-2" onClick={handleClose}>
-            Close
-          </button>
         </div>
-      </div>
-    </Modal>
+      </Modal>
+      <ConfirmOnLedgerModal
+        show={showCheckYourLedgerModal}
+        transactionArguments={transactionArguments}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
+      />
+    </>
   );
 };
 
