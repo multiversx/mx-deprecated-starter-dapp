@@ -10,6 +10,7 @@ body.modal-open .layout {
 }
 
 .card {
+  background: rgba(45, 55, 72, 0.4);
   .card-header {
     &:first-child {
       border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
@@ -19,23 +20,17 @@ body.modal-open .layout {
 }
 
 .btn {
-  &:hover:enabled {
-    background: rgba(0, 0, 0, 0.4);
-  }
   border: none !important;
-  box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 70, 194, 0.1);
   &.btn-primary {
-    background: rgba(255, 255, 255, 0.2);
-    border: rgba(255, 255, 255, 0.3);
+    background: $primary;
     color: $white;
-    box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 70, 194, 0.1);
     &:hover:enabled {
-      background: rgba(0, 0, 0, 0.2);
+      background: $primary;
     }
     &:not(:disabled):not(.disabled):active,
     &:not(:disabled):not(.disabled).active {
       color: $white;
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: $primary;
     }
   }
 }

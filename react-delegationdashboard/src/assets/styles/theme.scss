@@ -1,4 +1,5 @@
-$font-family-sans-serif: 'Poppins', sans-serif;
+$font-family-sans-serif: 'Cerebri Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+  Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
 $font-weight-normal: 300;
 $font-weight-bold: 500;
 $headings-font-weight: 400;
@@ -6,13 +7,14 @@ $white: #fff;
 
 $body: #fff;
 $body-bg: #e5e5e5;
-$body-color: #fff;
+$body-color: $white;
 
-$primary: $white;
+$background: #1a202c;
+$primary: #3d4dd6;
 $secondary: #f3f6f9;
 $dark: #5d6473;
 $muted: #b5b5c3;
-$light: #f3f6f9;
+$light: #f2f2f2;
 $success: #28a745;
 
 $orange: #ffa800;
@@ -26,7 +28,7 @@ $light-red: #ffe2e630;
 $light-primary: #e1f0ff30;
 $disabled: #333;
 
-$card-bg: rgba(0, 0, 0, 0.4);
+$card-bg: rgba(45, 55, 72, 0.4);
 $text-muted: $muted;
 $brand-color: $white;
 $logo-height: 1.5rem;
