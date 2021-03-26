@@ -28,7 +28,7 @@ const Home = () => {
         <div className="m-auto login-container">
           <div className="card my-spacer text-center">
             <div className="card-body p-spacer mx-lg-spacer">
-              <p className="h5 mb-spacer text-nowrap mb-0 p-0 text-semibold"><Logo className="logo " /> STAKE DAO</p>
+              <p className="h5 mb-spacer text-nowrap mb-0 p-0 text-semibold"><Logo /> STAKE DAO</p>
               <h5>Elrond Delegation Manager</h5>
               <p className="mb-spacer">
                 Delegate Elrond ({egldLabel}) and earn up to 25% APY!
