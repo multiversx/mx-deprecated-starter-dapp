@@ -119,5 +119,3 @@ One can contribute by creating *pull requests*, or by opening *issues* for disco
 ## Developers
 
 The [Elrond Team](https://elrond.com/team/).
-
-
