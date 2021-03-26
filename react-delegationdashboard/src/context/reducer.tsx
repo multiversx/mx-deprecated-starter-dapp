@@ -14,7 +14,6 @@ export type ActionType =
   | { type: 'setAgencyMetaData'; agencyMetaData: StateType['agencyMetaData'] }
   | { type: 'setNumberOfActiveNodes'; numberOfActiveNodes: StateType['numberOfActiveNodes'] }
   | { type: 'setNumUsers'; numUsers: StateType['numUsers'] }
-  | { type: 'setMinDelegationAmount'; minDelegationAmount: StateType['minDelegationAmount'] }
   | { type: 'setTotalActiveStake'; totalActiveStake: StateType['totalActiveStake'] }
   | { type: 'setAprPercentage'; aprPercentage: StateType['aprPercentage'] };
 
@@ -99,14 +98,6 @@ export function reducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         numUsers,
-      };
-    }
-
-    case 'setMinDelegationAmount': {
-      const { minDelegationAmount } = action;
-      return {
-        ...state,
-        minDelegationAmount,
       };
     }
 

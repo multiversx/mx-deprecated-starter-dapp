@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@elrondnetwork/erdjs": "^3.1.2",
+    "@elrondnetwork/erdjs": "^3.1.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.12",
@@ -41,15 +41,9 @@
     "build-mainnet": "npm run copy-mainnet-config & npm run build",
     "build-testnet": "npm run copy-testnet-config & npm run build",
     "build-devnet": "npm run copy-devnet-config & npm run build",
-    "copy-mainnet-config": "run-script-os",
-    "copy-testnet-config": "run-script-os",
-    "copy-devnet-config": "run-script-os",
-    "copy-mainnet-config:nix": "cp ./src/config.mainnet.ts ./src/config.ts",
-    "copy-testnet-config:nix": "cp ./src/config.testnet.ts ./src/config.ts",
-    "copy-devnet-config:nix": "cp ./src/config.devnet.ts ./src/config.ts",
-    "copy-mainnet-config:windows": "copy .\\src\\config.mainnet.ts .\\src\\config.ts",
-    "copy-testnet-config:windows": "copy .\\src\\config.testnet.ts .\\src\\config.ts",
-    "copy-devnet-config:windows": "copy .\\src\\config.devnet.ts .\\src\\config.ts"
+    "copy-mainnet-config": "cp ./src/config.mainnet.ts ./src/config.ts",
+    "copy-testnet-config": "cp ./src/config.testnet.ts ./src/config.ts",
+    "copy-devnet-config": "cp ./src/config.devnet.ts ./src/config.ts"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -76,7 +70,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.22.0",
-    "run-script-os": "^1.1.5",
     "typescript": "^4.1.2"
   }
 }

@@ -26,7 +26,6 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     getBlsKeys,
     getNumUsers,
     getMetaData,
-    getDelegationManagerContractConfig,
   } = contractViews;
 
   const getContractOverviewType = (value: QueryResponse) => {
@@ -42,7 +41,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
       value.returnData[2].asBigInt.toFixed(),
       initialOwnerFunds,
       value.returnData[4]?.asString,
-      value.returnData[5]?.asBool,
+      value.returnData[5].asBool,
       value.returnData[6].asBool,
       value.returnData[7]?.asString,
       value.returnData[8].asBool,
@@ -71,7 +70,6 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
       dapp.apiProvider.getNetworkStake(),
       dapp.proxy.getNetworkConfig(),
       dapp.proxy.getNetworkStatus(),
-      getDelegationManagerContractConfig(dapp),
     ])
       .then(
         ([
@@ -86,15 +84,10 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           networkStake,
           networkConfig,
           networkStatus,
-          delegationManager,
         ]) => {
           dispatch({
             type: 'setNumUsers',
             numUsers: numUsers.returnData[0].asNumber,
-          });
-          dispatch({
-            type: 'setMinDelegationAmount',
-            minDelegationAmount: delegationManager.returnData[5].asNumber,
           });
           dispatch({
             type: 'setContractOverview',

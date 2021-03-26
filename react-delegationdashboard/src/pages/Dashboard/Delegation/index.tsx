@@ -29,8 +29,9 @@ const MyDelegation = () => {
         setClaimableRewards(
           denominate({
             denomination,
-            decimals: 4,
+            decimals,
             input: value.returnData[0]?.asBigInt.toFixed(),
+            showLastNonZeroDecimal: false,
           }) || ''
         );
       })
@@ -42,6 +43,7 @@ const MyDelegation = () => {
             denomination,
             decimals,
             input: value.returnData[0]?.asBigInt.toFixed(),
+            showLastNonZeroDecimal: false,
           }) || ''
         );
         setUserActiveNominatedStake(value.returnData[0]?.asBigInt.toFixed());

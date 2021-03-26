@@ -5,10 +5,9 @@ import BigNumber from 'bignumber.js';
 import { ErrorMessage, Formik } from 'formik';
 import { entireBalance } from 'helpers';
 import Denominate from 'components/Denominate';
-import { denomination, decimals, minDust } from 'config';
+import { denomination, decimals } from 'config';
 import { object, string } from 'yup';
 import { ActionModalType } from 'helpers/types';
-import denominate from 'components/Denominate/formatters';
 
 const UndelegateModal = ({
   show,
@@ -18,8 +17,9 @@ const UndelegateModal = ({
   handleClose,
   handleContinue,
 }: ActionModalType) => {
-  const { egldLabel, minDelegationAmount } = useContext();
-  const { entireBalance: available } = entireBalance({
+  const { egldLabel } = useContext();
+
+  const available = entireBalance({
     balance: balance as string,
     gasPrice: '0',
     gasLimit: '0',
@@ -30,19 +30,10 @@ const UndelegateModal = ({
   const UndelegateSchema = object().shape({
     amount: string()
       .required('Required')
-      .test(
-        'minimum',
-        `Minimum ${denominate({
-          input: minDelegationAmount.toFixed(),
-          denomination,
-          decimals,
-          showLastNonZeroDecimal: false,
-        })} ${egldLabel}`,
-        value => {
-          const bnAmount = new BigNumber(value !== undefined ? value : '');
-          return bnAmount.comparedTo(1) >= 0;
-        }
-      )
+      .test('minimum', `Minimum 1 ${egldLabel}`, value => {
+        const bnAmount = new BigNumber(value !== undefined ? value : '');
+        return bnAmount.comparedTo(1) >= 0;
+      })
       .test('dustLeft', `You can not keep under 1 ${egldLabel}. Use the Max option.`, value => {
         const bnAmount = new BigNumber(value !== undefined ? value : '');
         const bnAvailable = new BigNumber(available);
@@ -61,12 +52,7 @@ const UndelegateModal = ({
           <p className="mb-spacer">{description}</p>
           <Formik
             initialValues={{
-              amount: denominate({
-                input: minDelegationAmount.toFixed(),
-                denomination,
-                decimals,
-                showLastNonZeroDecimal: false,
-              }),
+              amount: '1',
             }}
             onSubmit={values => {
               handleContinue(values.amount.toString());
