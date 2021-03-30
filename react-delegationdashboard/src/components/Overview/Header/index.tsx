@@ -10,12 +10,12 @@ const Header = () => {
   const dispatch = useDispatch();
   const { address, delegationContract, contractOverview, ledgerAccount } = useContext();
 
-  const isAdmin = () => {
+  const isOwner = () => {
     let loginAddress = new Address(address).hex();
     return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
 
-  const isOwner = () => {
+  const isOwnerPath = () => {
     let currentURL = location.pathname;
     return currentURL.includes('owner') === true;
   };
@@ -41,7 +41,7 @@ const Header = () => {
         <span className="text-truncate">{delegationContract}</span>
       </div>
       <div className="d-flex justify-content-center align-items-center justify-content-between">
-        {isAdmin() && !isOwner() ? (
+        {isOwner() && !isOwnerPath() ? (
           <Link to="/owner" className="btn btn-primary btn-sm">
             Admin
           </Link>
@@ -51,7 +51,7 @@ const Header = () => {
             Dashboard
           </Link>
         ) : null}
-        {isAdmin() && isOwner() ? <SetAgencyMetaDataModal /> : null}
+        {isOwner() && isOwnerPath() ? <SetAgencyMetaDataModal /> : null}
       </div>
     </div>
   );

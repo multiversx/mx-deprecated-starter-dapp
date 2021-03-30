@@ -33,12 +33,12 @@ const Views = () => {
     return percentage ? percentage.toFixed(2) : '...';
   };
 
-  const isAdmin = () => {
+  const isOwner = () => {
     let loginAddress = new Address(address).hex();
     return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
 
-  const isOwner = () => {
+  const isOwnerPath = () => {
     let currentURL = location.pathname;
     return currentURL.includes('owner') === true;
   };
@@ -113,7 +113,7 @@ const Views = () => {
       >
         {location.pathname === '/owner' && <SetPercentageFeeAction />}
       </StatCard>
-      {isAdmin() && location.pathname === '/owner' ? (
+      {isOwner() && location.pathname === '/owner' ? (
         <StatCard
           title="Delegation Cap"
           value={
@@ -180,7 +180,7 @@ const Views = () => {
         )
       )}
 
-      {isAdmin() && isOwner() && (
+      {isOwner() && isOwnerPath() && (
         <StatCard
           title="Automatic activation"
           value={contractOverview.automaticActivation === 'true' ? 'ON' : 'OFF'}
@@ -190,7 +190,7 @@ const Views = () => {
           <AutomaticActivationAction automaticFlag={contractOverview.automaticActivation} />
         </StatCard>
       )}
-      {isAdmin() && isOwner() && (
+      {isOwner() && isOwnerPath() && (
         <StatCard
           title="ReDelegate Cap"
           value={contractOverview.reDelegationCap === 'true' ? 'ON' : 'OFF'}
