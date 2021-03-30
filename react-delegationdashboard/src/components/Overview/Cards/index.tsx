@@ -111,9 +111,9 @@ const Views = () => {
         color="red"
         svg="service.svg"
       >
-        {location.pathname === '/owner' && <SetPercentageFeeAction />}
+        {isOwnerPath() && <SetPercentageFeeAction />}
       </StatCard>
-      {isOwner() && location.pathname === '/owner' ? (
+      {isOwner() && isOwnerPath() ? (
         <StatCard
           title="Delegation Cap"
           value={
