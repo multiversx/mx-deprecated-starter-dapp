@@ -24,8 +24,6 @@ The react implementation for Dashboard Delegation
   </p>
 </p>
 
-
-
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -44,14 +42,11 @@ The react implementation for Dashboard Delegation
   </ol>
 </details>
 
-
 ### Built With
 
 * [React](https://reactjs.org/)
 * [Typescript](https://www.typescriptlang.org/)
 * [Bootstrap](https://getbootstrap.com)
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -70,6 +65,7 @@ For *development* you will need to have the following:
 ### Instalation and running
 
 ### Step 1. Install modules
+
 From a terminal, navigate to the project folder and run ```npm install```
 
 ### Step 2. Update Configs
@@ -77,10 +73,16 @@ From a terminal, navigate to the project folder and run ```npm install```
 In the application's src folder there are 3 config files (config.devnet.ts, config.testnet.ts, config.mainnet.ts).
 
 Based on the environment used the configs will need to be updated:
-- delegationContract : should contain the address of the Delegation Smart Contract received after the creation of Delegation Smart Contract
-- also check the walletAddress, apiAddress and explorerAddress
 
-### Step 3. Build for testing and production use
+* delegationContract : should contain the address of the Delegation Smart Contract received after the creation of Delegation Smart Contract
+* also check the walletAddress, apiAddress and explorerAddress
+
+### Step 3. Create .env file
+
+* copy `.env.example` to `.env`
+* leave as it is to deploy on a root domain e.g. `staking.yourcompany.com` or add path e.g. `PUBLIC_URL=/staking/` if you wish to deploy the app in a subfolder.
+
+### Step 4. Build for testing and production use
 
 A build of the app is necessary to deploy for testing purposes or for production use.
 The dapp is configured with build scripts targeting either the public devnet, the public testnet or the public mainnet.
@@ -91,7 +93,7 @@ For testing on the testnet run => ```npm run build-testnet```
 
 For production use on the mainnet run => ```npm run build-mainnet```
 
-### Step 4. Run the dashboard
+### Step 5. Run the dashboard
 
 To run the project locally run ```npm run start``` from the project folder. This will start the React app in development mode, using the configs found in the config.ts file.
 
@@ -99,8 +101,6 @@ To run the project locally run ```npm run start``` from the project folder. This
 ## Roadmap
 
 See the [open issues](https://github.com/ElrondNetwork/starter-dapp/issues) for a list of proposed features (and known issues).
-
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -115,9 +115,6 @@ One can contribute by creating *pull requests*, or by opening *issues* for disco
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
 ## Developers
 
 The [Elrond Team](https://elrond.com/team/).
-
-

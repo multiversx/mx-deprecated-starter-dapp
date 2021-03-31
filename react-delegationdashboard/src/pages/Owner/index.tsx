@@ -10,7 +10,7 @@ import { getItem } from 'storage/session';
 const Owner = () => {
   const { address, contractOverview, loggedIn, dapp, ledgerAccount } = useContext();
   const dispatch = useDispatch();
-  const isAdmin = () => {
+  const isOwner = () => {
     let loginAddress = new Address(address).hex();
     return loginAddress.localeCompare(contractOverview.ownerAddress) === 0;
   };
@@ -41,7 +41,7 @@ const Owner = () => {
 
   return (
     <>
-      {isAdmin() ? (
+      {isOwner() ? (
         <div className="owner w-100">
           <div className="card border-0">
             <Overview />

@@ -6,7 +6,7 @@ import { ContextProvider } from './context';
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <ContextProvider>
         <Switch>
           {routes.map((route, i) => (
