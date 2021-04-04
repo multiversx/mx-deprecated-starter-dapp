@@ -1,0 +1,3 @@
+schema: ./data/schema.graphql
+documents: src
+extensions: {}

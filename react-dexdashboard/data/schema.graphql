@@ -1,0 +1,45 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type PairInfoModel {
+  reserves_a: String!
+  reserves_b: String!
+  total_supply: String!
+}
+
+type PairPriceModel {
+  tokena_price: String!
+  tokenb_price: String!
+}
+
+type PairModel {
+  token_a: String!
+  token_b: String!
+  address: String!
+  info: PairInfoModel!
+  price: PairPriceModel!
+}
+
+type TransactionModel {
+  nonce: Int!
+  value: String!
+  sender: String!
+  receiver: String!
+  gasPrice: Int!
+  gasLimit: Int!
+  data: String!
+  chainID: String!
+  version: Int!
+  options: String!
+  status: String!
+}
+
+type Query {
+  pairs: [PairModel!]!
+  createPair(token_b: String!, token_a: String!): TransactionModel!
+  addLiquidity(amount1Min: Int!, amount0Min: Int!, amount1: Int!, amount0: Int!, address: String!): TransactionModel!
+  removeLiquidity(amount1Min: Int!, amount0Min: Int!, tokenID: String!, liquidity: Int!, address: String!): TransactionModel!
+  swapTokensFixedInput(amountOutMin: Int!, tokenOut: String!, amountIn: Int!, tokenIn: String!, address: String!): TransactionModel!
+  swapTokensFixedOutput(amountOut: Int!, tokenOut: String!, amountInMax: Int!, tokenIn: String!, address: String!): TransactionModel!
+}
