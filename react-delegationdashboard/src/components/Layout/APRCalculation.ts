@@ -67,9 +67,12 @@ const calculateAPR = ({
         parseInt(denominateValue(networkConfig.topUpRewardsGradientPoint.toFixed()))
     );
   const baseReward = rewardsPerEpochWithoutProtocolSustainability - topUpReward;
-
-  const validatorBaseStake = allActiveNodes * stakePerNode;
   const validatorTotalStake = parseInt(denominateValue(totalActiveStake));
+  const actualNumberOfNodes = Math.min(
+    Math.floor(validatorTotalStake / stakePerNode),
+    allActiveNodes
+  );
+  const validatorBaseStake = actualNumberOfNodes * stakePerNode;
   const validatorTopUpStake =
     ((validatorTotalStake - allNodes * stakePerNode) / allNodes) * allActiveNodes;
   const validatorTopUpReward =
