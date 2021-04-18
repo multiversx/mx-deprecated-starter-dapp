@@ -1,0 +1,18 @@
+.statcard {
+  min-height: 8.8rem;
+  min-width: 10rem;
+  flex-basis: 0;
+  flex-grow: 1;
+  font-size: 0.85rem;
+  @include media-breakpoint-only(lg) {
+    min-width: 13rem;
+  }
+  .icon {
+    height: 1.5rem;
+
+    svg {
+      height: 1.5rem;
+      width: auto;
+    }
+  }
+}

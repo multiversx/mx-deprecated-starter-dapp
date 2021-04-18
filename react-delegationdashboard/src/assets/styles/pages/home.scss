@@ -1,0 +1,19 @@
+.home {
+  color: #fff;
+  .login-container {
+    font-size: 0.8125rem;
+    max-width: 33.625rem;
+
+    .btn {
+      min-width: 6.875rem;
+      @include media-breakpoint-up(sm) {
+        min-width: 8rem;
+      }
+    }
+    .logo {
+      fill: $white;
+      height: 2.5rem;
+      width: auto;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+$spacer-val: $spacer * 1.7;
+// SPACING
+$spacers: (
+  spacer: (
+    $spacer-val,
+  ),
+);

@@ -1,0 +1,147 @@
+body.modal-open .layout {
+  filter: blur(6px);
+}
+
+.opacity-6 {
+  opacity: 0.6;
+}
+.opacity-5 {
+  opacity: 0.5;
+}
+
+.card {
+  .card-header {
+    &:first-child {
+      border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
+    }
+  }
+  box-shadow: rgba(255, 255, 255, 0.2) 0 0 0 0.5px inset;
+}
+
+.btn {
+  &:hover:enabled {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  border: none !important;
+  box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 70, 194, 0.1);
+  &.btn-primary {
+    background: rgba(255, 255, 255, 0.2);
+    border: rgba(255, 255, 255, 0.3);
+    color: $white;
+    box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 70, 194, 0.1);
+    &:hover:enabled {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    &:not(:disabled):not(.disabled):active,
+    &:not(:disabled):not(.disabled).active {
+      color: $white;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.table {
+  th,
+  td {
+    font-size: 0.875rem;
+    vertical-align: middle;
+    &:first-of-type {
+      padding-left: 0;
+    }
+    &:last-of-type {
+      text-align: right;
+      padding-right: 0;
+    }
+  }
+  th {
+    font-size: $table-head-font-size;
+    font-weight: 400;
+    padding-top: 0;
+    padding-bottom: 0.875rem;
+  }
+  td {
+    font-size: $table-font-size;
+    border-top: $table-border-width solid $table-border-color;
+    border-bottom: $table-border-width solid $table-border-color;
+  }
+  .trim {
+    max-width: 10rem;
+    @include media-breakpoint-up(sm) {
+      max-width: 14rem;
+    }
+    @include media-breakpoint-up(md) {
+      max-width: 30rem;
+    }
+    @include media-breakpoint-up(xl) {
+      max-width: 42rem;
+    }
+  }
+  .dropdown {
+    position: unset !important;
+    .dropdown-menu {
+      box-shadow: $dropdown-box-shadow;
+    }
+  }
+}
+
+label {
+  @include font-size(80%);
+}
+
+.fa-spin {
+  animation-duration: 0.5s;
+}
+
+.card-bg-red {
+  background: rgba(0, 0, 0, 0)
+    radial-gradient(
+      218.51% 281.09% at 100% 100%,
+      rgba(253, 63, 51, 0.6) 0%,
+      rgba(76, 0, 200, 0.6) 45.83%,
+      rgba(76, 0, 200, 0.6) 100%
+    )
+    repeat scroll 0% 0%;
+  box-shadow: 0 0.6rem 0.6rem 0 rgba(253, 63, 51, 0.06);
+}
+
+.card-bg-orange {
+  background: rgba(0, 0, 0, 0)
+    radial-gradient(
+      218.51% 281.09% at 100% 100%,
+      rgba(238, 184, 109, 0.8) 0%,
+      rgba(76, 0, 200, 0.6) 45.83%,
+      rgba(76, 0, 200, 0.6) 100%
+    )
+    repeat scroll 0% 0%;
+  box-shadow: 0 0.6rem 0.6rem 0 rgba(238, 184, 109, 0.06);
+}
+
+.card-bg-purple {
+  background: rgba(0, 0, 0, 0)
+    radial-gradient(
+      218.51% 281.09% at 100% 100%,
+      rgba(129, 122, 227, 0.6) 0%,
+      rgba(76, 0, 200, 0.6) 45.83%,
+      rgba(76, 0, 200, 0.6) 100%
+    )
+    repeat scroll 0% 0%;
+  box-shadow: 0 0.6rem 0.6rem 0 rgba(129, 122, 227, 0.06);
+}
+
+.card-bg-green {
+  background: rgba(0, 0, 0, 0)
+    radial-gradient(
+      218.51% 281.09% at 100% 100%,
+      rgba(27, 197, 189, 0.6) 0%,
+      rgba(76, 0, 200, 0.6) 45.83%,
+      rgba(76, 0, 200, 0.6) 100%
+    )
+    repeat scroll 0% 0%;
+  box-shadow: 0 0.6rem 0.6rem 0 rgba(27, 197, 189, 0.06);
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1300px;
+  }
+}

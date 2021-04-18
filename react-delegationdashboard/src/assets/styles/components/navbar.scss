@@ -1,0 +1,11 @@
+.navbar {
+  svg.logo {
+    fill: $brand-color;
+    height: $logo-height;
+    width: auto;
+  }
+  .navbar-brand {
+    color: $brand-color;
+    line-height: $logo-height;
+  }
+}
