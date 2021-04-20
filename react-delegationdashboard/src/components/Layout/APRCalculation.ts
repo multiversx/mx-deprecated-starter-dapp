@@ -34,8 +34,9 @@ const calculateAPR = ({
   blsKeys: ContractReturnData[];
   totalActiveStake: string;
 }) => {
-  const allNodes = blsKeys.filter(key => key.asString === 'staked' || key.asString === 'jailed')
-    .length;
+  const allNodes = blsKeys.filter(
+    key => key.asString === 'staked' || key.asString === 'jailed' || key.asString === 'queued'
+  ).length;
   const allActiveNodes = blsKeys.filter(key => key.asString === 'staked').length;
   if (allActiveNodes <= 0) {
     return '0.00';
@@ -73,8 +74,7 @@ const calculateAPR = ({
     allActiveNodes
   );
   const validatorBaseStake = actualNumberOfNodes * stakePerNode;
-  const validatorTopUpStake =
-    ((validatorTotalStake - allNodes * stakePerNode) / allNodes) * allActiveNodes;
+  const validatorTopUpStake = validatorTotalStake - allNodes * stakePerNode;
   const validatorTopUpReward =
     networkTopUpStake > 0 ? (validatorTopUpStake / networkTopUpStake) * topUpReward : 0;
   const validatorBaseReward = (validatorBaseStake / networkBaseStake) * baseReward;
