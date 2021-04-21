@@ -19,6 +19,7 @@ import { getItem } from '../storage/session';
 const defaultGatewayAddress = 'https://gateway.elrond.com';
 const defaultApiAddress = 'https://gateway.elrond.com';
 const defaultExplorerAddress = 'https://gateway.elrond.com';
+const defaultServiceAddress = 'http://localhost:3005/graphql';
 
 export const defaultNetwork: NetworkType = {
   id: 'not-configured',
@@ -28,6 +29,7 @@ export const defaultNetwork: NetworkType = {
   apiAddress: '',
   gatewayAddress: '',
   explorerAddress: '',
+  serviceAddress: '',
   delegationContract: '',
 };
 
@@ -52,6 +54,7 @@ export interface StateType {
   decimals: number;
   account: AccountType;
   explorerAddress: string;
+  serviceAddress: string;
   delegationContract?: string;
   totalActiveStake: string;
   numberOfActiveNodes: string;
@@ -107,14 +110,14 @@ export const initialState = () => {
     dapp: {
       provider: getItem('ledgerLogin')
         ? new HWProvider(
-            new ProxyProvider(
-              sessionNetwork.gatewayAddress !== undefined
-                ? sessionNetwork?.gatewayAddress
-                : defaultGatewayAddress,
-              4000
-            ),
-            getItem('ledgerLogin').index
-          )
+          new ProxyProvider(
+            sessionNetwork.gatewayAddress !== undefined
+              ? sessionNetwork?.gatewayAddress
+              : defaultGatewayAddress,
+            4000
+          ),
+          getItem('ledgerLogin').index
+        )
         : new WalletProvider(sessionNetwork.walletAddress),
       proxy: new ProxyProvider(
         sessionNetwork.gatewayAddress !== undefined
@@ -135,6 +138,7 @@ export const initialState = () => {
     account: emptyAccount,
     egldLabel: sessionNetwork?.egldLabel,
     explorerAddress: sessionNetwork.explorerAddress || defaultExplorerAddress,
+    serviceAddress: sessionNetwork.serviceAddress || defaultServiceAddress,
     delegationContract: sessionNetwork.delegationContract,
     contractOverview: emptyContractOverview,
     networkConfig: emptyNetworkConfig,
@@ -147,9 +151,9 @@ export const initialState = () => {
     ledgerAccount:
       getItem('ledgerAccountIndex') && getItem('address')
         ? {
-            index: getItem('ledgerAccountIndex'),
-            address: getItem('address'),
-          }
+          index: getItem('ledgerAccountIndex'),
+          address: getItem('address'),
+        }
         : undefined,
   };
 };

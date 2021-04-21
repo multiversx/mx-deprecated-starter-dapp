@@ -6,6 +6,7 @@ import {
     GasPrice,
     Address,
     TransactionPayload,
+    Balance,
 } from '@elrondnetwork/erdjs';
 import {
     Grid,
@@ -37,14 +38,11 @@ interface IPair {
 
 const CreatePairAction = () => {
     const classes = useStyles();
-    const { account, dapp, loading } = useContext();
-    const [pairs, setPairs] = useState<IPair[]>([]);
+    const { account, dapp, loading, serviceAddress } = useContext();
     const [tokenA, setTokenA] = useState('');
     const [tokenB, setTokenB] = useState('');
-    const [amountA, setAmountA] = useState(0);
-    const [amountB, setAmountB] = useState(0);
 
-    const client = new GraphQLClient('http://localhost:3005/graphql', {
+    const client = new GraphQLClient(serviceAddress, {
         headers: {
             'Content-Type': 'application/json',
         },
@@ -131,15 +129,94 @@ const CreatePairAction = () => {
                 const pairs = response.pairs;
                 console.log(pairs);
                 let pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_a == tokenA && value.token_b == tokenB);
+                if (pair == undefined) {
+                    pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_b == tokenA && value.token_a == tokenB);
+                }
+                if (pair == undefined) {
+                    alert('PAIR NOT AVAILABLE');
+                    return;
+                }
+
                 console.log(pair.address);
                 const variables = {
                     address: pair.address,
-                    lpTokenName: pair.token_a + '-' + pair.token_b,
-                    lpTokenTicker: pair.token_a[0] + pair.token_b[0]
+                    lpTokenName: 'LiquidityToken' + pair.token_a[0] + pair.token_b[0],
+                    lpTokenTicker: 'LPT' + pair.token_a[0] + pair.token_b[0]
                 };
                 client.request(issueLPTokenQuery, variables)
                     .then(response => {
                         const rawTransaction = response.issueLPToken;
+                        console.log(response);
+                        rawTransaction.nonce = account?.nonce;
+                        let transaction = new Transaction({
+                            ...rawTransaction,
+                            data: TransactionPayload.fromEncoded(rawTransaction.data),
+                            receiver: new Address(rawTransaction.receiver),
+                            gasLimit: new GasLimit(rawTransaction.gasLimit),
+                            gasPrice: new GasPrice(rawTransaction.gasPrice),
+                        });
+                        transaction.value = Balance.eGLD('5');
+                        console.log(transaction);
+
+                        dapp.provider.sendTransaction(transaction);
+                    }).catch(error => {
+                        console.error(error);
+                    });
+
+            }).catch(error => {
+                console.error(error);
+            });
+    };
+
+    const handleSetLocalRoles = () => {
+        console.log('Send Transaction');
+        const pairsQuery = gql`
+        {
+            pairs {
+                token_a
+                token_b
+                address
+            }
+        }
+        `;
+
+        const setLocalRolesQuery = gql`
+        query($address: String!){
+            setLocalRoles(
+                address: $address,
+            ) {
+                nonce
+                value
+                receiver
+                gasPrice
+                gasLimit
+                data
+                chainID
+                version
+            }
+        }
+        `;
+
+        client.request(pairsQuery)
+            .then(response => {
+                const pairs = response.pairs;
+                console.log(pairs);
+                let pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_a == tokenA && value.token_b == tokenB);
+                if (pair == undefined) {
+                    pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_b == tokenA && value.token_a == tokenB);
+                }
+                if (pair == undefined) {
+                    alert('PAIR NOT AVAILABLE');
+                    return;
+                }
+
+                console.log(pair.address);
+                const variables = {
+                    address: pair.address,
+                };
+                client.request(setLocalRolesQuery, variables)
+                    .then(response => {
+                        const rawTransaction = response.setLocalRoles;
                         console.log(response);
                         rawTransaction.nonce = account?.nonce;
                         let transaction = new Transaction({
@@ -175,14 +252,19 @@ const CreatePairAction = () => {
                 <Grid item md={3}>
                     <Input placeholder="Token B" type='text' onChange={(ev: React.ChangeEvent<HTMLInputElement>): void => setTokenB(ev.target.value)} />
                 </Grid>
-                <Grid item md={3}>
+                <Grid item md={2}>
                     <Button onClick={handleCreatePair}>
                         CREATE PAIR
                     </Button>
                 </Grid>
-                <Grid item md={3}>
+                <Grid item md={2}>
                     <Button onClick={handleIssueLpToken}>
                         ISSUE LP TOKEN
+                    </Button>
+                </Grid>
+                <Grid item md={2}>
+                    <Button onClick={handleSetLocalRoles}>
+                        SET LOCAL ROLES
                     </Button>
                 </Grid>
             </Grid>

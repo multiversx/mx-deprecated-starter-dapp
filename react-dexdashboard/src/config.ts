@@ -36,6 +36,7 @@ export const network: NetworkType = {
   apiAddress: 'https://testnet-api.elrond.com',
   gatewayAddress: 'https://testnet-gateway.elrond.com',
   explorerAddress: 'http://testnet-explorer.elrond.com/',
+  serviceAddress: 'http://localhost:3005/graphql',
   delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp0llllswfeycs',
 };
 
@@ -53,6 +54,7 @@ const networkSchema = object({
   walletAddress: string(),
   apiAddress: string(),
   gatewayAddress: string(),
+  serviceAddress: string(),
   explorerAddress: string(),
 }).required();
 

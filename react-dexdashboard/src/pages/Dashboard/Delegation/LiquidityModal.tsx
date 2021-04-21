@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useContext, useDispatch } from 'context';
+import React, { useState } from 'react';
+import { useContext } from 'context';
 import {
     Transaction,
     GasLimit,
     GasPrice,
     Address,
     TransactionPayload,
+    SmartContract,
+    ContractFunction,
 } from '@elrondnetwork/erdjs';
 import {
     Grid,
@@ -14,7 +16,7 @@ import {
     Box
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { request, gql, GraphQLClient } from 'graphql-request';
+import { gql, GraphQLClient } from 'graphql-request';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,23 +30,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface IPair {
-    token_a: string,
-    token_b: string,
-    address: string
-}
-
 
 const AddLiquidityAction = () => {
     const classes = useStyles();
-    const { account, dapp, loading } = useContext();
-    const [pairs, setPairs] = useState<IPair[]>([]);
+    const { account, dapp, loading, serviceAddress } = useContext();
     const [tokenA, setTokenA] = useState('');
     const [tokenB, setTokenB] = useState('');
     const [amountA, setAmountA] = useState(0);
     const [amountB, setAmountB] = useState(0);
 
-    const client = new GraphQLClient('http://localhost:3005/graphql', {
+    const client = new GraphQLClient(serviceAddress, {
         headers: {
             'Content-Type': 'application/json',
         },
@@ -87,20 +82,104 @@ const AddLiquidityAction = () => {
 
         client.request(pairsQuery)
             .then(response => {
-                const data = response;
-                console.log(data.pairs);
-                let pair = data.pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_a == tokenA && value.token_b == tokenB);
+                const pairs = response.pairs;
+                console.log(pairs);
+                let pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_a == tokenA && value.token_b == tokenB);
+                if (pair == undefined) {
+                    pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_b == tokenA && value.token_a == tokenB);
+                }
+                if (pair == undefined) {
+                    alert('PAIR NOT AVAILABLE');
+                    return;
+                }
+
                 console.log(pair.address);
                 const variables = {
                     address: pair.address,
                     amount0: amountA,
                     amount1: amountB,
-                    amount0Min: amountA * 0.99,
-                    amount1Min: amountB * 0.99,
+                    amount0Min: Math.floor(amountA * 0.99),
+                    amount1Min: Math.floor(amountB * 0.99),
                 };
                 client.request(addLiquidityQuery, variables)
                     .then(response => {
                         const rawTransaction = response.addLiquidity;
+                        console.log(rawTransaction);
+                        rawTransaction.nonce = account?.nonce;
+                        let transaction = new Transaction({
+                            ...rawTransaction,
+                            data: TransactionPayload.fromEncoded(rawTransaction.data),
+                            receiver: new Address(rawTransaction.receiver),
+                            gasLimit: new GasLimit(rawTransaction.gasLimit),
+                            gasPrice: new GasPrice(rawTransaction.gasPrice),
+                        });
+                        console.log(transaction);
+
+                        dapp.provider.sendTransaction(transaction);
+                    }).catch(error => {
+                        console.error(error);
+                    });
+
+            }).catch(error => {
+                console.error(error);
+            });
+    };
+
+    const handleTransferToken = (token: string, amount: number) => {
+        console.log('Send Transaction');
+        // const txArguments = new DelegationTransactionType(value, 'delegate');
+        // sendTransactionWallet(txArguments);
+        const pairsQuery = gql`
+        {
+            pairs {
+                token_a
+                token_b
+                address
+            }
+        }
+        `;
+
+        const esdtTransferQuery = gql`
+        query($address: String!, $token: String!, $amount: Int!){
+            esdtTransfer(
+                address: $address,
+                token: $token,
+                amount: $amount,
+            ) {
+                nonce
+                value
+                receiver
+                gasPrice
+                gasLimit
+                data
+                chainID
+                version
+            }
+        }
+        `;
+
+        client.request(pairsQuery)
+            .then(response => {
+                const pairs = response.pairs;
+                console.log(pairs);
+                let pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_a == tokenA && value.token_b == tokenB);
+                if (pair == undefined) {
+                    pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_b == tokenA && value.token_a == tokenB);
+                }
+                if (pair == undefined) {
+                    alert('PAIR NOT AVAILABLE');
+                    return;
+                }
+
+                console.log(pair.address);
+                const variables = {
+                    address: pair.address,
+                    token: token,
+                    amount: amount,
+                };
+                client.request(esdtTransferQuery, variables)
+                    .then(response => {
+                        const rawTransaction = response.esdtTransfer;
                         console.log(rawTransaction);
                         rawTransaction.nonce = account?.nonce;
                         let transaction = new Transaction({
@@ -130,26 +209,34 @@ const AddLiquidityAction = () => {
                 </Box>
             </Grid>
             <Grid container spacing={2}>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <Input placeholder="Token A" type='text' onChange={(ev: React.ChangeEvent<HTMLInputElement>): void => setTokenA(ev.target.value)} />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <Input placeholder="Token B" type='text' onChange={(ev: React.ChangeEvent<HTMLInputElement>): void => setTokenB(ev.target.value)} />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={2}>
+                    <Button onClick={() => handleTransferToken(tokenA, amountA)}>
+                        Transfer Token A
+                    </Button>
+                </Grid>
+                <Grid item md={2}>
+                    <Button onClick={() => handleTransferToken(tokenB, amountB)}>
+                        Transfer Token B
+                    </Button>
+                </Grid>
+                <Grid item md={2}>
                     <Button onClick={handleAddLiquidity}>
                         Add Liquidity
                     </Button>
                 </Grid>
             </Grid>
             <Grid container spacing={2}>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <Input placeholder="Amount A" type='number' onChange={(ev: React.ChangeEvent<HTMLInputElement>): void => setAmountA(parseInt(ev.target.value))} />
                 </Grid>
-                <Grid item md={4}>
+                <Grid item md={3}>
                     <Input placeholder="Amount B" type='number' onChange={(ev: React.ChangeEvent<HTMLInputElement>): void => setAmountB(parseInt(ev.target.value))} />
-                </Grid>
-                <Grid item md={4}>
                 </Grid>
             </Grid>
         </div>

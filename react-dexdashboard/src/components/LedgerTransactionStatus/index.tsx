@@ -37,7 +37,7 @@ const TransactionStatusModal = ({ show, txHash }: TransactionStatusModalType) =>
     txDStatus.status.toLowerCase() === 'pending' ? delay : null
   );
 
-  useEffect(() => {}, [lastTxStatus]);
+  useEffect(() => { }, [lastTxStatus]);
 
   const getTransactionStatus = (hash: TransactionHash) => {
     if (!txHash.isEmpty()) {
@@ -81,7 +81,6 @@ const TransactionStatusModal = ({ show, txHash }: TransactionStatusModalType) =>
               icon={txDStatus.icon}
               className={`text-white ml-1 ${getStatus(txStatus.pending) && spin ? 'fa-spin' : ''}`}
             />
-            <StatusTxDetails txHash={txHash.hash} />
           </div>
 
           <button

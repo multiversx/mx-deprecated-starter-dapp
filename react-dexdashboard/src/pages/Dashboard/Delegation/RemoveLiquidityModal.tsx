@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useContext, useDispatch } from 'context';
-import fetchGraphQL from '../../../fetchGraphQL';
-import { graphql } from 'babel-plugin-relay/macro';
+import React, { useState } from 'react';
+import { useContext } from 'context';
 import {
     Transaction,
     GasLimit,
@@ -16,7 +14,7 @@ import {
     Box
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { request, gql, GraphQLClient } from 'graphql-request';
+import { gql, GraphQLClient } from 'graphql-request';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,22 +28,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface IPair {
-    token_a: string,
-    token_b: string,
-    address: string
-}
-
 
 const RemoveLiquidityAction = () => {
     const classes = useStyles();
-    const { account, dapp, loading } = useContext();
+    const { account, dapp, loading, serviceAddress } = useContext();
     const [tokenA, setTokenA] = useState('');
     const [tokenB, setTokenB] = useState('');
     const [lpToken, setLpToken] = useState('');
     const [liquidity, setLiquidity] = useState(0);
 
-    const client = new GraphQLClient('http://localhost:3005/graphql', {
+    const client = new GraphQLClient(serviceAddress, {
         headers: {
             'Content-Type': 'application/json',
         },
@@ -98,9 +90,17 @@ const RemoveLiquidityAction = () => {
 
         client.request(pairsQuery)
             .then(response => {
-                const data = response;
-                console.log(data.pairs);
-                let pair = data.pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_a == tokenA && value.token_b == tokenB);
+                const pairs = response.pairs;
+                console.log(pairs);
+                let pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_a == tokenA && value.token_b == tokenB);
+                if (pair == undefined) {
+                    pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_b == tokenA && value.token_a == tokenB);
+                }
+                if (pair == undefined) {
+                    alert('PAIR NOT AVAILABLE');
+                    return;
+                }
+
                 console.log(pair.address);
                 const variables = {
                     address: pair.address,

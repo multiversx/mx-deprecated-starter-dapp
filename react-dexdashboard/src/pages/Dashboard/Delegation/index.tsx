@@ -13,6 +13,7 @@ import SwapFixedInputAction from './SwapFixedInputModal';
 import RemoveLiquidityAction from './RemoveLiquidityModal';
 import SwapFixedOutputAction from './SwapFixedOutputModal';
 import CreatePairAction from './CreatePairModal';
+import WrapEGLDAction from './WrapEGLDModal';
 
 const MyDelegation = () => {
   const { dapp, address, egldLabel, delegationContract, loading } = useContext();
@@ -31,6 +32,7 @@ const MyDelegation = () => {
       <SwapFixedInputAction />
       <SwapFixedOutputAction />
       <RemoveLiquidityAction />
+      <WrapEGLDAction />
     </>
   );
 };

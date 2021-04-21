@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useContext, useDispatch } from 'context';
-import fetchGraphQL from '../../../fetchGraphQL';
-import { graphql } from 'babel-plugin-relay/macro';
 import {
     Transaction,
     GasLimit,
@@ -30,21 +28,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface IPair {
-    token_a: string,
-    token_b: string,
-    address: string
-}
-
 
 const SwapFixedInputAction = () => {
     const classes = useStyles();
-    const { account, dapp, loading } = useContext();
+    const { account, dapp, loading, serviceAddress } = useContext();
     const [tokenA, setTokenA] = useState('');
     const [tokenB, setTokenB] = useState('');
     const [amountIn, setAmountIn] = useState(0);
 
-    const client = new GraphQLClient('http://localhost:3005/graphql', {
+    const client = new GraphQLClient(serviceAddress, {
         headers: {
             'Content-Type': 'application/json',
         },
@@ -73,7 +65,7 @@ const SwapFixedInputAction = () => {
         }
         `;
 
-        const addLiquidityQuery = gql`
+        const swapFIxedInputQuery = gql`
         query($address: String!, $tokenIn: String!, $amountIn: Int!, $tokenOut: String!, $amountOutMin: Int!){
             swapTokensFixedInput(
                 address: $address,
@@ -99,8 +91,23 @@ const SwapFixedInputAction = () => {
                 const pairs = response.pairs;
                 console.log(pairs);
                 let pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_a == tokenA && value.token_b == tokenB);
+                if (pair == undefined) {
+                    pair = pairs.find((value: { token_a: string; token_b: string; address: string; }) => value.token_b == tokenA && value.token_a == tokenB);
+                }
+                if (pair == undefined) {
+                    alert('PAIR NOT AVAILABLE');
+                    return;
+                }
+
                 console.log(pair.address);
-                let amountOutMin = Math.floor((amountIn * 997 * pair.info.reserves_b) / (pair.info.reserves_a * 1000 + amountIn * 997) * 0.99);
+                let amountOutMin: number;
+
+                if (pair.token_a == tokenA) {
+                    amountOutMin = Math.floor((amountIn * 997 * pair.info.reserves_b) / (pair.info.reserves_a * 1000 + amountIn * 997) * 0.99);
+                } else {
+                    amountOutMin = Math.floor((amountIn * 997 * pair.info.reserves_a) / (pair.info.reserves_b * 1000 + amountIn * 997) * 0.99);
+                }
+
                 const variables = {
                     address: pair.address,
                     tokenIn: tokenA,
@@ -108,7 +115,8 @@ const SwapFixedInputAction = () => {
                     tokenOut: tokenB,
                     amountOutMin: amountOutMin,
                 };
-                client.request(addLiquidityQuery, variables)
+                console.log(variables);
+                client.request(swapFIxedInputQuery, variables)
                     .then(response => {
                         const rawTransaction = response.swapTokensFixedInput;
                         console.log(response);
