@@ -23,7 +23,7 @@ const getStakingSCBalance = async (): Promise<string> => {
   if (result.status) {
     return result.data.balance;
   } else {
-    return '0';
+    return 'N/A';
   }
 };
 
