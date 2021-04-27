@@ -1,7 +1,7 @@
 import { QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import BigNumber from 'bignumber.js';
 import denominate from 'components/Denominate/formatters';
-import { denomination, decimals } from 'config';
+import { denomination, decimals, auctionContract, network } from 'config';
 import { useContext, useDispatch } from 'context';
 import { emptyAgencyMetaData } from 'context/state';
 import { contractViews } from 'contracts/ContractViews';
@@ -16,6 +16,16 @@ import React from 'react';
 import { calculateAPR } from './APRCalculation';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import axios from 'axios';
+
+const getStakingSCBalance = async (): Promise<string> => {
+  const result = await axios.get(`${network.apiAddress}/accounts/${auctionContract}`);
+  if (result.status) {
+    return result.data.balance;
+  } else {
+    return 'N/A';
+  }
+};
 
 const Layout = ({ children, page }: { children: React.ReactNode; page: string }) => {
   const dispatch = useDispatch();
@@ -73,7 +83,7 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
       getDelegationManagerContractConfig(dapp),
     ])
       .then(
-        ([
+        async ([
           metaData,
           numUsers,
           contractOverview,
@@ -95,9 +105,10 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
             type: 'setMinDelegationAmount',
             minDelegationAmount: delegationManager.returnData[5].asNumber,
           });
+          const contract = getContractOverviewType(contractOverview);
           dispatch({
             type: 'setContractOverview',
-            contractOverview: getContractOverviewType(contractOverview),
+            contractOverview: contract,
           });
           dispatch({
             type: 'setAgencyMetaData',
@@ -122,9 +133,9 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
               networkConfig.ChainID
             ),
           });
-          dispatch({
-            type: 'setAprPercentage',
-            aprPercentage: calculateAPR({
+          const stakingBalance = await getStakingSCBalance(); // Delete it after we migrate to erdjs 4.x
+          const APR = parseFloat(
+            calculateAPR({
               stats: new Stats(networkStats.Epoch),
               networkConfig: new NetworkConfig(
                 networkConfig.TopUpFactor,
@@ -138,11 +149,21 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
                 networkStake.TotalValidators,
                 networkStake.ActiveValidators,
                 networkStake.QueueSize,
-                new BigNumber(networkStake.TotalStaked)
+                new BigNumber(stakingBalance) // Replace with the economics value from erdjs 4.x
               ),
               blsKeys: blsKeys,
               totalActiveStake: activeStake.asBigInt.toFixed(),
-            }),
+            })
+          );
+
+          dispatch({
+            type: 'setAprPercentage',
+            aprPercentage: (
+              APR -
+              APR * ((contract?.serviceFee ? parseFloat(contract.serviceFee) : 15) / 100)
+            )
+              .toFixed(2)
+              .toString(),
           });
         }
       )
