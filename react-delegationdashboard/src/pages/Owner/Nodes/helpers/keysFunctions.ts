@@ -1,5 +1,11 @@
-import { Address, AddressValue, BytesValue, ContractFunction, Query } from '@elrondnetwork/erdjs';
-import { decodeString } from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
+import {
+  Address,
+  AddressValue,
+  BytesValue,
+  ContractFunction,
+  decodeString,
+  Query,
+} from '@elrondnetwork/erdjs';
 import { auctionContract, stakingContract } from 'config';
 import { DappState } from 'context/state';
 import { NodeType } from './nodeType';

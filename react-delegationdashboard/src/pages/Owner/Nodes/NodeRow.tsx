@@ -1,4 +1,10 @@
-import { Address, BytesValue, ContractFunction, Query } from '@elrondnetwork/erdjs';
+import {
+  Address,
+  BytesValue,
+  ContractFunction,
+  decodeUnsignedNumber,
+  Query,
+} from '@elrondnetwork/erdjs';
 import { faCaretDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
@@ -12,7 +18,6 @@ import { NodeType } from './helpers/nodeType';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
 import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
-import { decodeUnsignedNumber } from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake' | 'remove';
 

@@ -16,13 +16,12 @@ import { calculateAPR } from './APRCalculation';
 import Footer from './Footer';
 import Navbar from './Navbar';
 import axios from 'axios';
-import { QueryResponse } from '@elrondnetwork/erdjs';
-
 import {
+  QueryResponse,
   decodeUnsignedNumber,
   decodeBigNumber,
   decodeString,
-} from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
+} from '@elrondnetwork/erdjs';
 
 const getStakingSCBalance = async (): Promise<string> => {
   const result = await axios.get(`${network.apiAddress}/accounts/${auctionContract}`);

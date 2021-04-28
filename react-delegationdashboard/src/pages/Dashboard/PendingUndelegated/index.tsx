@@ -1,4 +1,9 @@
-import { QueryResponse } from '@elrondnetwork/erdjs';
+import {
+  QueryResponse,
+  decodeBigNumber,
+  decodeString,
+  decodeUnsignedNumber,
+} from '@elrondnetwork/erdjs';
 import * as React from 'react';
 import { useContext } from 'context';
 import { contractViews } from 'contracts/ContractViews';
@@ -6,16 +11,10 @@ import denominate from 'components/Denominate/formatters';
 import { denomination, decimals } from 'config';
 import UndelegatedValueRow from './UndelegatedValueRow';
 import { UndelegatedValueType } from './UndelegatedValueType';
-import {
-  decodeBigNumber,
-  decodeString,
-  decodeUnsignedNumber,
-} from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
 
 const UndelegatedListView = () => {
   const { dapp, address, delegationContract, networkConfig } = useContext();
   const { getUserUnDelegatedList } = contractViews;
-
   const [userUnstakeValue, setUserUnstakedValue] = React.useState(Array<UndelegatedValueType>());
 
   const denomintateValue = (value: string): string => {

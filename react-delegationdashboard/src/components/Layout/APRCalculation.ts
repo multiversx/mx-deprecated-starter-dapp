@@ -1,4 +1,4 @@
-import { decodeString } from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
+import { decodeString } from '@elrondnetwork/erdjs';
 import denominate from 'components/Denominate/formatters';
 import {
   yearSettings,

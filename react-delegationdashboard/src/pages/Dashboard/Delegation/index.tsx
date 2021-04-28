@@ -8,10 +8,7 @@ import ClaimRewardsAction from '../Actions/ClaimRewardsAction';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import State from 'components/State';
 import { denomination, decimals } from 'config';
-import {
-  decodeBigNumber,
-  decodeUnsignedNumber,
-} from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
+import { decodeBigNumber, decodeUnsignedNumber } from '@elrondnetwork/erdjs';
 
 const MyDelegation = () => {
   const { dapp, address, egldLabel, delegationContract, loading } = useContext();
