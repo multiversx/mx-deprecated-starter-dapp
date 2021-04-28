@@ -1,4 +1,3 @@
-import { QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
 import BigNumber from 'bignumber.js';
 import denominate from 'components/Denominate/formatters';
 import { denomination, decimals, auctionContract, network } from 'config';
@@ -17,6 +16,13 @@ import { calculateAPR } from './APRCalculation';
 import Footer from './Footer';
 import Navbar from './Navbar';
 import axios from 'axios';
+import { QueryResponse } from '@elrondnetwork/erdjs';
+
+import {
+  decodeUnsignedNumber,
+  decodeBigNumber,
+  decodeString,
+} from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
 
 const getStakingSCBalance = async (): Promise<string> => {
   const result = await axios.get(`${network.apiAddress}/accounts/${auctionContract}`);
@@ -40,22 +46,23 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
   } = contractViews;
 
   const getContractOverviewType = (value: QueryResponse) => {
+    let response = value.outputUntyped();
     let initialOwnerFunds = denominate({
       decimals,
       denomination,
-      input: value.returnData[3].asBigInt.toFixed(),
+      input: decodeBigNumber(response[3]).toFixed(),
     });
     return new ContractOverview(
-      value.returnData[0].asHex.toString(),
-      (value.returnData[1].asNumber / 100).toString(),
-      value.returnData[2].asBigInt.toFixed(),
+      response[0].toString('hex'),
+      (decodeUnsignedNumber(response[1]) / 100).toString(),
+      decodeBigNumber(response[2]).toFixed(),
       initialOwnerFunds,
-      value.returnData[4]?.asString,
-      value.returnData[5]?.asBool,
-      value.returnData[6].asBool,
-      value.returnData[7]?.asString,
-      value.returnData[8].asBool,
-      value.returnData[9]?.asNumber * 6
+      decodeString(response[4]),
+      decodeString(response[5]),
+      decodeString(response[6]),
+      decodeString(response[7]),
+      decodeString(response[8]),
+      decodeUnsignedNumber(response[9]) * 6
     );
   };
 
@@ -63,10 +70,11 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     if (value && value.returnData && value.returnData.length === 0) {
       return emptyAgencyMetaData;
     }
+    const response = value.outputUntyped();
     return new AgencyMetadata(
-      value.returnData[0]?.asString,
-      value.returnData[1]?.asString,
-      value.returnData[2]?.asString
+      decodeString(response[0]),
+      decodeString(response[1]),
+      decodeString(response[2])
     );
   };
   React.useEffect(() => {
@@ -87,10 +95,8 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           metaData,
           numUsers,
           contractOverview,
-          {
-            returnData: [activeStake],
-          },
-          { returnData: blsKeys },
+          activeStake,
+          blsKeysResponse,
           networkStats,
           networkStake,
           networkConfig,
@@ -99,11 +105,11 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
         ]) => {
           dispatch({
             type: 'setNumUsers',
-            numUsers: numUsers.returnData[0].asNumber,
+            numUsers: decodeUnsignedNumber(numUsers.outputUntyped()[0]),
           });
           dispatch({
             type: 'setMinDelegationAmount',
-            minDelegationAmount: delegationManager.returnData[5].asNumber,
+            minDelegationAmount: decodeUnsignedNumber(delegationManager.outputUntyped()[0]),
           });
           const contract = getContractOverviewType(contractOverview);
           dispatch({
@@ -116,11 +122,14 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
           });
           dispatch({
             type: 'setTotalActiveStake',
-            totalActiveStake: activeStake.asBigInt.toFixed(),
+            totalActiveStake: decodeBigNumber(activeStake.outputUntyped()[0]).toFixed(),
           });
           dispatch({
             type: 'setNumberOfActiveNodes',
-            numberOfActiveNodes: blsKeys.filter(key => key.asString === 'staked').length.toString(),
+            numberOfActiveNodes: blsKeysResponse
+              .outputUntyped()
+              .filter(key => decodeString(key) === 'staked')
+              .length.toString(),
           });
           dispatch({
             type: 'setNetworkConfig',
@@ -151,8 +160,8 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
                 networkStake.QueueSize,
                 new BigNumber(stakingBalance) // Replace with the economics value from erdjs 4.x
               ),
-              blsKeys: blsKeys,
-              totalActiveStake: activeStake.asBigInt.toFixed(),
+              blsKeys: blsKeysResponse.outputUntyped(),
+              totalActiveStake: decodeBigNumber(activeStake.outputUntyped()[0]).toFixed(),
             })
           );
 

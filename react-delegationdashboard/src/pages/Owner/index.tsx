@@ -1,5 +1,5 @@
 import { Redirect } from 'react-router-dom';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address } from '@elrondnetwork/erdjs';
 import { useEffect } from 'react';
 import { useContext, useDispatch } from 'context';
 import Overview from 'components/Overview';

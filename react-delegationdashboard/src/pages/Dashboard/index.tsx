@@ -4,7 +4,7 @@ import Delegation from './Delegation';
 import PendingUndelegated from './PendingUndelegated';
 import { Redirect } from 'react-router-dom';
 import Overview from 'components/Overview';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address } from '@elrondnetwork/erdjs';
 import { AccountType } from 'helpers/contractDataDefinitions';
 import State from 'components/State';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';

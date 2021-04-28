@@ -1,4 +1,4 @@
-import { QueryResponse } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import { QueryResponse } from '@elrondnetwork/erdjs';
 import * as React from 'react';
 import { useContext } from 'context';
 import { contractViews } from 'contracts/ContractViews';
@@ -6,6 +6,11 @@ import denominate from 'components/Denominate/formatters';
 import { denomination, decimals } from 'config';
 import UndelegatedValueRow from './UndelegatedValueRow';
 import { UndelegatedValueType } from './UndelegatedValueType';
+import {
+  decodeBigNumber,
+  decodeString,
+  decodeUnsignedNumber,
+} from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
 
 const UndelegatedListView = () => {
   const { dapp, address, delegationContract, networkConfig } = useContext();
@@ -21,7 +26,7 @@ const UndelegatedListView = () => {
     let roundsRemainingInEpoch =
       networkConfig.roundsPerEpoch - networkConfig.roundsPassedInCurrentEpoch;
     let roundEpochComplete = 0;
-    let epochsChangesRemaining = value.returnData[index + 1].asNumber;
+    let epochsChangesRemaining = decodeUnsignedNumber(value.outputUntyped()[index + 1]);
     if (epochsChangesRemaining > 1) {
       roundEpochComplete = (epochsChangesRemaining - 1) * networkConfig.roundsPerEpoch;
     } else {
@@ -39,11 +44,11 @@ const UndelegatedListView = () => {
     undelegatedList: UndelegatedValueType[]
   ) => {
     let timeLeft = 0;
-    if (value.returnData[index + 1].asString !== '') {
+    if (decodeString(value.outputUntyped()[index + 1]) !== '') {
       timeLeft = getTimeLeft(value, index, timeLeft);
     }
     const element = new UndelegatedValueType(
-      denomintateValue(value.returnData[index].asBigInt.toFixed()),
+      denomintateValue(decodeBigNumber(value.outputUntyped()[index]).toFixed()),
       timeLeft
     );
     undelegatedList.push(element);

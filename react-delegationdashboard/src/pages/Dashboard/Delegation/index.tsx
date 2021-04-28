@@ -8,6 +8,10 @@ import ClaimRewardsAction from '../Actions/ClaimRewardsAction';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import State from 'components/State';
 import { denomination, decimals } from 'config';
+import {
+  decodeBigNumber,
+  decodeUnsignedNumber,
+} from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
 
 const MyDelegation = () => {
   const { dapp, address, egldLabel, delegationContract, loading } = useContext();
@@ -23,29 +27,31 @@ const MyDelegation = () => {
     dispatch({ type: 'loading', loading: true });
     getClaimableRewards(dapp, address, delegationContract)
       .then(value => {
-        if (value.returnData.length > 0 && value.returnData[0]?.asNumber !== 0) {
+        const response = value.outputUntyped();
+        if (response.length > 0 && decodeUnsignedNumber(response[0]) !== 0) {
           setDisplayRewards(true);
         }
         setClaimableRewards(
           denominate({
             denomination,
             decimals: 4,
-            input: value.returnData[0]?.asBigInt.toFixed(),
+            input: decodeBigNumber(response[0]).toFixed(),
           }) || ''
         );
       })
       .catch(e => console.error('getClaimableRewards error', e));
     getUserActiveStake(dapp, address, delegationContract)
       .then(value => {
+        const response = value.outputUntyped();
         setUserActiveStake(
           denominate({
             denomination,
             decimals,
-            input: value.returnData[0]?.asBigInt.toFixed(),
+            input: decodeBigNumber(response[0]).toFixed(),
           }) || ''
         );
-        setUserActiveNominatedStake(value.returnData[0]?.asBigInt.toFixed());
-        if (value.returnData.length > 0 && value.returnData[0]?.asNumber !== 0) {
+        setUserActiveNominatedStake(decodeBigNumber(response[0]).toFixed());
+        if (response.length > 0 && decodeUnsignedNumber(response[0]) !== 0) {
           setDisplayUndelegate(true);
         }
 

@@ -1,4 +1,4 @@
-import { ContractReturnData } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import { decodeString } from '@elrondnetwork/erdjs/out/smartcontracts/codec/binaryCodecUtils';
 import denominate from 'components/Denominate/formatters';
 import {
   yearSettings,
@@ -31,13 +31,16 @@ const calculateAPR = ({
   stats: Stats;
   networkConfig: NetworkConfig;
   networkStake: NetworkStake;
-  blsKeys: ContractReturnData[];
+  blsKeys: Buffer[];
   totalActiveStake: string;
 }) => {
   const allNodes = blsKeys.filter(
-    key => key.asString === 'staked' || key.asString === 'jailed' || key.asString === 'queued'
+    key =>
+      decodeString(key) === 'staked' ||
+      decodeString(key) === 'jailed' ||
+      decodeString(key) === 'queued'
   ).length;
-  const allActiveNodes = blsKeys.filter(key => key.asString === 'staked').length;
+  const allActiveNodes = blsKeys.filter(key => decodeString(key) === 'staked').length;
   if (allActiveNodes <= 0) {
     return '0.00';
   }
