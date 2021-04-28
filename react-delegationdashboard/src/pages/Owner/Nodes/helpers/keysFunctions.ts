@@ -66,7 +66,7 @@ export const getQueueIndex = (blsKey: any, dapp: DappState) => {
     address: new Address(stakingContract),
     func: new ContractFunction('getQueueIndex'),
     caller: new Address(auctionContract),
-    args: [BytesValue.fromUTF8(blsKey)],
+    args: [BytesValue.fromHex(blsKey)],
   });
   return new Promise(resolve => {
     dapp.proxy
