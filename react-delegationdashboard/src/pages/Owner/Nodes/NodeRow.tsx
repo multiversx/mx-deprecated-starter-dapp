@@ -31,8 +31,6 @@ const allowedActions: { [key: string]: ActionType[] } = {
 
 const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const { explorerAddress, dapp, ledgerAccount } = useContext();
-  const [showDelegateModal, setShowDelegateModal] = useState(false);
-  const [selectedAction, setSelectedAction] = useState('');
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
     new DelegationTransactionType('', '')
@@ -56,7 +54,7 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
     const query = new Query({
       address: new Address(stakingContract),
       func: new ContractFunction('getRemainingUnBondPeriod'),
-      args: [BytesValue.fromUTF8(key.blsKey)],
+      args: [BytesValue.fromHex(key.blsKey)],
     });
     if (key.status.key === 'unStaked') {
       dapp.proxy
