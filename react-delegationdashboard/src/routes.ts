@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import withPageTitle from './components/PageTitle';
 import Owner from 'pages/Owner';
 import Ledger from 'pages/Ledger';
+import WalletConnect from 'pages/WalletConnect';
 
 interface RouteType {
   path: string;
@@ -30,6 +31,12 @@ const routes: RouteType[] = [
     page: 'ledger',
     title: 'Ledger login',
     component: Ledger,
+  },
+  {
+    path: '/walletconnect',
+    page: 'walletconnect',
+    title: 'Maiar login',
+    component: WalletConnect,
   },
   {
     path: '/owner',
