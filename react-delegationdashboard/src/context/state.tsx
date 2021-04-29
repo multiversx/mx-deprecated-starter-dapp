@@ -92,10 +92,10 @@ export const emptyContractOverview: ContractOverview = {
   maxDelegationCap: '',
   initialOwnerFunds: '',
   automaticActivation: 'false',
-  withDelegationCap: false,
-  changeableServiceFee: false,
+  withDelegationCap: 'false',
+  changeableServiceFee: 'false',
   reDelegationCap: 'false',
-  createdNounce: false,
+  createdNounce: 'false',
   unBondPeriod: 0,
 };
 

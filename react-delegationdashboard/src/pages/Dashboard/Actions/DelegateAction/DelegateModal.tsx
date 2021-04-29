@@ -40,7 +40,7 @@ const DelegateModal = ({ show, balance, handleClose, handleContinue }: DelegateM
   };
 
   const getAvailableToDelegate = () => {
-    if (contractOverview?.withDelegationCap) {
+    if (contractOverview && contractOverview.withDelegationCap === 'true') {
       const bnAvailable = new BigNumber(entireBalanceMinusDust);
       const totalActive = denominate({
         input: totalActiveStake,

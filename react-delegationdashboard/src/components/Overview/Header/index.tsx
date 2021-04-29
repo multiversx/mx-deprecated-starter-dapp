@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address } from '@elrondnetwork/erdjs';
 import { useContext, useDispatch } from 'context';
 import SetAgencyMetaDataModal from './SetAgencyMetaDataModal';
 import { getItem } from 'storage/session';

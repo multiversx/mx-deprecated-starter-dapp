@@ -7,10 +7,10 @@ export class ContractOverview {
   maxDelegationCap: string;
   initialOwnerFunds?: string;
   automaticActivation: string;
-  withDelegationCap?: boolean;
-  changeableServiceFee?: boolean;
+  withDelegationCap?: string;
+  changeableServiceFee?: string;
   reDelegationCap: string;
-  createdNounce?: boolean;
+  createdNounce?: string;
   unBondPeriod?: number;
   public constructor(
     ownerAddress: string = '',
@@ -18,10 +18,10 @@ export class ContractOverview {
     maxDelegationCap: string = '',
     initialOwnerFunds?: string,
     automaticActivation: string = 'false',
-    withDelegationCap: boolean = false,
-    changeableServiceFee?: boolean,
+    withDelegationCap: string = 'false',
+    changeableServiceFee?: string,
     reDelegationCap: string = 'false',
-    createdNounce?: boolean,
+    createdNounce?: string,
     unBondPeriod?: number
   ) {
     this.ownerAddress = ownerAddress;

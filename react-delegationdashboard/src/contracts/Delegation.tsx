@@ -54,7 +54,7 @@ export default class Delegation {
         console.warn('invalid signerProvider');
     }
 
-    return new Transaction();
+    throw new Error('invalid signerProvider');
   }
 
   private async sendTransactionBasedOnType(
@@ -77,7 +77,7 @@ export default class Delegation {
       let transaction = new Transaction({
         chainID: delegationTransactionType.chainId,
         receiver: this.contract.getAddress(),
-        value: Balance.eGLD(delegationTransactionType.value),
+        value: Balance.egld(delegationTransactionType.value),
         gasLimit: new GasLimit(delegationContract.gasLimit),
         data: payload,
         nonce: this.account?.nonce,

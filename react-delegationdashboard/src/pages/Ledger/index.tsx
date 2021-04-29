@@ -2,7 +2,7 @@ import React from 'react';
 import { useContext, useDispatch } from 'context';
 import AddressTable from './AddressTable';
 import ConfirmedAddress from './ConfirmedAddress';
-import { HWProvider } from '@elrondnetwork/erdjs/out';
+import { HWProvider } from '@elrondnetwork/erdjs';
 import { useHistory } from 'react-router-dom';
 import LedgerConnect from './LedgerConnect';
 

@@ -1,5 +1,4 @@
-import { Address, ContractFunction, Argument } from '@elrondnetwork/erdjs/out';
-import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import { Address, AddressValue, ContractFunction, Query } from '@elrondnetwork/erdjs';
 import { auctionContract, delegationManagerContract } from 'config';
 import { DappState } from '../context/state';
 
@@ -8,7 +7,7 @@ export const contractViews = {
     const query = new Query({
       address: new Address(delegationContract),
       func: new ContractFunction('getUserActiveStake'),
-      args: [Argument.fromPubkey(new Address(address))],
+      args: [new AddressValue(new Address(address))],
     });
     return dapp.proxy.queryContract(query);
   },
@@ -16,7 +15,7 @@ export const contractViews = {
     const query = new Query({
       address: new Address(delegationContract),
       func: new ContractFunction('getUserUnDelegatedList'),
-      args: [Argument.fromPubkey(new Address(address))],
+      args: [new AddressValue(new Address(address))],
     });
     return dapp.proxy.queryContract(query);
   },
@@ -24,7 +23,7 @@ export const contractViews = {
     const query = new Query({
       address: new Address(delegationContract),
       func: new ContractFunction('getClaimableRewards'),
-      args: [Argument.fromPubkey(new Address(address))],
+      args: [new AddressValue(new Address(address))],
     });
     return dapp.proxy.queryContract(query);
   },
@@ -67,7 +66,7 @@ export const contractViews = {
     const query = new Query({
       address: new Address(auctionContract),
       func: new ContractFunction('getBlsKeysStatus'),
-      args: [Argument.fromPubkey(new Address(delegationContract))],
+      args: [new AddressValue(new Address(delegationContract))],
     });
     return dapp.proxy.queryContract(query);
   },

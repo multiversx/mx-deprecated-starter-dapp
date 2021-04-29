@@ -1,5 +1,10 @@
-import { Address, Argument, ContractFunction, TransactionHash } from '@elrondnetwork/erdjs/out';
-import { Query } from '@elrondnetwork/erdjs/out/smartcontracts/query';
+import {
+  Address,
+  BytesValue,
+  ContractFunction,
+  decodeUnsignedNumber,
+  Query,
+} from '@elrondnetwork/erdjs';
 import { faCaretDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
@@ -26,8 +31,6 @@ const allowedActions: { [key: string]: ActionType[] } = {
 
 const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
   const { explorerAddress, dapp, ledgerAccount } = useContext();
-  const [showDelegateModal, setShowDelegateModal] = useState(false);
-  const [selectedAction, setSelectedAction] = useState('');
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
     new DelegationTransactionType('', '')
@@ -51,13 +54,14 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
     const query = new Query({
       address: new Address(stakingContract),
       func: new ContractFunction('getRemainingUnBondPeriod'),
-      args: [Argument.fromHex(key.blsKey)],
+      args: [BytesValue.fromHex(key.blsKey)],
     });
     if (key.status.key === 'unStaked') {
+      const untypedResponse = value.outputUntyped();
       dapp.proxy
         .queryContract(query)
         .then(value => {
-          const remainingUnBondPeriod = value.returnData[0].asNumber;
+          const remainingUnBondPeriod = decodeUnsignedNumber(untypedResponse[0]);
           const newRemaining = remainingUnBondPeriod !== undefined ? remainingUnBondPeriod : 0;
 
           if (ref.current !== null) {

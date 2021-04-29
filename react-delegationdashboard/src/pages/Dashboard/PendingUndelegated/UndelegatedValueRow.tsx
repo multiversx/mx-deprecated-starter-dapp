@@ -72,7 +72,9 @@ const UndelegatedValueRow = ({
       <ConfirmOnLedgerModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
-        handleClose={() => {}}
+        handleClose={() => {
+          setShowCheckYourLedgerModal(false);
+        }}
       />
     </>
   );

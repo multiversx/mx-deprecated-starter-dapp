@@ -1,5 +1,4 @@
-import { Address } from '@elrondnetwork/erdjs/out';
-import { BLS, ValidatorSecretKey } from '@elrondnetwork/erdjs/out/walletcore/validatorKeys';
+import { Address, BLS, ValidatorSecretKey } from '@elrondnetwork/erdjs';
 
 function hexStringToByte(str: string) {
   if (!str) {

@@ -1,4 +1,4 @@
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import { TransactionHash } from '@elrondnetwork/erdjs';
 import { faCheck, faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'context';
@@ -81,7 +81,7 @@ const TransactionStatusModal = ({ show, txHash }: TransactionStatusModalType) =>
               icon={txDStatus.icon}
               className={`text-white ml-1 ${getStatus(txStatus.pending) && spin ? 'fa-spin' : ''}`}
             />
-            <StatusTxDetails txHash={txHash.hash} />
+            <StatusTxDetails txHash={txHash.toString()} />
           </div>
 
           <button

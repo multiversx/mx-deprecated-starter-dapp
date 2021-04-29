@@ -1,4 +1,4 @@
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import { TransactionHash } from '@elrondnetwork/erdjs';
 import { useContext } from 'context';
 import { Delegation } from 'contracts';
 import { DelegationTransactionType } from './contractDataDefinitions';
@@ -16,7 +16,7 @@ export default function useDelegation({ handleClose, setLedgerDataError }: UseDe
     delegation
       .sendTransaction(transactionArguments)
       .then(transaction => {
-        handleClose(transaction.hash);
+        handleClose(transaction.getHash());
       })
       .catch(e => {
         if (e.statusCode in ledgerErrorCodes) {

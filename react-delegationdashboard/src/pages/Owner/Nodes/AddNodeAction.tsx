@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DropzoneFileType } from 'components/DropzonePem';
 import RequestVariablesModal from 'components/DropzonePem/RequestVariablesModal';
-import { BLS } from '@elrondnetwork/erdjs/out';
+import { BLS } from '@elrondnetwork/erdjs';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
 import { useContext } from 'context';

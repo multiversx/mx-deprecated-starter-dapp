@@ -1,4 +1,4 @@
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address } from '@elrondnetwork/erdjs';
 import React, { useEffect } from 'react';
 import { useContext, useDispatch } from 'context';
 import { getItem, removeItem, setItem } from 'storage/session';

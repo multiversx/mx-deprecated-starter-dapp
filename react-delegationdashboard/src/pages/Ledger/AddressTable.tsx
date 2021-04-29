@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { useContext, useDispatch } from 'context';
-import { HWProvider } from '@elrondnetwork/erdjs/out';
+import { HWProvider } from '@elrondnetwork/erdjs';
 import { faChevronLeft, faChevronRight, faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import AddressRow from './AddressRow';
 import { useHistory } from 'react-router-dom';
@@ -21,7 +21,6 @@ const AddressTable = ({
   const dispatch = useDispatch();
   const [startIndex, setStartIndex] = React.useState(0);
   const [accounts, setAccounts] = React.useState<string[]>([]);
-  const [error] = React.useState('');
   const [selectedAddress, setSelectedAddress] = React.useState('');
   const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>();
   const hwWalletP = new HWProvider(dapp.proxy);
