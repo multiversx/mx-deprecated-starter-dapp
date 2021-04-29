@@ -43,11 +43,12 @@ const UndelegatedListView = () => {
     undelegatedList: UndelegatedValueType[]
   ) => {
     let timeLeft = 0;
-    if (decodeString(value.outputUntyped()[index + 1]) !== '') {
+    const untypedResponse = value.outputUntyped();
+    if (decodeString(untypedResponse[index + 1]) !== '') {
       timeLeft = getTimeLeft(value, index, timeLeft);
     }
     const element = new UndelegatedValueType(
-      denomintateValue(decodeBigNumber(value.outputUntyped()[index]).toFixed()),
+      denomintateValue(decodeBigNumber(untypedResponse[index]).toFixed()),
       timeLeft
     );
     undelegatedList.push(element);
