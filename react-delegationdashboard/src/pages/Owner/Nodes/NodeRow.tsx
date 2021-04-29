@@ -57,10 +57,11 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
       args: [BytesValue.fromHex(key.blsKey)],
     });
     if (key.status.key === 'unStaked') {
+      const untypedResponse = value.outputUntyped();
       dapp.proxy
         .queryContract(query)
         .then(value => {
-          const remainingUnBondPeriod = decodeUnsignedNumber(value.outputUntyped()[0]);
+          const remainingUnBondPeriod = decodeUnsignedNumber(untypedResponse[0]);
           const newRemaining = remainingUnBondPeriod !== undefined ? remainingUnBondPeriod : 0;
 
           if (ref.current !== null) {

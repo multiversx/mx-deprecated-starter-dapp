@@ -21,7 +21,8 @@ export const getAllNodesStatus = (dapp: DappState, delegationContract?: string) 
       .queryContract(query)
       .then(value => {
         let nodes = new Array<NodeType>();
-        mapNodes(value.outputUntyped(), nodes, []);
+        const untypedResponse = value.outputUntyped();
+        mapNodes(untypedResponse, nodes, []);
         return resolve(nodes);
       })
       .catch(e => console.error('GetAllNodesStatus error ', e));
@@ -39,8 +40,8 @@ export const getBlsKeysStatus = (dapp: DappState, queued: any[], delegationContr
       .queryContract(query)
       .then(value => {
         let nodes = new Array<NodeType>();
-        let responseValues = value.outputUntyped();
-        mapNodes(responseValues.reverse(), nodes, queued);
+        let untypedResponse = value.outputUntyped();
+        mapNodes(untypedResponse.reverse(), nodes, queued);
         return resolve(nodes);
       })
       .catch(e => console.error('GetBlsKeysStatus error', e));
@@ -72,7 +73,8 @@ export const getQueueIndex = (blsKey: any, dapp: DappState) => {
     dapp.proxy
       .queryContract(query)
       .then(value => {
-        return resolve(decodeString(value.outputUntyped()[0]));
+        const untypedResponse = value.outputUntyped();
+        return resolve(decodeString(untypedResponse[0]));
       })
       .catch(e => console.error('getQueueIndex error', e));
   });

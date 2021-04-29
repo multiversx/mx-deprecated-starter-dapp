@@ -22,10 +22,11 @@ const UndelegatedListView = () => {
   };
 
   const getTimeLeft = (value: QueryResponse, index: number, timeLeft: number) => {
+    const untypedResponse = value.outputUntyped();
     let roundsRemainingInEpoch =
       networkConfig.roundsPerEpoch - networkConfig.roundsPassedInCurrentEpoch;
     let roundEpochComplete = 0;
-    let epochsChangesRemaining = decodeUnsignedNumber(value.outputUntyped()[index + 1]);
+    let epochsChangesRemaining = decodeUnsignedNumber(untypedResponse[index + 1]);
     if (epochsChangesRemaining > 1) {
       roundEpochComplete = (epochsChangesRemaining - 1) * networkConfig.roundsPerEpoch;
     } else {

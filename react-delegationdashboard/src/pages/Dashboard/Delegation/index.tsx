@@ -24,31 +24,31 @@ const MyDelegation = () => {
     dispatch({ type: 'loading', loading: true });
     getClaimableRewards(dapp, address, delegationContract)
       .then(value => {
-        const response = value.outputUntyped();
-        if (response.length > 0 && decodeUnsignedNumber(response[0]) !== 0) {
+        const untypedResponse = value.outputUntyped();
+        if (untypedResponse.length > 0 && decodeUnsignedNumber(untypedResponse[0]) !== 0) {
           setDisplayRewards(true);
         }
         setClaimableRewards(
           denominate({
             denomination,
             decimals: 4,
-            input: decodeBigNumber(response[0]).toFixed(),
+            input: decodeBigNumber(untypedResponse[0]).toFixed(),
           }) || ''
         );
       })
       .catch(e => console.error('getClaimableRewards error', e));
     getUserActiveStake(dapp, address, delegationContract)
       .then(value => {
-        const response = value.outputUntyped();
+        const untypedResponse = value.outputUntyped();
         setUserActiveStake(
           denominate({
             denomination,
             decimals,
-            input: decodeBigNumber(response[0]).toFixed(),
+            input: decodeBigNumber(untypedResponse[0]).toFixed(),
           }) || ''
         );
-        setUserActiveNominatedStake(decodeBigNumber(response[0]).toFixed());
-        if (response.length > 0 && decodeUnsignedNumber(response[0]) !== 0) {
+        setUserActiveNominatedStake(decodeBigNumber(untypedResponse[0]).toFixed());
+        if (untypedResponse.length > 0 && decodeUnsignedNumber(untypedResponse[0]) !== 0) {
           setDisplayUndelegate(true);
         }
 

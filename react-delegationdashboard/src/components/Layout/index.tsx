@@ -45,23 +45,23 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
   } = contractViews;
 
   const getContractOverviewType = (value: QueryResponse) => {
-    let response = value.outputUntyped();
+    let untypedResponse = value.outputUntyped();
     let initialOwnerFunds = denominate({
       decimals,
       denomination,
-      input: decodeBigNumber(response[3]).toFixed(),
+      input: decodeBigNumber(untypedResponse[3]).toFixed(),
     });
     return new ContractOverview(
-      response[0].toString('hex'),
-      (decodeUnsignedNumber(response[1]) / 100).toString(),
-      decodeBigNumber(response[2]).toFixed(),
+      untypedResponse[0].toString('hex'),
+      (decodeUnsignedNumber(untypedResponse[1]) / 100).toString(),
+      decodeBigNumber(untypedResponse[2]).toFixed(),
       initialOwnerFunds,
-      decodeString(response[4]),
-      decodeString(response[5]),
-      decodeString(response[6]),
-      decodeString(response[7]),
-      decodeString(response[8]),
-      decodeUnsignedNumber(response[9]) * 6
+      decodeString(untypedResponse[4]),
+      decodeString(untypedResponse[5]),
+      decodeString(untypedResponse[6]),
+      decodeString(untypedResponse[7]),
+      decodeString(untypedResponse[8]),
+      decodeUnsignedNumber(untypedResponse[9]) * 6
     );
   };
 
@@ -69,11 +69,11 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
     if (value && value.returnData && value.returnData.length === 0) {
       return emptyAgencyMetaData;
     }
-    const response = value.outputUntyped();
+    const untypedResponse = value.outputUntyped();
     return new AgencyMetadata(
-      decodeString(response[0]),
-      decodeString(response[1]),
-      decodeString(response[2])
+      decodeString(untypedResponse[0]),
+      decodeString(untypedResponse[1]),
+      decodeString(untypedResponse[2])
     );
   };
   React.useEffect(() => {
