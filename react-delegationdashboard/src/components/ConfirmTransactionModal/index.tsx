@@ -6,19 +6,19 @@ import { TransactionHash } from '@elrondnetwork/erdjs';
 import TransactionStatusModal from 'components/LedgerTransactionStatus';
 import { useHistory } from 'react-router-dom';
 import { useContext, useDispatch } from 'context';
-export interface ConfirmOnLedgerModalType {
+export interface ConfirmTransactionModalType {
   show: boolean;
   transactionArguments: DelegationTransactionType;
   handleClose: () => void;
 }
-const ConfirmOnLedgerModal = ({
+const ConfirmTransactionModal = ({
   show,
   transactionArguments,
   handleClose,
-}: ConfirmOnLedgerModalType) => {
+}: ConfirmTransactionModalType) => {
   const dispatch = useDispatch();
   const { egldLabel, delegationContract, dapp } = useContext();
-  const [ledgerError, setLedgerDataError] = useState('');
+  const [error, setError] = useState('');
   const [showTransactionStatus, setShowTransactionStatus] = useState(false);
   const [txHash, setTxHash] = useState(new TransactionHash(''));
   const closeTransactionModal = (txHash: TransactionHash) => {
@@ -30,14 +30,14 @@ const ConfirmOnLedgerModal = ({
 
   const handleCloseModal = () => {
     setShowTransactionStatus(false);
-    if (ledgerError === 'Your session has expired. Please login again') {
+    if (error === 'Your session has expired. Please login again') {
       dispatch({ type: 'logout', provider: dapp.provider });
     }
     history.push('');
   };
   const { sendTransaction } = useDelegation({
     handleClose: closeTransactionModal,
-    setLedgerDataError,
+    setError: setError,
   });
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const ConfirmOnLedgerModal = ({
         <div className="card">
           <div className="card-body p-spacer ">
             <div className="h6 mb-spacer text-center" data-testid="transactionTitle">
-              Confirm on ledger
+              Confirm transaction on device
             </div>
             <div className="form-group" data-testid="transactionTitle">
               <span className="form-label">To: </span>
@@ -72,9 +72,9 @@ const ConfirmOnLedgerModal = ({
               {transactionArguments.type}
               {`${transactionArguments.args !== '' ? '@' + transactionArguments.args : ''}`}
             </div>
-            {ledgerError && (
+            {error && (
               <p className="text-danger d-flex justify-content-center align-items-center">
-                {ledgerError}
+                {error}
               </p>
             )}
             <div className="text-center">
@@ -82,7 +82,7 @@ const ConfirmOnLedgerModal = ({
                 id="closeButton"
                 className="btn btn-primary mx-2 "
                 onClick={handleCloseModal}
-                disabled={ledgerError === ''}
+                disabled={error === ''}
               >
                 Close
               </button>
@@ -95,4 +95,4 @@ const ConfirmOnLedgerModal = ({
   );
 };
 
-export default ConfirmOnLedgerModal;
+export default ConfirmTransactionModal;

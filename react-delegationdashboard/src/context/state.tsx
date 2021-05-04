@@ -15,7 +15,7 @@ import {
   ContractOverview,
   NetworkConfig,
 } from 'helpers/contractDataDefinitions';
-import { denomination, decimals, network, NetworkType, walletConnectBridge } from '../config';
+import { denomination, decimals, network, NetworkType } from '../config';
 import { getItem } from '../storage/session';
 const defaultGatewayAddress = 'https://gateway.elrond.com';
 const defaultApiAddress = 'https://gateway.elrond.com';
@@ -102,32 +102,6 @@ export const emptyContractOverview: ContractOverview = {
   reDelegationCap: 'false',
   createdNounce: 'false',
   unBondPeriod: 0,
-};
-
-const getProvider = (sessionNetwork: any) => {
-  if (getItem('ledgerLogin')) {
-    return new HWProvider(
-      new ProxyProvider(
-        sessionNetwork.gatewayAddress !== undefined
-          ? sessionNetwork?.gatewayAddress
-          : defaultGatewayAddress,
-        4000
-      ),
-      getItem('ledgerLogin').index
-    );
-  }
-  if (getItem('walletConnectLogin'))
-    return new WalletConnectProvider(
-      new ProxyProvider(
-        sessionNetwork.gatewayAddress !== undefined
-          ? sessionNetwork?.gatewayAddress
-          : defaultGatewayAddress,
-        4000
-      ),
-      walletConnectBridge
-    );
-
-  return new WalletProvider(sessionNetwork.walletAddress);
 };
 
 export const initialState = (): {

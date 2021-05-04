@@ -1,4 +1,4 @@
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import ConfirmTransactionModal from 'components/ConfirmTransactionModal';
 import OwnerActionModal from 'components/Overview/OwnerActionModal';
 import { useContext } from 'context';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
@@ -6,7 +6,7 @@ import { useDelegationWallet } from 'helpers/useDelegation';
 import React, { useState } from 'react';
 
 const ReDelegateCapActivationAction = ({ automaticFlag }: { automaticFlag: string }) => {
-  const { ledgerAccount } = useContext();
+  const { ledgerAccount, walletConnectAccount } = useContext();
   const [showReDelegationCapActivationModal, setShowReDelegationCapActivationModal] = useState(
     false
   );
@@ -25,7 +25,7 @@ const ReDelegateCapActivationAction = ({ automaticFlag }: { automaticFlag: strin
       redelegateRewardsActivation
     );
 
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       setShowReDelegationCapActivationModal(false);
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
@@ -53,7 +53,7 @@ const ReDelegateCapActivationAction = ({ automaticFlag }: { automaticFlag: strin
         }}
         handleContinue={handleReDelegationCapActivation}
       />
-      <ConfirmOnLedgerModal
+      <ConfirmTransactionModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

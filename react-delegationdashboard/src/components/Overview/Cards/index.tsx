@@ -39,7 +39,7 @@ const Views = () => {
   };
 
   const isOwnerPath = () => {
-    let currentURL = location.pathname;
+    let currentURL = window.location.pathname;
     return currentURL.includes('owner') === true;
   };
 

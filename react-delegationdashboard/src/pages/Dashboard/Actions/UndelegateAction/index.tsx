@@ -4,14 +4,14 @@ import { nominateValToHex } from 'helpers/nominate';
 import UndelegateModal from './UndelegateModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import ConfirmTransactionModal from 'components/ConfirmTransactionModal';
 
 interface UndelegateModalType {
   balance: string;
 }
 
 const UndelegateAction = ({ balance }: UndelegateModalType) => {
-  const { egldLabel, ledgerAccount } = useContext();
+  const { egldLabel, ledgerAccount, walletConnectAccount } = useContext();
   const [showModal, setShowModal] = useState(false);
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
@@ -21,7 +21,7 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
 
   const handleUndelegate = (value: string) => {
     let txArguments = new DelegationTransactionType('0', 'unDelegate', nominateValToHex(value));
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       setShowModal(false);
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
@@ -44,7 +44,7 @@ const UndelegateAction = ({ balance }: UndelegateModalType) => {
         }}
         handleContinue={handleUndelegate}
       />
-      <ConfirmOnLedgerModal
+      <ConfirmTransactionModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

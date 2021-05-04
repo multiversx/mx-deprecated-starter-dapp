@@ -1,4 +1,4 @@
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import ConfirmTransactionModal from 'components/ConfirmTransactionModal';
 import { useContext } from 'context';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import SetPercentageFeeModal from './SetPercentageFeeModal';
 
 const SetPercentageFeeAction = () => {
-  const { ledgerAccount } = useContext();
+  const { ledgerAccount, walletConnectAccount } = useContext();
 
   const [showUpdateFeeModal, setShowUpdateFeeModal] = useState(false);
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
@@ -24,7 +24,7 @@ const SetPercentageFeeAction = () => {
   };
   const handleUpdateFee = (value: string) => {
     let txArguments = new DelegationTransactionType('0', 'changeServiceFee', nominateVal(value));
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       setShowUpdateFeeModal(false);
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
@@ -47,7 +47,7 @@ const SetPercentageFeeAction = () => {
         }}
         handleContinue={handleUpdateFee}
       />
-      <ConfirmOnLedgerModal
+      <ConfirmTransactionModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

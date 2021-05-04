@@ -20,12 +20,16 @@ export type ActionType =
   | { type: 'setAprPercentage'; aprPercentage: StateType['aprPercentage'] }
   | { type: 'setLedgerAccount'; ledgerAccount: StateType['ledgerAccount'] }
   | {
-      type: 'walletConnectLogin';
+      type: 'setWalletConnectLogin';
       walletConnectLogin: StateType['walletConnectLogin'];
     }
   | {
       type: 'setWalletConnectAccount';
       walletConnectAccount: StateType['walletConnectAccount'];
+    }
+  | {
+      type: 'setWalletAccount';
+      walletAccount: StateType['walletAccount'];
     };
 
 export function reducer(state: StateType, action: ActionType): StateType {
@@ -149,7 +153,7 @@ export function reducer(state: StateType, action: ActionType): StateType {
       };
     }
 
-    case 'walletConnectLogin': {
+    case 'setWalletConnectLogin': {
       const { walletConnectLogin } = action;
       setItem('walletConnectLogin', walletConnectLogin);
       return {

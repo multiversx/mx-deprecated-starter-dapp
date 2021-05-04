@@ -39,7 +39,7 @@ const WalletConnect = () => {
       .getAddress()
       .then(address => {
         dispatch({
-          type: 'walletConnectLogin',
+          type: 'setWalletConnectLogin',
           walletConnectLogin: {
             loginType: 'walletConnect',
           },
