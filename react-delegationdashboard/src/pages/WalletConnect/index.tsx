@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { useContext, useDispatch } from 'context';
@@ -9,8 +9,9 @@ const WalletConnect = () => {
   const { dapp } = useContext();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [qrSvg, setQrSvg] = React.useState<string>('');
-  const [error, setError] = React.useState<string>('');
+  const [qrSvg, setQrSvg] = useState('');
+  const [wcUri, setWcUri] = useState('');
+  const [error, setError] = useState<string>('');
 
   const urlParams = new URLSearchParams(window.location.search);
   const isFromMobile = urlParams.get('mobileplatform') === 'true';
@@ -25,15 +26,16 @@ const WalletConnect = () => {
     },
   };
 
-  const buildQrCode = (string: string) => {
+  const buildQrCode = () => {
     (async () => {
-      if (string) {
-        const svg = await QRCode.toString(string, { type: 'svg' });
+      if (wcUri) {
+        const svg = await QRCode.toString(wcUri, { type: 'svg' });
         setQrSvg(svg);
       }
     })();
   };
 
+  useEffect(buildQrCode, [wcUri]);
   const handleOnLogin = () => {
     dapp.provider
       .getAddress()
@@ -64,10 +66,10 @@ const WalletConnect = () => {
     walletConnect.addEventListener('onWalletConnectDisconect', handleOnLogout);
 
     const walletConectUri = await walletConnect.login();
-    buildQrCode(walletConectUri);
+    setWcUri(walletConectUri);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     walletConnectInit();
   }, []);
 

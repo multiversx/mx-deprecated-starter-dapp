@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { decimals } from 'config';
 
 interface AddressRowType {
   setSelectedAddress: React.Dispatch<React.SetStateAction<string>>;

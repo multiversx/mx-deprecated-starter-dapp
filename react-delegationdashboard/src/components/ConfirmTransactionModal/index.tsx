@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap';
 import { useDelegation } from 'helpers';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { TransactionHash } from '@elrondnetwork/erdjs';
-import TransactionStatusModal from 'components/LedgerTransactionStatus';
+import TransactionStatusModal from 'components/TransactionStatus';
 import { useHistory } from 'react-router-dom';
 import { useContext, useDispatch } from 'context';
 export interface ConfirmTransactionModalType {
