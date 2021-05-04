@@ -66,7 +66,7 @@ const SetAgencyMetaDataModal = () => {
                 website: string()
                   .required('Required')
                   .test('URL', 'URL is not valid!', value => {
-                    var expression = /^((?:http(?:s)?\:\/\/)?[a-zA-Z0-9_-]+(?:.[a-zA-Z0-9_-]+)*.[a-zA-Z]{2,4}(?:\/[a-zA-Z0-9_]+)*(?:\/[a-zA-Z0-9_]+.[a-zA-Z]{2,4}(?:\?[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)?)?(?:\&[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)*)$/;
+                    var expression = /^((?:http(?:s)?:\/\/)?[a-zA-Z0-9_-]+(?:.[a-zA-Z0-9_-]+)*.[a-zA-Z]{2,4}(?:\/[a-zA-Z0-9_]+)*(?:\/[a-zA-Z0-9_]+.[a-zA-Z]{2,4}(?:\?[a-zA-Z0-9_]+=[a-zA-Z0-9_]+)?)?(?:&[a-zA-Z0-9_]+=[a-zA-Z0-9_]+)*)$/;
                     var regex = new RegExp(expression);
                     if (value?.match(regex)) {
                       return true;

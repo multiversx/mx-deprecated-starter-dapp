@@ -58,7 +58,7 @@ const AddressTable = ({
       });
   };
 
-  React.useEffect(fetchAccounts, [startIndex]);
+  React.useEffect(fetchAccounts, /* eslint-disable react-hooks/exhaustive-deps */ [startIndex]);
 
   const goToNext = () => {
     setSelectedAddress('');
