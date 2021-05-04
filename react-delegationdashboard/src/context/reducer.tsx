@@ -26,10 +26,6 @@ export type ActionType =
   | {
       type: 'setWalletConnectAccount';
       walletConnectAccount: StateType['walletConnectAccount'];
-    }
-  | {
-      type: 'setWalletAccount';
-      walletAccount: StateType['walletAccount'];
     };
 
 export function reducer(state: StateType, action: ActionType): StateType {

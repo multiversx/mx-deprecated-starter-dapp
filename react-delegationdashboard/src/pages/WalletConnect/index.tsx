@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { useContext, useDispatch } from 'context';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs';
