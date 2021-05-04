@@ -60,7 +60,7 @@ const DropzonePem = ({
       setFieldValue(fieldName, updatedFiles);
     }
   };
-  React.useEffect(updateFieldValue, [files]);
+  React.useEffect(updateFieldValue, /* eslint-disable react-hooks/exhaustive-deps */ [files]);
 
   const getUpdatedFiles = ({
     existing,

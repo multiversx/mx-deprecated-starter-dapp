@@ -54,9 +54,12 @@ const Views = () => {
       });
   };
 
-  React.useEffect(() => {
-    getNetworkStake();
-  }, []);
+  React.useEffect(
+    () => {
+      getNetworkStake();
+    },
+    /* eslint-disable react-hooks/exhaustive-deps */ []
+  );
 
   return (
     <div className="cards d-flex flex-wrap mr-spacer">

@@ -31,7 +31,7 @@ const Owner = () => {
     });
   };
 
-  useEffect(fetchAccount, []);
+  useEffect(fetchAccount, /* eslint-disable react-hooks/exhaustive-deps */ []);
 
   const isLedgerLogin = getItem('ledgerLogin') && !ledgerAccount;
   const isWalletConnect = getItem('walletConnectLogin') && !walletConnectAccount;
@@ -54,7 +54,7 @@ const Owner = () => {
     }
   };
 
-  useEffect(dispatchLoginType, []);
+  useEffect(dispatchLoginType, /* eslint-disable react-hooks/exhaustive-deps */ []);
 
   if (!loggedIn) {
     return <Redirect to="/" />;

@@ -50,9 +50,9 @@ const Dashboard = () => {
       });
     }
   };
-  useEffect(fetchAccount, []);
+  useEffect(fetchAccount, /* eslint-disable react-hooks/exhaustive-deps */ []);
 
-  useEffect(dispatchLoginType, []);
+  useEffect(dispatchLoginType, /* eslint-disable react-hooks/exhaustive-deps */ []);
   if (!loggedIn) {
     return <Redirect to="/" />;
   }

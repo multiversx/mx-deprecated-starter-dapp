@@ -69,9 +69,12 @@ const WalletConnect = () => {
     setWcUri(walletConectUri);
   };
 
-  useEffect(() => {
-    walletConnectInit();
-  }, []);
+  useEffect(
+    () => {
+      walletConnectInit();
+    },
+    /* eslint-disable react-hooks/exhaustive-deps */ []
+  );
 
   return (
     <div className="m-auto login-container">

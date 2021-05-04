@@ -40,11 +40,15 @@ const ConfirmTransactionModal = ({
     setError: setError,
   });
 
-  useEffect(() => {
-    if (transactionArguments.type !== '') {
-      sendTransaction(transactionArguments);
-    }
-  }, [transactionArguments]);
+  useEffect(
+    () => {
+      if (transactionArguments.type !== '') {
+        sendTransaction(transactionArguments);
+      }
+    },
+    /* eslint-disable react-hooks/exhaustive-deps */
+    [transactionArguments]
+  );
   return (
     <>
       <Modal

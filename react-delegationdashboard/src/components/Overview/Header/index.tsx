@@ -47,8 +47,8 @@ const Header = () => {
       });
     }
   };
-  useEffect(fetchLedger, []);
-  useEffect(fetchWalletConnect, []);
+  useEffect(fetchLedger, /* eslint-disable react-hooks/exhaustive-deps */ []);
+  useEffect(fetchWalletConnect, /* eslint-disable react-hooks/exhaustive-deps */ []);
 
   return (
     <div className="header card-header d-flex align-items-center border-0 justify-content-between px-spacer">
