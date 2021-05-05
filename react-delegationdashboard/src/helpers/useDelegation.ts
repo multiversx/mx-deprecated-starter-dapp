@@ -5,7 +5,7 @@ import { DelegationTransactionType } from './contractDataDefinitions';
 import { ledgerErrorCodes } from './ledgerErrorCodes';
 export interface UseDelegationType {
   handleClose: (txHash: TransactionHash) => void;
-  setError: (flag: string) => void;
+  setError: (error: string) => void;
 }
 export default function useDelegation({
   handleClose,
