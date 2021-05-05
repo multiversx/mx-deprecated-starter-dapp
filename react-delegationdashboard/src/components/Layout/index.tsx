@@ -169,7 +169,8 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
               type: 'setAprPercentage',
               aprPercentage: (
                 APR -
-                APR * ((contract?.serviceFee ? parseFloat(contract.serviceFee) : 0) / 100)
+                APR *
+                  ((contract && contract.serviceFee ? parseFloat(contract.serviceFee) : 0) / 100)
               )
                 .toFixed(2)
                 .toString(),
