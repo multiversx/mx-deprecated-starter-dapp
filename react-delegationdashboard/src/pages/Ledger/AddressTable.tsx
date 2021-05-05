@@ -38,7 +38,7 @@ const AddressTable = ({
           return;
         }
         hwWalletP
-          .getAccounts(startIndex, 10)
+          .getAccounts(startIndex, 5)
           .then(accounts => {
             setAccounts(accounts);
             dispatch({ type: 'loading', loading: false });
@@ -152,7 +152,7 @@ const AddressTable = ({
                       {accounts.map((account, index) => {
                         const props = {
                           account,
-                          index: index + startIndex * 10,
+                          index: index + startIndex * 5,
                           selectedAddress,
                           setSelectedAddress,
                           setSelectedIndex,
