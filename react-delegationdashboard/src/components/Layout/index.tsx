@@ -76,75 +76,63 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
       decodeString(untypedResponse[2])
     );
   };
-  React.useEffect(() => {
-    Promise.all([
-      getMetaData(dapp, delegationContract),
-      getNumUsers(dapp, delegationContract),
-      getContractConfig(dapp, delegationContract),
-      getTotalActiveStake(dapp, delegationContract),
-      getBlsKeys(dapp, delegationContract),
-      dapp.apiProvider.getNetworkStats(),
-      dapp.apiProvider.getNetworkStake(),
-      dapp.proxy.getNetworkConfig(),
-      dapp.proxy.getNetworkStatus(),
-      getDelegationManagerContractConfig(dapp),
-    ])
-      .then(
-        async ([
-          metaData,
-          numUsers,
-          contractOverview,
-          activeStake,
-          blsKeysResponse,
-          networkStats,
-          networkStake,
-          networkConfig,
-          networkStatus,
-          delegationManager,
-        ]) => {
-          dispatch({
-            type: 'setNumUsers',
-            numUsers: decodeUnsignedNumber(numUsers.outputUntyped()[0]),
-          });
-          dispatch({
-            type: 'setMinDelegationAmount',
-            minDelegationAmount: decodeUnsignedNumber(delegationManager.outputUntyped()[0]),
-          });
-          const contract = getContractOverviewType(contractOverview);
-          dispatch({
-            type: 'setContractOverview',
-            contractOverview: contract,
-          });
-          dispatch({
-            type: 'setAgencyMetaData',
-            agencyMetaData: getAgencyMetaDataType(metaData),
-          });
-          dispatch({
-            type: 'setTotalActiveStake',
-            totalActiveStake: decodeBigNumber(activeStake.outputUntyped()[0]).toFixed(),
-          });
-          dispatch({
-            type: 'setNumberOfActiveNodes',
-            numberOfActiveNodes: blsKeysResponse
-              .outputUntyped()
-              .filter(key => decodeString(key) === 'staked')
-              .length.toString(),
-          });
-          dispatch({
-            type: 'setNetworkConfig',
-            networkConfig: new NetworkConfig(
-              networkConfig.TopUpFactor,
-              networkConfig.RoundDuration,
-              networkConfig.RoundsPerEpoch,
-              networkStatus.RoundsPassedInCurrentEpoch,
-              new BigNumber(networkConfig.TopUpRewardsGradientPoint),
-              networkConfig.ChainID
-            ),
-          });
-          const stakingBalance = await getStakingSCBalance(); // Delete it after we migrate to erdjs 4.x
-          const APR = parseFloat(
-            calculateAPR({
-              stats: new Stats(networkStats.Epoch),
+  React.useEffect(
+    () => {
+      Promise.all([
+        getMetaData(dapp, delegationContract),
+        getNumUsers(dapp, delegationContract),
+        getContractConfig(dapp, delegationContract),
+        getTotalActiveStake(dapp, delegationContract),
+        getBlsKeys(dapp, delegationContract),
+        dapp.apiProvider.getNetworkStats(),
+        dapp.apiProvider.getNetworkStake(),
+        dapp.proxy.getNetworkConfig(),
+        dapp.proxy.getNetworkStatus(),
+        getDelegationManagerContractConfig(dapp),
+      ])
+        .then(
+          async ([
+            metaData,
+            numUsers,
+            contractOverview,
+            activeStake,
+            blsKeysResponse,
+            networkStats,
+            networkStake,
+            networkConfig,
+            networkStatus,
+            delegationManager,
+          ]) => {
+            dispatch({
+              type: 'setNumUsers',
+              numUsers: decodeUnsignedNumber(numUsers.outputUntyped()[0]),
+            });
+            dispatch({
+              type: 'setMinDelegationAmount',
+              minDelegationAmount: decodeUnsignedNumber(delegationManager.outputUntyped()[0]),
+            });
+            const contract = getContractOverviewType(contractOverview);
+            dispatch({
+              type: 'setContractOverview',
+              contractOverview: contract,
+            });
+            dispatch({
+              type: 'setAgencyMetaData',
+              agencyMetaData: getAgencyMetaDataType(metaData),
+            });
+            dispatch({
+              type: 'setTotalActiveStake',
+              totalActiveStake: decodeBigNumber(activeStake.outputUntyped()[0]).toFixed(),
+            });
+            dispatch({
+              type: 'setNumberOfActiveNodes',
+              numberOfActiveNodes: blsKeysResponse
+                .outputUntyped()
+                .filter(key => decodeString(key) === 'staked')
+                .length.toString(),
+            });
+            dispatch({
+              type: 'setNetworkConfig',
               networkConfig: new NetworkConfig(
                 networkConfig.TopUpFactor,
                 networkConfig.RoundDuration,
@@ -153,32 +141,48 @@ const Layout = ({ children, page }: { children: React.ReactNode; page: string })
                 new BigNumber(networkConfig.TopUpRewardsGradientPoint),
                 networkConfig.ChainID
               ),
-              networkStake: new NetworkStake(
-                networkStake.TotalValidators,
-                networkStake.ActiveValidators,
-                networkStake.QueueSize,
-                new BigNumber(stakingBalance) // Replace with the economics value from erdjs 4.x
-              ),
-              blsKeys: blsKeysResponse.outputUntyped(),
-              totalActiveStake: decodeBigNumber(activeStake.outputUntyped()[0]).toFixed(),
-            })
-          );
+            });
+            const stakingBalance = await getStakingSCBalance(); // Delete it after we migrate to erdjs 4.x
+            const APR = parseFloat(
+              calculateAPR({
+                stats: new Stats(networkStats.Epoch),
+                networkConfig: new NetworkConfig(
+                  networkConfig.TopUpFactor,
+                  networkConfig.RoundDuration,
+                  networkConfig.RoundsPerEpoch,
+                  networkStatus.RoundsPassedInCurrentEpoch,
+                  new BigNumber(networkConfig.TopUpRewardsGradientPoint),
+                  networkConfig.ChainID
+                ),
+                networkStake: new NetworkStake(
+                  networkStake.TotalValidators,
+                  networkStake.ActiveValidators,
+                  networkStake.QueueSize,
+                  new BigNumber(stakingBalance) // Replace with the economics value from erdjs 4.x
+                ),
+                blsKeys: blsKeysResponse.outputUntyped(),
+                totalActiveStake: decodeBigNumber(activeStake.outputUntyped()[0]).toFixed(),
+              })
+            );
 
-          dispatch({
-            type: 'setAprPercentage',
-            aprPercentage: (
-              APR -
-              APR * ((contract?.serviceFee ? parseFloat(contract.serviceFee) : 0) / 100)
-            )
-              .toFixed(2)
-              .toString(),
-          });
-        }
-      )
-      .catch(e => {
-        console.error('To do ', e);
-      });
-  }, []);
+            dispatch({
+              type: 'setAprPercentage',
+              aprPercentage: (
+                APR -
+                APR *
+                  ((contract && contract.serviceFee ? parseFloat(contract.serviceFee) : 0) / 100)
+              )
+                .toFixed(2)
+                .toString(),
+            });
+          }
+        )
+        .catch(e => {
+          console.error('To do ', e);
+        });
+    },
+    /* eslint-disable react-hooks/exhaustive-deps */ []
+  );
 
   return (
     <div className={`layout d-flex flex-column min-vh-100 ${page}`}>

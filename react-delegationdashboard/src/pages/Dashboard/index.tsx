@@ -11,12 +11,15 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { getItem } from 'storage/session';
 
 const Dashboard = () => {
-  const { loggedIn, dapp, address, networkConfig, ledgerAccount } = useContext();
+  const {
+    loggedIn,
+    dapp,
+    address,
+    networkConfig,
+    ledgerAccount,
+    walletConnectAccount,
+  } = useContext();
   const dispatch = useDispatch();
-
-  if (!loggedIn) {
-    return <Redirect to="/" />;
-  }
 
   const fetchAccount = () => {
     dapp.proxy.getAccount(new Address(address)).then(account => {
@@ -25,7 +28,12 @@ const Dashboard = () => {
         account: new AccountType(account.balance.toString(), account.nonce),
       });
     });
-    if (getItem('ledgerLogin') && !ledgerAccount) {
+  };
+
+  const isLedgerLogin = getItem('ledgerLogin') && !ledgerAccount;
+  const isWalletConnect = getItem('walletConnectLogin') && !walletConnectAccount;
+  const dispatchLoginType = () => {
+    if (isLedgerLogin) {
       const ledgerLogin = getItem('ledgerLogin');
       dispatch({
         type: 'setLedgerAccount',
@@ -35,9 +43,19 @@ const Dashboard = () => {
         },
       });
     }
+    if (isWalletConnect) {
+      dispatch({
+        type: 'setWalletConnectAccount',
+        walletConnectAccount: address,
+      });
+    }
   };
-  useEffect(fetchAccount, []);
+  useEffect(fetchAccount, /* eslint-disable react-hooks/exhaustive-deps */ []);
 
+  useEffect(dispatchLoginType, /* eslint-disable react-hooks/exhaustive-deps */ []);
+  if (!loggedIn) {
+    return <Redirect to="/" />;
+  }
   return (
     <div className="dashboard w-100">
       <div className="card border-0">

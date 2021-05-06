@@ -62,7 +62,7 @@ const DelegationCapModal = ({
                         addCommas: false,
                       })
                     );
-                    return comparationResult >= 0 || bnAmount.comparedTo(0) == 0;
+                    return comparationResult >= 0 || bnAmount.comparedTo(0) === 0;
                   }
                 ),
             })}

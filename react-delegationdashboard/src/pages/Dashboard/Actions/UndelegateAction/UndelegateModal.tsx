@@ -47,7 +47,7 @@ const UndelegateModal = ({
         const bnAmount = new BigNumber(value !== undefined ? value : '');
         const bnAvailable = new BigNumber(available);
         return (
-          bnAvailable.minus(bnAmount).comparedTo(1) >= 0 || bnAvailable.comparedTo(bnAmount) == 0
+          bnAvailable.minus(bnAmount).comparedTo(1) >= 0 || bnAvailable.comparedTo(bnAmount) === 0
         );
       }),
   });

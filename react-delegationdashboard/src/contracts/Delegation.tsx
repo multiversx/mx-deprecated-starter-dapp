@@ -7,6 +7,7 @@ import {
   GasLimit,
   IDappProvider,
   WalletProvider,
+  WalletConnectProvider,
   HWProvider,
   Address,
   SmartContract,
@@ -49,6 +50,8 @@ export default class Delegation {
         setItem('transaction_identifier', true, 120);
         return this.sendTransactionBasedOnType(delegationTransactionType);
       case HWProvider:
+        return this.sendTransactionBasedOnType(delegationTransactionType);
+      case WalletConnectProvider:
         return this.sendTransactionBasedOnType(delegationTransactionType);
       default:
         console.warn('invalid signerProvider');

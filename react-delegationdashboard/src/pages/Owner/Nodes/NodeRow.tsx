@@ -17,7 +17,7 @@ import { stakingContract } from 'config';
 import { NodeType } from './helpers/nodeType';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import ConfirmTransactionModal from 'components/ConfirmTransactionModal';
 
 type ActionType = 'unStake' | 'unJail' | 'unBond' | 'reStake' | 'stake' | 'remove';
 
@@ -30,7 +30,7 @@ const allowedActions: { [key: string]: ActionType[] } = {
 };
 
 const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
-  const { explorerAddress, dapp, ledgerAccount } = useContext();
+  const { explorerAddress, dapp, ledgerAccount, walletConnectAccount } = useContext();
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
     new DelegationTransactionType('', '')
@@ -40,7 +40,7 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
 
   const handleAction = (action: ActionType) => {
     const txArguments = nodeTransactions[action]({ blsKey: key.blsKey });
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
@@ -72,7 +72,10 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
     }
   };
 
-  React.useEffect(fetchUnBondPeriod, [key.blsKey, key.status]);
+  React.useEffect(
+    fetchUnBondPeriod,
+    /* eslint-disable react-hooks/exhaustive-deps */ [key.blsKey, key.status]
+  );
 
   const statusColor =
     key.status.key === 'staked' ? 'green' : key.status.key === 'jailed' ? 'red' : 'orange';
@@ -143,7 +146,7 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
           </Dropdown.Menu>
         </Dropdown>
       </td>
-      <ConfirmOnLedgerModal
+      <ConfirmTransactionModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

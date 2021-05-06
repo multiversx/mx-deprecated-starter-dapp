@@ -1,4 +1,4 @@
-import { object, string, boolean, InferType } from 'yup';
+import { object, string, InferType } from 'yup';
 import { DelegationContractType } from './helpers/types';
 
 export const minDust: string = '5000000000000000'; // 0.005 EGLD
@@ -27,6 +27,7 @@ export const stakingContract: string =
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7';
 export const delegationManagerContract: string =
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllslmq6y6';
+export const walletConnectBridge: string = 'https://bridge.walletconnect.org';
 
 export const network: NetworkType = {
   id: 'devnet',
@@ -36,7 +37,7 @@ export const network: NetworkType = {
   apiAddress: 'https://devnet-api.elrond.com',
   gatewayAddress: 'https://devnet-gateway.elrond.com',
   explorerAddress: 'http://devnet-explorer.elrond.com/',
-  delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqp8lllls9jsunl',
+  delegationContract: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqy8lllls62y8s5',
 };
 
 const networkSchema = object({

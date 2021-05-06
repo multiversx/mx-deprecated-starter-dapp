@@ -5,9 +5,12 @@ import { DelegationTransactionType } from './contractDataDefinitions';
 import { ledgerErrorCodes } from './ledgerErrorCodes';
 export interface UseDelegationType {
   handleClose: (txHash: TransactionHash) => void;
-  setLedgerDataError: (flag: string) => void;
+  setError: (error: string) => void;
 }
-export default function useDelegation({ handleClose, setLedgerDataError }: UseDelegationType) {
+export default function useDelegation({
+  handleClose,
+  setError: setTransactionError,
+}: UseDelegationType) {
   const { dapp, delegationContract, account, networkConfig } = useContext();
   const delegation = new Delegation(dapp.proxy, delegationContract, dapp.provider, account);
 
@@ -20,10 +23,12 @@ export default function useDelegation({ handleClose, setLedgerDataError }: UseDe
       })
       .catch(e => {
         if (e.statusCode in ledgerErrorCodes) {
-          setLedgerDataError((ledgerErrorCodes as any)[e.statusCode].message);
+          setTransactionError((ledgerErrorCodes as any)[e.statusCode].message);
         }
         if (e.message === 'HWApp not initialised, call init() first')
-          setLedgerDataError('Your session has expired. Please login again');
+          setTransactionError('Your session has expired. Please login again');
+        if (e.message === 'Failed or Rejected Request')
+          setTransactionError('Failed or Rejected Request. Please try again');
         console.error(`${transactionArguments.type}`, e);
       });
   };

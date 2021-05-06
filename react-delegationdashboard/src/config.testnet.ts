@@ -27,6 +27,7 @@ export const stakingContract: string =
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqllls0lczs7';
 export const delegationManagerContract: string =
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllslmq6y6';
+export const walletConnectBridge: string = 'https://bridge.walletconnect.org';
 
 export const network: NetworkType = {
   id: 'testnet',

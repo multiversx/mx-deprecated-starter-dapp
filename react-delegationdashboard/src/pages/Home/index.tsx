@@ -5,6 +5,7 @@ import { ReactComponent as Logo } from 'assets/images/logo.svg';
 import State from 'components/State';
 import { useContext } from 'context';
 import WalletLogin from './Login/Wallet';
+import WalletConnectLogin from './Login/WalletConnect';
 
 const Home = () => {
   const { loading, error, loggedIn, egldLabel } = useContext();
@@ -35,10 +36,14 @@ const Home = () => {
               </p>
               <p className="mb-spacer">Please select your login method:</p>
               <div>
-                <a href={process.env.PUBLIC_URL + '/ledger'} className="btn btn-primary px-sm-spacer mx-1 mx-sm-3">
+                <a
+                  href={process.env.PUBLIC_URL + '/ledger'}
+                  className="btn btn-primary px-sm-spacer mx-1 mx-sm-3"
+                >
                   Ledger
                 </a>
                 <WalletLogin />
+                <WalletConnectLogin />
               </div>
             </div>
           </div>

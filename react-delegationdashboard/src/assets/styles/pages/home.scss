@@ -6,9 +6,6 @@
 
     .btn {
       min-width: 6.875rem;
-      @include media-breakpoint-up(sm) {
-        min-width: 8rem;
-      }
     }
     .logo {
       fill: $white;

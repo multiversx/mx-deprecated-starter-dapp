@@ -6,10 +6,10 @@ import { useContext } from 'context';
 import { AgencyMetadata, DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import ModalActionButton from 'components/ModalActionButton';
 import { useDelegationWallet } from 'helpers/useDelegation';
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import ConfirmTransactionModal from 'components/ConfirmTransactionModal';
 
 const SetAgencyMetaDataModal = () => {
-  const { agencyMetaData, ledgerAccount } = useContext();
+  const { agencyMetaData, ledgerAccount, walletConnectAccount } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
@@ -23,7 +23,7 @@ const SetAgencyMetaDataModal = () => {
     const hexKeyBase = Buffer.from(values.keybase).toString('hex');
     const data = hexName + '@' + hexWeb + '@' + hexKeyBase;
     let txArguments = new DelegationTransactionType('0', 'setMetaData', data);
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       setShowDelegateModal(false);
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
@@ -66,7 +66,7 @@ const SetAgencyMetaDataModal = () => {
                 website: string()
                   .required('Required')
                   .test('URL', 'URL is not valid!', value => {
-                    var expression = /^((?:http(?:s)?\:\/\/)?[a-zA-Z0-9_-]+(?:.[a-zA-Z0-9_-]+)*.[a-zA-Z]{2,4}(?:\/[a-zA-Z0-9_]+)*(?:\/[a-zA-Z0-9_]+.[a-zA-Z]{2,4}(?:\?[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)?)?(?:\&[a-zA-Z0-9_]+\=[a-zA-Z0-9_]+)*)$/;
+                    var expression = /^((?:http(?:s)?:\/\/)?[a-zA-Z0-9_-]+(?:.[a-zA-Z0-9_-]+)*.[a-zA-Z]{2,4}(?:\/[a-zA-Z0-9_]+)*(?:\/[a-zA-Z0-9_]+.[a-zA-Z]{2,4}(?:\?[a-zA-Z0-9_]+=[a-zA-Z0-9_]+)?)?(?:&[a-zA-Z0-9_]+=[a-zA-Z0-9_]+)*)$/;
                     var regex = new RegExp(expression);
                     if (value?.match(regex)) {
                       return true;
@@ -151,7 +151,7 @@ const SetAgencyMetaDataModal = () => {
           </div>
         </div>
       </Modal>
-      <ConfirmOnLedgerModal
+      <ConfirmTransactionModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

@@ -81,7 +81,10 @@ const UndelegatedListView = () => {
       .catch(e => console.error('getUserUnDelegatedList error', e));
   };
 
-  React.useEffect(getUserUnDelegated, [networkConfig]);
+  React.useEffect(
+    getUserUnDelegated,
+    /* eslint-disable react-hooks/exhaustive-deps */ [networkConfig]
+  );
 
   return (
     <>

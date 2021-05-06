@@ -8,7 +8,14 @@ import { AccountType } from 'helpers/contractDataDefinitions';
 import { getItem } from 'storage/session';
 
 const Owner = () => {
-  const { address, contractOverview, loggedIn, dapp, ledgerAccount } = useContext();
+  const {
+    address,
+    contractOverview,
+    loggedIn,
+    dapp,
+    ledgerAccount,
+    walletConnectAccount,
+  } = useContext();
   const dispatch = useDispatch();
   const isOwner = () => {
     let loginAddress = new Address(address).hex();
@@ -22,7 +29,14 @@ const Owner = () => {
         account: new AccountType(account.balance.toString(), account.nonce),
       });
     });
-    if (getItem('ledgerLogin') && !ledgerAccount) {
+  };
+
+  useEffect(fetchAccount, /* eslint-disable react-hooks/exhaustive-deps */ []);
+
+  const isLedgerLogin = getItem('ledgerLogin') && !ledgerAccount;
+  const isWalletConnect = getItem('walletConnectLogin') && !walletConnectAccount;
+  const dispatchLoginType = () => {
+    if (isLedgerLogin) {
       const ledgerLogin = getItem('ledgerLogin');
       dispatch({
         type: 'setLedgerAccount',
@@ -32,8 +46,15 @@ const Owner = () => {
         },
       });
     }
+    if (isWalletConnect) {
+      dispatch({
+        type: 'setWalletConnectAccount',
+        walletConnectAccount: address,
+      });
+    }
   };
-  useEffect(fetchAccount, []);
+
+  useEffect(dispatchLoginType, /* eslint-disable react-hooks/exhaustive-deps */ []);
 
   if (!loggedIn) {
     return <Redirect to="/" />;

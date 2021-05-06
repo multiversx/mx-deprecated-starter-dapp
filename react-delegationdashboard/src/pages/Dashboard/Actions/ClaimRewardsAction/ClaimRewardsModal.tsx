@@ -4,7 +4,7 @@ import { useContext } from 'context';
 import BigNumber from 'bignumber.js';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import ConfirmTransactionModal from 'components/ConfirmTransactionModal';
 export interface ClaimRewardsModalType {
   show: boolean;
   title: string;
@@ -12,7 +12,7 @@ export interface ClaimRewardsModalType {
   handleClose: () => void;
 }
 const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewardsModalType) => {
-  const { totalActiveStake, contractOverview, ledgerAccount } = useContext();
+  const { totalActiveStake, contractOverview, ledgerAccount, walletConnectAccount } = useContext();
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
     new DelegationTransactionType('', '')
@@ -21,7 +21,7 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
 
   const handleClaimRewards = (): void => {
     let txArguments = new DelegationTransactionType('0', 'claimRewards');
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       handleClose();
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
@@ -44,7 +44,7 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
 
   const handleRedelegateRewards = () => {
     let txArguments = new DelegationTransactionType('0', 'reDelegateRewards');
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       handleClose();
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
@@ -94,7 +94,7 @@ const ClaimRewardsModal = ({ show, title, description, handleClose }: ClaimRewar
           </div>
         </div>
       </Modal>
-      <ConfirmOnLedgerModal
+      <ConfirmTransactionModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

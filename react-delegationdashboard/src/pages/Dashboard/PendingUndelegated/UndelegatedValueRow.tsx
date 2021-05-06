@@ -4,7 +4,7 @@ import { useContext } from 'context';
 import { UndelegatedValueType } from './UndelegatedValueType';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
 import { useDelegationWallet } from 'helpers/useDelegation';
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import ConfirmTransactionModal from 'components/ConfirmTransactionModal';
 
 const UndelegatedValueRow = ({
   undelegatedValue: value,
@@ -12,7 +12,7 @@ const UndelegatedValueRow = ({
   undelegatedValue: UndelegatedValueType;
 }) => {
   const [isDisabled, setIsDisabled] = React.useState(true);
-  const { egldLabel, ledgerAccount } = useContext();
+  const { egldLabel, ledgerAccount, walletConnectAccount } = useContext();
   const [counter, setCounter] = React.useState(value.timeLeft);
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
@@ -22,7 +22,7 @@ const UndelegatedValueRow = ({
 
   const handleWithdraw = () => {
     let txArguments = new DelegationTransactionType('0', 'withdraw');
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
     } else {
@@ -69,7 +69,7 @@ const UndelegatedValueRow = ({
           </button>
         </td>
       </tr>
-      <ConfirmOnLedgerModal
+      <ConfirmTransactionModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

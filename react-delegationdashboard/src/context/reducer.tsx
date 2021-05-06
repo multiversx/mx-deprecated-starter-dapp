@@ -18,7 +18,15 @@ export type ActionType =
   | { type: 'setMinDelegationAmount'; minDelegationAmount: StateType['minDelegationAmount'] }
   | { type: 'setTotalActiveStake'; totalActiveStake: StateType['totalActiveStake'] }
   | { type: 'setAprPercentage'; aprPercentage: StateType['aprPercentage'] }
-  | { type: 'setLedgerAccount'; ledgerAccount: StateType['ledgerAccount'] };
+  | { type: 'setLedgerAccount'; ledgerAccount: StateType['ledgerAccount'] }
+  | {
+      type: 'setWalletConnectLogin';
+      walletConnectLogin: StateType['walletConnectLogin'];
+    }
+  | {
+      type: 'setWalletConnectAccount';
+      walletConnectAccount: StateType['walletConnectAccount'];
+    };
 
 export function reducer(state: StateType, action: ActionType): StateType {
   switch (action.type) {
@@ -141,6 +149,23 @@ export function reducer(state: StateType, action: ActionType): StateType {
       };
     }
 
+    case 'setWalletConnectLogin': {
+      const { walletConnectLogin } = action;
+      setItem('walletConnectLogin', walletConnectLogin);
+      return {
+        ...state,
+        walletConnectLogin,
+      };
+    }
+
+    case 'setWalletConnectAccount': {
+      const { walletConnectAccount } = action;
+      return {
+        ...state,
+        walletConnectAccount,
+      };
+    }
+
     case 'logout': {
       const { provider } = action;
       provider
@@ -150,6 +175,7 @@ export function reducer(state: StateType, action: ActionType): StateType {
       removeItem('logged_in');
       removeItem('address');
       removeItem('ledgerLogin');
+      removeItem('walletConnectLogin');
       return initialState();
     }
 

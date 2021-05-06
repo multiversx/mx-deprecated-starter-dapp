@@ -8,7 +8,13 @@ import { getItem } from 'storage/session';
 const Header = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  const { address, delegationContract, contractOverview, ledgerAccount } = useContext();
+  const {
+    address,
+    delegationContract,
+    contractOverview,
+    ledgerAccount,
+    walletConnectAccount,
+  } = useContext();
 
   const isOwner = () => {
     let loginAddress = new Address(address).hex();
@@ -16,7 +22,7 @@ const Header = () => {
   };
 
   const isOwnerPath = () => {
-    let currentURL = location.pathname;
+    let currentURL = window.location.pathname;
     return currentURL.includes('owner') === true;
   };
 
@@ -32,7 +38,17 @@ const Header = () => {
       });
     }
   };
-  useEffect(fetchLedger, []);
+
+  const fetchWalletConnect = () => {
+    if (getItem('walletConnectLogin') && !walletConnectAccount) {
+      dispatch({
+        type: 'setWalletConnectAccount',
+        walletConnectAccount: address,
+      });
+    }
+  };
+  useEffect(fetchLedger, /* eslint-disable react-hooks/exhaustive-deps */ []);
+  useEffect(fetchWalletConnect, /* eslint-disable react-hooks/exhaustive-deps */ []);
 
   return (
     <div className="header card-header d-flex align-items-center border-0 justify-content-between px-spacer">

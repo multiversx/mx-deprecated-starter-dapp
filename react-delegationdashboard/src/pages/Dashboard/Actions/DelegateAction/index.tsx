@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useContext } from 'context';
 import DelegateModal from './DelegateModal';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import ConfirmTransactionModal from 'components/ConfirmTransactionModal';
 import { useDelegationWallet } from 'helpers/useDelegation';
 
 const DelegateAction = () => {
-  const { account, ledgerAccount } = useContext();
+  const { account, ledgerAccount, walletConnectAccount } = useContext();
   const [showDelegateModal, setShowDelegateModal] = useState(false);
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
@@ -16,7 +16,7 @@ const DelegateAction = () => {
 
   const handleDelegate = (value: string) => {
     const txArguments = new DelegationTransactionType(value, 'delegate');
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       setShowDelegateModal(false);
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
@@ -43,7 +43,7 @@ const DelegateAction = () => {
         }}
         handleContinue={handleDelegate}
       />
-      <ConfirmOnLedgerModal
+      <ConfirmTransactionModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

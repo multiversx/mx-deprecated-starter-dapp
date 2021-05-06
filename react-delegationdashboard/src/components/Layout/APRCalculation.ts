@@ -22,11 +22,11 @@ const denominateValue = (value: string) => {
 };
 
 const calculateAPR = ({
-  stats: stats,
-  networkConfig: networkConfig,
-  networkStake: networkStake,
-  blsKeys: blsKeys,
-  totalActiveStake: totalActiveStake,
+  stats,
+  networkConfig,
+  networkStake,
+  blsKeys,
+  totalActiveStake,
 }: {
   stats: Stats;
   networkConfig: NetworkConfig;

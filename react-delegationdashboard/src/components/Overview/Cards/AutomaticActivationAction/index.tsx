@@ -1,4 +1,4 @@
-import ConfirmOnLedgerModal from 'components/ConfirmOnLedgerModal';
+import ConfirmTransactionModal from 'components/ConfirmTransactionModal';
 import OwnerActionModal from 'components/Overview/OwnerActionModal';
 import { useContext } from 'context';
 import { DelegationTransactionType } from 'helpers/contractDataDefinitions';
@@ -6,7 +6,7 @@ import { useDelegationWallet } from 'helpers/useDelegation';
 import React, { useState } from 'react';
 
 const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string }) => {
-  const { ledgerAccount } = useContext();
+  const { ledgerAccount, walletConnectAccount } = useContext();
   const [showAutomaticActivationModal, setShowAutomaticActivationModal] = useState(false);
   const [showCheckYourLedgerModal, setShowCheckYourLedgerModal] = useState(false);
   const [transactionArguments, setTransactionArguments] = useState(
@@ -17,7 +17,7 @@ const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string })
   const handleAutomaticActivation = () => {
     let activation = Buffer.from(automaticFlag === 'true' ? 'false' : 'true').toString('hex');
     let txArguments = new DelegationTransactionType('0', 'setAutomaticActivation', activation);
-    if (ledgerAccount) {
+    if (ledgerAccount || walletConnectAccount) {
       setShowAutomaticActivationModal(false);
       setTransactionArguments(txArguments);
       setShowCheckYourLedgerModal(true);
@@ -44,7 +44,7 @@ const AutomaticActivationAction = ({ automaticFlag }: { automaticFlag: string })
         }}
         handleContinue={handleAutomaticActivation}
       />
-      <ConfirmOnLedgerModal
+      <ConfirmTransactionModal
         show={showCheckYourLedgerModal}
         transactionArguments={transactionArguments}
         handleClose={() => {

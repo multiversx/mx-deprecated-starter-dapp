@@ -6,6 +6,7 @@ import {
   Nonce,
   ChainID,
   HWProvider,
+  WalletConnectProvider,
 } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import {
@@ -46,6 +47,9 @@ export interface StateType {
     index: number;
     loginType: string;
   };
+  walletConnectLogin: {
+    loginType: string;
+  };
   address: string;
   egldLabel: string;
   denomination: number;
@@ -65,6 +69,7 @@ export interface StateType {
     index: number;
     address: string;
   };
+  walletConnectAccount?: string;
 }
 export const emptyAccount: AccountType = {
   balance: '...',
@@ -99,23 +104,41 @@ export const emptyContractOverview: ContractOverview = {
   unBondPeriod: 0,
 };
 
-export const initialState = () => {
+export const initialState = (): {
+  denomination: number;
+  decimals: number;
+  dapp: {
+    provider: HWProvider | WalletProvider | WalletConnectProvider;
+    proxy: ProxyProvider;
+    apiProvider: ApiProvider;
+  };
+  loading: boolean;
+  error: string;
+  loggedIn: boolean;
+  ledgerLogin: any;
+  walletConnectLogin: any;
+  address: any;
+  account: AccountType;
+  egldLabel: string;
+  explorerAddress: string;
+  delegationContract: string | undefined;
+  contractOverview: ContractOverview;
+  networkConfig: NetworkConfig;
+  agencyMetaData: AgencyMetadata;
+  numberOfActiveNodes: string;
+  numUsers: number;
+  minDelegationAmount: number;
+  totalActiveStake: string;
+  aprPercentage: string;
+  ledgerAccount: { index: any; address: any } | undefined;
+  walletConnectAccount: any;
+} => {
   const sessionNetwork = network || defaultNetwork;
   return {
     denomination: denomination,
     decimals: decimals,
     dapp: {
-      provider: getItem('ledgerLogin')
-        ? new HWProvider(
-            new ProxyProvider(
-              sessionNetwork.gatewayAddress !== undefined
-                ? sessionNetwork?.gatewayAddress
-                : defaultGatewayAddress,
-              4000
-            ),
-            getItem('ledgerLogin').index
-          )
-        : new WalletProvider(sessionNetwork.walletAddress),
+      provider: new WalletProvider(sessionNetwork.walletAddress),
       proxy: new ProxyProvider(
         sessionNetwork.gatewayAddress !== undefined
           ? sessionNetwork?.gatewayAddress
@@ -131,6 +154,7 @@ export const initialState = () => {
     error: '',
     loggedIn: !!getItem('logged_in'),
     ledgerLogin: getItem('ledgerLogin'),
+    walletConnectLogin: getItem('walletConnectLogin'),
     address: getItem('address'),
     account: emptyAccount,
     egldLabel: sessionNetwork?.egldLabel,
@@ -151,5 +175,7 @@ export const initialState = () => {
             address: getItem('address'),
           }
         : undefined,
+
+    walletConnectAccount: getItem('address'),
   };
 };
