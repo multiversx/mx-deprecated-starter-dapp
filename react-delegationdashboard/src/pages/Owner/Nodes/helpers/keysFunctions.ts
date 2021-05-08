@@ -56,7 +56,8 @@ export const getQueueSize = (dapp: DappState) => {
     dapp.proxy
       .queryContract(query)
       .then(value => {
-        return resolve(value.outputTyped()[0].valueOf());
+        const untypedResponse = value.outputUntyped();
+        return resolve(decodeString(untypedResponse[0]));
       })
       .catch(e => console.error('getQueueSize error', e));
   });
