@@ -1,4 +1,4 @@
-import { object, string, boolean, InferType } from 'yup';
+import { object, string, InferType } from 'yup';
 import { DelegationContractType } from './helpers/types';
 
 export const minDust: string = '5000000000000000'; // 0.005 EGLD
