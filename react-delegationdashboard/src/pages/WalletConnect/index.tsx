@@ -60,10 +60,11 @@ const WalletConnect = () => {
   };
 
   const walletConnectInit = async () => {
-    const walletConnect = new WalletConnectProvider(dapp.proxy, walletConnectBridge);
+    const walletConnect = new WalletConnectProvider(dapp.proxy, walletConnectBridge, {
+      onClientLogin: handleOnLogin,
+      onClientLogout: handleOnLogout,
+    });
     dapp.provider = walletConnect;
-    walletConnect.addEventListener('onWalletConnectLogin', handleOnLogin);
-    walletConnect.addEventListener('onWalletConnectDisconect', handleOnLogout);
 
     const walletConectUri = await walletConnect.login();
     setWcUri(walletConectUri);
