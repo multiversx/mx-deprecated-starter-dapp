@@ -68,7 +68,7 @@ const calculateAPR = ({
     ((2 * topUpRewardsLimit) / Math.PI) *
     Math.atan(
       networkTopUpStake /
-        parseInt(denominateValue(networkConfig.topUpRewardsGradientPoint.toFixed()))
+        (2 * parseInt(denominateValue(networkConfig.topUpRewardsGradientPoint.toFixed())))
     );
   const baseReward = rewardsPerEpochWithoutProtocolSustainability - topUpReward;
   const validatorTotalStake = parseInt(denominateValue(totalActiveStake));
