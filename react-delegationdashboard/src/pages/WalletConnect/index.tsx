@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { useContext, useDispatch } from 'context';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs';
-import { walletConnectBridge } from 'config';
+import { walletConnectBridge, walletConnectDeepLink } from 'config';
 
 const WalletConnect = () => {
   const { dapp } = useContext();
@@ -94,7 +94,7 @@ const WalletConnect = () => {
                   id="accessWalletBtn"
                   data-testid="accessWalletBtn"
                   className="btn btn-primary px-spacer mt-spacer"
-                  href={`${walletConnectBridge}?wallet-connect=${encodeURIComponent(wcUri)}`}
+                  href={`${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`}
                   rel="noopener noreferrer nofollow"
                   target="_blank"
                 >
