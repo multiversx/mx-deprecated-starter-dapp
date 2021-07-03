@@ -85,9 +85,25 @@ const WalletConnect = () => {
 
           <h4 className="mb-3">Connect Maiar</h4>
           <p className="lead mb-0">
-            {isFromMobile
-              ? 'Confirm the connection in the Maiar app'
-              : 'Scan the QR code using Maiar'}
+            {isFromMobile ? (
+              <>
+                <p className="lead mb-0">
+                  Scan the QR code using Maiar or click the button below to open the App
+                </p>
+                <a
+                  id="accessWalletBtn"
+                  data-testid="accessWalletBtn"
+                  className="btn btn-primary px-spacer mt-spacer"
+                  href={`${walletConnectBridge}?wallet-connect=${encodeURIComponent(wcUri)}`}
+                  rel="noopener noreferrer nofollow"
+                  target="_blank"
+                >
+                  Maiar Login
+                </a>
+              </>
+            ) : (
+              'Scan the QR code using Maiar'
+            )}
           </p>
           <div>
             {error && (
