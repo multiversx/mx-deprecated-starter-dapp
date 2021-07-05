@@ -28,6 +28,8 @@ export const stakingContract: string =
 export const delegationManagerContract: string =
   'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllslmq6y6';
 export const walletConnectBridge: string = 'https://bridge.walletconnect.org';
+export const walletConnectDeepLink: string =
+  'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/';
 
 export const network: NetworkType = {
   id: 'mainnet',
