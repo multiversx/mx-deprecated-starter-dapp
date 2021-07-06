@@ -37,7 +37,11 @@ const UndelegatedValueRow = ({
 
   const getTimeLeft = () => {
     if (counter === 0) setCounter(value.timeLeft);
-    const timeLeftInMiliseconds = moment.duration(counter, 'seconds').asMilliseconds();
+    let waitingStartDate = moment.duration(counter, 'seconds');
+    if(waitingStartDate.asDays() >= 1){
+      return (waitingStartDate.asDays() | 0) + ' days';
+    }
+    const timeLeftInMiliseconds = waitingStartDate.asMilliseconds();
     return moment.utc(timeLeftInMiliseconds).format('HH:mm:ss');
   };
   return (
