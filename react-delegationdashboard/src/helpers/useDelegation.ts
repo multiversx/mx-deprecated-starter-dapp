@@ -25,10 +25,16 @@ export default function useDelegation({
         if (e.statusCode in ledgerErrorCodes) {
           setTransactionError((ledgerErrorCodes as any)[e.statusCode].message);
         }
-        if (e.message === 'HWApp not initialised, call init() first')
+        if (e.message === 'HWApp not initialised, call init() first') {
           setTransactionError('Your session has expired. Please login again');
-        if (e.message === 'Failed or Rejected Request')
+        }
+        if (e.message === 'Failed or Rejected Request') {
           setTransactionError('Failed or Rejected Request. Please try again');
+        }
+        if (e.message === 'cancel') {
+          setTransactionError('Transaction Cancelled');
+        }
+        
         console.error(`${transactionArguments.type}`, e);
       });
   };
