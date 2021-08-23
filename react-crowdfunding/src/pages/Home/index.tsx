@@ -39,7 +39,7 @@ const Home = () => {
           <PageState svgComponent={<></>} spin /> :
 
           <div className="row w-100 d-flex flex-column login__container">
-            <h1 className="text-center">Welcome to our Croudfunding App</h1>
+            <h1 className="text-center">Welcome to our Crowdfunding App</h1>
             <p className="text-center">We currently raised&nbsp;
               {valueLoading ?
                 "..."
