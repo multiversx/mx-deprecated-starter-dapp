@@ -1,9 +1,10 @@
-import { Address } from '@elrondnetwork/erdjs';
+import { Address, WalletProvider } from '@elrondnetwork/erdjs';
 import React, { useEffect } from 'react';
 import { useContext, useDispatch } from 'context';
 import { getItem, removeItem, setItem } from 'storage/session';
 import { AccountType } from 'helpers/contractDataDefinitions';
 import { useLocation } from 'react-router-dom';
+import { network } from 'config';
 
 const WalletLogin = () => {
   const dispatch = useDispatch();
@@ -39,31 +40,28 @@ const WalletLogin = () => {
           dispatch({ type: 'loading', loading: false });
           return;
         }
-
-        if (getItem('wallet_login')) {
-          console.log('wallet');
-          const urlSearchParams = new URLSearchParams(search);
-          const params = Object.fromEntries(urlSearchParams as any);
-          const address = params?.address;
-          if (address !== undefined && new Address(params.address)) {
-            removeItem('wallet_login');
-            dispatch({ type: 'login', address });
-            dapp.proxy
-              .getAccount(new Address(address))
-              .then(account =>
-                dispatch({
-                  type: 'setAccount',
-                  account: new AccountType(account.balance.toString(), account.nonce),
-                })
-              )
-              .catch(err => {
-                console.log({ err });
-                dispatch({ type: 'loading', loading: false });
-              });
-          }
-          dispatch({ type: 'loading', loading: false });
-          return;
+        const urlSearchParams = new URLSearchParams(search);
+        const params = Object.fromEntries(urlSearchParams as any);
+        const address = params?.address;
+        if (address !== undefined && new Address(params.address)) {
+          removeItem('wallet_login');
+          dispatch({ type: 'login', address });
+          dapp.proxy
+            .getAccount(new Address(address))
+            .then(account =>
+              dispatch({
+                type: 'setAccount',
+                account: new AccountType(account.balance.toString(), account.nonce),
+              })
+            )
+            .catch(err => {
+              console.log({ err });
+              dispatch({ type: 'loading', loading: false });
+            });
         }
+        removeItem('wallet_login');
+        dispatch({ type: 'loading', loading: false });
+        return;
       });
     }
   };

@@ -40,7 +40,9 @@ const Header = () => {
   };
 
   const fetchWalletConnect = () => {
+    console.log('fetchWalletConnect');
     if (getItem('walletConnectLogin') && !walletConnectAccount) {
+      console.log('isWalletConnect');
       dispatch({
         type: 'setWalletConnectAccount',
         walletConnectAccount: address,

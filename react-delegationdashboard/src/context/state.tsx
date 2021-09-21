@@ -176,6 +176,6 @@ export const initialState = (): {
           }
         : undefined,
 
-    walletConnectAccount: getItem('address'),
+    walletConnectAccount: getItem('walletConnectLogin') ? getItem('address') : undefined,
   };
 };

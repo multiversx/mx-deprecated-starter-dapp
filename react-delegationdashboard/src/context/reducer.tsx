@@ -180,7 +180,7 @@ export function reducer(state: StateType, action: ActionType): StateType {
     }
 
     default: {
-      throw new Error(`Unhandled action type: ${action!.type}`);
+      throw new Error(`Unhandled action type: ${action}`);
     }
   }
 }
