@@ -22,12 +22,14 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const fetchAccount = () => {
-    dapp.proxy.getAccount(new Address(address)).then(account => {
-      dispatch({
-        type: 'setAccount',
-        account: new AccountType(account.balance.toString(), account.nonce),
+    if (loggedIn) {
+      dapp.proxy.getAccount(new Address(address)).then(account => {
+        dispatch({
+          type: 'setAccount',
+          account: new AccountType(account.balance.toString(), account.nonce),
+        });
       });
-    });
+    }
   };
 
   const isLedgerLogin = getItem('ledgerLogin') && !ledgerAccount;

@@ -143,11 +143,11 @@ export const initialState = (): {
         sessionNetwork.gatewayAddress !== undefined
           ? sessionNetwork?.gatewayAddress
           : defaultGatewayAddress,
-        4000
+        { timeout: 4000 }
       ),
       apiProvider: new ApiProvider(
         sessionNetwork.apiAddress !== undefined ? sessionNetwork?.apiAddress : defaultApiAddress,
-        4000
+        { timeout: 4000 }
       ),
     },
     loading: false,
@@ -176,6 +176,6 @@ export const initialState = (): {
           }
         : undefined,
 
-    walletConnectAccount: getItem('address'),
+    walletConnectAccount: getItem('walletConnectLogin') ? getItem('address') : undefined,
   };
 };

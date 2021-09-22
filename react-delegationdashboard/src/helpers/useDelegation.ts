@@ -34,7 +34,7 @@ export default function useDelegation({
         if (e.message === 'cancel') {
           setTransactionError('Transaction Cancelled');
         }
-        
+
         console.error(`${transactionArguments.type}`, e);
       });
   };
