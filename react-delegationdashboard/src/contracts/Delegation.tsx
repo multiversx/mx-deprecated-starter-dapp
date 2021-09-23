@@ -70,8 +70,14 @@ export default class Delegation {
       throw new Error('The contract for this action in not defined');
     } else {
       let funcName = delegationContract.data;
+      let gasLimit = delegationContract.gasLimit;
       if (delegationTransactionType.args !== '') {
         funcName = `${delegationContract.data}${delegationTransactionType.args}`;
+      }
+      if (delegationContract.data === 'addNodes' && delegationTransactionType.args) {
+        const nodeKeys = delegationTransactionType.args.split('@').slice(1);
+        const numNodes = nodeKeys.length / 2;
+        gasLimit = delegationContract.gasLimit * numNodes;
       }
       const func = new ContractFunction(funcName);
       let payload = TransactionPayload.contractCall()
@@ -81,7 +87,7 @@ export default class Delegation {
         chainID: delegationTransactionType.chainId,
         receiver: this.contract.getAddress(),
         value: Balance.egld(delegationTransactionType.value),
-        gasLimit: new GasLimit(delegationContract.gasLimit),
+        gasLimit: new GasLimit(gasLimit),
         data: payload,
         nonce: this.account?.nonce,
       });
