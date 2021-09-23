@@ -75,8 +75,9 @@ export default class Delegation {
         funcName = `${delegationContract.data}${delegationTransactionType.args}`;
       }
       if (delegationContract.data === 'addNodes' && delegationTransactionType.args) {
-        const nodesNo = delegationTransactionType.args.split('@').slice(1).length / 2;
-        gasLimit = delegationContract.gasLimit * nodesNo;
+        const nodeKeys = delegationTransactionType.args.split('@').slice(1);
+        const numNodes = nodeKeys.length / 2;
+        gasLimit = delegationContract.gasLimit * numNodes;
       }
       const func = new ContractFunction(funcName);
       let payload = TransactionPayload.contractCall()
