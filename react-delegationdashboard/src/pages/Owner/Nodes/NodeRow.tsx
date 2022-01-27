@@ -136,7 +136,7 @@ const NodeRow = ({ blsKey: key }: { blsKey: NodeType; index: number }) => {
                       (
                       {moment
                         .utc(moment.duration(remaining, 'seconds').asMilliseconds())
-                        .format('HH:mm:ss')}{' '}
+                        .format('D:HH:mm:ss')}{' '}
                       left)
                     </span>
                   )}
