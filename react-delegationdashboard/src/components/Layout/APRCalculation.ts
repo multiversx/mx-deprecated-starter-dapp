@@ -77,7 +77,8 @@ const calculateAPR = ({
     allActiveNodes
   );
   const validatorBaseStake = actualNumberOfNodes * stakePerNode;
-  const validatorTopUpStake = validatorTotalStake - allNodes * stakePerNode;
+  const validatorTopUpStake =
+    ((validatorTotalStake - allNodes * stakePerNode) / allNodes) * allActiveNodes;
   const validatorTopUpReward =
     networkTopUpStake > 0 ? (validatorTopUpStake / networkTopUpStake) * topUpReward : 0;
   const validatorBaseReward = (validatorBaseStake / networkBaseStake) * baseReward;
