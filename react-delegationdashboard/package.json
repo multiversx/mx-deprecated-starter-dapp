@@ -48,7 +48,6 @@
     "copy-testnet-config:nix": "cp ./src/config.testnet.ts ./src/config.ts",
     "copy-devnet-config:nix": "cp ./src/config.devnet.ts ./src/config.ts",
     "copy-mainnet-config:windows": "copy .\\src\\config.mainnet.ts .\\src\\config.ts",
-    "copy-mainnet-unlimited-config:windows": "copy .\\src\\config.mainnet-unlimited.ts .\\src\\config.ts",
     "copy-testnet-config:windows": "copy .\\src\\config.testnet.ts .\\src\\config.ts",
     "copy-devnet-config:windows": "copy .\\src\\config.devnet.ts .\\src\\config.ts"
   },
