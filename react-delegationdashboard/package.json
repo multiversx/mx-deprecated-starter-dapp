@@ -20,7 +20,7 @@
     "formik": "^2.2.6",
     "immer": "^8.0.1",
     "moment": "^2.29.1",
-    "node-sass": "^4.0.0",
+    "node-sass": "^7.0.0",
     "qrcode": "^1.4.4",
     "react": "^16.13.1",
     "react-bootstrap": "1.4.3",
