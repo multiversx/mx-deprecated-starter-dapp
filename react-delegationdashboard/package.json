@@ -18,7 +18,7 @@
     "bignumber.js": "^9.0.1",
     "bootstrap": "^4.6.0",
     "formik": "^2.2.6",
-    "immer": "^8.0.1",
+    "immer": "^9.0.6",
     "moment": "^2.29.1",
     "node-sass": "^4.0.0",
     "qrcode": "^1.4.4",
